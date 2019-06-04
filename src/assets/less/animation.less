@@ -1,0 +1,29 @@
+
+// bounce
+.bounce-enter-active {
+    animation: bounce-in .3s;
+}
+.bounce-leave-active {
+    animation: bounce-in .3s reverse;
+}
+@keyframes bounce-in {
+    0% {
+        transform: translateY(40px);
+    }
+    100% {
+        transform: translateY(0px);
+    }
+}
+
+// rotate360
+.rotate360 {
+    animation: rotate-in 10s linear infinite;
+}
+@keyframes rotate-in {
+    0% {
+        transform:rotate(0deg);
+    }
+    100% {
+        transform:rotate(360deg);
+    }
+}

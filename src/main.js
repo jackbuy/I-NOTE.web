@@ -27,7 +27,7 @@ import 'quill/dist/quill.core.css';
 import 'quill/dist/quill.snow.css';
 import 'quill/dist/quill.bubble.css';
 
-import VueSocketio from 'vue-socket.io';
+// import VueSocketio from 'vue-socket.io';
 
 Vue.use(ElementUI, { size: 'small', zIndex: 3000 });
 Vue.use(Vuex);
@@ -66,16 +66,17 @@ Vue.config.productionTip = false;
 //     }
 // });
 
-Vue.use(new VueSocketio({
-    debug: false,
-    connection: 'http://localhost:3000',
-    vuex: {
-        store,
-        actionPrefix: 'SOCKET_',
-        mutationPrefix: 'SOCKET_'
-    }
-    // options: { query: {token: localStorage.getItem('token')} } // Optional options
-}));
+// socket
+// Vue.use(new VueSocketio({
+//     debug: false,
+//     connection: 'http://localhost:3000',
+//     vuex: {
+//         store,
+//         actionPrefix: 'SOCKET_',
+//         mutationPrefix: 'SOCKET_'
+//     }
+//     // options: { query: {token: localStorage.getItem('token')} } // Optional options
+// }));
 
 router.beforeEach((to, from, next) => {
     NProgress.start();

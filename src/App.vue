@@ -24,5 +24,4 @@ export default {
 <style lang="less">
     @import './assets/fonts/iconfont.css';
     @import './assets/less/global.less';
-    @import './assets/less/theme.less';
 </style>

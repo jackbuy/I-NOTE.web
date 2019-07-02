@@ -1,0 +1,73 @@
+@containerWidth: 1000px;
+.layout{
+    &__header{
+        height: 60px;
+        line-height: 60px;
+        background: #333;
+        color: #fff;
+        &-inner{
+            height: inherit;
+            line-height: inherit;
+            width: @containerWidth;
+            margin: 0 auto;
+            font-size: 0;
+            >div{
+                display: inline-block;
+                margin: 0 20px;
+                font-size: 14px;
+            }
+        }
+        &-logo{
+            font-size: 0;
+            margin-left: 0 !important;
+            img{
+                display: inline-block;
+                width: 30px;
+                height: 30px;
+                vertical-align: middle;
+            }
+        }
+        &-menu{
+            font-size: 0;
+            >div{
+                display: inline-block;
+                margin-right: 20px;
+                font-size: 14px;
+                cursor: pointer;
+            }
+        }
+        &-search{
+            input{
+                border-width: 0;
+                height: 24px;
+                line-height: 24px;
+                width: 190px;
+                padding-left: 5px;
+                color: #333;
+                font-size: 12px;
+            }
+        }
+        &-login{
+            float: right;
+            font-size: 0;
+            span{
+                margin-left: 10px;
+                font-size: 12px;
+                cursor: pointer;
+            }
+        }
+    }
+    &__content{
+        width: @containerWidth;
+        margin: 0 auto;
+        min-height: 500px;
+    }
+    &__footer{
+        width: @containerWidth;
+        margin: 0 auto;
+        line-height: 40px;
+        height: 40px;
+        text-align: center;
+        border-top: 1px solid #eee;
+    }
+}

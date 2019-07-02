@@ -4,10 +4,9 @@
  */
 import mutations from './mutations';
 import actions from './actions';
-import defaultState from './state';
 
 const Store = {
-    state: Object.assign(defaultState),
+    state: {},
     getters: {},
     mutations: mutations,
     actions: actions

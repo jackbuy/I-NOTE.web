@@ -20,7 +20,7 @@ export default {
     },
     methods: {
         handleRoute(url) {
-            console.log(url);
+            this.$emit('push', url);
         }
     }
 };

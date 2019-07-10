@@ -3,7 +3,8 @@
         <layout-header>
             <layout-header-logo></layout-header-logo>
             <layout-header-menu
-                :data="menuDate">
+                :data="menuDate"
+                @push="handleRouterPush">
             </layout-header-menu>
             <layout-header-search
                 @search="handleSearch">
@@ -11,6 +12,7 @@
             <layout-header-login></layout-header-login>
         </layout-header>
         <layout-content>
+            <breadcrumb></breadcrumb>
             <keep-alive>
                 <router-view v-if="$route.meta.keepAlive"></router-view>
             </keep-alive>
@@ -21,7 +23,7 @@
 </template>
 
 <script>
-import Layout from './src/Layout';
+import Layout from './src/LayoutMain';
 import LayoutHeader from './src/LayoutHeader';
 import LayoutHeaderLogo from './src/LayoutHeaderLogo';
 import LayoutHeaderMenu from './src/LayoutHeaderMenu';
@@ -29,6 +31,7 @@ import LayoutHeaderSearch from './src/LayoutHeaderSearch';
 import LayoutHeaderLogin from './src/LayoutHeaderLogin';
 import LayoutContent from './src/LayoutContent';
 import LayoutFooter from './src/LayoutFooter';
+import Breadcrumb from '@/components/common/breadcrumb/Breadcrumb';
 export default {
     name: 'LayoutContainer',
     components: {
@@ -39,7 +42,8 @@ export default {
         LayoutHeaderSearch,
         LayoutHeaderLogin,
         LayoutContent,
-        LayoutFooter
+        LayoutFooter,
+        Breadcrumb
     },
     data() {
         return {
@@ -52,14 +56,21 @@ export default {
                 {
                     id: 2,
                     title: '消息',
-                    url: '/msg_center'
+                    url: '/msg'
                 }
             ]
         };
     },
     methods: {
         handleSearch(keyword) {
-            console.log(keyword);
+            if (keyword.length > 0) {
+                this.$router.push({
+                    path: `/search/${keyword}`
+                });
+            }
+        },
+        handleRouterPush(url) {
+            this.$router.push(url);
         }
     }
 };

@@ -16,7 +16,7 @@
   "dependencies": {
     "axios": "^0.18.0",
     "css-loader": "^2.1.0",
-    "element-ui": "^2.6.1",
+    "element-ui": "^2.10.1",
     "less": "^3.9.0",
     "less-loader": "^4.1.0",
     "moment": "^2.24.0",

@@ -1,7 +1,8 @@
 <template>
     <div class="layout__header-search">
-        <form>
+        <form @submit.prevent="handleSearch">
             <input
+                v-model.trim="keyword"
                 type="text"
                 placeholder="搜索">
         </form>
@@ -10,6 +11,16 @@
 
 <script>
 export default {
-    name: 'LayoutHeaderSearch'
+    name: 'LayoutHeaderSearch',
+    data() {
+        return {
+            keyword: ''
+        };
+    },
+    methods: {
+        handleSearch() {
+            this.$emit('search', this.keyword);
+        }
+    }
 };
 </script>

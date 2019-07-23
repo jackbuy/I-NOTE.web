@@ -11,9 +11,8 @@
 <script>
 import ArticleList from '@/components/common/articleList/ArticleList';
 import ArticleListItem from '@/components/common/articleList/ArticleListItem';
-import api from '@/utils/api';
 export default {
-    name: 'Article',
+    name: 'Search',
     components: {
         ArticleList,
         ArticleListItem
@@ -34,14 +33,9 @@ export default {
             ]
         };
     },
-    created() {
-        this.getArticleList();
-    },
-    methods: {
-        getArticleList() {
-            api.articleQuery().then((res) => {
-                this.articleData = res.data;
-            });
+    computed: {
+        keyword() {
+            return this.$route.params.keyword;
         }
     }
 };

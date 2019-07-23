@@ -9,7 +9,15 @@
             </div>
         </div>
         <div class="article-tag__content">
-            <slot></slot>
+            <template v-if="data.length > 0">
+                <slot
+                    v-for="item in data"
+                    :row="item">
+                </slot>
+            </template>
+            <template v-else>
+                <span class="norecord">暂无数据！</span>
+            </template>
         </div>
     </div>
 </template>
@@ -17,6 +25,12 @@
 <script>
 export default {
     name: 'ArticleTag',
+    props: {
+        data: {
+            type: Array,
+            default: () => ([])
+        }
+    },
     methods: {
         handleMore() {
             this.$router.push({

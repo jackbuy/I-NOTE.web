@@ -3,11 +3,13 @@ import Router from 'vue-router';
 const Page404 = () => import('@/components/common/Page404');
 const Layout = () => import('@/components/common/layout/Layout');
 const Home = () => import('@/components/page/home/Home');
-const Msg = () => import('@/components/page/msg');
-const Search = () => import('@/components/page/search');
-const ArticleDetail = () => import('@/components/page/articleDetail');
+const Msg = () => import('@/components/page/msg/Msg');
+const Search = () => import('@/components/page/search/Search');
+const ArticleDetail = () => import('@/components/page/articleDetail/ArticleDetail');
 const Article = () => import('@/components/page/article/Article');
+const ArticleAdd = () => import('@/components/page/articleAdd');
 const Tag = () => import('@/components/page/tag/Tag');
+const Zone = () => import('@/components/page/zone');
 
 Vue.use(Router);
 
@@ -25,13 +27,19 @@ export default new Router({
                     path: '/home',
                     name: 'home',
                     component: Home,
-                    meta: {title: '发现', keepAlive: true}
+                    meta: {title: '发现'}
                 },
                 {
                     path: '/detail/:articleId',
                     name: 'detail',
                     component: ArticleDetail,
                     meta: {title: '文章-详情'}
+                },
+                {
+                    path: '/article/add',
+                    name: 'articleAdd',
+                    component: ArticleAdd,
+                    meta: {title: '文章-新增'}
                 },
                 {
                     path: '/tag/:tagId',
@@ -56,6 +64,18 @@ export default new Router({
                     name: 'search',
                     component: Search,
                     meta: {title: '搜索'}
+                },
+                {
+                    path: '/zone/:userId',
+                    name: 'zone',
+                    component: Zone,
+                    meta: {title: '空间'}
+                },
+                {
+                    path: '/zone',
+                    name: 'zone',
+                    component: Zone,
+                    meta: {title: '空间'}
                 }
             ]
         },

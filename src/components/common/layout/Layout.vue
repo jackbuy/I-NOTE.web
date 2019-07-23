@@ -9,7 +9,7 @@
             <layout-header-search
                 @search="handleSearch">
             </layout-header-search>
-            <layout-header-login></layout-header-login>
+            <layout-header-user></layout-header-user>
         </layout-header>
         <layout-content>
             <breadcrumb></breadcrumb>
@@ -19,6 +19,7 @@
             <router-view v-if="!$route.meta.keepAlive"></router-view>
         </layout-content>
         <!-- <layout-footer>footer</layout-footer> -->
+        <login></login>
     </layout>
 </template>
 
@@ -28,10 +29,11 @@ import LayoutHeader from './src/LayoutHeader';
 import LayoutHeaderLogo from './src/LayoutHeaderLogo';
 import LayoutHeaderMenu from './src/LayoutHeaderMenu';
 import LayoutHeaderSearch from './src/LayoutHeaderSearch';
-import LayoutHeaderLogin from './src/LayoutHeaderLogin';
+import LayoutHeaderUser from './src/LayoutHeaderUser';
 import LayoutContent from './src/LayoutContent';
 import LayoutFooter from './src/LayoutFooter';
 import Breadcrumb from '@/components/common/breadcrumb/Breadcrumb';
+import Login from '@/components/common/Login';
 export default {
     name: 'LayoutContainer',
     components: {
@@ -40,10 +42,11 @@ export default {
         LayoutHeaderLogo,
         LayoutHeaderMenu,
         LayoutHeaderSearch,
-        LayoutHeaderLogin,
+        LayoutHeaderUser,
         LayoutContent,
         LayoutFooter,
-        Breadcrumb
+        Breadcrumb,
+        Login
     },
     data() {
         return {

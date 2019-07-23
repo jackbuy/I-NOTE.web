@@ -14,13 +14,16 @@ axios.interceptors.request.use(function(config) {
 }, function(error) {
     return Promise.reject(error);
 });
+
 // 响应拦截器
 axios.interceptors.response.use(function(response) {
     if (response.status === 200) {
         if (response.data.code === 200) {
             return Promise.resolve(response.data);
         } else {
-            Message.warning({ message: response.data.message });
+            if (response.data.msg) {
+                Message.warning({ message: response.data.msg });
+            }
             return Promise.reject(response.data);
         }
     } else {

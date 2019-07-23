@@ -32,7 +32,7 @@ export default {
             return this.item.title;
         },
         articleId() {
-            return this.item.articleId;
+            return this.item._id;
         },
         updateTime() {
             return this.item.updateTime;

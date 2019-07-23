@@ -6,7 +6,13 @@ import mutations from './mutations';
 import actions from './actions';
 
 const Store = {
-    state: {},
+    state: {
+        isLogin: false,
+        loginModal: {
+            open: false,
+            type: ''
+        }
+    },
     getters: {},
     mutations: mutations,
     actions: actions

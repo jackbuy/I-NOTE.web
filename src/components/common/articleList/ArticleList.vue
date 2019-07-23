@@ -1,16 +1,34 @@
 <template>
     <div class="article-list">
-        <slot></slot>
+        <template v-if="data.length > 0">
+            <slot
+                v-for="item in data"
+                :row="item">
+            </slot>
+        </template>
+        <template v-else>
+            <span class="norecord">暂无数据！</span>
+        </template>
     </div>
 </template>
 
 <script>
 export default {
-    name: 'ArticleList'
+    name: 'ArticleList',
+    props: {
+        data: {
+            type: Array,
+            default: () => ([])
+        }
+    }
 };
 </script>
 
 <style lang="less">
+.norecord{
+    color: #666;
+    font-size: 12px;
+}
 .article-list{
     &__item{
         padding: 20px;
@@ -32,6 +50,7 @@ export default {
                 cursor: pointer;
                 font-size: 18px;
                 font-weight: bold;
+                line-height: 1.5;
                 color: #333;
                 transition: all 0.3s;
                 &:hover{

@@ -118,9 +118,9 @@ export default {
         },
         userLogin(params) {
             api.userLogin(params).then((res) => {
-                const { token, userMsg } = res.data;
+                const { token, userId } = res.data;
                 localStorage.setItem('token', token);
-                localStorage.setItem('userMsg', JSON.stringify(userMsg));
+                localStorage.setItem('userId', userId);
                 window.location.reload();
             });
         }

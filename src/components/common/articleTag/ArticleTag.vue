@@ -5,7 +5,7 @@
             <div
                 class="more"
                 @click="handleMore">
-                全部
+                管理
             </div>
         </div>
         <div class="article-tag__content">

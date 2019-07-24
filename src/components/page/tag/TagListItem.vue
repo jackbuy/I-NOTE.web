@@ -2,7 +2,7 @@
     <div class="tag-content-list-item">
         <div
             class="title"
-            @click="handleArticle(tagId)">{{ name }}</div>
+            @click="handleArticle(tagId)">{{ title }}</div>
         <div class="follow">
             <span>关注</span>
         </div>
@@ -19,8 +19,8 @@ export default {
         }
     },
     computed: {
-        name() {
-            return this.item.name;
+        title() {
+            return this.item.title;
         },
         tagId() {
             return this.item._id;

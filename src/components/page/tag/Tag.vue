@@ -14,6 +14,7 @@
 import TagLayout from './TagLayout';
 import TagList from './TagList';
 import TagListItem from './TagListItem';
+import api from '@/utils/api';
 export default {
     name: 'Tag',
     components: {
@@ -23,29 +24,36 @@ export default {
     },
     data() {
         return {
-            tagListData: [
-                {
-                    _id: 1,
-                    name: '微信小程序'
-                },
-                {
-                    _id: 2,
-                    name: 'nodejs'
-                },
-                {
-                    _id: 3,
-                    name: '前端'
-                },
-                {
-                    _id: 4,
-                    name: '面试'
-                },
-                {
-                    _id: 5,
-                    name: '算法'
-                }
-            ]
+            tagListData: []
         };
+    },
+    created() {
+        this.getArticleTag();
+    },
+    methods: {
+        getArticleTag() {
+            api.tagQuery().then((res) => {
+                this.tagListData = res.data;
+            });
+        }
     }
 };
+// db.tags.insertMany([
+//     {
+//         name: 'wechat-app',
+//         title: '微信小程序'
+//     },
+//     {
+//         name: 'frontend',
+//         title: '前端'
+//     },
+//     {
+//         name: 'nodejs',
+//         title: 'nodejs'
+//     },
+//     {
+//         name: 'vue',
+//         title: 'vue'
+//     }
+// ])
 </script>

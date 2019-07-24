@@ -2,12 +2,11 @@ import Vue from 'vue';
 import Router from 'vue-router';
 const Page404 = () => import('@/components/common/Page404');
 const Layout = () => import('@/components/common/layout/Layout');
-const Home = () => import('@/components/page/home/Home');
+const Article = () => import('@/components/page/article');
 const Msg = () => import('@/components/page/msg/Msg');
 const Search = () => import('@/components/page/search/Search');
 const ArticleDetail = () => import('@/components/page/articleDetail/ArticleDetail');
-const Article = () => import('@/components/page/article/Article');
-const ArticleAdd = () => import('@/components/page/articleAdd');
+const articleAddEdit = () => import('@/components/page/articleAddEdit');
 const Tag = () => import('@/components/page/tag/Tag');
 const Zone = () => import('@/components/page/zone');
 
@@ -21,13 +20,19 @@ export default new Router({
             children: [
                 {
                     path: '',
-                    redirect: '/home'
+                    redirect: '/article'
                 },
                 {
-                    path: '/home',
-                    name: 'home',
-                    component: Home,
-                    meta: {title: '发现'}
+                    path: '/article',
+                    name: 'articles',
+                    component: Article,
+                    meta: {title: '文章'}
+                },
+                {
+                    path: '/article/:tagName',
+                    name: 'article',
+                    component: Article,
+                    meta: {title: '文章'}
                 },
                 {
                     path: '/detail/:articleId',
@@ -36,16 +41,16 @@ export default new Router({
                     meta: {title: '文章-详情'}
                 },
                 {
-                    path: '/article/add',
+                    path: '/write',
                     name: 'articleAdd',
-                    component: ArticleAdd,
+                    component: articleAddEdit,
                     meta: {title: '文章-新增'}
                 },
                 {
-                    path: '/tag/:tagId',
-                    name: 'article',
-                    component: Article,
-                    meta: {title: '文章'}
+                    path: '/write/:articleId',
+                    name: 'articleEdit',
+                    component: articleAddEdit,
+                    meta: {title: '文章-编辑'}
                 },
                 {
                     path: '/tag',
@@ -66,13 +71,7 @@ export default new Router({
                     meta: {title: '搜索'}
                 },
                 {
-                    path: '/zone/:userId',
-                    name: 'zone',
-                    component: Zone,
-                    meta: {title: '空间'}
-                },
-                {
-                    path: '/zone',
+                    path: '/zone/:userId/:articleType',
                     name: 'zone',
                     component: Zone,
                     meta: {title: '空间'}

@@ -5,8 +5,8 @@
             <span @click="handleLog('register')">注册</span>
         </div>
         <div v-else>
-            <span @click="handleRoutePush('/article/add')">+写文章</span>
-            <span @click="handleRoutePush('/zone')">枫叶</span>
+            <span @click="handleRoutePush('/write')">+写文章</span>
+            <span @click="handleRoutePush(`/zone/${userId}/article`)">{{ userName }}</span>
             <span @click="handleLogOut()">退出</span>
         </div>
     </div>
@@ -14,16 +14,29 @@
 
 <script>
 import { mapMutations, mapState, mapActions } from 'vuex';
-import { TOGGLE_LOGIN_MODAL, IS_LOGIN, CHECK_USER_IS_LOGIN } from '@/store/mutation-types';
+import {
+    TOGGLE_LOGIN_MODAL,
+    IS_LOGIN,
+    CHECK_USER_IS_LOGIN,
+    GET_LOGIN_USERINFO
+} from '@/store/mutation-types';
 export default {
     name: 'LayoutHeaderUser',
     computed: {
         ...mapState({
-            isLogin: state => state.isLogin
-        })
+            isLogin: state => state.isLogin,
+            loginUserInfo: state => state.loginUserInfo
+        }),
+        userName() {
+            return this.loginUserInfo.username;
+        },
+        userId() {
+            return this.loginUserInfo._id;
+        }
     },
     created() {
         this.checkUserIsLogin();
+        this.getLoginUserInfo();
     },
     methods: {
         ...mapMutations({
@@ -31,7 +44,8 @@ export default {
             setIsLogin: IS_LOGIN
         }),
         ...mapActions({
-            checkUserIsLogin: CHECK_USER_IS_LOGIN
+            checkUserIsLogin: CHECK_USER_IS_LOGIN,
+            getLoginUserInfo: GET_LOGIN_USERINFO
         }),
         handleLog(type) {
             this.toggleLoginModal({

@@ -1,5 +1,5 @@
 <template>
-    <router-view/>
+    <router-view></router-view>
 </template>
 
 <script>
@@ -15,7 +15,7 @@ export default {
     },
     methods: {
         setDocumentTitle() {
-            if (this.$route.meta.title) document.title = `I'NOTE_${this.$route.meta.title}`;
+            if (this.$route.meta.title) document.title = `${this.$route.meta.title}_I'NOTE`;
         }
     }
 };

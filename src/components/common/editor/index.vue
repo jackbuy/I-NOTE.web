@@ -67,7 +67,7 @@ export default {
     }
     .ql-container.ql-snow{
         /* height: calc(100% - 185px); */
-        /* height: 185px; */
+        height: 400px;
     }
     .ql-toolbar.ql-snow .ql-formats{
         margin-right: 0;

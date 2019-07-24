@@ -1,8 +1,8 @@
 <template>
     <div
         class="article-tag__content-item"
-        @click="handleArticle(tagId)">
-        {{ name }}
+        @click="handleArticle(tagName)">
+        {{ title }}
     </div>
 </template>
 
@@ -16,17 +16,17 @@ export default {
         }
     },
     computed: {
-        name() {
-            return this.item.name;
+        title() {
+            return this.item.title;
         },
-        tagId() {
-            return this.item._id;
+        tagName() {
+            return this.item.name;
         }
     },
     methods: {
-        handleArticle(tagId) {
+        handleArticle(tagName) {
             this.$router.push({
-                path: `/tag/${tagId}`
+                path: `/article/${tagName}`
             });
         }
     }

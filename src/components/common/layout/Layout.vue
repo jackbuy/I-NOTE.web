@@ -51,16 +51,16 @@ export default {
     data() {
         return {
             menuDate: [
-                {
-                    id: 1,
-                    title: '发现',
-                    url: '/'
-                },
-                {
-                    id: 2,
-                    title: '消息',
-                    url: '/msg'
-                }
+                // {
+                //     id: 1,
+                //     title: '发现',
+                //     url: '/'
+                // },
+                // {
+                //     id: 2,
+                //     title: '消息',
+                //     url: '/msg'
+                // }
             ]
         };
     },

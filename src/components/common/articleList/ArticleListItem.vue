@@ -2,7 +2,7 @@
     <div class="article-list__item">
         <div class="article-list__item-header">
             <span>{{ username }}</span>
-            <span>{{ updateTime }}</span>
+            <span :title="createTime">{{ editTime }}</span>
             <span>{{ tag }}</span>
         </div>
         <div class="article-list__item-title">
@@ -16,6 +16,7 @@
 </template>
 
 <script>
+import utils from '@/utils/utils';
 export default {
     name: 'ArticleListItem',
     props: {
@@ -26,7 +27,7 @@ export default {
     },
     computed: {
         username() {
-            return this.item.username;
+            return this.item.userId.username;
         },
         title() {
             return this.item.title;
@@ -34,11 +35,14 @@ export default {
         articleId() {
             return this.item._id;
         },
-        updateTime() {
-            return this.item.updateTime;
+        createTime() {
+            return `创建于 ${utils.formatDate.time(this.item.createTime)}`;
+        },
+        editTime() {
+            return `${utils.formatDate.time(this.item.editTime)}`;
         },
         tag() {
-            return this.item.tag;
+            return this.item.tagName;
         },
         support() {
             return this.item.support;

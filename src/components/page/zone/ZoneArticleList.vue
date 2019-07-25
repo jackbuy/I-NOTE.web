@@ -3,7 +3,12 @@
         :data="data"
         slot="content">
         <template slot-scope="scope">
-            <article-list-item :item="scope.row"></article-list-item>
+            <article-list-item :item="scope.row">
+                <template slot-scope="scopeInner">
+                    <span v-if="scopeInner.row.userId._id === userId" @click="handleEdit(scopeInner.row)"><i class="el-icon-edit"></i></span>
+                    <span v-if="scopeInner.row.userId._id === userId" @click="handleDelete(scopeInner.row)"><i class="el-icon-delete"></i></span>
+                </template>
+            </article-list-item>
         </template>
     </article-list>
 </template>
@@ -11,9 +16,11 @@
 <script>
 import ArticleList from '@/components/common/articleList/ArticleList';
 import ArticleListItem from '@/components/common/articleList/ArticleListItem';
+import message from '@/mixins/message';
 import api from '@/utils/api';
 export default {
     name: 'ZoneArticleList',
+    mixins: [ message ],
     props: {
         type: String
     },
@@ -29,6 +36,9 @@ export default {
     computed: {
         articleType() {
             return this.$route.params.articleType;
+        },
+        userId() {
+            return localStorage.getItem('userId');
         }
     },
     watch: {
@@ -46,6 +56,22 @@ export default {
             api.zoneArticleQuery(params).then((res) => {
                 this.data = res.data;
             });
+        },
+        handleEdit(row) {
+            const { _id } = row;
+            this.$router.push(`/write/${_id}`);
+        },
+        handleDelete(row) {
+            const { _id } = row;
+            this.confirmWarning({
+                title: '提示',
+                content: '确认删除吗？'
+            }).then(() => {
+                api.articleDelete(_id).then(() => {
+                    this.showSuccessMsg('删除成功！');
+                    this.getArticleList(this.articleType);
+                });
+            }).catch(() => {});
         }
     }
 };

@@ -4,7 +4,13 @@
             :data="articleData"
             slot="content">
             <template slot-scope="scope">
-                <article-list-item :item="scope.row"></article-list-item>
+                <article-list-item :item="scope.row">
+                    <template slot-scope="scopeInner">
+                        <span>赞</span>
+                        <span><i class="el-icon-star-off"></i></span>
+                        <span><i class="el-icon-chat-dot-round"></i></span>
+                    </template>
+                </article-list-item>
             </template>
         </article-list>
         <article-tag
@@ -42,6 +48,9 @@ export default {
     computed: {
         tagName() {
             return this.$route.params.tagName;
+        },
+        userId() {
+            return localStorage.getItem('userId');
         }
     },
     watch: {
@@ -66,7 +75,13 @@ export default {
         },
         getArticleTag() {
             api.tagQuery().then((res) => {
-                this.articleTagData = res.data;
+                if (res.data.length > 0) {
+                    this.articleTagData.push({
+                        name: '',
+                        title: '全部'
+                    });
+                    this.articleTagData.push(...res.data);
+                }
             });
         }
     }

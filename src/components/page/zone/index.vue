@@ -53,23 +53,5 @@ export default {
 </script>
 
 <style lang="less">
-.zone{
-    &__header{
-        font-size: 0;
-        margin-bottom: 15px;
-        span{
-            display: inline-block;
-            padding: 5px 10px;
-            font-size: 14px;
-            margin-right: 20px;
-            cursor: pointer;
-            &.active{
-                color: #069;
-                background: #ccc;
-                border-radius: 4px;
-            }
-        }
-    }
-    &__content{}
-}
+@import './index.less';
 </style>

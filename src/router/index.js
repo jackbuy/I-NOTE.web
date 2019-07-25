@@ -5,7 +5,7 @@ const Layout = () => import('@/components/common/layout/Layout');
 const Article = () => import('@/components/page/article');
 const Msg = () => import('@/components/page/msg/Msg');
 const Search = () => import('@/components/page/search/Search');
-const ArticleDetail = () => import('@/components/page/articleDetail/ArticleDetail');
+const ArticleDetail = () => import('@/components/page/articleDetail');
 const articleAddEdit = () => import('@/components/page/articleAddEdit');
 const Tag = () => import('@/components/page/tag/Tag');
 const Zone = () => import('@/components/page/zone');
@@ -74,7 +74,7 @@ export default new Router({
                     path: '/zone/:userId/:articleType',
                     name: 'zone',
                     component: Zone,
-                    meta: {title: '空间'}
+                    meta: {title: '我的主页'}
                 }
             ]
         },

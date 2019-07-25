@@ -1,0 +1,46 @@
+.article-tag{
+    width: 100%;
+    border: 1px solid #eee;
+    &__title{
+        padding: 15px;
+        display: flex;
+        border-bottom: 1px solid #eee;
+        .tit{
+            flex: 1;
+        }
+        .more{
+            color: #539eff;
+            font-size: 12px;
+            cursor: pointer;
+            transition: all 0.3s;
+            &:hover{
+                color: #539eff;
+            }
+        }
+    }
+    &__content{
+        padding: 10px 20px;
+        font-size: 0;
+        .norecord{
+            color: #666;
+            font-size: 12px;
+            text-align: center;
+            padding: 20px;
+        }
+        &-item{
+            display: inline-block;
+            border-radius: 20px;
+            border: 1px solid #eee;
+            padding: 5px 10px;
+            font-size: 13px;
+            margin: 5px 0;
+            margin-right: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+            &:hover{
+                color: #539eff;
+                border-color: #539eff;
+            }
+        }
+    }
+}

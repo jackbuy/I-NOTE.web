@@ -7,7 +7,11 @@
                 <span @click="handleDelete(articleId)">删除</span>
             </b>
         </div>
-        <div class="article-detail__content" v-html="content"></div>
+        <div
+            v-highlight
+            v-html="content"
+            class="article-detail__content" >
+        </div>
     </div>
 </template>
 
@@ -61,33 +65,5 @@ export default {
 </script>
 
 <style lang="less">
-.article-detail{
-    &__title{
-        line-height: 1.4;
-        padding: 20px 0 30px 0;
-        font-size: 24px;
-        span{
-            font-size: 12px;
-            color: #409EFF;
-            padding-left: 20px;
-            cursor: pointer;
-            &:hover{
-                text-decoration: underline;
-            }
-        }
-    }
-    &__content{
-        line-height: 1.8;
-        font-size: 16px;
-        p,
-        pre{
-            margin-bottom: 10px;
-        }
-        pre{
-            background: #f5f5f5;
-            border-radius: 4px;
-            padding: 15px;
-        }
-    }
-}
+@import './index.less';
 </style>

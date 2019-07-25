@@ -2,10 +2,10 @@
     <layout>
         <layout-header>
             <layout-header-logo></layout-header-logo>
-            <layout-header-menu
+            <!-- <layout-header-menu
                 :data="menuDate"
                 @push="handleRouterPush">
-            </layout-header-menu>
+            </layout-header-menu> -->
             <layout-header-search
                 @search="handleSearch">
             </layout-header-search>
@@ -51,16 +51,16 @@ export default {
     data() {
         return {
             menuDate: [
-                // {
-                //     id: 1,
-                //     title: '发现',
-                //     url: '/'
-                // },
-                // {
-                //     id: 2,
-                //     title: '消息',
-                //     url: '/msg'
-                // }
+                {
+                    id: 1,
+                    title: '文章',
+                    url: '/'
+                },
+                {
+                    id: 2,
+                    title: '消息',
+                    url: '/msg'
+                }
             ]
         };
     },

@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 import router from './router';
+import './directive';
 
 import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
@@ -33,6 +34,7 @@ router.beforeEach((to, from, next) => {
 });
 
 router.afterEach(transition => {
+    window.scrollTo(0, 0);
     NProgress.done();
 });
 

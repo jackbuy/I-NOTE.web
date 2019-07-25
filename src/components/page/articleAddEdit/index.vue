@@ -74,7 +74,7 @@ export default {
     },
     watch: {
         $route(to, from) {
-            if (to.path === '/wirte') {
+            if (to.path === '/write') {
                 this.form = {
                     title: '',
                     contentText: '',

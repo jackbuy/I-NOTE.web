@@ -4,13 +4,14 @@
             <span>{{ username }}</span>
             <span :title="createTime">{{ editTime }}</span>
             <span>{{ tag }}</span>
+            <span>赞：{{ support }}次</span>
+            <span>阅读：{{ support }}次</span>
         </div>
         <div class="article-list__item-title">
             <span @click="handleDetail(articleId)">{{ title }}</span>
         </div>
         <div class="article-list__item-action">
-            <span>赞 {{ support }}</span>
-            <span>收藏 {{ collect }}</span>
+            <slot :row="item"></slot>
         </div>
     </div>
 </template>
@@ -45,7 +46,7 @@ export default {
             return this.item.tagName;
         },
         support() {
-            return this.item.support;
+            return this.item.support || 0;
         },
         collect() {
             return this.item.collect;

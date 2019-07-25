@@ -49,19 +49,26 @@
                 border-width: 0;
                 height: 24px;
                 line-height: 24px;
-                width: 190px;
+                width: 180px;
                 padding-left: 5px;
                 color: #333;
                 font-size: 12px;
+                transition: all 0.3s;
+                &:focus{
+                    width: 240px;
+                }
             }
         }
         &-login{
             float: right;
             font-size: 0;
             span{
-                margin-left: 10px;
+                margin-left: 15px;
                 font-size: 12px;
                 cursor: pointer;
+            }
+            .el-dropdown{
+                color: #fff;
             }
         }
     }
@@ -70,7 +77,7 @@
         margin: 0 auto;
         min-height: 500px;
         &.header-fixed{
-            margin-top: 75px;
+            margin-top: 60px;
         }
     }
     &__footer{

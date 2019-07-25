@@ -5,9 +5,16 @@
             <span @click="handleLog('register')">注册</span>
         </div>
         <div v-else>
-            <span @click="handleRoutePush('/write')">+写文章</span>
-            <span @click="handleRoutePush(`/zone/${userId}/article`)">{{ userName }}</span>
-            <span @click="handleLogOut()">退出</span>
+            <span @click="handleRoutePush('/write')"><i class="el-icon-circle-plus-outline"></i> 写文章</span>
+            <el-dropdown @command="handleCommand">
+                <span class="el-dropdown-link">
+                    {{ userName }}<i class="el-icon-arrow-down el-icon--right"></i>
+                </span>
+                <el-dropdown-menu slot="dropdown">
+                    <el-dropdown-item command="zone">我的主页</el-dropdown-item>
+                    <el-dropdown-item command="loginOut" divided>退出</el-dropdown-item>
+                </el-dropdown-menu>
+            </el-dropdown>
         </div>
     </div>
 </template>
@@ -55,10 +62,17 @@ export default {
         },
         handleLogOut() {
             localStorage.clear();
-            window.location.reload();
+            this.$router.push('/');
+            setTimeout(() => {
+                window.location.reload();
+            });
         },
         handleRoutePush(url) {
             this.$router.push(url);
+        },
+        handleCommand(command) {
+            if (command === 'loginOut') this.handleLogOut();
+            if (command === 'zone') this.handleRoutePush(`/zone/${this.userId}/article`);
         }
     }
 };

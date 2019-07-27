@@ -20,13 +20,7 @@ export default new Router({
             children: [
                 {
                     path: '',
-                    redirect: '/article'
-                },
-                {
-                    path: '/article',
-                    name: 'articles',
-                    component: Article,
-                    meta: {title: '文章'}
+                    redirect: '/article/all'
                 },
                 {
                     path: '/article/:tagName',
@@ -41,40 +35,40 @@ export default new Router({
                     meta: {title: '文章-详情'}
                 },
                 {
-                    path: '/write',
-                    name: 'articleAdd',
-                    component: articleAddEdit,
-                    meta: {title: '文章-新增'}
-                },
-                {
-                    path: '/write/:articleId',
-                    name: 'articleEdit',
-                    component: articleAddEdit,
-                    meta: {title: '文章-编辑'}
-                },
-                {
-                    path: '/tag',
-                    name: 'tag',
-                    component: Tag,
-                    meta: {title: '标签-全部'}
-                },
-                {
-                    path: '/msg',
-                    name: 'msg',
-                    component: Msg,
-                    meta: {title: '消息'}
-                },
-                {
                     path: '/search/:keyword',
                     name: 'search',
                     component: Search,
                     meta: {title: '搜索'}
                 },
                 {
+                    path: '/write',
+                    name: 'articleAdd',
+                    component: articleAddEdit,
+                    meta: {title: '文章-新增', requireAuth: true}
+                },
+                {
+                    path: '/write/:articleId',
+                    name: 'articleEdit',
+                    component: articleAddEdit,
+                    meta: {title: '文章-编辑', requireAuth: true}
+                },
+                {
+                    path: '/tag',
+                    name: 'tag',
+                    component: Tag,
+                    meta: {title: '标签-全部', requireAuth: true}
+                },
+                {
+                    path: '/msg',
+                    name: 'msg',
+                    component: Msg,
+                    meta: {title: '消息', requireAuth: true}
+                },
+                {
                     path: '/zone/:userId/:articleType',
                     name: 'zone',
                     component: Zone,
-                    meta: {title: '我的主页'}
+                    meta: {title: '我的主页', requireAuth: true}
                 }
             ]
         },

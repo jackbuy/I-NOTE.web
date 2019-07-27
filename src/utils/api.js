@@ -6,13 +6,13 @@ export default {
     userLogin: (params) => http('post', `${apiBaseUrl}/user/login`, params),
     // 用户注册
     userRegister: (params) => http('post', `${apiBaseUrl}/user/register`, params),
-    // 检查用户是否登录
-    checkUserIsLogin: () => http('get', `${apiBaseUrl}/user/isLogin`),
     // 已登录用户信息
-    getLoginUserInfo: () => http('get', `${apiBaseUrl}/user/loginUserInfo`),
+    getUserInfo: () => http('get', `${apiBaseUrl}/user/userInfo`),
 
-    // 文章列表
+    // 已发布文章列表
     articleQuery: (params) => http('post', `${apiBaseUrl}/article/query`, params),
+    // 已发布文章点赞
+    articleSupport: (articleId) => http('get', `${apiBaseUrl}/article/support/${articleId}`),
     // 文章详情
     getDetail: (params) => http('post', `${apiBaseUrl}/article/detail`, params),
     // 文章新增
@@ -27,5 +27,5 @@ export default {
 
     // zone
     // 指定用户文章列表
-    zoneArticleQuery: (params) => http('post', `${apiBaseUrl}/article/loginUser/query`, params)
+    zoneArticleQuery: (params) => http('post', `${apiBaseUrl}/article/mine/query`, params)
 };

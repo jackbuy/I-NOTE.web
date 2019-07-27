@@ -43,7 +43,7 @@
 
 <script>
 import { mapState, mapMutations } from 'vuex';
-import { TOGGLE_LOGIN_MODAL, IS_LOGIN } from '@/store/mutation-types';
+import { TOGGLE_LOGIN_MODAL } from '@/store/mutation-types';
 import Modal from '@/components/common/modal/Modal';
 import api from '@/utils/api';
 export default {
@@ -84,8 +84,7 @@ export default {
     },
     methods: {
         ...mapMutations({
-            toggleLoginModal: TOGGLE_LOGIN_MODAL,
-            isLogin: IS_LOGIN
+            toggleLoginModal: TOGGLE_LOGIN_MODAL
         }),
         handRegister() {
             this.$refs.user.validate((valid) => {

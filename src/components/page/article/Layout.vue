@@ -10,14 +10,5 @@
 </template>
 
 <style lang="less">
-    .home{
-        display: flex;
-        &-content{
-            flex: 1;
-        }
-        &-side{
-            width: 30%;
-            padding-left: 15px;
-        }
-    }
+@import './layout.less';
 </style>

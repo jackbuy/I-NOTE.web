@@ -14,6 +14,11 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex';
+import {
+    ARTICLE_QUERY
+} from '@/store/mutation-types';
+
 import ArticleList from '@/components/common/articleList/ArticleList';
 import ArticleListItem from '@/components/common/articleList/ArticleListItem';
 import message from '@/mixins/message';
@@ -50,10 +55,16 @@ export default {
         }
     },
     methods: {
+        ...mapActions({
+            articleQuery: ARTICLE_QUERY
+        }),
         getArticleList(type) {
-            const params = { publish: true };
+            const params = {
+                publish: true,
+                mine: true
+            };
             if (type === 'draft') params.publish = false;
-            api.zoneArticleQuery(params).then((res) => {
+            this.articleQuery(params).then((res) => {
                 this.data = res.data;
             });
         },

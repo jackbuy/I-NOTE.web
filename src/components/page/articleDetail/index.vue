@@ -2,10 +2,13 @@
     <div class="article-detail">
         <div class="article-detail__title">
             {{ title }}
-            <b v-if="isOwn">
-                <span @click="handleEdit(articleId)">编辑</span>
-                <span @click="handleDelete(articleId)">删除</span>
-            </b>
+        </div>
+        <div class="article-detail__info">
+            <span>{{ username }}</span>
+            <span :title="createTime">{{ editTime }}</span>
+            <span>{{ tag }}</span>
+            <span>赞：{{ supportCount }}次</span>
+            <span>阅读：{{ viewCount }}次</span>
         </div>
         <div
             v-highlight
@@ -17,6 +20,7 @@
 
 <script>
 import api from '@/utils/api';
+import utils from '@/utils/utils';
 import message from '@/mixins/message';
 export default {
     name: 'ArticleDetail',
@@ -36,9 +40,23 @@ export default {
         content() {
             return this.detail.contentHtml;
         },
-        isOwn() {
-            const userId = localStorage.getItem('userId');
-            return this.detail.userId === userId;
+        username() {
+            if (this.detail.userId) return this.detail.userId.username;
+        },
+        createTime() {
+            return `创建于 ${utils.formatDate.time(this.detail.createTime)}`;
+        },
+        editTime() {
+            return `${utils.formatDate.time(this.detail.editTime)}`;
+        },
+        tag() {
+            return this.detail.tagName;
+        },
+        supportCount() {
+            return this.detail.supportCount || 0;
+        },
+        viewCount() {
+            return this.detail.viewCount || 0;
         }
     },
     created() {
@@ -49,15 +67,6 @@ export default {
             const params = { articleId };
             api.getDetail(params).then((res) => {
                 this.detail = res.data;
-            });
-        },
-        handleEdit(articleId) {
-            this.$router.push(`/write/${articleId}`);
-        },
-        handleDelete(articleId) {
-            api.articleDelete(articleId).then(() => {
-                this.showSuccessMsg('删除成功！');
-                this.$router.push(`/`);
             });
         }
     }

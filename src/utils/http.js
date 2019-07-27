@@ -1,6 +1,8 @@
 import axios from 'axios';
+// import store from '@/store';
 import { Message } from 'element-ui';
 import qs from 'qs';
+const store = require('@/store');
 
 axios.defaults.headers.common['token'] = localStorage.getItem('token') || '';
 axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
@@ -21,8 +23,11 @@ axios.interceptors.response.use(function(response) {
         if (response.data.code === 200) {
             return Promise.resolve(response.data);
         } else {
-            if (response.data.msg) {
+            if (response.data.msg && response.data.code === 500) {
                 Message.warning({ message: response.data.msg });
+            }
+            if (response.data.code === 401) {
+                store.default.commit('OPEN_LOGIN_MODAL');
             }
             return Promise.reject(response.data);
         }
@@ -42,8 +47,8 @@ const http = (method, url, data) => {
             data: data
         }).then((res) => {
             resolve(res);
-        }).catch((err) => {
-            reject(err);
+        }).catch(() => {
+            // reject(err);
         });
     });
 };

@@ -23,36 +23,35 @@
 import { mapMutations, mapState, mapActions } from 'vuex';
 import {
     TOGGLE_LOGIN_MODAL,
-    IS_LOGIN,
-    CHECK_USER_IS_LOGIN,
-    GET_LOGIN_USERINFO
+    GET_USER_INFO
 } from '@/store/mutation-types';
 export default {
     name: 'LayoutHeaderUser',
     computed: {
         ...mapState({
-            isLogin: state => state.isLogin,
-            loginUserInfo: state => state.loginUserInfo
+            userInfo: state => state.userInfo
         }),
         userName() {
-            return this.loginUserInfo.username;
+            return this.userInfo.username;
         },
         userId() {
-            return this.loginUserInfo._id;
+            return this.userInfo._id;
+        },
+        isLogin() {
+            if (localStorage.getItem('userId') && localStorage.getItem('token')) return true;
         }
     },
     created() {
-        this.checkUserIsLogin();
-        this.getLoginUserInfo();
+        if (this.isLogin) {
+            this.getUserInfo();
+        }
     },
     methods: {
         ...mapMutations({
-            toggleLoginModal: TOGGLE_LOGIN_MODAL,
-            setIsLogin: IS_LOGIN
+            toggleLoginModal: TOGGLE_LOGIN_MODAL
         }),
         ...mapActions({
-            checkUserIsLogin: CHECK_USER_IS_LOGIN,
-            getLoginUserInfo: GET_LOGIN_USERINFO
+            getUserInfo: GET_USER_INFO
         }),
         handleLog(type) {
             this.toggleLoginModal({
@@ -62,10 +61,7 @@ export default {
         },
         handleLogOut() {
             localStorage.clear();
-            this.$router.push('/');
-            setTimeout(() => {
-                window.location.reload();
-            });
+            window.location.reload();
         },
         handleRoutePush(url) {
             this.$router.push(url);

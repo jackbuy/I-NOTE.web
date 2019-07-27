@@ -2,13 +2,16 @@
  * store
  * @author: zhaozj
  */
+import Vue from 'vue';
+import Vuex from 'vuex';
 import mutations from './mutations';
 import actions from './actions';
 
+Vue.use(Vuex);
+
 const Store = {
     state: {
-        loginUserInfo: {}, // 已登录用户信息
-        isLogin: false,
+        userInfo: {}, // 已登录用户信息
         loginModal: {
             open: false,
             type: ''
@@ -19,4 +22,4 @@ const Store = {
     actions: actions
 };
 
-export default Store;
+export default new Vuex.Store(Store);

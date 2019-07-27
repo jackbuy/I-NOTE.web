@@ -1,13 +1,11 @@
 import Vue from 'vue';
-import Vuex from 'vuex';
 import router from './router';
+import store from './store';
 import './directive';
+import App from './App';
 
 import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
-
-import App from './App';
-import Store from './store';
 
 // 进度条
 import NProgress from 'nprogress';
@@ -20,17 +18,23 @@ import 'quill/dist/quill.snow.css';
 import 'quill/dist/quill.bubble.css';
 
 Vue.use(ElementUI);
-Vue.use(Vuex);
 Vue.use(VueQuillEditor, {/* { default global options } */});
-
-// vuex
-const store = new Vuex.Store(Store);
 
 Vue.config.productionTip = false;
 
 router.beforeEach((to, from, next) => {
     NProgress.start();
-    next();
+    // 判断该路由是否需要登录权限
+    if (to.meta.requireAuth) {
+        let token = localStorage.getItem('token');
+        if (token) {
+            next();
+        } else {
+            next({ path: '/article/all' });
+        }
+    } else {
+        next();
+    }
 });
 
 router.afterEach(transition => {

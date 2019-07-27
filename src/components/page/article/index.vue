@@ -6,9 +6,16 @@
             <template slot-scope="scope">
                 <article-list-item :item="scope.row">
                     <template slot-scope="scopeInner">
-                        <span>赞</span>
-                        <span><i class="el-icon-star-off"></i></span>
-                        <span><i class="el-icon-chat-dot-round"></i></span>
+                        <span
+                            v-if="scopeInner.row.isSupport"
+                            class="active">已赞</span>
+                        <span
+                            v-else
+                            @click="handleSupport(scopeInner.row._id)">
+                            点赞
+                        </span>
+                        <!-- <span><i class="el-icon-star-off"></i></span>
+                        <span><i class="el-icon-chat-dot-round"></i></span> -->
                     </template>
                 </article-list-item>
             </template>
@@ -24,12 +31,19 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex';
+import {
+    ARTICLE_QUERY,
+    ARTICLE_SUPPORT,
+    TAG_QUERY
+} from '@/store/mutation-types';
+
 import ArticleLayout from './Layout';
 import ArticleList from '@/components/common/articleList/ArticleList';
 import ArticleListItem from '@/components/common/articleList/ArticleListItem';
 import ArticleTag from '@/components/common/articleTag/ArticleTag';
 import ArticleTagItem from '@/components/common/articleTag/ArticleTagItem';
-import api from '@/utils/api';
+
 export default {
     name: 'Home',
     components: {
@@ -48,9 +62,6 @@ export default {
     computed: {
         tagName() {
             return this.$route.params.tagName;
-        },
-        userId() {
-            return localStorage.getItem('userId');
         }
     },
     watch: {
@@ -58,26 +69,40 @@ export default {
             handler(n, o) {
                 this.getArticleList(n);
             },
-            // deep: true, // 深度监听
-            immediate: true // 立即执行
+            immediate: true
         }
     },
     created() {
         this.getArticleTag();
     },
     methods: {
+        ...mapActions({
+            articleQuery: ARTICLE_QUERY,
+            tagQuery: TAG_QUERY,
+            articleSupport: ARTICLE_SUPPORT
+        }),
+        handleSupport(articleId) {
+            this.articleSupport(articleId).then(() => {
+                this.articleData.map((item) => {
+                    if (item._id === articleId) {
+                        item.isSupport = true;
+                        item.supportCount++;
+                    }
+                });
+            });
+        },
         getArticleList(tagName) {
             const params = { publish: true };
-            if (tagName) params.tagName = tagName;
-            api.articleQuery(params).then((res) => {
+            if (tagName && tagName !== 'all') params.tagName = tagName;
+            this.articleQuery(params).then((res) => {
                 this.articleData = res.data;
             });
         },
         getArticleTag() {
-            api.tagQuery().then((res) => {
+            this.tagQuery().then((res) => {
                 if (res.data.length > 0) {
                     this.articleTagData.push({
-                        name: '',
+                        name: 'all',
                         title: '全部'
                     });
                     this.articleTagData.push(...res.data);

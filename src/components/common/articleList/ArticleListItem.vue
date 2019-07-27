@@ -4,8 +4,8 @@
             <span>{{ username }}</span>
             <span :title="createTime">{{ editTime }}</span>
             <span>{{ tag }}</span>
-            <span>赞：{{ support }}次</span>
-            <span>阅读：{{ support }}次</span>
+            <span>赞：{{ supportCount }}次</span>
+            <span>阅读：{{ viewCount }}次</span>
         </div>
         <div class="article-list__item-title">
             <span @click="handleDetail(articleId)">{{ title }}</span>
@@ -45,8 +45,11 @@ export default {
         tag() {
             return this.item.tagName;
         },
-        support() {
-            return this.item.support || 0;
+        supportCount() {
+            return this.item.supportCount || 0;
+        },
+        viewCount() {
+            return this.item.viewCount || 0;
         },
         collect() {
             return this.item.collect;

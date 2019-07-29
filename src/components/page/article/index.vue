@@ -64,7 +64,8 @@ export default {
                 pageSize: 5,
                 currentPage: 1,
                 total: 0
-            }
+            },
+            isLoadMore: false // 是否加载更多
         };
     },
     computed: {
@@ -78,7 +79,9 @@ export default {
     watch: {
         tagName: {
             handler(n, o) {
-                this.getArticleList(n);
+                this.pageConfig.currentPage = 1;
+                this.isLoadMore = true;
+                this.getArticleList(n, 'load');
             },
             immediate: true
         }
@@ -86,19 +89,16 @@ export default {
     created() {
         this.getArticleTag();
     },
-    mounted() {
-        window.onscroll = () => {
-            if (this.getScrollHeight() === this.getWindowHeight() + this.getDocumentTop()) {
-                this.getArticleList(this.tagName);
-            }
-        };
-    },
     methods: {
         ...mapActions({
             articleQuery: ARTICLE_QUERY,
             tagQuery: TAG_QUERY,
             articleSupport: ARTICLE_SUPPORT
         }),
+        // 滚动条到底部，异步加载数据
+        scrollToBottomLoadData() {
+            if (this.isLoadMore) this.getArticleList(this.tagName);
+        },
         handleSupport(articleId) {
             this.articleSupport(articleId).then(() => {
                 this.articleData.map((item) => {
@@ -109,17 +109,21 @@ export default {
                 });
             });
         },
-        getArticleList(tagName) {
+        getArticleList(tagName, loadType = 'loadMore') {
             const params = {
                 publish: true,
                 pageSize: this.pageConfig.pageSize,
                 currentPage: this.pageConfig.currentPage++
             };
             if (tagName && tagName !== 'all') params.tagName = tagName;
-            if (this.articleData.length >= this.pageConfig.total && this.articleData.length > 0) return;
             this.articleQuery(params).then((res) => {
-                this.articleData.push(...res.data);
                 this.pageConfig.total = res.total;
+                if (loadType === 'loadMore') {
+                    this.articleData.push(...res.data);
+                } else {
+                    this.articleData = res.data;
+                }
+                if (this.articleData.length === res.total) this.isLoadMore = false; // 加载完成
             });
         },
         getArticleTag() {

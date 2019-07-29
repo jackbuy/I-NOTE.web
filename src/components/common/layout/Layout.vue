@@ -54,7 +54,7 @@ export default {
             baseMenuDate: [
                 {
                     id: 1,
-                    title: '文章',
+                    title: '发现',
                     url: '/'
                 },
                 {

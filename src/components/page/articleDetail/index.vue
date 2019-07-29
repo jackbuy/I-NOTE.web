@@ -1,30 +1,36 @@
 <template>
-    <div class="article-detail">
-        <div class="article-detail__title">
-            {{ title }}
+    <detail-layout>
+        <div class="article-detail" slot="content">
+            <div class="article-detail__title">
+                {{ title }}
+            </div>
+            <div class="article-detail__info">
+                <span>{{ username }}</span>
+                <span :title="createTime">{{ editTime }}</span>
+                <span>{{ tag }}</span>
+                <span>赞：{{ supportCount }}次</span>
+                <span>阅读：{{ viewCount }}次</span>
+            </div>
+            <div
+                v-highlight
+                v-html="content"
+                class="article-detail__content" >
+            </div>
         </div>
-        <div class="article-detail__info">
-            <span>{{ username }}</span>
-            <span :title="createTime">{{ editTime }}</span>
-            <span>{{ tag }}</span>
-            <span>赞：{{ supportCount }}次</span>
-            <span>阅读：{{ viewCount }}次</span>
-        </div>
-        <div
-            v-highlight
-            v-html="content"
-            class="article-detail__content" >
-        </div>
-    </div>
+    </detail-layout>
 </template>
 
 <script>
+import DetailLayout from './layout';
 import api from '@/utils/api';
 import utils from '@/utils/utils';
 import message from '@/mixins/message';
 export default {
     name: 'ArticleDetail',
     mixins: [ message ],
+    components: {
+        DetailLayout
+    },
     data() {
         return {
             detail: {}

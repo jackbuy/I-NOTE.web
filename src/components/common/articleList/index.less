@@ -10,6 +10,13 @@
         padding: 20px;
         border: 1px solid #eee;
         border-top-width: 0;
+        position: relative;
+        &.has-img{
+            padding-right: 200px;
+            .article-list__item-img{
+                display: block;
+            }
+        }
         &:first-child{
             border-top-width: 1px;
         }
@@ -32,6 +39,20 @@
                 &:hover{
                     color: #539eff;
                 }
+            }
+        }
+        &-img{
+            display: none;
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: #ccc;
+            width: 160px;
+            height: 100px;
+            overflow: hidden;
+            text-align: center;
+            img{
+                height: 100px;
             }
         }
         &-action{

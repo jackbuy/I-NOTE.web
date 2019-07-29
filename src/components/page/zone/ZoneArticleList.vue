@@ -5,8 +5,16 @@
         <template slot-scope="scope">
             <article-list-item :item="scope.row">
                 <template slot-scope="scopeInner">
-                    <span v-if="scopeInner.row.userId._id === userId" @click="handleEdit(scopeInner.row)"><i class="el-icon-edit"></i></span>
-                    <span v-if="scopeInner.row.userId._id === userId" @click="handleDelete(scopeInner.row)"><i class="el-icon-delete"></i></span>
+                    <button
+                        v-if="scopeInner.row.userId._id === userId"
+                        @click="handleEdit(scopeInner.row)">
+                        <i class="el-icon-edit"></i>
+                    </button>
+                    <button
+                        v-if="scopeInner.row.userId._id === userId"
+                        @click="handleDelete(scopeInner.row)">
+                        <i class="el-icon-delete"></i>
+                    </button>
                 </template>
             </article-list-item>
         </template>

@@ -26,13 +26,13 @@ export default new Router({
                     path: '/article/:tagName',
                     name: 'article',
                     component: Article,
-                    meta: {title: '文章'}
+                    meta: {title: '发现'}
                 },
                 {
                     path: '/detail/:articleId',
                     name: 'detail',
                     component: ArticleDetail,
-                    meta: {title: '文章-详情'}
+                    meta: {title: '发现-详情'}
                 },
                 {
                     path: '/search/:keyword',
@@ -44,13 +44,13 @@ export default new Router({
                     path: '/write',
                     name: 'articleAdd',
                     component: articleAddEdit,
-                    meta: {title: '文章-新增', requireAuth: true}
+                    meta: {title: '发现-新增', requireAuth: true}
                 },
                 {
                     path: '/write/:articleId',
                     name: 'articleEdit',
                     component: articleAddEdit,
-                    meta: {title: '文章-编辑', requireAuth: true}
+                    meta: {title: '发现-编辑', requireAuth: true}
                 },
                 {
                     path: '/tag',

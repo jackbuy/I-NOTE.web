@@ -6,13 +6,13 @@
         </div>
         <div v-else>
             <span @click="handleRoutePush('/write')"><i class="el-icon-circle-plus-outline"></i> 写文章</span>
+            <span @click="handleRoutePush(`/zone/${userId}/article`)">{{ userName }}</span>
             <el-dropdown @command="handleCommand">
                 <span class="el-dropdown-link">
-                    {{ userName }}<i class="el-icon-arrow-down el-icon--right"></i>
+                    <i class="el-icon-more el-icon--right"></i>
                 </span>
                 <el-dropdown-menu slot="dropdown">
-                    <el-dropdown-item command="zone">我的主页</el-dropdown-item>
-                    <el-dropdown-item command="loginOut" divided>退出</el-dropdown-item>
+                    <el-dropdown-item command="loginOut">退出</el-dropdown-item>
                 </el-dropdown-menu>
             </el-dropdown>
         </div>
@@ -68,7 +68,7 @@ export default {
         },
         handleCommand(command) {
             if (command === 'loginOut') this.handleLogOut();
-            if (command === 'zone') this.handleRoutePush(`/zone/${this.userId}/article`);
+            // if (command === 'zone') this.handleRoutePush(`/zone/${this.userId}/article`);
         }
     }
 };

@@ -1,5 +1,7 @@
 <template>
-    <div class="article-list__item">
+    <div
+        class="article-list__item"
+        :class="{'has-img': img}">
         <div class="article-list__item-header">
             <span>{{ username }}</span>
             <span :title="createTime">{{ editTime }}</span>
@@ -13,6 +15,7 @@
         <div class="article-list__item-action">
             <slot :row="item"></slot>
         </div>
+        <div class="article-list__item-img" v-if="img" v-html="img"></div>
     </div>
 </template>
 
@@ -53,6 +56,14 @@ export default {
         },
         collect() {
             return this.item.collect;
+        },
+        img() {
+            if (this.item.contentHtml) {
+                // 匹配图片（g表示匹配所有结果i表示区分大小写）
+                var imgReg = /<img.*?(?:>|\/>)/gi;
+                var arr = this.item.contentHtml.match(imgReg);
+                if (arr && arr.length > 0) return arr[0];
+            }
         }
     },
     methods: {

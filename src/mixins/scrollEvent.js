@@ -1,17 +1,12 @@
-// /*
-// 当滚动条滑动，触发事件，判断是否到达最底部
-// 然后调用ajax处理函数异步加载数据
-// */
-// window.onscroll = function () {
-//     //监听事件内容
-//     if (getScrollHeight() == getWindowHeight() + getDocumentTop()) {
-//         //当滚动条到底时,这里是触发内容
-//         //异步请求数据,局部刷新dom
-//         ajax_function();
-//     }
-// }
-
 export default {
+    mounted() {
+        // 当滚动条滑动，触发事件，判断是否到达最底部
+        window.onscroll = () => {
+            if (this.getScrollHeight() === this.getWindowHeight() + this.getDocumentTop()) {
+                this.scrollToBottomLoadData();
+            }
+        };
+    },
     methods: {
         // 文档高度
         getDocumentTop() {

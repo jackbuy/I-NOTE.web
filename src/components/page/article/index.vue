@@ -6,14 +6,15 @@
             <template slot-scope="scope">
                 <article-list-item :item="scope.row">
                     <template slot-scope="scopeInner">
-                        <span
+                        <button
                             v-if="scopeInner.row.isSupport"
-                            class="active">已赞</span>
-                        <span
+                            class="active">已赞</button>
+                        <button
                             v-else
+                            :disabled="scopeInner.row.userId._id === mine"
                             @click="handleSupport(scopeInner.row._id)">
                             点赞
-                        </span>
+                        </button>
                         <!-- <span><i class="el-icon-star-off"></i></span>
                         <span><i class="el-icon-chat-dot-round"></i></span> -->
                     </template>
@@ -43,6 +44,7 @@ import ArticleList from '@/components/common/articleList/ArticleList';
 import ArticleListItem from '@/components/common/articleList/ArticleListItem';
 import ArticleTag from '@/components/common/articleTag/ArticleTag';
 import ArticleTagItem from '@/components/common/articleTag/ArticleTagItem';
+import scrollEvent from '@/mixins/scrollEvent';
 
 export default {
     name: 'Home',
@@ -53,15 +55,24 @@ export default {
         ArticleTag,
         ArticleTagItem
     },
+    mixins: [ scrollEvent ],
     data() {
         return {
             articleData: [],
-            articleTagData: []
+            articleTagData: [],
+            pageConfig: {
+                pageSize: 5,
+                currentPage: 1,
+                total: 0
+            }
         };
     },
     computed: {
         tagName() {
             return this.$route.params.tagName;
+        },
+        mine() {
+            return localStorage.getItem('userId');
         }
     },
     watch: {
@@ -74,6 +85,13 @@ export default {
     },
     created() {
         this.getArticleTag();
+    },
+    mounted() {
+        window.onscroll = () => {
+            if (this.getScrollHeight() === this.getWindowHeight() + this.getDocumentTop()) {
+                this.getArticleList(this.tagName);
+            }
+        };
     },
     methods: {
         ...mapActions({
@@ -92,10 +110,16 @@ export default {
             });
         },
         getArticleList(tagName) {
-            const params = { publish: true };
+            const params = {
+                publish: true,
+                pageSize: this.pageConfig.pageSize,
+                currentPage: this.pageConfig.currentPage++
+            };
             if (tagName && tagName !== 'all') params.tagName = tagName;
+            if (this.articleData.length >= this.pageConfig.total && this.articleData.length > 0) return;
             this.articleQuery(params).then((res) => {
-                this.articleData = res.data;
+                this.articleData.push(...res.data);
+                this.pageConfig.total = res.total;
             });
         },
         getArticleTag() {

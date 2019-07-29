@@ -25,6 +25,9 @@ export default {
     // Tag列表
     tagQuery: () => http('get', `${apiBaseUrl}/tag/query`),
 
+    // 消息列表
+    messageQuery: () => http('get', `${apiBaseUrl}/message/query`),
+
     // zone
     // 指定用户文章列表
     zoneArticleQuery: (params) => http('post', `${apiBaseUrl}/article/mine/query`, params)

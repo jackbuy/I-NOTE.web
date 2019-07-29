@@ -1,0 +1,44 @@
+.msg{
+    &__header{
+        font-size: 0;
+        // margin-bottom: 15px;
+        span{
+            display: inline-block;
+            padding: 5px 10px;
+            font-size: 14px;
+            margin-right: 10px;
+            cursor: pointer;
+            &.active{ 
+                color: #409EFF;
+                border: 1px solid #409EFF;
+                // border-radius: 4px;
+            }
+        }
+    }
+    &__content{
+        .list{
+            border: 1px solid #eee;
+        }
+        .item{
+            padding: 20px;
+            border-top: 1px solid #eee;
+            &:first-child{
+                border-top-width: 0;
+            }
+        }
+        .user{
+            color: #888;
+        }
+        .article{
+            color: #409EFF;
+            cursor: pointer;
+            &:hover{
+                text-decoration: underline;
+            }
+        }
+        .norecord{
+            padding: 20px;
+            text-align: center;
+        }
+    }
+}

@@ -12,6 +12,12 @@ export default {
             commit(C.GET_USER_INFO, res.data);
         });
     },
+    // 获取所有消息
+    [C.MESSAGE_QUERY]({commit}, params) {
+        api.messageQuery().then((res) => {
+            commit(C.MESSAGE_QUERY, res.data);
+        });
+    },
     // 获取文章
     [C.ARTICLE_QUERY]({commit}, params) {
         return api.articleQuery(params);

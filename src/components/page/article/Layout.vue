@@ -6,6 +6,7 @@
         <div class="home-side">
             <slot name="tag"></slot>
         </div>
+        <el-backtop></el-backtop>
     </div>
 </template>
 

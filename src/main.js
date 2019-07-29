@@ -30,7 +30,7 @@ router.beforeEach((to, from, next) => {
         if (token) {
             next();
         } else {
-            next({ path: '/article/all' });
+            next({ path: '/' });
         }
     } else {
         next();

@@ -3,7 +3,7 @@ import Router from 'vue-router';
 const Page404 = () => import('@/components/common/Page404');
 const Layout = () => import('@/components/common/layout/Layout');
 const Article = () => import('@/components/page/article');
-const Msg = () => import('@/components/page/msg/Msg');
+const Msg = () => import('@/components/page/msg');
 const Search = () => import('@/components/page/search/Search');
 const ArticleDetail = () => import('@/components/page/articleDetail');
 const articleAddEdit = () => import('@/components/page/articleAddEdit');

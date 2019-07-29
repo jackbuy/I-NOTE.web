@@ -2,10 +2,11 @@
     <layout>
         <layout-header>
             <layout-header-logo></layout-header-logo>
-            <!-- <layout-header-menu
+            <layout-header-menu
+                v-if="menuDate.length > 0"
                 :data="menuDate"
                 @push="handleRouterPush">
-            </layout-header-menu> -->
+            </layout-header-menu>
             <layout-header-search
                 @search="handleSearch">
             </layout-header-search>
@@ -50,7 +51,7 @@ export default {
     },
     data() {
         return {
-            menuDate: [
+            baseMenuDate: [
                 {
                     id: 1,
                     title: '文章',
@@ -63,6 +64,14 @@ export default {
                 }
             ]
         };
+    },
+    computed: {
+        isLogin() {
+            if (localStorage.getItem('userId') && localStorage.getItem('token')) return true;
+        },
+        menuDate() {
+            return this.isLogin ? this.baseMenuDate : [];
+        }
     },
     methods: {
         handleSearch(keyword) {

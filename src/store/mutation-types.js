@@ -10,5 +10,7 @@ export const GET_USER_INFO = 'GET_USER_INFO';
 export const ARTICLE_QUERY = 'ARTICLE_QUERY';
 // 获取所有Tag
 export const TAG_QUERY = 'TAG_QUERY';
+// 获取所有Message
+export const MESSAGE_QUERY = 'MESSAGE_QUERY';
 // 文章点赞
 export const ARTICLE_SUPPORT = 'ARTICLE_SUPPORT';

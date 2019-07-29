@@ -1,25 +1,25 @@
 <template>
-    <div class="zone">
-        <div class="zone__header">
-            <span
-                v-for="item in headerTabData"
-                :key="item.type"
-                :class="{'active': articleType === item.type}"
-                @click="handleChange(item.type)">{{ item.title }}</span>
-        </div>
-        <div class="zone__content">
-            <zone-article-list
-                :type="articleType">
-            </zone-article-list>
-        </div>
-    </div>
+    <zone-layout>
+        <span
+            v-for="item in headerTabData"
+            :key="item.type"
+            :class="{'active': articleType === item.type}"
+            slot="header"
+            @click="handleChange(item.type)">{{ item.title }}</span>
+        <zone-article-list
+            :type="articleType"
+            slot="content">
+        </zone-article-list>
+    </zone-layout>
 </template>
 
 <script>
+import ZoneLayout from './layout';
 import ZoneArticleList from './ZoneArticleList';
 export default {
     name: 'Zone',
     components: {
+        ZoneLayout,
         ZoneArticleList
     },
     data() {
@@ -51,7 +51,3 @@ export default {
     }
 };
 </script>
-
-<style lang="less">
-@import './index.less';
-</style>

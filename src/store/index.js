@@ -15,7 +15,8 @@ const Store = {
         loginModal: {
             open: false,
             type: ''
-        }
+        },
+        msgData: []
     },
     getters: {},
     mutations: mutations,

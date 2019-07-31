@@ -19,7 +19,7 @@ export default {
         },
         width: {
             type: String,
-            default: '560px'
+            default: '400px'
         },
         visible: {
             type: Boolean,

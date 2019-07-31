@@ -9,6 +9,7 @@ const ArticleDetail = () => import('@/components/page/articleDetail');
 const articleAddEdit = () => import('@/components/page/articleAddEdit');
 const Tag = () => import('@/components/page/tag/Tag');
 const Zone = () => import('@/components/page/zone');
+const Test = () => import('@/components/common/ckEditor');
 
 Vue.use(Router);
 
@@ -29,6 +30,12 @@ export default new Router({
                     meta: {title: '发现'}
                 },
                 {
+                    path: '/test',
+                    name: 'test',
+                    component: Test,
+                    meta: {title: '测试'}
+                },
+                {
                     path: '/detail/:articleId',
                     name: 'detail',
                     component: ArticleDetail,
@@ -44,13 +51,13 @@ export default new Router({
                     path: '/write',
                     name: 'articleAdd',
                     component: articleAddEdit,
-                    meta: {title: '发现-新增', requireAuth: true}
+                    meta: {title: '文章-新增', requireAuth: true}
                 },
                 {
                     path: '/write/:articleId',
                     name: 'articleEdit',
                     component: articleAddEdit,
-                    meta: {title: '发现-编辑', requireAuth: true}
+                    meta: {title: '文章-编辑', requireAuth: true}
                 },
                 {
                     path: '/tag',

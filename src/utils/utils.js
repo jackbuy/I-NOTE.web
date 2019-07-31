@@ -100,25 +100,8 @@ export default {
         }
         return result;
     },
-    findIndex(arr, name, _name) {
-        let _index = -1;
-        arr.map((ele, index) => {
-            if (ele[name] === _name) _index = index;
-        });
-        return _index;
-    },
-    findId(arr, name, _name) {
-        let id = '';
-        arr.map((ele) => {
-            if (ele[name] === _name) id = ele._id;
-        });
-        return id;
-    },
-    findEle(arr, name, _name) {
-        let _ele = {};
-        arr.map((ele) => {
-            if (ele[name] === _name) _ele = ele;
-        });
-        return _ele;
+    findIdIndex(arr, id) {
+        let ids = arr.map(item => item._id);
+        return ids.indexOf(id);
     }
 };

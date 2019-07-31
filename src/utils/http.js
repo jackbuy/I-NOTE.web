@@ -27,7 +27,14 @@ axios.interceptors.response.use(function(response) {
                 Message.warning({ message: response.data.msg });
             }
             if (response.data.code === 401) {
-                store.default.commit('OPEN_LOGIN_MODAL');
+                if (localStorage.getItem('token') && localStorage.getItem('userId')) {
+                    localStorage.clear();
+                    window.location.reload();
+                    // Message.warning({ message: 'token已过期' });
+                } else {
+                    store.default.commit('OPEN_LOGIN_MODAL');
+                }
+                localStorage.clear();
             }
             return Promise.reject(response.data);
         }

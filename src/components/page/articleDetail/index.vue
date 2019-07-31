@@ -3,6 +3,7 @@
         <div class="article-detail" slot="content">
             <div class="article-detail__title">
                 {{ title }}
+                <span v-if="currentUserId === userId" @click="handleRouterEdit(articleId)">编辑</span>
             </div>
             <div class="article-detail__info">
                 <span>{{ username }}</span>
@@ -24,10 +25,10 @@
 import DetailLayout from './layout';
 import api from '@/utils/api';
 import utils from '@/utils/utils';
-import message from '@/mixins/message';
+import ArticleCommon from '@/mixins/articleCommon';
 export default {
     name: 'ArticleDetail',
-    mixins: [ message ],
+    mixins: [ ArticleCommon ],
     components: {
         DetailLayout
     },
@@ -48,6 +49,9 @@ export default {
         },
         username() {
             if (this.detail.userId) return this.detail.userId.username;
+        },
+        userId() {
+            if (this.detail.userId) return this.detail.userId._id;
         },
         createTime() {
             return `创建于 ${utils.formatDate.time(this.detail.createTime)}`;

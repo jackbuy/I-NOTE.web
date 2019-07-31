@@ -3,16 +3,14 @@
         <el-form
             ref="form"
             :model="form"
-            :rules="rules">
-            <el-form-item>
+            :rules="rules"
+            label-width="50px">
+            <el-form-item
+                prop="title"
+                label="标题">
                 <el-input
                     v-model="form.title"
                     placeholder="请输入标题"></el-input>
-            </el-form-item>
-            <el-form-item>
-                <editor
-                    v-model="form.contentHtml"
-                    @get-text="handleGetText"></editor>
             </el-form-item>
             <el-form-item
                 label="发布">
@@ -23,8 +21,9 @@
                 </el-switch>
             </el-form-item>
             <el-form-item
-                v-if="form.publish">
-                <el-select v-model="form.tagName" placeholder="请选择Tag">
+                v-if="form.publish"
+                label="标签">
+                <el-select v-model="form.tagName" filterable placeholder="请选择 ( 可搜索 )">
                     <el-option
                         v-for="item in tagOptions"
                         :key="item.name"
@@ -32,6 +31,12 @@
                         :value="item.name">
                     </el-option>
                 </el-select>
+            </el-form-item>
+            <el-form-item
+                label="内容">
+                <editor
+                    v-model="form.contentHtml"
+                    @get-text="handleGetText"></editor>
             </el-form-item>
             <el-form-item>
                 <el-button
@@ -64,7 +69,13 @@ export default {
                 tagName: ''
             },
             tagOptions: [],
-            rules: {}
+            rules: {
+                title: [
+                    {
+                        required: true, message: '必填'
+                    }
+                ]
+            }
         };
     },
     computed: {
@@ -103,20 +114,24 @@ export default {
             });
         },
         handleSave() {
-            const params = {
-                ...this.form
-            };
-            if (this.articleId) {
-                api.articleEdit(this.articleId, params).then(() => {
-                    this.showSuccessMsg('保存成功！');
-                });
-            } else {
-                api.articleAdd(params).then((res) => {
-                    const { articleId } = res.data;
-                    this.$router.push(`/write/${articleId}`);
-                    this.showSuccessMsg('保存成功！');
-                });
-            }
+            this.$refs.form.validate((valid) => {
+                if (valid) {
+                    const params = {
+                        ...this.form
+                    };
+                    if (this.articleId) {
+                        api.articleEdit(this.articleId, params).then(() => {
+                            this.showSuccessMsg('保存成功！');
+                        });
+                    } else {
+                        api.articleAdd(params).then((res) => {
+                            const { articleId } = res.data;
+                            this.$router.push(`/write/${articleId}`);
+                            this.showSuccessMsg('保存成功！');
+                        });
+                    }
+                }
+            });
         },
         handleGetText(text) {
             this.form.contentText = text;

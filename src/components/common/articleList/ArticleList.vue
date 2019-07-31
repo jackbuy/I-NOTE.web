@@ -6,9 +6,11 @@
                 :row="item">
             </slot>
         </template>
-        <template v-else>
+        <template v-if="noMore && data.length === 0 && !LoadMore">
             <div class="norecord">暂无数据！</div>
         </template>
+        <div v-if='LoadMore' class="loading-tip">加载中...</div>
+        <div v-if='noMore && data.length > 0 && !LoadMore' class="loading-tip">~ 我是有底线的 ~</div>
     </div>
 </template>
 
@@ -19,6 +21,14 @@ export default {
         data: {
             type: Array,
             default: () => ([])
+        },
+        LoadMore: {
+            type: Boolean,
+            default: false
+        },
+        noMore: {
+            type: Boolean,
+            default: false
         }
     }
 };

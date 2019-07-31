@@ -2,24 +2,36 @@
     <article-layout>
         <article-list
             :data="articleData"
+            :load-more="isLoadMore"
+            :no-more="isLoadFinish"
             slot="content">
-            <template slot-scope="scope">
-                <article-list-item :item="scope.row">
-                    <template slot-scope="scopeInner">
-                        <button
-                            v-if="scopeInner.row.isSupport"
-                            class="active">已赞</button>
-                        <button
-                            v-else
-                            :disabled="scopeInner.row.userId._id === mine"
-                            @click="handleSupport(scopeInner.row._id)">
-                            点赞
-                        </button>
-                        <!-- <span><i class="el-icon-star-off"></i></span>
-                        <span><i class="el-icon-chat-dot-round"></i></span> -->
-                    </template>
-                </article-list-item>
-            </template>
+            <article-list-item
+                slot-scope="scope"
+                :item="scope.row">
+                <template slot-scope="scopeInner">
+                    <button
+                        v-if="scopeInner.row.isSupport"
+                        class="active">已赞</button>
+                    <button
+                        v-else
+                        :disabled="scopeInner.row.userId._id === currentUserId"
+                        @click="handleSupport(scopeInner.row._id)">
+                        点赞
+                    </button>
+                    <button
+                        v-if="scopeInner.row.userId._id === currentUserId"
+                        @click="handleRouterEdit(scopeInner.row._id)">
+                        <i class="el-icon-edit"></i>
+                    </button>
+                    <button
+                        v-if="scopeInner.row.userId._id === currentUserId"
+                        @click="handleRouterDelete(scopeInner.row._id)">
+                        <i class="el-icon-delete"></i>
+                    </button>
+                    <!-- <span><i class="el-icon-star-off"></i></span>
+                    <span><i class="el-icon-chat-dot-round"></i></span> -->
+                </template>
+            </article-list-item>
         </article-list>
         <article-tag
             :data="articleTagData"
@@ -45,6 +57,9 @@ import ArticleListItem from '@/components/common/articleList/ArticleListItem';
 import ArticleTag from '@/components/common/articleTag/ArticleTag';
 import ArticleTagItem from '@/components/common/articleTag/ArticleTagItem';
 import scrollEvent from '@/mixins/scrollEvent';
+import ArticleCommon from '@/mixins/articleCommon';
+import api from '@/utils/api';
+import utils from '@/utils/utils';
 
 export default {
     name: 'Home',
@@ -55,7 +70,7 @@ export default {
         ArticleTag,
         ArticleTagItem
     },
-    mixins: [ scrollEvent ],
+    mixins: [ scrollEvent, ArticleCommon ],
     data() {
         return {
             articleData: [],
@@ -65,22 +80,20 @@ export default {
                 currentPage: 1,
                 total: 0
             },
-            isLoadMore: false // 是否加载更多
+            isLoadMore: false, // 是否加载中,
+            isLoadFinish: false // 是否加载完成
         };
     },
     computed: {
         tagName() {
             return this.$route.params.tagName;
-        },
-        mine() {
-            return localStorage.getItem('userId');
         }
     },
     watch: {
         tagName: {
             handler(n, o) {
                 this.pageConfig.currentPage = 1;
-                this.isLoadMore = true;
+                this.articleData = [];
                 this.getArticleList(n, 'load');
             },
             immediate: true
@@ -97,7 +110,7 @@ export default {
         }),
         // 滚动条到底部，异步加载数据
         scrollToBottomLoadData() {
-            if (this.isLoadMore) this.getArticleList(this.tagName);
+            if (!this.isLoadFinish && !this.isLoadMore) this.getArticleList(this.tagName);
         },
         handleSupport(articleId) {
             this.articleSupport(articleId).then(() => {
@@ -109,6 +122,15 @@ export default {
                 });
             });
         },
+        handleRouterDelete(articleId) {
+            this.confirmDelete().then(() => {
+                return api.articleDelete(articleId);
+            }).then(() => {
+                const index = utils.findIdIndex(this.articleData, articleId);
+                this.articleData.splice(index, 1);
+                this.showSuccessMsg('删除成功！');
+            }).catch(() => {});
+        },
         getArticleList(tagName, loadType = 'loadMore') {
             const params = {
                 publish: true,
@@ -116,14 +138,16 @@ export default {
                 currentPage: this.pageConfig.currentPage++
             };
             if (tagName && tagName !== 'all') params.tagName = tagName;
+            this.isLoadMore = true;
             this.articleQuery(params).then((res) => {
                 this.pageConfig.total = res.total;
+                this.isLoadMore = false;
                 if (loadType === 'loadMore') {
                     this.articleData.push(...res.data);
                 } else {
                     this.articleData = res.data;
                 }
-                if (this.articleData.length === res.total) this.isLoadMore = false; // 加载完成
+                if (this.articleData.length === res.total) this.isLoadFinish = true;
             });
         },
         getArticleTag() {

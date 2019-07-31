@@ -17,11 +17,6 @@ import 'quill/dist/quill.core.css';
 import 'quill/dist/quill.snow.css';
 import 'quill/dist/quill.bubble.css';
 
-// ckEditor 富文本编辑器
-import CKEditor from '@ckeditor/ckeditor5-vue';
-
-Vue.use(CKEditor);
-
 Vue.use(ElementUI, {size: 'small'});
 Vue.use(VueQuillEditor, {/* { default global options } */});
 

@@ -17,17 +17,5 @@ export default {
         api.messageQuery().then((res) => {
             commit(C.MESSAGE_QUERY, res.data);
         });
-    },
-    // 获取文章
-    [C.ARTICLE_QUERY]({commit}, params) {
-        return api.articleQuery(params);
-    },
-    // 获取Tag
-    [C.TAG_QUERY]({commit}, params) {
-        return api.tagQuery();
-    },
-    // 文章点赞
-    [C.ARTICLE_SUPPORT]({commit}, params) {
-        return api.articleSupport(params);
     }
 };

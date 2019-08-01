@@ -26,7 +26,10 @@ export default {
             if (this.data.receiveUserId) return this.data.receiveUserId.username;
         },
         msgType() {
-            return this.data.type === 0 ? '赞了' : '收藏了';
+            if (this.data.type === 0) return '赞了';
+            if (this.data.type === 1) return '收藏了';
+            if (this.data.type === 2) return '取消收藏了';
+            if (this.data.type === 3) return '关注了';
         },
         articleTitle() {
             if (this.data.articleId) return this.data.articleId.title;

@@ -6,12 +6,6 @@
             <article-list-item :item="scope.row">
                 <template slot-scope="scopeInner">
                     <button
-                        v-if="scopeInner.row.userId._id === userId"
-                        @click="handleEdit(scopeInner.row)">
-                        <i class="el-icon-edit"></i>
-                    </button>
-                    <button
-                        v-if="scopeInner.row.userId._id === userId"
                         @click="handleDelete(scopeInner.row)">
                         <i class="el-icon-delete"></i>
                     </button>
@@ -28,7 +22,7 @@ import message from '@/mixins/message';
 import api from '@/utils/api';
 
 export default {
-    name: 'ZoneArticleList',
+    name: 'ZoneCollectList',
     mixins: [ message ],
     props: {
         type: String
@@ -42,33 +36,19 @@ export default {
             data: []
         };
     },
-    computed: {
-        userId() {
-            return localStorage.getItem('userId');
-        }
-    },
     watch: {
         type: {
             handler(n, o) {
-                this.getArticleList(n);
+                this.getCollectList(n);
             },
             immediate: true
         }
     },
     methods: {
-        getArticleList(type) {
-            const params = {
-                publish: true,
-                mine: true
-            };
-            if (type === 'draft') params.publish = false;
-            api.articleQuery(params).then((res) => {
-                this.data = res.data;
+        getCollectList(type) {
+            api.collectQuery().then((res) => {
+                this.data = res.data.map(item => item.articleId);
             });
-        },
-        handleEdit(row) {
-            const { _id } = row;
-            this.$router.push(`/write/${_id}`);
         },
         handleDelete(row) {
             const { _id } = row;

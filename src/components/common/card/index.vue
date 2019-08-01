@@ -1,0 +1,39 @@
+<template>
+    <div class="card">
+        <div class="card__title">
+            <div class="tit">{{title}}</div>
+            <!-- <div
+                class="more"
+                @click="handleMore">
+                管理
+            </div> -->
+            <slot name="menu"></slot>
+        </div>
+        <div class="card__content">
+            <slot></slot>
+            <template v-if="value && value.length > 0">
+                <slot name="content"></slot>
+            </template>
+            <template v-if="value && value.length === 0">
+                <div class="norecord">暂无数据！</div>
+            </template>
+        </div>
+    </div>
+</template>
+
+<script>
+export default {
+    name: 'Card',
+    props: {
+        title: {
+            type: String,
+            default: '标题'
+        },
+        value: Array
+    }
+};
+</script>
+
+<style lang="less">
+@import './index.less';
+</style>

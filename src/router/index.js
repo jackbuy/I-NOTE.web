@@ -32,7 +32,7 @@ export default new Router({
                     path: '/detail/:articleId',
                     name: 'detail',
                     component: ArticleDetail,
-                    meta: {title: '发现-详情'}
+                    meta: {title: '详情'}
                 },
                 {
                     path: '/search/:keyword',

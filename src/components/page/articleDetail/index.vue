@@ -18,11 +18,20 @@
                 class="article-detail__content" >
             </div>
         </div>
+        <card slot="recommend" title="作者">
+            <div slot="menu" class="menu">
+                <span @click="handleFollow()">+关注</span>
+            </div>
+            <span>{{ username }}</span>
+        </card>
+        <card slot="recommend" title="相关文章" v-model="recommendData">
+        </card>
     </detail-layout>
 </template>
 
 <script>
 import DetailLayout from './layout';
+import Card from '@/components/common/Card';
 import api from '@/utils/api';
 import utils from '@/utils/utils';
 import ArticleCommon from '@/mixins/articleCommon';
@@ -30,11 +39,13 @@ export default {
     name: 'ArticleDetail',
     mixins: [ ArticleCommon ],
     components: {
-        DetailLayout
+        DetailLayout,
+        Card
     },
     data() {
         return {
-            detail: {}
+            detail: {},
+            recommendData: []
         };
     },
     computed: {
@@ -77,6 +88,12 @@ export default {
             const params = { articleId };
             api.getDetail(params).then((res) => {
                 this.detail = res.data;
+            });
+        },
+        // 关注
+        handleFollow() {
+            api.followUser(this.userId).then(() => {
+                alert('已关注');
             });
         }
     }

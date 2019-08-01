@@ -9,10 +9,10 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex';
-import { ARTICLE_QUERY } from '@/store/mutation-types';
 import ArticleList from '@/components/common/articleList/ArticleList';
 import ArticleListItem from '@/components/common/articleList/ArticleListItem';
+import api from '@/utils/api';
+
 export default {
     name: 'Search',
     components: {
@@ -38,15 +38,12 @@ export default {
         this.getArticleList(this.keyword);
     },
     methods: {
-        ...mapActions({
-            articleQuery: ARTICLE_QUERY
-        }),
         getArticleList(keyword) {
             const params = {
                 publish: true,
                 keyword
             };
-            this.articleQuery(params).then((res) => {
+            api.articleQuery(params).then((res) => {
                 this.articleData = res.data;
             });
         }

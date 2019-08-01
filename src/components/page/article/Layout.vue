@@ -5,6 +5,7 @@
         </div>
         <div class="home-side">
             <slot name="tag"></slot>
+            <slot name="specialTopic"></slot>
         </div>
         <el-backtop></el-backtop>
     </div>

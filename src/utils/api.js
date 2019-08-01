@@ -13,6 +13,8 @@ export default {
     articleQuery: (params) => http('post', `${apiBaseUrl}/article/query`, params),
     // 已发布文章点赞
     articleSupport: (articleId) => http('get', `${apiBaseUrl}/article/support/${articleId}`),
+    // 已发布文章收藏
+    articleCollect: (articleId) => http('get', `${apiBaseUrl}/article/collect/${articleId}`),
     // 文章详情
     getDetail: (params) => http('post', `${apiBaseUrl}/article/detail`, params),
     // 文章新增
@@ -27,6 +29,16 @@ export default {
 
     // 消息列表
     messageQuery: () => http('get', `${apiBaseUrl}/message/query`),
+
+    // 收藏列表
+    collectQuery: () => http('get', `${apiBaseUrl}/collect/query`),
+
+    // 关注人列表
+    followUserQuery: () => http('get', `${apiBaseUrl}/follow/user/query`),
+    // 粉丝列表
+    fansQuery: () => http('get', `${apiBaseUrl}/fans/query`),
+    // 关注人
+    followUser: (followUserId) => http('get', `${apiBaseUrl}/follow/user/${followUserId}`),
 
     // zone
     // 指定用户文章列表

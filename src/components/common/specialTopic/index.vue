@@ -1,9 +1,10 @@
 <template>
     <div
-        class="article-tag__content-item"
+        class="special-topic"
         :class="{'active': tagName === activeTagName}"
         @click="handleArticle(tagName)">
-        {{ title }}
+        <div class="img" :style="{backgroundImage: 'url(' + img + ')'}"></div>
+        <div class="title">{{ title }}</div>
     </div>
 </template>
 
@@ -19,6 +20,9 @@ export default {
     computed: {
         title() {
             return this.item.title;
+        },
+        img() {
+            return this.item.img;
         },
         tagName() {
             return this.item.name;
@@ -36,3 +40,7 @@ export default {
     }
 };
 </script>
+
+<style lang="less">
+@import './index.less';
+</style>

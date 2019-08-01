@@ -19,19 +19,6 @@ export default {
 };
 </script>
 
-<style lang="less" scoped>
-.breadcrumb{
-    padding: 30px 0;
-    span{
-        margin-right: 10px;
-        color: #666;
-        font-size: 12px;
-        vertical-align: bottom;
-        &:first-child{
-            font-size: 26px;
-            font-weight: bold;
-            color: #212121;
-        }
-    }
-}
+<style lang="less">
+@import './index.less';
 </style>

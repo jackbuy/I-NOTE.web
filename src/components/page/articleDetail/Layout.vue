@@ -4,7 +4,8 @@
             <slot name="content"></slot>
         </div>
         <div class="home-side">
-            <slot name="tag"></slot>
+            <slot name="userinfo"></slot>
+            <slot name="recommend"></slot>
         </div>
         <el-backtop></el-backtop>
     </div>

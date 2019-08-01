@@ -7,6 +7,7 @@
             <span :title="createTime">{{ editTime }}</span>
             <span>{{ tag }}</span>
             <span v-if="supportCount > 0">赞：{{ supportCount }}次</span>
+            <span v-if="collectCount > 0">收藏：{{ collectCount }}次</span>
             <span v-if="viewCount > 0">阅读：{{ viewCount }}次</span>
         </div>
         <div class="article-list__item-title">
@@ -31,7 +32,7 @@ export default {
     },
     computed: {
         username() {
-            return this.item.userId.username;
+            if (this.item.userId) return this.item.userId.username;
         },
         title() {
             return this.item.title;
@@ -54,8 +55,8 @@ export default {
         viewCount() {
             return this.item.viewCount || 0;
         },
-        collect() {
-            return this.item.collect;
+        collectCount() {
+            return this.item.collectCount || 0;
         },
         img() {
             if (this.item.contentHtml) {

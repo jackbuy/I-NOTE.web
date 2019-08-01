@@ -33,7 +33,7 @@ import LayoutHeaderSearch from './src/LayoutHeaderSearch';
 import LayoutHeaderUser from './src/LayoutHeaderUser';
 import LayoutContent from './src/LayoutContent';
 import LayoutFooter from './src/LayoutFooter';
-import Breadcrumb from '@/components/common/breadcrumb/Breadcrumb';
+import Breadcrumb from '@/components/common/breadcrumb';
 import Login from '@/components/common/Login';
 export default {
     name: 'LayoutContainer',

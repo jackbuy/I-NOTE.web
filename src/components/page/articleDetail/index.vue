@@ -5,25 +5,23 @@
                 {{ title }}
                 <span v-if="currentUserId === userId" @click="handleRouterEdit(articleId)">编辑</span>
             </div>
-            <div class="article-detail__info">
-                <span>{{ username }}</span>
-                <span :title="createTime">{{ editTime }}</span>
-                <span>{{ tag }}</span>
-                <span>赞：{{ supportCount }}次</span>
-                <span>阅读：{{ viewCount }}次</span>
-            </div>
+            <UserAvatar
+                v-if="userInfo"
+                :user="userInfo"
+                :follow="isFollow"
+                @doFollow="handleFollow">
+                <div class="article-detail__info">
+                    <span :title="createTime">{{ editTime }}</span>
+                    <span>{{ tag }}</span>
+                    <span>浏览：{{ viewCount }}次</span>
+                </div>
+            </UserAvatar>
             <div
                 v-highlight
                 v-html="content"
                 class="article-detail__content" >
             </div>
         </div>
-        <card slot="recommend" title="作者">
-            <div slot="menu" class="menu">
-                <span @click="handleFollow()">+关注</span>
-            </div>
-            <span>{{ username }}</span>
-        </card>
         <card slot="recommend" title="相关文章" v-model="recommendData">
         </card>
     </detail-layout>
@@ -31,7 +29,8 @@
 
 <script>
 import DetailLayout from './layout';
-import Card from '@/components/common/Card';
+import Card from '@/components/common/card';
+import UserAvatar from '@/components/common/userAvatar';
 import api from '@/utils/api';
 import utils from '@/utils/utils';
 import ArticleCommon from '@/mixins/articleCommon';
@@ -40,7 +39,8 @@ export default {
     mixins: [ ArticleCommon ],
     components: {
         DetailLayout,
-        Card
+        Card,
+        UserAvatar
     },
     data() {
         return {
@@ -57,6 +57,9 @@ export default {
         },
         content() {
             return this.detail.contentHtml;
+        },
+        userInfo() {
+            if (this.detail.userId) return this.detail.userId;
         },
         username() {
             if (this.detail.userId) return this.detail.userId.username;
@@ -78,6 +81,9 @@ export default {
         },
         viewCount() {
             return this.detail.viewCount || 0;
+        },
+        isFollow() {
+            return this.detail.isFollow;
         }
     },
     created() {
@@ -93,7 +99,7 @@ export default {
         // 关注
         handleFollow() {
             api.followUser(this.userId).then(() => {
-                alert('已关注');
+                this.detail.isFollow = !this.detail.isFollow;
             });
         }
     }

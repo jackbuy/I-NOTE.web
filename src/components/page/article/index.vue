@@ -65,7 +65,7 @@ import ArticleList from '@/components/common/articleList/ArticleList';
 import ArticleListItem from '@/components/common/articleList/ArticleListItem';
 import ArticleTag from '@/components/common/articleTag';
 import SpecialTopic from '@/components/common/specialTopic';
-import Card from '@/components/common/Card';
+import Card from '@/components/common/card';
 import scrollEvent from '@/mixins/scrollEvent';
 import ArticleCommon from '@/mixins/articleCommon';
 import api from '@/utils/api';

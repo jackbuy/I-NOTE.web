@@ -1,8 +1,11 @@
 .article-detail{
+    border: 1px solid #eee;
+    padding: 15px;
+    margin-bottom: 15px;
     &__title{
         line-height: 1.4;
-        padding-bottom: 20px;
-        font-size: 24px;
+        padding: 10px 0 25px 0;
+        font-size: 26px;
         span{
             font-size: 12px;
             color: #409EFF;
@@ -16,7 +19,6 @@
     &__info{
         font-size: 12px;
         color: #999;
-        padding-bottom: 20px;
         span{
             margin-right: 10px;
         }
@@ -36,15 +38,16 @@
         img,
         p,
         pre{
-            margin-bottom: 20px;
+            margin-bottom: 15px;
         }
         img{
             max-width: 100%;
-            margin: 0 auto;
+            margin-left: auto;
+            margin-right: auto;
         }
         iframe{
-            width: 620px;
-            height: 320px;
+            width: 100%;
+            height: 360px;
             margin: 0 auto;
         }
         blockquote{
@@ -59,7 +62,11 @@
         }
         ul,
         ol{
-            margin-left: 20px;
+            margin-left: 50px;
+            list-style: disc;
+        }
+        ol{
+            list-style: decimal;
         }
         a{
             color: #409EFF;

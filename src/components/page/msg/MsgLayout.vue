@@ -10,5 +10,5 @@
 </template>
 
 <style lang="less">
-@import './index.less';
+@import './msgLayout.less';
 </style>

@@ -61,7 +61,10 @@ export default {
     watch: {
         keyword: {
             handler(n, o) {
-                this.getArticleList(n);
+                this.pageConfig.currentPage = 1;
+                this.articleData = [];
+                this.isLoadFinish = false;
+                this.getArticleList(n, 'load');
             },
             immediate: true
         }

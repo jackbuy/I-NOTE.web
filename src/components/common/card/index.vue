@@ -1,7 +1,7 @@
 <template>
     <div class="card">
         <div class="card__title">
-            <div class="tit">{{title}}</div>
+            <div class="tit"><i v-if="icon" :class="icon"></i>{{ title }}</div>
             <slot name="menu"></slot>
         </div>
         <div class="card__content">
@@ -24,6 +24,7 @@ export default {
             type: String,
             default: '标题'
         },
+        icon: String,
         value: Array
     }
 };

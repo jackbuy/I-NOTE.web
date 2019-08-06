@@ -45,7 +45,7 @@
 </template>
 
 <script>
-import ZoneLayout from './layout';
+import ZoneLayout from './ZoneLayout';
 import ZoneArticleList from './ZoneArticleList';
 import ZoneCollectList from './ZoneCollectList';
 import ZoneFollowUserList from './ZoneFollowUserList';

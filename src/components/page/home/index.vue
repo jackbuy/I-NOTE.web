@@ -1,5 +1,5 @@
 <template>
-    <article-layout>
+    <home-layout>
         <article-sort slot="header">
             <span :class="{'active': sortType === 'newest'}" @click="handleSort('newest')">最新</span>
             <span :class="{'active': sortType === 'popular'}" @click="handleSort('popular')">热门</span>
@@ -32,7 +32,7 @@
                 </template>
             </article-list-item>
         </article-list>
-        <card slot="tag" title="标签" v-model="articleTagData">
+        <card slot="tag" icon="icon icon-bq" title="标签" v-model="articleTagData">
             <div slot="menu" class="menu">
                 <span @click="handleRouterTag">全部</span>
             </div>
@@ -54,11 +54,11 @@
                 :item="item">
             </special-topic>
         </card> -->
-    </article-layout>
+    </home-layout>
 </template>
 
 <script>
-import ArticleLayout from './Layout';
+import HomeLayout from './HomeLayout';
 import ArticleList from '@/components/common/articleList/ArticleList';
 import ArticleListItem from '@/components/common/articleList/ArticleListItem';
 import ArticleTag from '@/components/common/articleTag';
@@ -71,7 +71,7 @@ import api from '@/utils/api';
 export default {
     name: 'Home',
     components: {
-        ArticleLayout,
+        HomeLayout,
         ArticleList,
         ArticleListItem,
         ArticleTag,

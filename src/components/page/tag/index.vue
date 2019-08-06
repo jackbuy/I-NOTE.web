@@ -35,8 +35,7 @@ export default {
         getArticleTag() {
             const params = {
                 pageSize: 1000,
-                currentPage: 1,
-                type: 0
+                currentPage: 1
             };
             api.tagQuery(params).then((res) => {
                 this.tagListData = res.data;
@@ -57,22 +56,4 @@ export default {
         }
     }
 };
-// db.tags.insertMany([
-//     {
-//         name: 'wechat-app',
-//         title: '微信小程序'
-//     },
-//     {
-//         name: 'frontend',
-//         title: '前端'
-//     },
-//     {
-//         name: 'nodejs',
-//         title: 'nodejs'
-//     },
-//     {
-//         name: 'vue',
-//         title: 'vue'
-//     }
-// ])
 </script>

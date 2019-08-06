@@ -44,7 +44,7 @@
                 class="article-detail__content" >
             </div>
         </div>
-        <card slot="recommend" title="相关文章" v-model="recommendFilterData">
+        <card slot="recommend" icon="icon icon-wenzhang" title="相关文章" v-model="recommendFilterData">
             <article-recommend
                 v-for="item in recommendFilterData"
                 :key="item._id"
@@ -56,7 +56,7 @@
 </template>
 
 <script>
-import DetailLayout from './layout';
+import DetailLayout from './DetailLayout';
 import Card from '@/components/common/card';
 import UserAvatar from '@/components/common/userAvatar';
 import ArticleRecommend from '@/components/common/articleRecommend';
@@ -207,7 +207,3 @@ export default {
     }
 };
 </script>
-
-<style lang="less">
-@import './index.less';
-</style>

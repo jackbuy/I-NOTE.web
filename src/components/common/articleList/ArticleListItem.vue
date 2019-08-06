@@ -6,7 +6,7 @@
             <span>{{ username }}</span>
             <span :title="createTime">{{ editTime }}</span>
             <span>{{ tag }}</span>
-            <span v-if="viewCount > 0">阅读 {{ viewCount }}</span>
+            <span v-if="viewCount > 0">浏览 {{ viewCount }}</span>
         </div>
         <div class="article-list__item-title">
             <span @click="handleDetail(articleId)">{{ title }}</span>

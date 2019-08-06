@@ -1,6 +1,6 @@
 <template>
     <div class="user-avatar">
-        <div class="img">
+        <div class="img" @click="handleZone(userId)">
             <el-avatar :size="50">{{ userImg }}</el-avatar>
         </div>
         <div class="title">

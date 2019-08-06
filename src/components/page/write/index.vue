@@ -137,7 +137,11 @@ export default {
             this.form.contentText = text;
         },
         getArticleTag() {
-            api.tagQuery().then((res) => {
+            const params = {
+                pageSize: 1000,
+                currentPage: 1
+            };
+            api.tagQuery(params).then((res) => {
                 this.tagOptions = res.data;
             });
         }

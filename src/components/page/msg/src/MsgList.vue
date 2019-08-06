@@ -1,11 +1,11 @@
 <template>
     <div class="list">
         <template v-if="data.length > 0">
-            <msg-support-item
+            <msg-list-item
                 v-for="item in data"
                 :key="item._id"
                 :data="item">
-            </msg-support-item>
+            </msg-list-item>
         </template>
         <template v-else>
             <div class="norecord">暂无消息！</div>
@@ -14,11 +14,11 @@
 </template>
 
 <script>
-import MsgSupportItem from './MsgSupportItem';
+import MsgListItem from './MsgListItem';
 export default {
     name: '',
     components: {
-        MsgSupportItem
+        MsgListItem
     },
     props: {
         data: {

@@ -13,5 +13,5 @@
 </template>
 
 <style lang="less">
-@import './index.less';
+@import './zoneLayout.less';
 </style>

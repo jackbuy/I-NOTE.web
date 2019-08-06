@@ -8,7 +8,7 @@ import api from '@/utils/api';
 export default {
     // 获取用户信息
     [C.GET_USER_INFO]({commit}, params) {
-        api.getUserInfo().then((res) => {
+        api.getUserInfo(params).then((res) => {
             commit(C.GET_USER_INFO, res.data);
         });
     },

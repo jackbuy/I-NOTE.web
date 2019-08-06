@@ -1,10 +1,10 @@
 .article-list{
+    background: #fff;
     .norecord{
         color: #666;
         font-size: 12px;
         text-align: center;
         padding: 20px;
-        border: 1px solid #eee;
     }
     .loading-tip{
         height: 50px;
@@ -15,8 +15,7 @@
     }
     &__item{
         padding: 20px;
-        border: 1px solid #eee;
-        border-top-width: 0;
+        border-top: 1px solid #f5f5f5;
         position: relative;
         &.has-img{
             padding-right: 200px;
@@ -68,25 +67,20 @@
                 margin-top: 20px;
                 display: inline-block;
                 padding: 5px 10px;
-                border: 1px solid #eee;
-                font-size: 12px;
+                border: 1px solid #e5e5e5;
+                font-size: 14px;
                 color: #666;
                 background: #fff;
-                margin-right: 15px;
+                margin-right: -1px;
                 cursor: pointer;
                 transition: all 0.3s;
                 &:hover,
                 &.active{
                     color: #539eff;
-                    border-color: #539eff;
                 }
                 &[disabled]{
                     cursor: not-allowed;
                     color: #999;
-                    &:hover{
-                        color: #999;
-                        border-color: #eee;
-                    }
                 }
             }
         }

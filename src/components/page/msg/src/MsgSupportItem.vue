@@ -1,11 +1,17 @@
 <template>
     <div class="item">
-        <span class="user">{{ createUser }}</span>
-        <span>{{ msgType }}</span>
-        <!-- <span>{{ receiveUser }}</span> -->
-        <span>你的文章 [</span>
-        <span class="article" @click="handleRouter(articleId)">{{ articleTitle }}</span>
-        <span>]</span>
+        <div v-if="data.type === 3 || data.type === 4">
+            <span class="user">{{ createUser }}</span>
+            <span>{{ msgType }}</span>
+            <span>你</span>
+        </div>
+        <div v-else>
+            <span class="user">{{ createUser }}</span>
+            <span>{{ msgType }}</span>
+            <span>你的文章 [</span>
+            <span class="article" @click="handleRouter(articleId)">{{ articleTitle }}</span>
+            <span>]</span>
+        </div>
     </div>
 </template>
 
@@ -26,10 +32,12 @@ export default {
             if (this.data.receiveUserId) return this.data.receiveUserId.username;
         },
         msgType() {
-            if (this.data.type === 0) return '赞了';
             if (this.data.type === 1) return '收藏了';
             if (this.data.type === 2) return '取消收藏了';
             if (this.data.type === 3) return '关注了';
+            if (this.data.type === 4) return '取消关注了';
+            if (this.data.type === 5) return '赞了';
+            if (this.data.type === 6) return '取消赞了';
         },
         articleTitle() {
             if (this.data.articleId) return this.data.articleId.title;

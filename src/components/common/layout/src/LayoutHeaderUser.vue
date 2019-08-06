@@ -12,6 +12,7 @@
                     <i class="el-icon-more el-icon--right"></i>
                 </span>
                 <el-dropdown-menu slot="dropdown">
+                    <el-dropdown-item command="ww">设置</el-dropdown-item>
                     <el-dropdown-item command="loginOut">退出</el-dropdown-item>
                 </el-dropdown-menu>
             </el-dropdown>
@@ -43,7 +44,10 @@ export default {
     },
     created() {
         if (this.isLogin) {
-            this.getUserInfo();
+            const params = {
+                userId: localStorage.getItem('userId')
+            };
+            this.getUserInfo(params);
         }
     },
     methods: {

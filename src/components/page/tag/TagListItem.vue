@@ -2,9 +2,12 @@
     <div class="tag-content-list-item">
         <div
             class="title"
-            @click="handleArticle(tagId)">{{ title }}</div>
-        <div class="follow">
-            <span>关注</span>
+            @click="handleArticle(tagName)">{{ title }}</div>
+        <div
+            class="follow"
+            @click="handleFollow(tagId)">
+            <span v-if="isFollow" :class="{'active': isFollow}">已关注</span>
+            <span v-else>关注</span>
         </div>
     </div>
 </template>
@@ -22,15 +25,24 @@ export default {
         title() {
             return this.item.title;
         },
+        tagName() {
+            return this.item.name;
+        },
         tagId() {
             return this.item._id;
+        },
+        isFollow() {
+            return this.item.isFollow;
         }
     },
     methods: {
-        handleArticle(tagId) {
+        handleArticle(tagName) {
             this.$router.push({
-                path: `/tag/${tagId}`
+                path: `/tag/${tagName}`
             });
+        },
+        handleFollow(tagId) {
+            this.$emit('doFollow', tagId);
         }
     }
 };

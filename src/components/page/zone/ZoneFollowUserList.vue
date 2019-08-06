@@ -1,10 +1,16 @@
 <template>
     <div
+        class="follow-user"
         slot="content">
         <div
             v-for="item in data"
-            :key="item._id">
-            {{item.followId.username}}
+            :key="item._id"
+            class="list">
+            <span
+                class="name"
+                @click="handleZone(item.followId._id)">
+                {{item.followId.username}}
+            </span>
         </div>
     </div>
 </template>
@@ -17,7 +23,8 @@ export default {
     name: 'ZoneFollowUserList',
     mixins: [ message ],
     props: {
-        type: String
+        type: String,
+        userId: String
     },
     components: {
     },
@@ -29,29 +36,24 @@ export default {
     watch: {
         type: {
             handler(n, o) {
-                this.getCollectList(n);
+                this.getCollectList();
             },
             immediate: true
         }
     },
     methods: {
-        getCollectList(type) {
-            api.followUserQuery().then((res) => {
+        getCollectList() {
+            const params = {
+                userId: this.userId,
+                type: 0
+            };
+            api.followQuery(params).then((res) => {
                 this.data = res.data;
             });
+        },
+        handleZone(userId) {
+            this.$router.push(`/zone/${userId}/article`);
         }
-        // handleDelete(row) {
-        //     const { _id } = row;
-        //     this.confirmWarning({
-        //         title: '提示',
-        //         content: '确认删除吗？'
-        //     }).then(() => {
-        //         api.articleDelete(_id).then(() => {
-        //             this.showSuccessMsg('删除成功！');
-        //             this.getArticleList(this.articleType);
-        //         });
-        //     }).catch(() => {});
-        // }
     }
 };
 </script>

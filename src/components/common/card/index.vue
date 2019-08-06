@@ -2,11 +2,6 @@
     <div class="card">
         <div class="card__title">
             <div class="tit">{{title}}</div>
-            <!-- <div
-                class="more"
-                @click="handleMore">
-                管理
-            </div> -->
             <slot name="menu"></slot>
         </div>
         <div class="card__content">

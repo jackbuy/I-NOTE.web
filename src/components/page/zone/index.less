@@ -1,6 +1,12 @@
 .zone{
     &__header{
+        margin-bottom: 15px;
+        background: #fff;
+    }
+    &__menu{
         font-size: 0;
+        background: #fff;
+        padding: 15px;
         margin-bottom: 15px;
         span{
             display: inline-block;
@@ -15,5 +21,19 @@
             }
         }
     }
-    &__content{}
+    &__content{
+        .follow-user{
+            .list{
+                background: #fff;
+                padding: 15px;
+                margin-bottom: 15px;
+                .name{
+                    cursor: pointer;
+                    &:hover{
+                        text-decoration: underline;
+                    }
+                }
+            }
+        }
+    }
 }

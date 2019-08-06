@@ -1,7 +1,6 @@
 <template>
     <div
         class="article-tag"
-        :class="{'active': tagName === activeTagName}"
         @click="handleArticle(tagName)">
         {{ title }}
     </div>
@@ -22,15 +21,12 @@ export default {
         },
         tagName() {
             return this.item.name;
-        },
-        activeTagName() {
-            return this.$route.params.tagName || 'all';
         }
     },
     methods: {
         handleArticle(tagName) {
             this.$router.push({
-                path: `/article/${tagName}`
+                path: `/tag/${tagName}`
             });
         }
     }

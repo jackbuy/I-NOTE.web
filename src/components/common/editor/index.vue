@@ -62,7 +62,6 @@ export default {
     },
     mounted() {
         this.$refs.quillEditor.quill.getModule('toolbar').addHandler('image', this.imgHandler);
-        console.dir(this.$refs.quillEditor.quill);
     },
     methods: {
         onEditorChange({ quill, html, text }) {

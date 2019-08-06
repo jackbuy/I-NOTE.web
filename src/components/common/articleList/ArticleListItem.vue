@@ -6,9 +6,7 @@
             <span>{{ username }}</span>
             <span :title="createTime">{{ editTime }}</span>
             <span>{{ tag }}</span>
-            <span v-if="supportCount > 0">赞：{{ supportCount }}次</span>
-            <span v-if="collectCount > 0">收藏：{{ collectCount }}次</span>
-            <span v-if="viewCount > 0">阅读：{{ viewCount }}次</span>
+            <span v-if="viewCount > 0">阅读 {{ viewCount }}</span>
         </div>
         <div class="article-list__item-title">
             <span @click="handleDetail(articleId)">{{ title }}</span>

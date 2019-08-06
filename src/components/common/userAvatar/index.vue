@@ -5,8 +5,8 @@
         </div>
         <div class="title">
             <div class="name">
-                {{ username }}
-                <span @click="handleFollow()">
+                <strong @click="handleZone(userId)">{{ username }}</strong>
+                <span v-if="userId !== mine" @click="handleFollow()">
                     <i v-if="!follow">+关注</i>
                     <i v-else>已关注</i>
                 </span>
@@ -30,16 +30,25 @@ export default {
         }
     },
     computed: {
+        mine() {
+            return localStorage.getItem('userId');
+        },
+        userId() {
+            return this.user._id;
+        },
         username() {
             return this.user.username;
         },
         userImg() {
-            return this.username.split('')[0].toUpperCase();
+            if (this.username) return this.username.split('')[0].toUpperCase();
         }
     },
     methods: {
         handleFollow() {
             this.$emit('doFollow');
+        },
+        handleZone(userId) {
+            this.$router.push(`/zone/${userId}/article`);
         }
     }
 };

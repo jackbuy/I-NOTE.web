@@ -2,12 +2,13 @@ import Vue from 'vue';
 import Router from 'vue-router';
 const Page404 = () => import('@/components/common/Page404');
 const Layout = () => import('@/components/common/layout/Layout');
-const Article = () => import('@/components/page/article');
+const Find = () => import('@/components/page/find');
 const Msg = () => import('@/components/page/msg');
 const Search = () => import('@/components/page/search/Search');
 const ArticleDetail = () => import('@/components/page/articleDetail');
 const articleAddEdit = () => import('@/components/page/articleAddEdit');
-const Tag = () => import('@/components/page/tag/Tag');
+const Tag = () => import('@/components/page/tag');
+const Article = () => import('@/components/page/article');
 const Zone = () => import('@/components/page/zone');
 
 Vue.use(Router);
@@ -20,12 +21,12 @@ export default new Router({
             children: [
                 {
                     path: '',
-                    redirect: '/article/all'
+                    redirect: '/find/newest'
                 },
                 {
-                    path: '/article/:tagName',
-                    name: 'article',
-                    component: Article,
+                    path: '/find/:sortType',
+                    name: 'find',
+                    component: Find,
                     meta: {title: '发现'}
                 },
                 {
@@ -56,7 +57,13 @@ export default new Router({
                     path: '/tag',
                     name: 'tag',
                     component: Tag,
-                    meta: {title: '标签-全部', requireAuth: true}
+                    meta: {title: '标签-管理'}
+                },
+                {
+                    path: '/tag/:tagName',
+                    name: 'article',
+                    component: Article,
+                    meta: {title: '标签-文章'}
                 },
                 {
                     path: '/msg',
@@ -68,7 +75,7 @@ export default new Router({
                     path: '/zone/:userId/:articleType',
                     name: 'zone',
                     component: Zone,
-                    meta: {title: '我的主页', requireAuth: true}
+                    meta: {title: '空间'}
                 }
             ]
         },

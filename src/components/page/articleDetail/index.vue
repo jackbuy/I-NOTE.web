@@ -1,11 +1,9 @@
 <template>
     <detail-layout>
-        <div class="article-detail" slot="content">
-            <div class="article-detail__title">
-                {{ title }}
-                <span v-if="currentUserId === userId" @click="handleRouterEdit(articleId)">编辑</span>
-            </div>
-            <UserAvatar
+        <div
+            class="article-author"
+            slot="author">
+            <user-avatar
                 v-if="userInfo"
                 :user="userInfo"
                 :follow="isFollow"
@@ -13,16 +11,46 @@
                 <div class="article-detail__info">
                     <span :title="createTime">{{ editTime }}</span>
                     <span>{{ tag }}</span>
-                    <span>浏览：{{ viewCount }}次</span>
+                    <span>浏览 {{ viewCount }}</span>
                 </div>
-            </UserAvatar>
+            </user-avatar>
+        </div>
+        <div class="article-detail__menu" slot="menu">
+            <button
+                :disabled="currentUserId === userId"
+                :class="{'active': isSupport}"
+                @click="handleSupport(isSupport)">
+                <i v-if="isSupport" class="icon icon-dianzan"></i>
+                <i v-else class="icon icon-dianzan-o"></i>
+                <span v-if="supportCount > 0">{{ supportCount }}</span>
+            </button>
+            <button
+                :disabled="currentUserId === userId"
+                :class="{'active': isCollect}"
+                @click="handleCollect(isCollect)">
+                <i v-if="isCollect" class="icon icon-like"></i>
+                <i v-else class="icon icon-like-o"></i>
+                <span v-if="collectCount > 0">{{ collectCount }}</span>
+            </button>
+        </div>
+        <div class="article-detail" slot="content">
+            <div class="article-detail__title">
+                {{ title }}
+                <span v-if="currentUserId === userId" @click="handleRouterEdit(articleId)">编辑</span>
+            </div>
             <div
                 v-highlight
                 v-html="content"
                 class="article-detail__content" >
             </div>
         </div>
-        <card slot="recommend" title="相关文章" v-model="recommendData">
+        <card slot="recommend" title="相关文章" v-model="recommendFilterData">
+            <article-recommend
+                v-for="item in recommendFilterData"
+                :key="item._id"
+                :item="item"
+                @doDetail="handleRecommend">
+            </article-recommend>
         </card>
     </detail-layout>
 </template>
@@ -31,16 +59,16 @@
 import DetailLayout from './layout';
 import Card from '@/components/common/card';
 import UserAvatar from '@/components/common/userAvatar';
+import ArticleRecommend from '@/components/common/articleRecommend';
 import api from '@/utils/api';
 import utils from '@/utils/utils';
-import ArticleCommon from '@/mixins/articleCommon';
 export default {
     name: 'ArticleDetail',
-    mixins: [ ArticleCommon ],
     components: {
         DetailLayout,
         Card,
-        UserAvatar
+        UserAvatar,
+        ArticleRecommend
     },
     data() {
         return {
@@ -79,28 +107,102 @@ export default {
         supportCount() {
             return this.detail.supportCount || 0;
         },
+        collectCount() {
+            return this.detail.collectCount || 0;
+        },
         viewCount() {
             return this.detail.viewCount || 0;
         },
         isFollow() {
             return this.detail.isFollow;
+        },
+        isSupport() {
+            return this.detail.isSupport;
+        },
+        isCollect() {
+            return this.detail.isCollect;
+        },
+        recommendFilterData() {
+            let arr = [];
+            this.recommendData.map((item) => {
+                if (item._id !== this.articleId) arr.push(item);
+            });
+            return arr;
+        },
+        // 当前登录用户Id
+        currentUserId() {
+            return localStorage.getItem('userId');
         }
     },
-    created() {
-        this.getDetail(this.articleId);
+    watch: {
+        articleId: {
+            handler(n, o) {
+                this.getDetail(n);
+            },
+            immediate: true
+        }
     },
     methods: {
         getDetail(articleId) {
             const params = { articleId };
             api.getDetail(params).then((res) => {
                 this.detail = res.data;
+                this.recommend(this.detail.tagName);
             });
         },
         // 关注
         handleFollow() {
-            api.followUser(this.userId).then(() => {
+            const params = {
+                followId: this.userId,
+                type: 0
+            };
+            api.follow(params).then(() => {
                 this.detail.isFollow = !this.detail.isFollow;
             });
+        },
+        // 收藏
+        handleCollect(type) {
+            api.articleCollect(this.articleId).then(() => {
+                if (!type) {
+                    this.detail.isCollect = true;
+                    this.detail.collectCount++;
+                } else {
+                    this.detail.isCollect = false;
+                    this.detail.collectCount--;
+                }
+            });
+        },
+        // 赞
+        handleSupport(type) {
+            api.articleSupport(this.articleId).then(() => {
+                if (!type) {
+                    this.detail.isSupport = true;
+                    this.detail.supportCount++;
+                } else {
+                    this.detail.isSupport = false;
+                    this.detail.supportCount--;
+                }
+            });
+        },
+        // 相关文章
+        recommend(tagName) {
+            const params = {
+                publish: true,
+                pageSize: 6,
+                currentPage: 1,
+                tagName
+            };
+            api.articleQuery(params).then((res) => {
+                this.recommendData = res.data;
+            });
+        },
+        // 详情
+        handleRecommend(articleId) {
+            this.$router.push(`/detail/${articleId}`);
+        },
+        // 编辑
+        handleRouterEdit(articleId) {
+            this.$router.push(`/write/${articleId}`);
         }
     }
 };

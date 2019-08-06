@@ -1,7 +1,55 @@
+.article-author{
+    margin-bottom: 15px;
+}
 .article-detail{
-    border: 1px solid #eee;
     padding: 15px;
     margin-bottom: 15px;
+    background: #fff;
+    &__menu{
+        position: fixed;
+        left: 50%;
+        top: 50%;
+        width: 50px;
+        margin-left: -560px;
+        margin-top: -60px;
+        button{
+            display: block;
+            width: 40px;
+            height: 40px;
+            line-height: 40px;
+            text-align: center;
+            background: #fff;
+            border-radius: 50%;
+            border-width: 0;
+            margin: 15px 0;
+            cursor: pointer;
+            color: #999;
+            position: relative;
+            box-shadow: 0 0 3px rgba(0, 0, 0, .1);
+            &.active{
+                color: #409EFF;
+            }
+            &[disabled]{
+                cursor: not-allowed;
+                color: #999;
+            }
+            span{
+                position: absolute;
+                right: -10px;
+                top: -5px;
+                background: #fff;
+                line-height: 1;
+                font-size: 12px;
+                padding: 1px 5px;
+                color: #fff;
+                background: #aaa;
+                border-radius: 10px;
+            }
+            i{
+                font-size: 16px !important;
+            }
+        }
+    }
     &__title{
         line-height: 1.4;
         padding: 10px 0 25px 0;

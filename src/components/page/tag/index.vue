@@ -4,7 +4,8 @@
             <tag-list-item
                 v-for="item in tagListData"
                 :key="item._id"
-                :item="item">
+                :item="item"
+                @doFollow="handleFollow">
             </tag-list-item>
         </tag-list>
     </tag-layout>
@@ -32,8 +33,26 @@ export default {
     },
     methods: {
         getArticleTag() {
-            api.tagQuery().then((res) => {
+            const params = {
+                pageSize: 1000,
+                currentPage: 1,
+                type: 0
+            };
+            api.tagQuery(params).then((res) => {
                 this.tagListData = res.data;
+            });
+        },
+        handleFollow(tagId) {
+            const params = {
+                followId: tagId,
+                type: 2
+            };
+            api.follow(params).then((res) => {
+                this.tagListData.map((item) => {
+                    if (item._id === tagId) {
+                        item.isFollow = !item.isFollow;
+                    }
+                });
             });
         }
     }

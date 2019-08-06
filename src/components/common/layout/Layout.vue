@@ -21,6 +21,7 @@
         </layout-content>
         <!-- <layout-footer>footer</layout-footer> -->
         <login></login>
+        <el-backtop></el-backtop>
     </layout>
 </template>
 
@@ -57,6 +58,11 @@ export default {
                     title: '发现',
                     url: '/'
                 },
+                // {
+                //     id: 14,
+                //     title: '专题',
+                //     url: '/'
+                // },
                 {
                     id: 2,
                     title: '消息',

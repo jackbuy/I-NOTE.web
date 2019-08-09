@@ -23,12 +23,12 @@
             <el-form-item
                 v-if="form.publish"
                 label="标签">
-                <el-select v-model="form.tagName" filterable placeholder="请选择 ( 可搜索 )">
+                <el-select v-model="form.tagId" filterable placeholder="请选择 ( 可搜索 )">
                     <el-option
                         v-for="item in tagOptions"
-                        :key="item.name"
+                        :key="item._id"
                         :label="item.title"
-                        :value="item.name">
+                        :value="item._id">
                     </el-option>
                 </el-select>
             </el-form-item>
@@ -66,7 +66,7 @@ export default {
                 contentText: '',
                 contentHtml: '',
                 publish: false,
-                tagName: ''
+                tagId: ''
             },
             tagOptions: [],
             rules: {
@@ -91,7 +91,7 @@ export default {
                     contentText: '',
                     contentHtml: '',
                     publish: false,
-                    tagName: ''
+                    tagId: ''
                 };
             }
         }
@@ -103,13 +103,13 @@ export default {
     methods: {
         getDetail(articleId) {
             api.getDetail({ articleId }).then((res) => {
-                const { title, contentText, contentHtml, publish, tagName } = res.data;
+                const { title, contentText, contentHtml, publish, tagId } = res.data;
                 this.form = {
                     title,
                     contentText,
                     contentHtml,
                     publish,
-                    tagName
+                    tagId
                 };
             });
         },

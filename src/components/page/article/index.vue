@@ -54,12 +54,12 @@ export default {
         };
     },
     computed: {
-        tagName() {
-            return this.$route.params.tagName;
+        tagId() {
+            return this.$route.params.tagId;
         }
     },
     watch: {
-        tagName: {
+        tagId: {
             handler(n, o) {
                 this.getArticleList(n);
             },
@@ -69,12 +69,12 @@ export default {
     methods: {
         // 滚动条到底部，异步加载数据
         scrollToBottomLoadData() {
-            if (!this.isLoadFinish && !this.isLoadMore) this.getArticleList(this.tagName);
+            if (!this.isLoadFinish && !this.isLoadMore) this.getArticleList(this.tagId);
         },
-        getArticleList(tagName, loadType = 'loadMore') {
+        getArticleList(tagId, loadType = 'loadMore') {
             const params = {
                 publish: true,
-                tagName,
+                tagId,
                 pageSize: this.pageConfig.pageSize,
                 currentPage: this.pageConfig.currentPage++
             };

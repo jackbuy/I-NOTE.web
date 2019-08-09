@@ -60,7 +60,7 @@ export default new Router({
                     meta: { title: '标签-管理' }
                 },
                 {
-                    path: '/tag/:tagName',
+                    path: '/tag/:tagId',
                     name: 'article',
                     component: Article,
                     meta: { title: '标签-文章' }

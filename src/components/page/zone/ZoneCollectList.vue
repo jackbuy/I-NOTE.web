@@ -1,5 +1,6 @@
 <template>
     <article-list
+        v-if="articleData.length > 0"
         :load-more="isLoadMore"
         :no-more="isLoadFinish"
         :data="articleData">
@@ -107,7 +108,7 @@ export default {
             }).then(() => {
                 api.articleCollect(_id).then(() => {
                     this.showSuccessMsg('删除成功！');
-                    this.getCollectList();
+                    this.refresh('collect');
                 });
             }).catch(() => {});
         }

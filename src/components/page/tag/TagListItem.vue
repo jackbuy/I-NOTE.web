@@ -2,7 +2,7 @@
     <div class="tag-content-list-item">
         <div
             class="title"
-            @click="handleArticle(tagName)">{{ title }}</div>
+            @click="handleArticle(tagId)">{{ title }}</div>
         <div
             class="follow"
             @click="handleFollow(tagId)">
@@ -25,9 +25,6 @@ export default {
         title() {
             return this.item.title;
         },
-        tagName() {
-            return this.item.name;
-        },
         tagId() {
             return this.item._id;
         },
@@ -36,9 +33,9 @@ export default {
         }
     },
     methods: {
-        handleArticle(tagName) {
+        handleArticle(tagId) {
             this.$router.push({
-                path: `/tag/${tagName}`
+                path: `/tag/${tagId}`
             });
         },
         handleFollow(tagId) {

@@ -102,7 +102,7 @@ export default {
             return `${utils.formatDate.time(this.detail.editTime)}`;
         },
         tag() {
-            return this.detail.tagName;
+            if (this.detail.tagId) return this.detail.tagId.title;
         },
         supportCount() {
             return this.detail.supportCount || 0;

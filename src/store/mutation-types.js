@@ -8,3 +8,5 @@ export const OPEN_LOGIN_MODAL = 'OPEN_LOGIN_MODAL';
 export const GET_USER_INFO = 'GET_USER_INFO';
 // 获取所有Message
 export const MESSAGE_QUERY = 'MESSAGE_QUERY';
+// 隐藏面包屑
+export const HIDDEN_BREADCRUMB = 'HIDDEN_BREADCRUMB';

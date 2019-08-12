@@ -76,25 +76,23 @@ export default {
         }
     },
     methods: {
-        refresh(type) {
+        refresh() {
             this.pageConfig.currentPage = 1;
             this.articleData = [];
             this.isLoadFinish = false;
-            this.getArticleList(type, 'load');
+            this.getArticleList('load');
         },
         // 滚动条到底部，异步加载数据
         scrollToBottomLoadData() {
-            if (!this.isLoadFinish && !this.isLoadMore) this.getArticleList(this.type);
+            if (!this.isLoadFinish && !this.isLoadMore) this.getArticleList();
         },
-        getArticleList(type, loadType = 'loadMore') {
+        getArticleList(loadType = 'loadMore') {
             const params = {
                 publish: true,
                 userId: this.userId,
-                type,
                 pageSize: this.pageConfig.pageSize,
                 currentPage: this.pageConfig.currentPage++
             };
-            if (type === 'draft') params.publish = false;
             this.isLoadMore = true;
             api.articleQuery(params).then((res) => {
                 this.pageConfig.total = res.total;
@@ -118,8 +116,7 @@ export default {
                 content: '确认删除吗？'
             }).then(() => {
                 api.articleDelete(_id).then(() => {
-                    let type = this.type === 'draft' ? 'draft' : 'article';
-                    this.refresh(type);
+                    this.refresh();
                     this.showSuccessMsg('删除成功！');
                 });
             }).catch(() => {});

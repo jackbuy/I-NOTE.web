@@ -19,5 +19,8 @@ export default {
             open: true,
             type: 'login'
         };
+    },
+    [C.HIDDEN_BREADCRUMB](state, payload) {
+        state.isHiddenBreadcrumb = payload;
     }
 };

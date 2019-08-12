@@ -13,7 +13,7 @@
             <layout-header-user></layout-header-user>
         </layout-header>
         <layout-content>
-            <breadcrumb></breadcrumb>
+            <breadcrumb v-if="!isHiddenBreadcrumb"></breadcrumb>
             <keep-alive>
                 <router-view v-if="$route.meta.keepAlive"></router-view>
             </keep-alive>
@@ -26,6 +26,8 @@
 </template>
 
 <script>
+import { mapState, mapMutations } from 'vuex';
+import { HIDDEN_BREADCRUMB } from '@/store/mutation-types';
 import Layout from './src/LayoutMain';
 import LayoutHeader from './src/LayoutHeader';
 import LayoutHeaderLogo from './src/LayoutHeaderLogo';
@@ -71,7 +73,23 @@ export default {
             ]
         };
     },
+    watch: {
+        $route: {
+            handler(to, from) {
+                // 新增、编辑文章时，隐藏面包屑
+                if (to.path.split('/')[1] === 'write') {
+                    this.hiddenBreadcrumb(true);
+                } else {
+                    this.hiddenBreadcrumb(false);
+                }
+            },
+            immediate: true
+        }
+    },
     computed: {
+        ...mapState({
+            isHiddenBreadcrumb: state => state.isHiddenBreadcrumb
+        }),
         isLogin() {
             if (localStorage.getItem('userId') && localStorage.getItem('token')) return true;
         },
@@ -80,6 +98,9 @@ export default {
         }
     },
     methods: {
+        ...mapMutations({
+            hiddenBreadcrumb: HIDDEN_BREADCRUMB
+        }),
         handleSearch(keyword) {
             if (keyword.length > 0) {
                 this.$router.push({

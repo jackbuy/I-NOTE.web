@@ -9,7 +9,7 @@
             <span v-if="viewCount > 0">浏览 {{ viewCount }}</span>
         </div>
         <div class="article-list__item-title">
-            <span v-if="title" @click="handleDetail(articleId)">{{ title }}</span>
+            <span v-if="title || title.length === 0" @click="handleDetail(articleId)">{{ title ? title : '无标题' }}</span>
             <del v-else style="color: #ccc;">文章已被作者删除</del>
         </div>
         <div class="article-list__item-action">

@@ -8,22 +8,6 @@
             :item="scope.row">
             <template slot-scope="scopeInner">
                 <button
-                    :disabled="scopeInner.row.userId._id === currentUserId"
-                    :class="{'active': scopeInner.row.isSupport}"
-                    @click="handleSupport(scopeInner.row._id, scopeInner.row.isSupport)">
-                    <i v-if="scopeInner.row.isSupport" class="icon icon-dianzan"></i>
-                    <i v-else class="icon icon-dianzan-o"></i>
-                    {{ scopeInner.row.supportCount > 0 ? scopeInner.row.supportCount : '' }}
-                </button>
-                <button
-                    :disabled="scopeInner.row.userId._id === currentUserId"
-                    :class="{'active': scopeInner.row.isCollect}"
-                    @click="handleCollect(scopeInner.row._id, scopeInner.row.isCollect)">
-                    <i v-if="scopeInner.row.isCollect" class="icon icon-like"></i>
-                    <i v-else class="icon icon-like-o"></i>
-                    {{ scopeInner.row.collectCount > 0 ? scopeInner.row.collectCount : '' }}
-                </button>
-                <button
                     v-if="scopeInner.row.userId._id === currentUserId"
                     @click="handleEdit(scopeInner.row)">
                     <i class="el-icon-edit"></i>
@@ -45,12 +29,8 @@ import articleListCommon from '@/mixins/articleListCommon';
 import api from '@/utils/api';
 
 export default {
-    name: 'ZoneArticleList',
+    name: 'Search',
     mixins: [ articleListCommon ],
-    props: {
-        type: String,
-        userId: String
-    },
     components: {
         ArticleList,
         ArticleListItem
@@ -59,7 +39,7 @@ export default {
         return {
             articleData: [],
             pageConfig: {
-                pageSize: 15,
+                pageSize: 5,
                 currentPage: 1,
                 total: 0
             },
@@ -67,34 +47,26 @@ export default {
             isLoadFinish: false // 是否加载完成
         };
     },
-    watch: {
-        type: {
-            handler(n, o) {
-                this.refresh(n);
-            },
-            immediate: true
-        }
+    created() {
+        this.getArticleList();
     },
     methods: {
-        refresh(type) {
+        refresh() {
             this.pageConfig.currentPage = 1;
             this.articleData = [];
             this.isLoadFinish = false;
-            this.getArticleList(type, 'load');
+            this.getArticleList('load');
         },
         // 滚动条到底部，异步加载数据
         scrollToBottomLoadData() {
-            if (!this.isLoadFinish && !this.isLoadMore) this.getArticleList(this.type);
+            if (!this.isLoadFinish && !this.isLoadMore) this.getArticleList();
         },
-        getArticleList(type, loadType = 'loadMore') {
+        getArticleList(loadType = 'loadMore') {
             const params = {
-                publish: true,
-                userId: this.userId,
-                type,
+                publish: false,
                 pageSize: this.pageConfig.pageSize,
                 currentPage: this.pageConfig.currentPage++
             };
-            if (type === 'draft') params.publish = false;
             this.isLoadMore = true;
             api.articleQuery(params).then((res) => {
                 this.pageConfig.total = res.total;
@@ -118,8 +90,7 @@ export default {
                 content: '确认删除吗？'
             }).then(() => {
                 api.articleDelete(_id).then(() => {
-                    let type = this.type === 'draft' ? 'draft' : 'article';
-                    this.refresh(type);
+                    this.refresh();
                     this.showSuccessMsg('删除成功！');
                 });
             }).catch(() => {});

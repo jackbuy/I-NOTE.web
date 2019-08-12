@@ -1,86 +1,67 @@
 <template>
-    <div>
-        <el-form
-            ref="form"
-            :model="form"
-            :rules="rules"
-            label-width="50px">
-            <el-form-item
-                prop="title"
-                label="标题">
-                <el-input
-                    v-model="form.title"
-                    placeholder="请输入标题"></el-input>
-            </el-form-item>
-            <el-form-item
-                label="发布">
-                <el-switch
-                    v-model="form.publish"
-                    active-color="#13ce66"
-                    inactive-color="#ccc">
-                </el-switch>
-            </el-form-item>
-            <el-form-item
-                v-if="form.publish"
-                label="标签">
-                <el-select v-model="form.tagId" filterable placeholder="请选择 ( 可搜索 )">
-                    <el-option
-                        v-for="item in tagOptions"
-                        :key="item._id"
-                        :label="item.title"
-                        :value="item._id">
-                    </el-option>
-                </el-select>
-            </el-form-item>
-            <el-form-item
-                label="内容">
-                <editor
-                    v-model="form.contentHtml"
-                    @get-text="handleGetText"></editor>
-            </el-form-item>
-            <el-form-item>
+    <div class="write">
+        <div class="write__header">
+            <span v-if="!isPublish">
+                <span v-if="articleId" class="label">已保存到</span>
+                <span v-else-if="isSaving" class="label">保存中...</span>
+                <span v-else class="label">文章将自动保存到</span>
                 <el-button
-                    type="primary"
-                    @click="handleSave">
-                    保存
-                </el-button>
-            </el-form-item>
-        </el-form>
+                    @click="handleRouterDraft">草稿</el-button>
+            </span>
+            <span v-if="isPublish">
+                <span v-if="isSaving" class="label">保存中...</span>
+                <span v-else class="label">已保存</span>
+            </span>
+            <!-- <el-button
+                @click="handleRouterDraft">发布</el-button> -->
+            <el-popover
+                placement="bottom"
+                title="标题"
+                width="200"
+                trigger="click"
+                content="这是一段内容,这是一段内容,这是一段内容,这是一段内容。">
+                <el-button slot="reference">发布</el-button>
+            </el-popover>
+
+        </div>
+        <div class="write__title">
+            <input
+                v-model="form.title"
+                type="text"
+                placeholder="输入标题...">
+        </div>
+        <editor
+            placeholder="输入正文..."
+            v-model="form.contentHtml"></editor>
     </div>
 </template>
 
 <script>
 import Editor from '@/components/common/editor';
-import message from '@/mixins/message';
 import api from '@/utils/api';
 export default {
     name: 'ArticleAdd',
     components: {
         Editor
     },
-    mixins: [ message ],
     data() {
         return {
             form: {
                 title: '',
-                contentText: '',
                 contentHtml: '',
                 publish: false,
                 tagId: ''
             },
             tagOptions: [],
-            rules: {
-                title: [
-                    {
-                        required: true, message: '必填'
-                    }
-                ]
-            }
+            isSaving: false
         };
     },
     computed: {
         articleId() {
             return this.$route.params.articleId;
+        },
+        isPublish() {
+            return this.form.publish;
         }
     },
     watch: {
@@ -88,53 +69,65 @@ export default {
             if (to.path === '/write') {
                 this.form = {
                     title: '',
-                    contentText: '',
                     contentHtml: '',
                     publish: false,
                     tagId: ''
                 };
             }
+        },
+        form: {
+            handler(n, o) {
+                this.handleSave();
+                // if (!this.isSaving) {
+                // }
+            },
+            deep: true
         }
     },
     created() {
         if (this.articleId) this.getDetail(this.articleId);
-        this.getArticleTag();
+        // this.getArticleTag();
+    },
+    mounted() {
+        window.addEventListener('resize', this.setEditorHeight);
+        this.setEditorHeight();
+    },
+    destroyed() {
+        window.removeEventListener('resize', this.setEditorHeight);
     },
     methods: {
+        // 设置编辑器高度
+        setEditorHeight() {
+            let edit = document.getElementsByClassName('ql-container ql-snow')[0];
+            edit.style.height = window.innerHeight - 202 - 12 + 'px';
+        },
         getDetail(articleId) {
             api.getDetail({ articleId }).then((res) => {
-                const { title, contentText, contentHtml, publish, tagId } = res.data;
+                const { contentHtml, publish, tagId, title } = res.data;
                 this.form = {
-                    title,
-                    contentText,
                     contentHtml,
                     publish,
+                    title,
                     tagId
                 };
             });
         },
         handleSave() {
-            this.$refs.form.validate((valid) => {
-                if (valid) {
-                    const params = {
-                        ...this.form
-                    };
-                    if (this.articleId) {
-                        api.articleEdit(this.articleId, params).then(() => {
-                            this.showSuccessMsg('保存成功！');
-                        });
-                    } else {
-                        api.articleAdd(params).then((res) => {
-                            const { articleId } = res.data;
-                            this.$router.push(`/write/${articleId}`);
-                            this.showSuccessMsg('保存成功！');
-                        });
-                    }
-                }
-            });
-        },
-        handleGetText(text) {
-            this.form.contentText = text;
+            const params = {
+                ...this.form
+            };
+            this.isSaving = true;
+            if (this.articleId) {
+                api.articleEdit(this.articleId, params).then(() => {
+                    this.isSaving = false;
+                });
+            } else {
+                api.articleAdd(params).then((res) => {
+                    const { articleId } = res.data;
+                    this.$router.push(`/write/${articleId}`);
+                    this.isSaving = false;
+                });
+            }
         },
         getArticleTag() {
             const params = {
@@ -144,7 +137,14 @@ export default {
             api.tagQuery(params).then((res) => {
                 this.tagOptions = res.data;
             });
+        },
+        handleRouterDraft() {
+            this.$router.push('/article/draft');
         }
     }
 };
 </script>
+
+<style lang="less">
+@import './index.less';
+</style>

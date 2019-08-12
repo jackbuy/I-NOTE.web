@@ -9,6 +9,7 @@ const Detail = () => import('@/components/page/detail');
 const Write = () => import('@/components/page/write');
 const Tag = () => import('@/components/page/tag');
 const Article = () => import('@/components/page/article');
+const Draft = () => import('@/components/page/draft');
 const Zone = () => import('@/components/page/zone');
 
 Vue.use(Router);
@@ -64,6 +65,12 @@ export default new Router({
                     name: 'article',
                     component: Article,
                     meta: { title: '标签-文章' }
+                },
+                {
+                    path: '/article/draft',
+                    name: 'draft',
+                    component: Draft,
+                    meta: { title: '草稿' }
                 },
                 {
                     path: '/msg',

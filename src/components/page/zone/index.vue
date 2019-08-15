@@ -71,10 +71,6 @@ export default {
                     type: 'article',
                     title: '文章'
                 },
-                // {
-                //     type: 'draft',
-                //     title: '草稿'
-                // },
                 {
                     type: 'collect',
                     title: '收藏'

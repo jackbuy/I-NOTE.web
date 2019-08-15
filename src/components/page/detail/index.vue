@@ -147,7 +147,7 @@ export default {
             const params = { articleId };
             api.getDetail(params).then((res) => {
                 this.detail = res.data;
-                this.recommend(this.detail.tagName);
+                this.recommend(this.detail.tagId._id);
             });
         },
         // 关注
@@ -185,12 +185,12 @@ export default {
             });
         },
         // 相关文章
-        recommend(tagName) {
+        recommend(tagId) {
             const params = {
                 publish: true,
                 pageSize: 6,
                 currentPage: 1,
-                tagName
+                tagId
             };
             api.articleQuery(params).then((res) => {
                 this.recommendData = res.data;

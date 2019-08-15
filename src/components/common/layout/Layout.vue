@@ -3,14 +3,15 @@
         <layout-header>
             <layout-header-logo></layout-header-logo>
             <layout-header-menu
-                v-if="menuDate.length > 0"
+                v-if="menuDate.length > 0 && !isHiddenBreadcrumb"
                 :data="menuDate"
                 @push="handleRouterPush">
             </layout-header-menu>
             <layout-header-search
+                v-if="!isHiddenBreadcrumb"
                 @search="handleSearch">
             </layout-header-search>
-            <layout-header-user></layout-header-user>
+            <layout-header-user :is-write="isHiddenBreadcrumb"></layout-header-user>
         </layout-header>
         <layout-content>
             <breadcrumb v-if="!isHiddenBreadcrumb"></breadcrumb>

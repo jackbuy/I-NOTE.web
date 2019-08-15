@@ -5,7 +5,8 @@
             <span @click="handleLog('register')">注册</span>
         </div>
         <div v-else>
-            <span @click="handleRoutePush('/write')"><i class="el-icon-circle-plus-outline"></i> 写文章</span>
+            <span v-if="!isWrite" @click="handleRoutePush('/write')"><i class="el-icon-circle-plus-outline"></i> 写文章</span>
+            <span v-else @click="handleRoutePush('/article/draft')"><i class="el-icon-suitcase"></i> 草稿箱</span>
             <span @click="handleRoutePush(`/zone/${userId}/article`)">{{ userName }}</span>
             <el-dropdown @command="handleCommand">
                 <span class="el-dropdown-link">
@@ -28,6 +29,9 @@ import {
 } from '@/store/mutation-types';
 export default {
     name: 'LayoutHeaderUser',
+    props: {
+        isWrite: Boolean
+    },
     computed: {
         ...mapState({
             userInfo: state => state.userInfo

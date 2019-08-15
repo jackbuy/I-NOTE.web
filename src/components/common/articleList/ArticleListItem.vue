@@ -5,12 +5,11 @@
         <div class="article-list__item-header">
             <span>{{ username }}</span>
             <span :title="createTime">{{ editTime }}</span>
-            <span>{{ tag }}</span>
-            <span v-if="viewCount > 0">浏览 {{ viewCount }}</span>
+            <span v-if="publish">{{ tag }}</span>
+            <span v-if="publish && viewCount > 0">浏览 {{ viewCount }}</span>
         </div>
         <div class="article-list__item-title">
-            <span v-if="title || title.length === 0" @click="handleDetail(articleId)">{{ title ? title : '无标题' }}</span>
-            <del v-else style="color: #ccc;">文章已被作者删除</del>
+            <span @click="handleDetail(articleId)">{{ title }}</span>
         </div>
         <div class="article-list__item-action">
             <slot :row="item"></slot>
@@ -34,7 +33,14 @@ export default {
             if (this.item && this.item.userId) return this.item.userId.username;
         },
         title() {
-            if (this.item) return this.item.title;
+            if (this.item && this.item.title) {
+                return this.item.title;
+            } else {
+                return '无标题';
+            }
+        },
+        publish() {
+            if (this.item) return this.item.publish;
         },
         articleId() {
             if (this.item) return this.item._id || '';
@@ -62,9 +68,8 @@ export default {
     },
     methods: {
         handleDetail(articleId) {
-            this.$router.push({
-                path: `/detail/${articleId}`
-            });
+            let path = this.publish ? `/detail/${articleId}` : `/write/${articleId}`;
+            this.$router.push({ path });
         }
     }
 };

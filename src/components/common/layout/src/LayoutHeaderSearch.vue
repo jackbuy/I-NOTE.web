@@ -67,6 +67,7 @@ export default {
     },
     methods: {
         handleSearch($event) {
+            if (!this.keyword) return;
             event.target.blur();
             this.addHistoryKeywordList(this.keyword);
             this.$emit('search', this.keyword);

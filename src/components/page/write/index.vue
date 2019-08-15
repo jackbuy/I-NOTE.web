@@ -1,28 +1,50 @@
 <template>
     <div class="write">
         <div class="write__header">
-            <span v-if="!isPublish">
-                <span v-if="articleId" class="label">已保存到</span>
-                <span v-else-if="isSaving" class="label">保存中...</span>
-                <span v-else class="label">文章将自动保存到</span>
-                <el-button
-                    @click="handleRouterDraft">草稿</el-button>
+            <span>
+                <span class="label">{{ tips }}</span>
             </span>
-            <span v-if="isPublish">
-                <span v-if="isSaving" class="label">保存中...</span>
-                <span v-else class="label">已保存</span>
-            </span>
-            <!-- <el-button
-                @click="handleRouterDraft">发布</el-button> -->
             <el-popover
                 placement="bottom"
-                title="标题"
-                width="200"
-                trigger="click"
-                content="这是一段内容,这是一段内容,这是一段内容,这是一段内容。">
-                <el-button slot="reference">发布</el-button>
+                width="210"
+                v-model="visible">
+                <div>
+                    <div>
+                        <span class="publish-title">是否发布：</span>
+                        <el-switch
+                            v-model="form.publish"
+                            inactive-icon-class="inactive"
+                            active-color="#13ce66"
+                            inactive-color="#ccc">
+                        </el-switch>
+                    </div>
+                    <el-select
+                        v-if="form.publish"
+                        v-model="form.tagId"
+                        :popper-append-to-body="false"
+                        class="mt15"
+                        clearable
+                        filterable
+                        placeholder="选择一个标签( 可搜索 )">
+                        <el-option
+                            v-for="item in tagOptions"
+                            :key="item._id"
+                            :label="item.title"
+                            :value="item._id">
+                        </el-option>
+                    </el-select>
+                    <el-button
+                        :disabled="!isEditor"
+                        class="mt15"
+                        size="mini"
+                        type="primary"
+                        @click="handlePublish">确定</el-button>
+                </div>
+                <el-button
+                    size="mini"
+                    slot="reference">
+                    {{ editorStatus }} 保存<i class="el-icon-arrow-down el-icon--right"></i></el-button>
             </el-popover>
-
         </div>
         <div class="write__title">
             <input
@@ -38,12 +60,14 @@
 
 <script>
 import Editor from '@/components/common/editor';
+import message from '@/mixins/message';
 import api from '@/utils/api';
 export default {
     name: 'ArticleAdd',
     components: {
         Editor
     },
+    mixins: [ message ],
     data() {
         return {
             form: {
@@ -53,7 +77,10 @@ export default {
                 tagId: ''
             },
             tagOptions: [],
-            isSaving: false
+            isSaving: false,
+            isEditor: false,
+            isLoadDetail: false, // 详情内容是否加载完
+            visible: false
         };
     },
     computed: {
@@ -62,31 +89,29 @@ export default {
         },
         isPublish() {
             return this.form.publish;
+        },
+        tips() {
+            if (this.isSaving) {
+                return '保存中...';
+            } else {
+                return '未发布的文章，将保存到 “草稿箱”';
+            }
+        },
+        editorStatus() {
+            if (this.isEditor) return '*';
         }
     },
     watch: {
-        $route(to, from) {
-            if (to.path === '/write') {
-                this.form = {
-                    title: '',
-                    contentHtml: '',
-                    publish: false,
-                    tagId: ''
-                };
-            }
-        },
         form: {
             handler(n, o) {
-                this.handleSave();
-                // if (!this.isSaving) {
-                // }
+                if (o) this.isEditor = true;
             },
             deep: true
         }
     },
     created() {
         if (this.articleId) this.getDetail(this.articleId);
-        // this.getArticleTag();
+        this.getArticleTag();
     },
     mounted() {
         window.addEventListener('resize', this.setEditorHeight);
@@ -101,8 +126,13 @@ export default {
             let edit = document.getElementsByClassName('ql-container ql-snow')[0];
             edit.style.height = window.innerHeight - 202 - 12 + 'px';
         },
+        handlePublish() {
+            if (this.form.title.length === 0) return this.showWarningMsg('请输入标题');
+            if (this.form.publish && !this.form.tagId) return this.showWarningMsg('请选择标签');
+            this.handleSave();
+        },
         getDetail(articleId) {
-            api.getDetail({ articleId }).then((res) => {
+            api.getDetail({ articleId, isEdit: true }).then((res) => {
                 const { contentHtml, publish, tagId, title } = res.data;
                 this.form = {
                     contentHtml,
@@ -110,6 +140,8 @@ export default {
                     title,
                     tagId
                 };
+            }).then(() => {
+                this.isLoadDetail = true;
             });
         },
         handleSave() {
@@ -118,13 +150,21 @@ export default {
             };
             this.isSaving = true;
             if (this.articleId) {
-                api.articleEdit(this.articleId, params).then(() => {
+                api.articleEdit(this.articleId, params).then((res) => {
+                    this.isEditor = false;
+                    this.visible = false;
+                    this.isSaving = false;
+                }).catch(() => {
                     this.isSaving = false;
                 });
             } else {
                 api.articleAdd(params).then((res) => {
+                    this.isEditor = false; // 关闭提示
                     const { articleId } = res.data;
                     this.$router.push(`/write/${articleId}`);
+                    this.visible = false;
+                    this.isSaving = false;
+                }).catch(() => {
                     this.isSaving = false;
                 });
             }
@@ -137,9 +177,6 @@ export default {
             api.tagQuery(params).then((res) => {
                 this.tagOptions = res.data;
             });
-        },
-        handleRouterDraft() {
-            this.$router.push('/article/draft');
         }
     }
 };

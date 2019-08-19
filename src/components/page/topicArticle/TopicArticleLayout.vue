@@ -1,10 +1,10 @@
 <template>
-    <div class="home">
-        <div class="home-content">
+    <div class="topic-article">
+        <div class="topic-article__content">
             <slot name="header"></slot>
             <slot name="content"></slot>
         </div>
-        <div class="home-side">
+        <div class="topic-article__side">
             <slot name="tag"></slot>
             <slot name="topic"></slot>
             <slot name="author"></slot>
@@ -13,5 +13,5 @@
 </template>
 
 <style lang="less">
-@import './homeLayout.less';
+@import './index.less';
 </style>

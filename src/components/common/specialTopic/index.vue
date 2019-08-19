@@ -1,8 +1,7 @@
 <template>
     <div
         class="special-topic"
-        :class="{'active': tagName === activeTagName}"
-        @click="handleArticle(tagName)">
+        @click="handleRouterPush(id)">
         <div class="img" :style="{backgroundImage: 'url(' + img + ')'}"></div>
         <div class="title">{{ title }}</div>
     </div>
@@ -18,23 +17,20 @@ export default {
         }
     },
     computed: {
+        id(id) {
+            return this.item._id;
+        },
         title() {
             return this.item.title;
         },
         img() {
             return this.item.img;
-        },
-        tagName() {
-            return this.item.name;
-        },
-        activeTagName() {
-            return this.$route.params.tagName || 'all';
         }
     },
     methods: {
-        handleArticle(tagName) {
+        handleRouterPush(id) {
             this.$router.push({
-                path: `/article/${tagName}`
+                path: `/topic/${id}`
             });
         }
     }

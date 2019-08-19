@@ -68,6 +68,10 @@ export default {
             userInfo: {},
             headerTabData: [
                 {
+                    type: 'active',
+                    title: '动态'
+                },
+                {
                     type: 'article',
                     title: '文章'
                 },
@@ -75,14 +79,14 @@ export default {
                     type: 'collect',
                     title: '收藏'
                 },
-                // {
-                //     type: 'topic',
-                //     title: '专题'
-                // },
-                // {
-                //     type: 'followTopic',
-                //     title: '关注的专题'
-                // },
+                {
+                    type: 'topic',
+                    title: '专题'
+                },
+                {
+                    type: 'followTopic',
+                    title: '关注的专题'
+                },
                 {
                     type: 'followUser',
                     title: '关注的人'

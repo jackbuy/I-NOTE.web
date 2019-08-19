@@ -5,16 +5,24 @@
             <span @click="handleLog('register')">注册</span>
         </div>
         <div v-else>
-            <span v-if="!isWrite" @click="handleRoutePush('/write')"><i class="el-icon-circle-plus-outline"></i> 写文章</span>
-            <span v-else @click="handleRoutePush('/article/draft')"><i class="el-icon-suitcase"></i> 草稿箱</span>
-            <span @click="handleRoutePush(`/zone/${userId}/article`)">{{ userName }}</span>
-            <el-dropdown @command="handleCommand">
+            <el-dropdown v-if="!isWrite" @command="handleCommand">
                 <span class="el-dropdown-link">
-                    <i class="el-icon-more el-icon--right"></i>
+                    <i class="el-icon-plus"></i>
                 </span>
                 <el-dropdown-menu slot="dropdown">
-                    <el-dropdown-item command="ww">设置</el-dropdown-item>
-                    <el-dropdown-item command="loginOut">退出</el-dropdown-item>
+                    <el-dropdown-item command="article">写文章</el-dropdown-item>
+                    <el-dropdown-item command="topic">创建专题</el-dropdown-item>
+                </el-dropdown-menu>
+            </el-dropdown>
+            <!-- <span v-else @click="handleRoutePush('/article/draft')"><i class="el-icon-suitcase"></i> 草稿箱</span> -->
+            <el-dropdown @command="handleCommand">
+                <span class="el-dropdown-link">
+                    {{ userName }}
+                </span>
+                <el-dropdown-menu slot="dropdown">
+                    <el-dropdown-item command="zone">我的空间</el-dropdown-item>
+                    <!-- <el-dropdown-item command="ww">设置</el-dropdown-item> -->
+                    <el-dropdown-item divided command="loginOut">退出</el-dropdown-item>
                 </el-dropdown-menu>
             </el-dropdown>
         </div>
@@ -76,7 +84,9 @@ export default {
         },
         handleCommand(command) {
             if (command === 'loginOut') this.handleLogOut();
-            // if (command === 'zone') this.handleRoutePush(`/zone/${this.userId}/article`);
+            if (command === 'article') this.handleRoutePush(`/write`);
+            if (command === 'topic') this.handleRoutePush(`/topicAdd`);
+            if (command === 'zone') this.handleRoutePush(`/zone/${this.userId}/article`);
         }
     }
 };

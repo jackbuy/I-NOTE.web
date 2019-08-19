@@ -44,8 +44,9 @@
                 class="article-detail__content" >
             </div>
         </div>
-        <card slot="recommend" icon="icon icon-wenzhang" title="相关文章" v-model="recommendFilterData">
+        <card slot="recommend" icon="icon icon-wenzhang" title="相关文章">
             <article-recommend
+                slot="content"
                 v-for="item in recommendFilterData"
                 :key="item._id"
                 :item="item"

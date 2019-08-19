@@ -32,28 +32,36 @@
                 </template>
             </article-list-item>
         </article-list>
-        <card slot="tag" icon="icon icon-bq" title="标签" v-model="articleTagData">
+        <card slot="tag" icon="icon icon-bq" title="热门标签">
             <div slot="menu" class="menu">
-                <span @click="handleRouterTag">全部</span>
+                <span @click="handleRouterPush('/tag')">全部</span>
             </div>
             <article-tag
                 slot="content"
-                v-for="item in articleTagData"
+                v-for="item in tagRecommendData"
                 :key="item._id"
                 :item="item">
             </article-tag>
         </card>
-        <!-- <card slot="specialTopic" title="专题" v-model="specialTopicData">
+        <card slot="topic" icon="icon icon-bq" title="专题榜">
             <div slot="menu" class="menu">
-                <span>全部</span>
+                <span @click="handleRouterPush('/topic')">全部</span>
             </div>
             <special-topic
                 slot="content"
-                v-for="item in specialTopicData"
+                v-for="item in topicRecommendData"
                 :key="item._id"
                 :item="item">
             </special-topic>
-        </card> -->
+        </card>
+        <card slot="author" icon="icon icon-bq" title="创作榜">
+            <author-hot
+                slot="content"
+                v-for="item in authorRecommendData"
+                :key="item._id"
+                :item="item">
+            </author-hot>
+        </card>
     </home-layout>
 </template>
 
@@ -63,6 +71,7 @@ import ArticleList from '@/components/common/articleList/ArticleList';
 import ArticleListItem from '@/components/common/articleList/ArticleListItem';
 import ArticleTag from '@/components/common/articleTag';
 import SpecialTopic from '@/components/common/specialTopic';
+import authorHot from '@/components/common/authorHot';
 import Card from '@/components/common/card';
 import ArticleSort from '@/components/common/articleSort';
 import articleListCommon from '@/mixins/articleListCommon';
@@ -76,36 +85,17 @@ export default {
         ArticleListItem,
         ArticleTag,
         SpecialTopic,
+        authorHot,
         Card,
         ArticleSort
     },
     mixins: [ articleListCommon ],
     data() {
         return {
-            specialTopicData: [
-                {
-                    _id: '33',
-                    title: '自驾游',
-                    img: 'https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=1179289982,1144911896&fm=26&gp=0.jpg'
-                },
-                {
-                    _id: '333',
-                    title: '摄影',
-                    img: 'https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=144388917,3393541021&fm=26&gp=0.jpg'
-                },
-                {
-                    _id: '444',
-                    title: '背包客的故事',
-                    img: 'https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=1404651180,2297079451&fm=26&gp=0.jpg'
-                },
-                {
-                    _id: '4464',
-                    title: 'keep-alive的深入理解与使用(配合router-view缓存整个路由页面)',
-                    img: 'https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=1404651180,2297079451&fm=26&gp=0.jpg'
-                }
-            ], // 专题数据
             articleData: [],
-            articleTagData: [],
+            tagRecommendData: [], // Tag推荐
+            authorRecommendData: [], // 作者推荐
+            topicRecommendData: [], // 专题推荐
             pageConfig: {
                 pageSize: 15,
                 currentPage: 1,
@@ -132,7 +122,9 @@ export default {
         }
     },
     created() {
-        this.getArticleTag();
+        this.getTagRecommend();
+        this.getUserRecommend();
+        this.getTopicRecommend();
     },
     methods: {
         // 滚动条到底部，异步加载数据
@@ -161,19 +153,23 @@ export default {
         handleSort(sortType) {
             this.$router.push(`/find/${sortType}`);
         },
-        getArticleTag() {
-            if (!this.currentUserId) {
-                api.tagQuery().then((res) => {
-                    this.articleTagData = res.data;
-                });
-            } else {
-                api.tagFollowQuery().then((res) => {
-                    this.articleTagData = res.data;
-                });
-            }
+        getTagRecommend() {
+            api.tagRecommend().then((res) => {
+                this.tagRecommendData = res.data;
+            });
         },
-        handleRouterTag() {
-            this.$router.push('/tag');
+        getUserRecommend() {
+            api.userRecommend().then((res) => {
+                this.authorRecommendData = res.data;
+            });
+        },
+        getTopicRecommend() {
+            api.topicRecommend().then((res) => {
+                this.topicRecommendData = res.data;
+            });
+        },
+        handleRouterPush(path) {
+            this.$router.push(path);
         }
     }
 };

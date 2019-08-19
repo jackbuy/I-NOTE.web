@@ -3,6 +3,7 @@
         class="article-list__item"
         :class="{'has-img': img}">
         <div class="article-list__item-header">
+            <span v-if="isTop" class="article-top">置顶</span>
             <span>{{ username }}</span>
             <span :title="createTime">{{ editTime }}</span>
             <span v-if="publish">{{ tag }}</span>
@@ -39,6 +40,9 @@ export default {
                 return '无标题';
             }
         },
+        isTop() {
+            if (this.item) return this.item.isTop;
+        },
         publish() {
             if (this.item) return this.item.publish;
         },
@@ -58,12 +62,13 @@ export default {
             if (this.item) return this.item.viewCount || 0;
         },
         img() {
-            if (this.item && this.item.contentHtml) {
-                // 匹配图片（g表示匹配所有结果i表示区分大小写）
-                var imgReg = /<img.*?(?:>|\/>)/gi;
-                var arr = this.item.contentHtml.match(imgReg);
-                if (arr && arr.length > 0) return arr[0];
-            }
+            return '';
+            // if (this.item && this.item.contentHtml) {
+            //     // 匹配图片（g表示匹配所有结果i表示区分大小写）
+            //     var imgReg = /<img.*?(?:>|\/>)/gi;
+            //     var arr = this.item.contentHtml.match(imgReg);
+            //     if (arr && arr.length > 0) return arr[0];
+            // }
         }
     },
     methods: {

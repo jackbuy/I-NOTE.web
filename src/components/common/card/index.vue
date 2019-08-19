@@ -5,13 +5,7 @@
             <slot name="menu"></slot>
         </div>
         <div class="card__content">
-            <slot></slot>
-            <template v-if="value && value.length > 0">
-                <slot name="content"></slot>
-            </template>
-            <template v-if="value && value.length === 0">
-                <div class="norecord">暂无数据！</div>
-            </template>
+            <slot name="content"></slot>
         </div>
     </div>
 </template>
@@ -24,8 +18,7 @@ export default {
             type: String,
             default: '标题'
         },
-        icon: String,
-        value: Array
+        icon: String
     }
 };
 </script>

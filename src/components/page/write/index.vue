@@ -4,13 +4,19 @@
             <span>
                 <span class="label">{{ tips }}</span>
             </span>
+            <el-button
+                size="mini"
+                round
+                @click="handleRoutePush('/article/draft')">
+                草稿
+            </el-button>
             <el-popover
                 placement="bottom"
                 width="210"
                 v-model="visible">
                 <div>
                     <div>
-                        <span class="publish-title">是否发布：</span>
+                        <span class="publish-title">发布</span>
                         <el-switch
                             v-model="form.publish"
                             inactive-icon-class="inactive"
@@ -37,12 +43,14 @@
                         :disabled="!isEditor"
                         class="mt15"
                         size="mini"
+                        style="width: 100%"
                         type="primary"
                         @click="handlePublish">确定</el-button>
                 </div>
                 <el-button
                     size="mini"
-                    slot="reference">
+                    slot="reference"
+                    round>
                     {{ editorStatus }} 保存<i class="el-icon-arrow-down el-icon--right"></i></el-button>
             </el-popover>
         </div>
@@ -94,7 +102,7 @@ export default {
             if (this.isSaving) {
                 return '保存中...';
             } else {
-                return '未发布的文章，将保存到 “草稿箱”';
+                return '未发布的文章，将保存到 “草稿”';
             }
         },
         editorStatus() {
@@ -177,6 +185,9 @@ export default {
             api.tagQuery(params).then((res) => {
                 this.tagOptions = res.data;
             });
+        },
+        handleRoutePush(path) {
+            this.$router.push(path);
         }
     }
 };

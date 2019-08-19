@@ -8,6 +8,8 @@ export default {
     userRegister: (params) => http('post', `${apiBaseUrl}/user/register`, params),
     // 已登录用户信息
     getUserInfo: (params) => http('post', `${apiBaseUrl}/user/userInfo`, params),
+    // 用户推荐
+    userRecommend: () => http('get', `${apiBaseUrl}/user/recommend`),
 
     // 已发布文章列表
     articleQuery: (params) => http('post', `${apiBaseUrl}/article/query`, params),
@@ -24,10 +26,23 @@ export default {
     // 文章删除
     articleDelete: (articleId) => http('delete', `${apiBaseUrl}/article/delete/${articleId}`),
 
+    // 专题列表
+    topicQuery: (params) => http('post', `${apiBaseUrl}/topic/query`, params),
+    // 专题推荐
+    topicRecommend: () => http('get', `${apiBaseUrl}/topic/recommend`),
+    // 创建专题
+    topicAdd: (params) => http('post', `${apiBaseUrl}/topic/add`, params),
+    // 专题详情
+    topicDetail: (topicId) => http('get', `${apiBaseUrl}/topic/detail/${topicId}`),
+    // 专题文章
+    topicArticle: (topicId) => http('get', `${apiBaseUrl}/topic/article/${topicId}`),
+
     // Tag列表
     tagQuery: (params) => http('post', `${apiBaseUrl}/tag/query`, params),
     // 已关注Tag
     tagFollowQuery: (params) => http('post', `${apiBaseUrl}/tag/Follow/query`, params),
+    // Tag推荐
+    tagRecommend: () => http('get', `${apiBaseUrl}/tag/recommend`),
 
     // 消息列表
     messageQuery: () => http('get', `${apiBaseUrl}/message/query`),

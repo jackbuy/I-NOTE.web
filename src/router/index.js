@@ -9,6 +9,9 @@ const Detail = () => import('@/components/page/detail');
 const Write = () => import('@/components/page/write');
 const Tag = () => import('@/components/page/tag');
 const Article = () => import('@/components/page/article');
+const Topic = () => import('@/components/page/topic');
+const TopicArticle = () => import('@/components/page/topicArticle');
+const TopicAddEdit = () => import('@/components/page/topicAddEdit');
 const Draft = () => import('@/components/page/draft');
 const Zone = () => import('@/components/page/zone');
 
@@ -58,13 +61,37 @@ export default new Router({
                     path: '/tag',
                     name: 'tag',
                     component: Tag,
-                    meta: { title: '标签-管理' }
+                    meta: { title: '标签-全部' }
                 },
                 {
                     path: '/tag/:tagId',
                     name: 'article',
                     component: Article,
                     meta: { title: '标签-文章' }
+                },
+                {
+                    path: '/topic/:topicId',
+                    name: 'topicArticle',
+                    component: TopicArticle,
+                    meta: { title: '专题-文章' }
+                },
+                {
+                    path: '/topic',
+                    name: 'topic',
+                    component: Topic,
+                    meta: { title: '专题' }
+                },
+                {
+                    path: '/topicAdd',
+                    name: 'topicAdd',
+                    component: TopicAddEdit,
+                    meta: { title: '专题-新增' }
+                },
+                {
+                    path: '/topicEdit/:topicId',
+                    name: 'topicEdit',
+                    component: TopicAddEdit,
+                    meta: { title: '专题-编辑' }
                 },
                 {
                     path: '/article/draft',

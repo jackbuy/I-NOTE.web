@@ -1,11 +1,25 @@
 .sort{
-    padding: 15px;
+    padding: 0 20px;
     background: #fff;
     span{
-        margin-right: 15px;
+        display: inline-block;
+        padding: 15px 0;
+        margin-right: 20px;
         color: #999;
         cursor: pointer;
         transition: all 0.3s;
+        position: relative;
+        &.active::after{
+            content: "";
+            position: absolute;
+            left: 50%;
+            bottom: -2px;
+            width: 14px;
+            height: 3px;
+            margin-left: -7px;
+            background: #539eff;
+            z-index: 10;
+        }
         &.active,
         &:hover{
             color: #539eff;

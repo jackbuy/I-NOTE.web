@@ -9,7 +9,7 @@
             :item="scope.row">
                 <template slot-scope="scopeInner">
                     <button
-                        :disabled="scopeInner.row.userId._id === currentUserId"
+                        :disabled="loading || scopeInner.row.userId._id === currentUserId"
                         :class="{'active': scopeInner.row.isSupport}"
                         @click="handleSupport(scopeInner.row._id, scopeInner.row.isSupport)">
                         <i v-if="scopeInner.row.isSupport" class="icon icon-dianzan"></i>
@@ -17,7 +17,7 @@
                         {{ scopeInner.row.supportCount > 0 ? scopeInner.row.supportCount : '' }}
                     </button>
                     <button
-                        :disabled="scopeInner.row.userId._id === currentUserId"
+                        :disabled="loading || scopeInner.row.userId._id === currentUserId"
                         :class="{'active': scopeInner.row.isCollect}"
                         @click="handleCollect(scopeInner.row._id, scopeInner.row.isCollect)">
                         <i v-if="scopeInner.row.isCollect" class="icon icon-like"></i>

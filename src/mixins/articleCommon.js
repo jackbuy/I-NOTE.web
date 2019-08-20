@@ -9,12 +9,13 @@ export default {
         }
     },
     methods: {
-        // 跳转编辑
+        // 跳转文章编辑
         handleRouterEdit(articleId) {
             this.$router.push(`/write/${articleId}`);
         },
         // 收藏
         handleCollect(articleId, type) {
+            this.loading = true;
             api.articleCollect(articleId).then(() => {
                 this.listData.map((item) => {
                     if (item._id === articleId) {
@@ -27,10 +28,12 @@ export default {
                         }
                     }
                 });
+                this.loading = false;
             });
         },
         // 赞
         handleSupport(articleId, type) {
+            this.loading = true;
             api.articleSupport(articleId).then(() => {
                 this.listData.map((item) => {
                     if (item._id === articleId) {
@@ -43,6 +46,7 @@ export default {
                         }
                     }
                 });
+                this.loading = false;
             });
         }
     }

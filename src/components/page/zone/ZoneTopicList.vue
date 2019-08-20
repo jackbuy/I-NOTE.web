@@ -7,6 +7,18 @@
         <topic-item
             slot-scope="scope"
             :item="scope.row">
+            <template slot-scope="scopeInner">
+                <button
+                    v-if="scopeInner.row.userId._id === currentUserId"
+                    @click="handleRouterTopicEdit(scopeInner.row._id)">
+                    <i class="el-icon-edit"></i>
+                </button>
+                <button
+                    v-if="scopeInner.row.userId._id === currentUserId"
+                    @click="handleDelete(scopeInner.row)">
+                    <i class="el-icon-delete"></i>
+                </button>
+            </template>
         </topic-item>
     </infinite-scroll>
 </template>
@@ -14,6 +26,7 @@
 <script>
 import InfiniteScroll from '@/components/common/infiniteScrollList';
 import TopicItem from '@/components/common/topicItem';
+import message from '@/mixins/message';
 import api from '@/utils/api';
 
 export default {
@@ -22,6 +35,7 @@ export default {
         type: String,
         userId: String
     },
+    mixins: [ message ],
     components: {
         InfiniteScroll,
         TopicItem
@@ -36,6 +50,12 @@ export default {
             loading: false, // 加载中
             noMore: false // 没有更多数据
         };
+    },
+    computed: {
+        // 当前登录用户Id
+        currentUserId() {
+            return localStorage.getItem('userId');
+        }
     },
     watch: {
         type: {
@@ -67,6 +87,23 @@ export default {
                     this.noMore = true;
                 }
             });
+        },
+        handleRouterTopicEdit(topicId) {
+            this.$router.push({
+                path: `/topicEdit/${topicId}`
+            });
+        },
+        handleDelete(row) {
+            const { _id } = row;
+            this.confirmWarning({
+                title: '提示',
+                content: '确认删除吗？'
+            }).then(() => {
+                api.topicDelete(_id).then(() => {
+                    this.showSuccessMsg('删除成功！');
+                    this.refresh();
+                });
+            }).catch(() => {});
         }
     }
 };

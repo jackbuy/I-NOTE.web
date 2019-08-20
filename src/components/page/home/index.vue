@@ -4,17 +4,18 @@
             <span :class="{'active': sortType === 'newest'}" @click="handleSort('newest')">最新</span>
             <span :class="{'active': sortType === 'popular'}" @click="handleSort('popular')">热门</span>
         </article-sort>
-        <article-list
-            :data="articleData"
-            :load-more="isLoadMore"
-            :no-more="isLoadFinish"
-            slot="content">
-            <article-list-item
+        <infinite-scroll
+            slot="content"
+            :loading="loading"
+            :no-more="noMore"
+            :data="listData"
+            @loadData="getList(sortType)">
+            <article-item
                 slot-scope="scope"
                 :item="scope.row">
                 <template slot-scope="scopeInner">
                     <button
-                        :disabled="scopeInner.row.userId._id === currentUserId"
+                        :disabled="loading || scopeInner.row.userId._id === currentUserId"
                         :class="{'active': scopeInner.row.isSupport}"
                         @click="handleSupport(scopeInner.row._id, scopeInner.row.isSupport)">
                         <i v-if="scopeInner.row.isSupport" class="icon icon-dianzan"></i>
@@ -22,7 +23,7 @@
                         {{ scopeInner.row.supportCount > 0 ? scopeInner.row.supportCount : '' }}
                     </button>
                     <button
-                        :disabled="scopeInner.row.userId._id === currentUserId"
+                        :disabled="loading || scopeInner.row.userId._id === currentUserId"
                         :class="{'active': scopeInner.row.isCollect}"
                         @click="handleCollect(scopeInner.row._id, scopeInner.row.isCollect)">
                         <i v-if="scopeInner.row.isCollect" class="icon icon-like"></i>
@@ -30,8 +31,8 @@
                         {{ scopeInner.row.collectCount > 0 ? scopeInner.row.collectCount : '' }}
                     </button>
                 </template>
-            </article-list-item>
-        </article-list>
+            </article-item>
+        </infinite-scroll>
         <card slot="tag" icon="icon icon-bq" title="热门标签">
             <div slot="menu" class="menu">
                 <span @click="handleRouterPush('/tag')">全部</span>
@@ -66,43 +67,42 @@
 </template>
 
 <script>
-import HomeLayout from './HomeLayout';
-import ArticleList from '@/components/common/articleList/ArticleList';
-import ArticleListItem from '@/components/common/articleList/ArticleListItem';
+import HomeLayout from './Layout';
+import InfiniteScroll from '@/components/common/infiniteScrollList';
+import ArticleItem from '@/components/common/articleItem';
 import ArticleTag from '@/components/common/articleTag';
 import SpecialTopic from '@/components/common/specialTopic';
 import authorHot from '@/components/common/authorHot';
 import Card from '@/components/common/card';
 import ArticleSort from '@/components/common/articleSort';
-import articleListCommon from '@/mixins/articleListCommon';
+import articleCommon from '@/mixins/articleCommon';
 import api from '@/utils/api';
 
 export default {
     name: 'Home',
     components: {
         HomeLayout,
-        ArticleList,
-        ArticleListItem,
+        InfiniteScroll,
+        ArticleItem,
         ArticleTag,
         SpecialTopic,
         authorHot,
         Card,
         ArticleSort
     },
-    mixins: [ articleListCommon ],
+    mixins: [ articleCommon ],
     data() {
         return {
-            articleData: [],
+            listData: [],
             tagRecommendData: [], // Tag推荐
             authorRecommendData: [], // 作者推荐
             topicRecommendData: [], // 专题推荐
             pageConfig: {
                 pageSize: 15,
-                currentPage: 1,
-                total: 0
+                currentPage: 1
             },
-            isLoadMore: false, // 是否加载中,
-            isLoadFinish: false // 是否加载完成
+            loading: false, // 加载中
+            noMore: false // 没有更多数据
         };
     },
     computed: {
@@ -113,10 +113,7 @@ export default {
     watch: {
         sortType: {
             handler(n, o) {
-                this.pageConfig.currentPage = 1;
-                this.articleData = [];
-                this.isLoadFinish = false;
-                this.getArticleList(n, 'load');
+                this.refresh(n);
             },
             immediate: true
         }
@@ -127,27 +124,27 @@ export default {
         this.getTopicRecommend();
     },
     methods: {
-        // 滚动条到底部，异步加载数据
-        scrollToBottomLoadData() {
-            if (!this.isLoadFinish && !this.isLoadMore) this.getArticleList(this.sortType);
+        refresh(sortType) {
+            this.pageConfig.currentPage = 1;
+            this.listData = [];
+            this.noMore = false;
+            this.getList(sortType);
         },
-        getArticleList(sortType, loadType = 'loadMore') {
+        getList(sortType) {
             const params = {
                 publish: true,
                 sortType,
                 pageSize: this.pageConfig.pageSize,
                 currentPage: this.pageConfig.currentPage++
             };
-            this.isLoadMore = true;
+            this.loading = true;
             api.articleQuery(params).then((res) => {
-                this.pageConfig.total = res.total;
-                this.isLoadMore = false;
-                if (loadType === 'loadMore') {
-                    this.articleData.push(...res.data);
+                this.loading = false;
+                if (res.data.length > 0) {
+                    this.listData.push(...res.data);
                 } else {
-                    this.articleData = res.data;
+                    this.noMore = true;
                 }
-                if (this.articleData.length === res.total) this.isLoadFinish = true;
             });
         },
         handleSort(sortType) {

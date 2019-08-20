@@ -34,8 +34,10 @@ export default {
     topicRecommend: () => http('get', `${apiBaseUrl}/topic/recommend`),
     // 创建专题
     topicAdd: (params) => http('post', `${apiBaseUrl}/topic/add`, params),
+    // 删除专题
+    topicDelete: (topicId) => http('delete', `${apiBaseUrl}/topic/delete/${topicId}`),
     // 专题详情
-    topicDetail: (topicId) => http('get', `${apiBaseUrl}/topic/detail/${topicId}`),
+    topicDetail: (params) => http('post', `${apiBaseUrl}/topic/detail`, params),
     // 专题文章
     topicArticleQuery: (params) => http('post', `${apiBaseUrl}/topic/article/query`, params),
 

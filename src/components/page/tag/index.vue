@@ -12,7 +12,7 @@
 </template>
 
 <script>
-import TagLayout from './TagLayout';
+import TagLayout from './Layout';
 import TagList from './TagList';
 import TagListItem from './TagListItem';
 import api from '@/utils/api';

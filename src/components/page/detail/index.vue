@@ -17,7 +17,7 @@
         </div>
         <div class="article-detail__menu" slot="menu">
             <button
-                :disabled="currentUserId === userId"
+                :disabled="loading || currentUserId === userId"
                 :class="{'active': isSupport}"
                 @click="handleSupport(isSupport)">
                 <i v-if="isSupport" class="icon icon-dianzan"></i>
@@ -25,7 +25,7 @@
                 <span v-if="supportCount > 0">{{ supportCount }}</span>
             </button>
             <button
-                :disabled="currentUserId === userId"
+                :disabled="loading || currentUserId === userId"
                 :class="{'active': isCollect}"
                 @click="handleCollect(isCollect)">
                 <i v-if="isCollect" class="icon icon-like"></i>
@@ -33,7 +33,7 @@
                 <span v-if="collectCount > 0">{{ collectCount }}</span>
             </button>
             <button
-                :disabled="currentUserId === userId"
+                :disabled="loading || currentUserId === userId"
                 :class="{'active': isTopic}"
                 @click="handleOpenTopic()">
                 <i v-if="isTopic" class="icon icon-shoucang"></i>
@@ -66,7 +66,7 @@
 <script>
 import { mapMutations } from 'vuex';
 import { SET_DOCUMENT_TITLE } from '@/store/mutation-types';
-import DetailLayout from './DetailLayout';
+import DetailLayout from './Layout';
 import Card from '@/components/common/card';
 import UserAvatar from '@/components/common/userAvatar';
 import ArticleRecommend from '@/components/common/articleRecommend';
@@ -82,6 +82,7 @@ export default {
     },
     data() {
         return {
+            loading: false,
             detail: {},
             recommendData: []
         };
@@ -182,6 +183,7 @@ export default {
         },
         // 收藏
         handleCollect(type) {
+            this.loading = true;
             api.articleCollect(this.articleId).then(() => {
                 if (!type) {
                     this.detail.isCollect = true;
@@ -190,10 +192,12 @@ export default {
                     this.detail.isCollect = false;
                     this.detail.collectCount--;
                 }
+                this.loading = false;
             });
         },
         // 赞
         handleSupport(type) {
+            this.loading = true;
             api.articleSupport(this.articleId).then(() => {
                 if (!type) {
                     this.detail.isSupport = true;
@@ -202,6 +206,7 @@ export default {
                     this.detail.isSupport = false;
                     this.detail.supportCount--;
                 }
+                this.loading = false;
             });
         },
         // 打开专题

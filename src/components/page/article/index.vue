@@ -1,14 +1,15 @@
 <template>
-    <article-list
-        :load-more="isLoadMore"
-        :no-more="isLoadFinish"
-        :data="articleData">
-        <article-list-item
+    <infinite-scroll
+        :loading="loading"
+        :no-more="noMore"
+        :data="listData"
+        @loadData="getList(tagId)">
+        <article-item
             slot-scope="scope"
             :item="scope.row">
             <template slot-scope="scopeInner">
                 <button
-                    :disabled="scopeInner.row.userId._id === currentUserId"
+                    :disabled="loading || scopeInner.row.userId._id === currentUserId"
                     :class="{'active': scopeInner.row.isSupport}"
                     @click="handleSupport(scopeInner.row._id, scopeInner.row.isSupport)">
                     <i v-if="scopeInner.row.isSupport" class="icon icon-dianzan"></i>
@@ -16,7 +17,7 @@
                     {{ scopeInner.row.supportCount > 0 ? scopeInner.row.supportCount : '' }}
                 </button>
                 <button
-                    :disabled="scopeInner.row.userId._id === currentUserId"
+                    :disabled="loading || scopeInner.row.userId._id === currentUserId"
                     :class="{'active': scopeInner.row.isCollect}"
                     @click="handleCollect(scopeInner.row._id, scopeInner.row.isCollect)">
                     <i v-if="scopeInner.row.isCollect" class="icon icon-like"></i>
@@ -24,33 +25,32 @@
                     {{ scopeInner.row.collectCount > 0 ? scopeInner.row.collectCount : '' }}
                 </button>
             </template>
-        </article-list-item>
-    </article-list>
+        </article-item>
+    </infinite-scroll>
 </template>
 
 <script>
-import ArticleList from '@/components/common/articleList/ArticleList';
-import ArticleListItem from '@/components/common/articleList/ArticleListItem';
-import articleListCommon from '@/mixins/articleListCommon';
+import InfiniteScroll from '@/components/common/infiniteScrollList';
+import ArticleItem from '@/components/common/articleItem';
+import articleCommon from '@/mixins/articleCommon';
 import api from '@/utils/api';
 
 export default {
-    name: 'Search',
-    mixins: [ articleListCommon ],
+    name: 'Draft',
+    mixins: [ articleCommon ],
     components: {
-        ArticleList,
-        ArticleListItem
+        InfiniteScroll,
+        ArticleItem
     },
     data() {
         return {
-            articleData: [],
+            listData: [],
             pageConfig: {
-                pageSize: 5,
-                currentPage: 1,
-                total: 0
+                pageSize: 15,
+                currentPage: 1
             },
-            isLoadMore: false, // 是否加载中,
-            isLoadFinish: false // 是否加载完成
+            loading: false, // 加载中
+            noMore: false // 没有更多数据
         };
     },
     computed: {
@@ -61,33 +61,33 @@ export default {
     watch: {
         tagId: {
             handler(n, o) {
-                this.getArticleList(n);
+                this.refresh(n);
             },
             immediate: true
         }
     },
     methods: {
-        // 滚动条到底部，异步加载数据
-        scrollToBottomLoadData() {
-            if (!this.isLoadFinish && !this.isLoadMore) this.getArticleList(this.tagId);
+        refresh(tagId) {
+            this.pageConfig.currentPage = 1;
+            this.listData = [];
+            this.noMore = false;
+            this.getList(tagId);
         },
-        getArticleList(tagId, loadType = 'loadMore') {
+        getList(tagId) {
             const params = {
                 publish: true,
                 tagId,
                 pageSize: this.pageConfig.pageSize,
                 currentPage: this.pageConfig.currentPage++
             };
-            this.isLoadMore = true;
+            this.loading = true;
             api.articleQuery(params).then((res) => {
-                this.pageConfig.total = res.total;
-                this.isLoadMore = false;
-                if (loadType === 'loadMore') {
-                    this.articleData.push(...res.data);
+                this.loading = false;
+                if (res.data.length > 0) {
+                    this.listData.push(...res.data);
                 } else {
-                    this.articleData = res.data;
+                    this.noMore = true;
                 }
-                if (this.articleData.length === res.total) this.isLoadFinish = true;
             });
         }
     }

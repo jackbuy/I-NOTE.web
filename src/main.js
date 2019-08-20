@@ -30,7 +30,7 @@ router.beforeEach((to, from, next) => {
         if (token) {
             next();
         } else {
-            next({ path: '/' });
+            next({ path: '/403' });
         }
     } else {
         next();

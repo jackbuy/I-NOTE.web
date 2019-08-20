@@ -51,7 +51,7 @@
 </template>
 
 <script>
-import ZoneLayout from './layout';
+import ZoneLayout from './Layout';
 import ZoneArticleList from './ZoneArticleList';
 import ZoneCollectList from './ZoneCollectList';
 import ZoneTopicList from './ZoneTopicList';

@@ -34,25 +34,12 @@
 <script>
 import api from '@/utils/api';
 export default {
-    name: 'Search',
+    name: 'TopicAddEdit',
     data() {
         return {
             form: {}
         };
     },
-    computed: {
-        tagId() {
-            return this.$route.params.topicId;
-        }
-    },
-    // watch: {
-    //     tagId: {
-    //         handler(n, o) {
-    //             this.getArticleList(n);
-    //         },
-    //         immediate: true
-    //     }
-    // },
     methods: {
         handleSave() {
             api.topicAdd({ ...this.form }).then(() => {

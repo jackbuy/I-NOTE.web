@@ -11,19 +11,20 @@
                 :item="scope.row">
             </article-item>
         </infinite-scroll>
-        <card slot="topic" icon="icon icon-bq" :title="topicDetail.title">
+        <card slot="topic" icon="icon icon-zhuanti" :title="topicDetail.title">
+            <div v-if="img" slot="content" class="img" :style="{backgroundImage: 'url(' + img + ')'}"></div>
             <div
                 slot="content"
                 class="topic-description">
-                <div>{{ topicDetail.description }}</div>
-                <div>{{ createTime }}</div>
+                {{ topicDetail.description }}
             </div>
+            <div slot="content" class="time">{{ createTime }}</div>
         </card>
     </layout>
 </template>
 
 <script>
-import Layout from './layout';
+import Layout from './Layout';
 import Card from '@/components/common/card';
 import InfiniteScroll from '@/components/common/infiniteScrollList';
 import ArticleItem from '@/components/common/articleItem';
@@ -32,11 +33,7 @@ import api from '@/utils/api';
 import utils from '@/utils/utils';
 
 export default {
-    name: 'ZoneArticleList',
-    props: {
-        type: String,
-        userId: String
-    },
+    name: 'TopicArticle',
     mixins: [ articleCommon ],
     components: {
         Layout,
@@ -57,6 +54,9 @@ export default {
         };
     },
     computed: {
+        img() {
+            return this.topicDetail.img ? this.topicDetail.img : '';
+        },
         topicId() {
             return this.$route.params.topicId;
         },
@@ -97,7 +97,7 @@ export default {
             });
         },
         getTopicInfo(topicId) {
-            api.topicDetail(topicId).then((res) => {
+            api.topicDetail({ topicId }).then((res) => {
                 this.topicDetail = res.data;
             });
         }

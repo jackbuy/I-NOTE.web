@@ -7,7 +7,7 @@
 <script>
 import { mapState, mapActions } from 'vuex';
 import { MESSAGE_QUERY } from '@/store/mutation-types';
-import MsgLayout from './MsgLayout';
+import MsgLayout from './Layout';
 import MsgList from './src/MsgList';
 export default {
     name: 'MsgCenter',

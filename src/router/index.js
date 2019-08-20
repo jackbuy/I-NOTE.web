@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import Router from 'vue-router';
 const Page404 = () => import('@/components/common/Page404');
+const Page403 = () => import('@/components/common/Page403');
 const Layout = () => import('@/components/common/layout/Layout');
 const Home = () => import('@/components/page/home');
 const Msg = () => import('@/components/page/msg');
@@ -85,19 +86,19 @@ export default new Router({
                     path: '/topicAdd',
                     name: 'topicAdd',
                     component: TopicAddEdit,
-                    meta: { title: '专题-新增' }
+                    meta: { title: '专题-新增', requireAuth: true }
                 },
                 {
                     path: '/topicEdit/:topicId',
                     name: 'topicEdit',
                     component: TopicAddEdit,
-                    meta: { title: '专题-编辑' }
+                    meta: { title: '专题-编辑', requireAuth: true }
                 },
                 {
                     path: '/article/draft',
                     name: 'draft',
                     component: Draft,
-                    meta: { title: '草稿' }
+                    meta: { title: '草稿', requireAuth: true }
                 },
                 {
                     path: '/msg',
@@ -123,6 +124,12 @@ export default new Router({
             name: 'Page404',
             component: Page404,
             meta: { title: '404' }
+        },
+        {
+            path: '/403',
+            name: 'Page403',
+            component: Page403,
+            meta: { title: '403' }
         }
     ]
 });

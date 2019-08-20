@@ -1,65 +1,49 @@
 <template>
-    <article-list
-        :load-more="isLoadMore"
-        :no-more="isLoadFinish"
-        :data="articleData">
-        <article-list-item
+    <infinite-scroll
+        :loading="loading"
+        :no-more="noMore"
+        :data="listData"
+        @loadData="getList">
+        <article-item
             slot-scope="scope"
             :item="scope.row">
-            <template slot-scope="scopeInner">
-                <!-- <button
-                    :disabled="scopeInner.row.userId._id === currentUserId"
-                    :class="{'active': scopeInner.row.isSupport}"
-                    @click="handleSupport(scopeInner.row._id, scopeInner.row.isSupport)">
-                    <i v-if="scopeInner.row.isSupport" class="icon icon-dianzan"></i>
-                    <i v-else class="icon icon-dianzan-o"></i>
-                    {{ scopeInner.row.supportCount > 0 ? scopeInner.row.supportCount : '' }}
-                </button>
-                <button
-                    :disabled="scopeInner.row.userId._id === currentUserId"
-                    :class="{'active': scopeInner.row.isCollect}"
-                    @click="handleCollect(scopeInner.row._id, scopeInner.row.isCollect)">
-                    <i v-if="scopeInner.row.isCollect" class="icon icon-like"></i>
-                    <i v-else class="icon icon-like-o"></i>
-                    {{ scopeInner.row.collectCount > 0 ? scopeInner.row.collectCount : '' }}
-                </button> -->
-                <button
-                    v-if="userId === currentUserId"
-                    @click="handleDelete(scopeInner.row)">
-                    <i class="el-icon-delete"></i>
-                </button>
-            </template>
-        </article-list-item>
-    </article-list>
+                <template slot-scope="scopeInner">
+                    <button
+                        v-if="userId === currentUserId"
+                        @click="handleDelete(scopeInner.row)">
+                        <i class="el-icon-delete"></i>
+                    </button>
+                </template>
+        </article-item>
+    </infinite-scroll>
 </template>
 
 <script>
-import ArticleList from '@/components/common/articleList/ArticleList';
-import ArticleListItem from '@/components/common/articleList/ArticleListItem';
-import articleListCommon from '@/mixins/articleListCommon';
+import InfiniteScroll from '@/components/common/infiniteScrollList';
+import ArticleItem from '@/components/common/articleItem';
+import articleCommon from '@/mixins/articleCommon';
 import api from '@/utils/api';
 
 export default {
     name: 'ZoneCollectList',
-    mixins: [ articleListCommon ],
     props: {
         type: String,
         userId: String
     },
+    mixins: [ articleCommon ],
     components: {
-        ArticleList,
-        ArticleListItem
+        InfiniteScroll,
+        ArticleItem
     },
     data() {
         return {
-            articleData: [],
+            listData: [],
             pageConfig: {
                 pageSize: 15,
-                currentPage: 1,
-                total: 0
+                currentPage: 1
             },
-            isLoadMore: false, // 是否加载中,
-            isLoadFinish: false // 是否加载完成
+            loading: false, // 加载中
+            noMore: false // 没有更多数据
         };
     },
     watch: {
@@ -71,32 +55,26 @@ export default {
         }
     },
     methods: {
-        refresh(type) {
+        refresh() {
             this.pageConfig.currentPage = 1;
-            this.articleData = [];
-            this.isLoadFinish = false;
-            this.getArticleList(type, 'load');
+            this.listData = [];
+            this.noMore = false;
+            this.getList();
         },
-        // 滚动条到底部，异步加载数据
-        scrollToBottomLoadData() {
-            if (!this.isLoadFinish && !this.isLoadMore) this.getArticleList(this.type);
-        },
-        getArticleList(type, loadType = 'loadMore') {
+        getList() {
             const params = {
                 userId: this.userId,
                 pageSize: this.pageConfig.pageSize,
                 currentPage: this.pageConfig.currentPage++
             };
-            this.isLoadMore = true;
+            this.loading = true;
             api.collectQuery(params).then((res) => {
-                this.pageConfig.total = res.total;
-                this.isLoadMore = false;
-                if (loadType === 'loadMore') {
-                    this.articleData.push(...res.data);
+                this.loading = false;
+                if (res.data.length > 0) {
+                    this.listData.push(...res.data);
                 } else {
-                    this.articleData = res.data;
+                    this.noMore = true;
                 }
-                if (this.articleData.length === res.total) this.isLoadFinish = true;
             });
         },
         handleDelete(row) {
@@ -107,7 +85,7 @@ export default {
             }).then(() => {
                 api.articleCollect(_id).then(() => {
                     this.showSuccessMsg('删除成功！');
-                    this.refresh('collect');
+                    this.refresh();
                 });
             }).catch(() => {});
         }

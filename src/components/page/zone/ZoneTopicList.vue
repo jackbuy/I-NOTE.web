@@ -4,27 +4,27 @@
         :no-more="noMore"
         :data="listData"
         @loadData="getList">
-        <fans-item
+        <topic-item
             slot-scope="scope"
             :item="scope.row">
-        </fans-item>
+        </topic-item>
     </infinite-scroll>
 </template>
 
 <script>
 import InfiniteScroll from '@/components/common/infiniteScrollList';
-import FansItem from '@/components/common/fansItem';
+import TopicItem from '@/components/common/topicItem';
 import api from '@/utils/api';
 
 export default {
-    name: 'ZoneFansList',
+    name: 'ZoneTopicList',
     props: {
         type: String,
         userId: String
     },
     components: {
         InfiniteScroll,
-        FansItem
+        TopicItem
     },
     data() {
         return {
@@ -54,13 +54,12 @@ export default {
         },
         getList() {
             const params = {
-                type: 0,
                 userId: this.userId,
                 pageSize: this.pageConfig.pageSize,
                 currentPage: this.pageConfig.currentPage++
             };
             this.loading = true;
-            api.fansQuery(params).then((res) => {
+            api.topicUserQuery(params).then((res) => {
                 this.loading = false;
                 if (res.data.length > 0) {
                     this.listData.push(...res.data);

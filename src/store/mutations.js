@@ -22,5 +22,8 @@ export default {
     },
     [C.HIDDEN_BREADCRUMB](state, payload) {
         state.isHiddenBreadcrumb = payload;
+    },
+    [C.SET_DOCUMENT_TITLE](state, payload) {
+        state.documentTitle = payload;
     }
 };

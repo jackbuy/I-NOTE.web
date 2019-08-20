@@ -29,6 +29,12 @@
             :user-id="userId"
             slot="content">
         </zone-collect-list>
+        <zone-topic-list
+            v-if="articleType === 'topic'"
+            :type="articleType"
+            :user-id="userId"
+            slot="content">
+        </zone-topic-list>
         <zone-follow-user-list
             v-if="articleType === 'followUser'"
             :type="articleType"
@@ -45,9 +51,10 @@
 </template>
 
 <script>
-import ZoneLayout from './ZoneLayout';
+import ZoneLayout from './layout';
 import ZoneArticleList from './ZoneArticleList';
 import ZoneCollectList from './ZoneCollectList';
+import ZoneTopicList from './ZoneTopicList';
 import ZoneFollowUserList from './ZoneFollowUserList';
 import ZoneFansList from './ZoneFansList';
 import UserAvatar from '@/components/common/userAvatar';
@@ -58,6 +65,7 @@ export default {
     components: {
         ZoneLayout,
         ZoneArticleList,
+        ZoneTopicList,
         ZoneCollectList,
         ZoneFollowUserList,
         ZoneFansList,
@@ -67,10 +75,10 @@ export default {
         return {
             userInfo: {},
             headerTabData: [
-                {
-                    type: 'active',
-                    title: '动态'
-                },
+                // {
+                //     type: 'active',
+                //     title: '动态'
+                // },
                 {
                     type: 'article',
                     title: '文章'
@@ -83,10 +91,10 @@ export default {
                     type: 'topic',
                     title: '专题'
                 },
-                {
-                    type: 'followTopic',
-                    title: '关注的专题'
-                },
+                // {
+                //     type: 'followTopic',
+                //     title: '关注的专题'
+                // },
                 {
                     type: 'followUser',
                     title: '关注的人'

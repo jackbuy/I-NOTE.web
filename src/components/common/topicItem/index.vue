@@ -1,25 +1,25 @@
 <template>
     <div
-        class="topic-list__item"
+        class="topic__item"
         :class="{'has-img': img}">
-        <div class="topic-list__item-header">
+        <div class="topic__item-header">
             <span>{{ username }}</span>
             <span :title="createTime">{{ createTime }}</span>
         </div>
-        <div class="topic-list__item-title">
+        <div class="topic__item-title">
             <span @click="handleRouterPush(topicId)">{{ title }}</span>
         </div>
-        <div class="topic-list__item-action">
+        <div class="topic__item-action">
             <slot :row="item"></slot>
         </div>
-        <div class="topic-list__item-img" v-if="img" v-html="img"></div>
+        <div class="topic__item-img" v-if="img" v-html="img"></div>
     </div>
 </template>
 
 <script>
 import utils from '@/utils/utils';
 export default {
-    name: 'TopicListItem',
+    name: 'TopicItem',
     props: {
         item: {
             type: Object,
@@ -61,3 +61,7 @@ export default {
     }
 };
 </script>
+
+<style lang="less">
+@import './index.less';
+</style>

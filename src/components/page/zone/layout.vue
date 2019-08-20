@@ -13,5 +13,5 @@
 </template>
 
 <style lang="less">
-@import './zoneLayout.less';
+@import './layout.less';
 </style>

@@ -1,58 +1,73 @@
 <template>
-    <div
-        class="follow-user"
-        slot="content">
-        <div
-            v-for="item in data"
-            :key="item._id"
-            class="list">
-            <span
-                class="name"
-                @click="handleZone(item.followId._id)">
-                {{item.followId.username}}
-            </span>
-        </div>
-    </div>
+    <infinite-scroll
+        :loading="loading"
+        :no-more="noMore"
+        :data="listData"
+        @loadData="getList">
+        <follow-user-item
+            slot-scope="scope"
+            :item="scope.row">
+        </follow-user-item>
+    </infinite-scroll>
 </template>
 
 <script>
-import message from '@/mixins/message';
+import InfiniteScroll from '@/components/common/infiniteScrollList';
+import FollowUserItem from '@/components/common/followUserItem';
 import api from '@/utils/api';
 
 export default {
     name: 'ZoneFollowUserList',
-    mixins: [ message ],
     props: {
         type: String,
         userId: String
     },
     components: {
+        InfiniteScroll,
+        FollowUserItem
     },
     data() {
         return {
-            data: []
+            listData: [],
+            pageConfig: {
+                pageSize: 15,
+                currentPage: 1
+            },
+            loading: false, // 加载中
+            noMore: false // 没有更多数据
         };
     },
     watch: {
         type: {
             handler(n, o) {
-                this.getCollectList();
+                this.refresh(n);
             },
             immediate: true
         }
     },
     methods: {
-        getCollectList() {
-            const params = {
-                userId: this.userId,
-                type: 0
-            };
-            api.followQuery(params).then((res) => {
-                this.data = res.data;
-            });
+        refresh() {
+            this.pageConfig.currentPage = 1;
+            this.listData = [];
+            this.noMore = false;
+            this.getList();
         },
-        handleZone(userId) {
-            this.$router.push(`/zone/${userId}/article`);
+        getList() {
+            const params = {
+                type: 0,
+                userId: this.userId,
+                pageSize: this.pageConfig.pageSize,
+                currentPage: this.pageConfig.currentPage++
+            };
+            this.loading = true;
+            api.followQuery(params).then((res) => {
+                this.loading = false;
+                if (res.data.length > 0) {
+                    this.listData.push(...res.data);
+                } else {
+                    this.noMore = true;
+                }
+            });
         }
     }
 };

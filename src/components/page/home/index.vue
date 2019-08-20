@@ -43,7 +43,7 @@
                 :item="item">
             </article-tag>
         </card>
-        <card slot="topic" icon="icon icon-bq" title="专题榜">
+        <card slot="topic" icon="icon icon-zhuanti" title="专题榜">
             <div slot="menu" class="menu">
                 <span @click="handleRouterPush('/topic')">全部</span>
             </div>
@@ -54,7 +54,7 @@
                 :item="item">
             </special-topic>
         </card>
-        <card slot="author" icon="icon icon-bq" title="创作榜">
+        <card slot="author" icon="icon icon-zuozhe" title="创作榜">
             <author-hot
                 slot="content"
                 v-for="item in authorRecommendData"

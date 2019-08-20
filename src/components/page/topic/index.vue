@@ -1,73 +1,55 @@
 <template>
-    <topic-list
-        :load-more="isLoadMore"
-        :no-more="isLoadFinish"
-        :data="topicData">
-        <topic-list-item
+    <infinite-scroll
+        :loading="loading"
+        :no-more="noMore"
+        :data="listData"
+        @loadData="getList">
+        <topic-item
             slot-scope="scope"
             :item="scope.row">
-        </topic-list-item>
-    </topic-list>
+        </topic-item>
+    </infinite-scroll>
 </template>
 
 <script>
-import TopicList from '@/components/common/topicList';
-import TopicListItem from '@/components/common/topicList/Item';
-import scrollEvent from '@/mixins/scrollEvent';
+import InfiniteScroll from '@/components/common/infiniteScrollList';
+import TopicItem from '@/components/common/topicItem';
 import api from '@/utils/api';
 
 export default {
     name: 'Search',
-    mixins: [ scrollEvent ],
     components: {
-        TopicList,
-        TopicListItem
+        InfiniteScroll,
+        TopicItem
     },
     data() {
         return {
-            topicData: [],
+            listData: [],
             pageConfig: {
-                pageSize: 5,
-                currentPage: 1,
-                total: 0
+                pageSize: 15,
+                currentPage: 1
             },
-            isLoadMore: false, // 是否加载中,
-            isLoadFinish: false // 是否加载完成
+            loading: false, // 加载中
+            noMore: false // 没有更多数据
         };
     },
-    computed: {
-        tagId() {
-            return this.$route.params.tagId;
-        }
-    },
-    watch: {
-        tagId: {
-            handler(n, o) {
-                this.getArticleList(n);
-            },
-            immediate: true
-        }
+    created() {
+        this.getList();
     },
     methods: {
-        // 滚动条到底部，异步加载数据
-        scrollToBottomLoadData() {
-            if (!this.isLoadFinish && !this.isLoadMore) this.getArticleList(this.tagId);
-        },
-        getArticleList(tagId, loadType = 'loadMore') {
+        getList() {
             const params = {
                 pageSize: this.pageConfig.pageSize,
                 currentPage: this.pageConfig.currentPage++
             };
-            this.isLoadMore = true;
+            this.loading = true;
             api.topicQuery(params).then((res) => {
-                this.pageConfig.total = res.total;
-                this.isLoadMore = false;
-                if (loadType === 'loadMore') {
-                    this.topicData.push(...res.data);
+                this.loading = false;
+                if (res.data.length > 0) {
+                    this.listData.push(...res.data);
                 } else {
-                    this.topicData = res.data;
+                    this.noMore = true;
                 }
-                if (this.topicData.length === res.total) this.isLoadFinish = true;
             });
         }
     }

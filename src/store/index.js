@@ -17,7 +17,8 @@ const Store = {
             type: ''
         },
         msgData: [],
-        isHiddenBreadcrumb: false // 是否隐藏面包屑
+        isHiddenBreadcrumb: false, // 是否隐藏面包屑
+        documentTitle: ''
     },
     getters: {},
     mutations: mutations,

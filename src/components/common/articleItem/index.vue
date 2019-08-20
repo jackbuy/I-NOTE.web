@@ -1,21 +1,21 @@
 <template>
     <div
-        class="article-list__item"
+        class="article__item"
         :class="{'has-img': img}">
-        <div class="article-list__item-header">
+        <div class="article__item-header">
             <span v-if="isTop" class="article-top">置顶</span>
             <span>{{ username }}</span>
             <span :title="createTime">{{ editTime }}</span>
             <span v-if="publish">{{ tag }}</span>
             <span v-if="publish && viewCount > 0">浏览 {{ viewCount }}</span>
         </div>
-        <div class="article-list__item-title">
+        <div class="article__item-title">
             <span @click="handleDetail(articleId)">{{ title }}</span>
         </div>
-        <div class="article-list__item-action">
+        <div class="article__item-action">
             <slot :row="item"></slot>
         </div>
-        <div class="article-list__item-img" v-if="img" v-html="img"></div>
+        <div class="article__item-img" v-if="img" v-html="img"></div>
     </div>
 </template>
 
@@ -79,3 +79,7 @@ export default {
     }
 };
 </script>
+
+<style lang="less">
+@import './index.less';
+</style>

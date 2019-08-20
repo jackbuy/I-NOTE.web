@@ -32,6 +32,13 @@
                 <i v-else class="icon icon-like-o"></i>
                 <span v-if="collectCount > 0">{{ collectCount }}</span>
             </button>
+            <button
+                :disabled="currentUserId === userId"
+                :class="{'active': isTopic}"
+                @click="handleOpenTopic()">
+                <i v-if="isTopic" class="icon icon-shoucang"></i>
+                <i v-else class="icon icon-shoucang3"></i>
+            </button>
         </div>
         <div class="article-detail" slot="content">
             <div class="article-detail__title">
@@ -57,6 +64,8 @@
 </template>
 
 <script>
+import { mapMutations } from 'vuex';
+import { SET_DOCUMENT_TITLE } from '@/store/mutation-types';
 import DetailLayout from './DetailLayout';
 import Card from '@/components/common/card';
 import UserAvatar from '@/components/common/userAvatar';
@@ -123,6 +132,9 @@ export default {
         isCollect() {
             return this.detail.isCollect;
         },
+        isTopic() {
+            return this.detail.isTopic;
+        },
         recommendFilterData() {
             let arr = [];
             this.recommendData.map((item) => {
@@ -143,11 +155,18 @@ export default {
             immediate: true
         }
     },
+    destroyed() {
+        this.setDocumentTitle('');
+    },
     methods: {
+        ...mapMutations({
+            setDocumentTitle: SET_DOCUMENT_TITLE
+        }),
         getDetail(articleId) {
             const params = { articleId };
             api.getDetail(params).then((res) => {
                 this.detail = res.data;
+                this.setDocumentTitle(this.detail.title);
                 this.recommend(this.detail.tagId._id);
             });
         },
@@ -184,6 +203,10 @@ export default {
                     this.detail.supportCount--;
                 }
             });
+        },
+        // 打开专题
+        handleOpenTopic() {
+            alert(4);
         },
         // 相关文章
         recommend(tagId) {

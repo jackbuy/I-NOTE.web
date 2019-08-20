@@ -28,6 +28,8 @@ export default {
 
     // 专题列表
     topicQuery: (params) => http('post', `${apiBaseUrl}/topic/query`, params),
+    // 我的专题
+    topicUserQuery: (params) => http('post', `${apiBaseUrl}/topic/user/query`, params),
     // 专题推荐
     topicRecommend: () => http('get', `${apiBaseUrl}/topic/recommend`),
     // 创建专题
@@ -35,7 +37,7 @@ export default {
     // 专题详情
     topicDetail: (topicId) => http('get', `${apiBaseUrl}/topic/detail/${topicId}`),
     // 专题文章
-    topicArticle: (topicId) => http('get', `${apiBaseUrl}/topic/article/${topicId}`),
+    topicArticleQuery: (params) => http('post', `${apiBaseUrl}/topic/article/query`, params),
 
     // Tag列表
     tagQuery: (params) => http('post', `${apiBaseUrl}/tag/query`, params),

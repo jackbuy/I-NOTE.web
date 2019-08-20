@@ -3,19 +3,28 @@
 </template>
 
 <script>
+import { mapState } from 'vuex';
 export default {
     name: 'App',
-    created() {
-        this.setDocumentTitle();
+    computed: {
+        ...mapState({
+            documentTitle: state => state.documentTitle
+        }),
+        title() {
+            return this.documentTitle ? this.documentTitle : this.$route.meta.title;
+        }
     },
     watch: {
-        $route() {
-            this.setDocumentTitle();
+        title: {
+            handler() {
+                this.setDocumentTitle();
+            },
+            immediate: true
         }
     },
     methods: {
         setDocumentTitle() {
-            if (this.$route.meta.title) document.title = `${this.$route.meta.title}_I'NOTE`;
+            document.title = `${this.title}_I'NOTE`;
         }
     }
 };

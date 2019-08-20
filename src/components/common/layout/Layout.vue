@@ -20,7 +20,6 @@
             </keep-alive>
             <router-view v-if="!$route.meta.keepAlive"></router-view>
         </layout-content>
-        <!-- <layout-footer>footer</layout-footer> -->
         <login></login>
         <el-backtop></el-backtop>
     </layout>
@@ -36,7 +35,6 @@ import LayoutHeaderMenu from './src/LayoutHeaderMenu';
 import LayoutHeaderSearch from './src/LayoutHeaderSearch';
 import LayoutHeaderUser from './src/LayoutHeaderUser';
 import LayoutContent from './src/LayoutContent';
-import LayoutFooter from './src/LayoutFooter';
 import Breadcrumb from '@/components/common/breadcrumb';
 import Login from '@/components/common/Login';
 export default {
@@ -49,7 +47,6 @@ export default {
         LayoutHeaderSearch,
         LayoutHeaderUser,
         LayoutContent,
-        LayoutFooter,
         Breadcrumb,
         Login
     },

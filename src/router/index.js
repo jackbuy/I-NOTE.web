@@ -9,12 +9,13 @@ const Search = () => import('@/components/page/search');
 const Detail = () => import('@/components/page/detail');
 const Write = () => import('@/components/page/write');
 const Tag = () => import('@/components/page/tag');
-const Article = () => import('@/components/page/article');
+const TagArticle = () => import('@/components/page/tagArticle');
 const Topic = () => import('@/components/page/topic');
 const TopicArticle = () => import('@/components/page/topicArticle');
-const TopicAddEdit = () => import('@/components/page/topicAddEdit');
+const TopicWrite = () => import('@/components/page/topicWrite');
 const Draft = () => import('@/components/page/draft');
 const Zone = () => import('@/components/page/zone');
+const Settings = () => import('@/components/page/settings');
 
 Vue.use(Router);
 
@@ -47,6 +48,42 @@ export default new Router({
                     meta: { title: '搜索' }
                 },
                 {
+                    path: '/tag',
+                    name: 'tag',
+                    component: Tag,
+                    meta: { title: '标签-全部' }
+                },
+                {
+                    path: '/tag/:tagId',
+                    name: 'tagArticle',
+                    component: TagArticle,
+                    meta: { title: '标签-文章' }
+                },
+                {
+                    path: '/topic',
+                    name: 'topic',
+                    component: Topic,
+                    meta: { title: '专题' }
+                },
+                {
+                    path: '/topic/:topicId',
+                    name: 'topicArticle',
+                    component: TopicArticle,
+                    meta: { title: '专题-文章' }
+                },
+                {
+                    path: '/topicWrite',
+                    name: 'topicAdd',
+                    component: TopicWrite,
+                    meta: { title: '专题-创建', requireAuth: true }
+                },
+                {
+                    path: '/topicWrite/:topicId',
+                    name: 'topicEdit',
+                    component: TopicWrite,
+                    meta: { title: '专题-编辑', requireAuth: true }
+                },
+                {
                     path: '/write',
                     name: 'articleAdd',
                     component: Write,
@@ -57,42 +94,6 @@ export default new Router({
                     name: 'articleEdit',
                     component: Write,
                     meta: { title: '文章-编辑', requireAuth: true }
-                },
-                {
-                    path: '/tag',
-                    name: 'tag',
-                    component: Tag,
-                    meta: { title: '标签-全部' }
-                },
-                {
-                    path: '/tag/:tagId',
-                    name: 'article',
-                    component: Article,
-                    meta: { title: '标签-文章' }
-                },
-                {
-                    path: '/topic/:topicId',
-                    name: 'topicArticle',
-                    component: TopicArticle,
-                    meta: { title: '专题-文章' }
-                },
-                {
-                    path: '/topic',
-                    name: 'topic',
-                    component: Topic,
-                    meta: { title: '专题' }
-                },
-                {
-                    path: '/topicAdd',
-                    name: 'topicAdd',
-                    component: TopicAddEdit,
-                    meta: { title: '专题-新增', requireAuth: true }
-                },
-                {
-                    path: '/topicEdit/:topicId',
-                    name: 'topicEdit',
-                    component: TopicAddEdit,
-                    meta: { title: '专题-编辑', requireAuth: true }
                 },
                 {
                     path: '/article/draft',
@@ -107,10 +108,16 @@ export default new Router({
                     meta: { title: '消息', requireAuth: true }
                 },
                 {
-                    path: '/zone/:userId/:articleType',
+                    path: '/zone/:userId/:zoneType',
                     name: 'zone',
                     component: Zone,
                     meta: { title: '空间' }
+                },
+                {
+                    path: '/Settings',
+                    name: 'settings',
+                    component: Settings,
+                    meta: { title: '设置' }
                 }
             ]
         },

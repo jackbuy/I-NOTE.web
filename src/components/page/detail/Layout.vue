@@ -4,10 +4,10 @@
         <div class="detail-content">
             <slot name="author"></slot>
             <slot name="content"></slot>
+            <slot name="recommend"></slot>
         </div>
         <div class="detail-side">
             <slot name="userinfo"></slot>
-            <slot name="recommend"></slot>
         </div>
     </div>
 </template>

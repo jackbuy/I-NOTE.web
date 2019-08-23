@@ -33,7 +33,7 @@
                 </template>
             </article-item>
         </infinite-scroll>
-        <card slot="tag" icon="icon icon-bq" title="热门标签">
+        <card slot="tag" icon="icon icon-bq" title="标签">
             <div slot="menu" class="menu">
                 <span @click="handleRouterPush('/tag')">全部</span>
             </div>

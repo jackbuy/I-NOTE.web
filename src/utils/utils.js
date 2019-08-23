@@ -70,6 +70,9 @@ export default {
         },
         format(now) {
             return moment(now).fromNow();
+        },
+        now() {
+            return moment().format('YYYY-MM-DD HH:mm:ss');
         }
     },
     // 截取字符串
@@ -103,5 +106,45 @@ export default {
     findIdIndex(arr, id) {
         let ids = arr.map(item => item._id);
         return ids.indexOf(id);
+    },
+    /**
+     * 计算两个日期的间隔时间
+     * @param {string} date1
+     * @param {string} date2
+     */
+    diffDate(date1, date2) {
+        var start = Math.ceil(new Date(date1).getTime() / 1000);
+        var end = Math.ceil(new Date(date2).getTime() / 1000);
+        var timestamp = start - end;
+        var time = '';
+        switch (true) {
+            // 一秒内
+            case timestamp < 1:
+                time = '刚刚';
+                break;
+            // 一分钟内
+            case timestamp < 60:
+                time = parseInt(timestamp / 1 + '') + '秒前';
+                break;
+            // 一小时内
+            case timestamp > 60 && timestamp < 3600:
+                var t = parseInt(timestamp / 60 + '');
+                time = t + '分钟前';
+                break;
+            // 一天内
+            case timestamp >= 3600 && timestamp < 86400:
+                var hours = parseInt(timestamp / 3600 + '');
+                var minutes = parseInt(((timestamp - (3600 * hours)) / 60) + '');
+                time = hours + '小时 ' + minutes + '分钟前';
+                break;
+            // 一年内
+            case timestamp >= 86400 && timestamp < 31536000:
+                time = Math.floor(timestamp / 86400) + '天前';
+                break;
+            // 大于一天
+            default:
+                time = Math.floor(timestamp / 31536000) + '年前';
+        }
+        return time;
     }
 };

@@ -24,7 +24,7 @@ export default {
     },
     methods: {
         setDocumentTitle() {
-            document.title = `${this.title}_I'NOTE`;
+            document.title = `${this.title}_I'NOTE 创作者的社区`;
         }
     }
 };

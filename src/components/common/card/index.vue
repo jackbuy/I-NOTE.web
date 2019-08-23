@@ -1,6 +1,6 @@
 <template>
     <div class="card">
-        <div class="card__title">
+        <div v-if="visible" class="card__title">
             <div class="tit"><i v-if="icon" :class="icon"></i>{{ title }}</div>
             <slot name="menu"></slot>
         </div>
@@ -18,7 +18,11 @@ export default {
             type: String,
             default: '标题'
         },
-        icon: String
+        icon: String,
+        visible: {
+            type: Boolean,
+            default: true
+        }
     }
 };
 </script>

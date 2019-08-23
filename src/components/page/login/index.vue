@@ -63,7 +63,14 @@
             <el-form-item>
                 <el-button
                     native-type="submit"
-                    @click="handRegister">注册</el-button>
+                    @click="handRegister">
+                    注册
+                </el-button>
+                <!-- <el-button
+                    native-type="submit"
+                    @click="handleSendEmail">
+                    发送邮件
+                </el-button> -->
             </el-form-item>
         </el-form>
     </modal>
@@ -72,7 +79,7 @@
 <script>
 import { mapState, mapMutations } from 'vuex';
 import { TOGGLE_LOGIN_MODAL } from '@/store/mutation-types';
-import Modal from '@/components/common/modal/Modal';
+import Modal from '@/components/common/modal';
 import api from '@/utils/api';
 export default {
     name: 'Login',
@@ -194,6 +201,11 @@ export default {
                 localStorage.setItem('token', token);
                 localStorage.setItem('userId', userId);
                 window.location.reload();
+            });
+        },
+        handleSendEmail() {
+            api.sendEmail().then((res) => {
+                console.log(res);
             });
         }
     }

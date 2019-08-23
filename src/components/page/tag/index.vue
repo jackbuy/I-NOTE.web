@@ -41,6 +41,7 @@ export default {
                 this.tagListData = res.data;
             });
         },
+        // 关注
         handleFollow(tagId) {
             const params = {
                 followId: tagId,
@@ -52,7 +53,7 @@ export default {
                         item.isFollow = !item.isFollow;
                     }
                 });
-            });
+            }).catch(() => {});
         }
     }
 };

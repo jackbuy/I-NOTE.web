@@ -24,24 +24,23 @@ axios.interceptors.response.use(function(response) {
         } else {
             if (response.data.msg && response.data.code === 500) {
                 Message.warning({ message: response.data.msg });
+                return Promise.reject(response.data);
             }
             if (response.data.code === 401) {
+                localStorage.clear();
                 if (localStorage.getItem('token') && localStorage.getItem('userId')) {
-                    localStorage.clear();
                     window.location.reload();
-                    // Message.warning({ message: 'token已过期' });
                 } else {
                     store.default.commit('OPEN_LOGIN_MODAL');
                 }
-                localStorage.clear();
+                return Promise.reject(response.data);
             }
-            return Promise.reject(response.data);
         }
     } else {
-        console.log(response);
+        Message.warning({message: '数据请求异常！'});
     }
 }, function(error) {
-    Message.warning({message: '数据请求失败'});
+    Message.warning({message: '网络异常！'});
     return Promise.reject(error);
 });
 
@@ -53,8 +52,8 @@ const http = (method, url, data) => {
             data: data
         }).then((res) => {
             resolve(res);
-        }).catch(() => {
-            // reject(err);
+        }).catch((err) => {
+            reject(err);
         });
     });
 };

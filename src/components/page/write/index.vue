@@ -10,49 +10,13 @@
                 @click="handleRoutePush('/article/draft')">
                 草稿
             </el-button>
-            <el-popover
-                placement="bottom"
-                width="210"
-                v-model="visible">
-                <div>
-                    <div>
-                        <span class="publish-title">发布</span>
-                        <el-switch
-                            v-model="form.publish"
-                            inactive-icon-class="inactive"
-                            active-color="#13ce66"
-                            inactive-color="#ccc">
-                        </el-switch>
-                    </div>
-                    <el-select
-                        v-if="form.publish"
-                        v-model="form.tagId"
-                        :popper-append-to-body="false"
-                        class="mt15"
-                        clearable
-                        filterable
-                        placeholder="选择一个标签( 可搜索 )">
-                        <el-option
-                            v-for="item in tagOptions"
-                            :key="item._id"
-                            :label="item.title"
-                            :value="item._id">
-                        </el-option>
-                    </el-select>
-                    <el-button
-                        :disabled="!isEditor"
-                        class="mt15"
-                        size="mini"
-                        style="width: 100%"
-                        type="primary"
-                        @click="handlePublish">确定</el-button>
-                </div>
-                <el-button
-                    size="mini"
-                    slot="reference"
-                    round>
-                    {{ editorStatus }} 保存<i class="el-icon-arrow-down el-icon--right"></i></el-button>
-            </el-popover>
+            <el-button
+                size="mini"
+                type="primary"
+                round
+                @click="handleOpenPublishModal">
+                发布
+            </el-button>
         </div>
         <div class="write__title">
             <input
@@ -63,63 +27,64 @@
         <editor
             placeholder="输入正文..."
             v-model="form.contentHtml"></editor>
+        <publish-modal
+            v-if="showPublishModal"
+            v-model="showPublishModal"
+            :data="form"
+            @handlePublish="handleSave">
+        </publish-modal>
     </div>
 </template>
 
 <script>
 import Editor from '@/components/common/editor';
+import PublishModal from './publishModal';
 import message from '@/mixins/message';
 import api from '@/utils/api';
 export default {
     name: 'ArticleAdd',
     components: {
-        Editor
+        Editor,
+        PublishModal
     },
     mixins: [ message ],
     data() {
         return {
-            form: {
-                title: '',
-                contentHtml: '',
-                publish: false,
-                tagId: ''
-            },
+            showPublishModal: false,
+            form: {},
             tagOptions: [],
             isSaving: false,
-            isEditor: false,
-            isLoadDetail: false, // 详情内容是否加载完
-            visible: false
+            saved: false,
+            timer: null
         };
     },
     computed: {
         articleId() {
             return this.$route.params.articleId;
         },
-        isPublish() {
-            return this.form.publish;
-        },
         tips() {
             if (this.isSaving) {
                 return '保存中...';
             } else {
-                return '未发布的文章，将保存到 “草稿”';
+                return this.saved ? '已保存' : '文章将自动保存到';
             }
-        },
-        editorStatus() {
-            if (this.isEditor) return '*';
         }
     },
     watch: {
         form: {
             handler(n, o) {
-                if (o) this.isEditor = true;
+                if (o && !this.isSaving) {
+                    clearTimeout(this.timer);
+                    this.timer = setTimeout(() => {
+                        this.handleSave();
+                    }, 1000);
+                }
             },
             deep: true
         }
     },
     created() {
         if (this.articleId) this.getDetail(this.articleId);
-        this.getArticleTag();
     },
     mounted() {
         window.addEventListener('resize', this.setEditorHeight);
@@ -134,10 +99,10 @@ export default {
             let edit = document.getElementsByClassName('ql-container ql-snow')[0];
             edit.style.height = window.innerHeight - 202 - 12 + 'px';
         },
-        handlePublish() {
-            if (this.form.title.length === 0) return this.showWarningMsg('请输入标题');
-            if (this.form.publish && !this.form.tagId) return this.showWarningMsg('请选择标签');
-            this.handleSave();
+        handleOpenPublishModal() {
+            if (!this.form.title || this.form.title.length === 0) return this.showWarningMsg('标题不能为空！');
+            if (!this.form.contentHtml || this.form.contentHtml.length === 0) return this.showWarningMsg('正文不能为空！');
+            this.showPublishModal = true;
         },
         getDetail(articleId) {
             api.getDetail({ articleId, isEdit: true }).then((res) => {
@@ -148,43 +113,29 @@ export default {
                     title,
                     tagId
                 };
-            }).then(() => {
-                this.isLoadDetail = true;
             });
         },
-        handleSave() {
-            const params = {
-                ...this.form
-            };
+        handleSave(obj) {
+            let params = obj || {};
+            if (!obj) params = { ...this.form };
             this.isSaving = true;
             if (this.articleId) {
                 api.articleEdit(this.articleId, params).then((res) => {
-                    this.isEditor = false;
-                    this.visible = false;
+                    this.saved = true;
                     this.isSaving = false;
                 }).catch(() => {
                     this.isSaving = false;
                 });
             } else {
                 api.articleAdd(params).then((res) => {
-                    this.isEditor = false; // 关闭提示
+                    this.saved = true;
+                    this.isSaving = false;
                     const { articleId } = res.data;
                     this.$router.push(`/write/${articleId}`);
-                    this.visible = false;
-                    this.isSaving = false;
                 }).catch(() => {
                     this.isSaving = false;
                 });
             }
-        },
-        getArticleTag() {
-            const params = {
-                pageSize: 1000,
-                currentPage: 1
-            };
-            api.tagQuery(params).then((res) => {
-                this.tagOptions = res.data;
-            });
         },
         handleRoutePush(path) {
             this.$router.push(path);

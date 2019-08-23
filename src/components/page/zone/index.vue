@@ -2,48 +2,37 @@
     <zone-layout>
         <user-avatar
             :user="userInfo"
-            :follow="isFollow"
+            :type="zoneType"
             slot="header"
             @doFollow="handleFollow">
-            <div>
-                {{ createTime }}
-            </div>
         </user-avatar>
-        <span
-            v-for="item in headerTabData"
-            :key="item.type"
-            :class="{'active': articleType === item.type}"
-            slot="menu"
-            @click="handleChange(item.type)">
-            {{ item.title }}
-        </span>
         <zone-article-list
-            v-if="articleType === 'article' || articleType === 'draft'"
-            :type="articleType"
+            v-if="zoneType === 'article' || zoneType === 'draft'"
+            :type="zoneType"
             :user-id="userId"
             slot="content">
         </zone-article-list>
         <zone-collect-list
-            v-if="articleType === 'collect'"
-            :type="articleType"
+            v-if="zoneType === 'collect'"
+            :type="zoneType"
             :user-id="userId"
             slot="content">
         </zone-collect-list>
         <zone-topic-list
-            v-if="articleType === 'topic'"
-            :type="articleType"
+            v-if="zoneType === 'topic'"
+            :type="zoneType"
             :user-id="userId"
             slot="content">
         </zone-topic-list>
         <zone-follow-user-list
-            v-if="articleType === 'followUser'"
-            :type="articleType"
+            v-if="zoneType === 'follow'"
+            :type="zoneType"
             :user-id="userId"
             slot="content">
         </zone-follow-user-list>
         <zone-fans-list
-            v-if="articleType === 'fans'"
-            :type="articleType"
+            v-if="zoneType === 'fans'"
+            :type="zoneType"
             :user-id="userId"
             slot="content">
         </zone-fans-list>
@@ -59,7 +48,6 @@ import ZoneFollowUserList from './ZoneFollowUserList';
 import ZoneFansList from './ZoneFansList';
 import UserAvatar from '@/components/common/userAvatar';
 import api from '@/utils/api';
-import utils from '@/utils/utils';
 export default {
     name: 'Zone',
     components: {
@@ -73,75 +61,47 @@ export default {
     },
     data() {
         return {
-            userInfo: {},
-            headerTabData: [
-                // {
-                //     type: 'active',
-                //     title: '动态'
-                // },
-                {
-                    type: 'article',
-                    title: '文章'
-                },
-                {
-                    type: 'collect',
-                    title: '收藏'
-                },
-                {
-                    type: 'topic',
-                    title: '专题'
-                },
-                // {
-                //     type: 'followTopic',
-                //     title: '关注的专题'
-                // },
-                {
-                    type: 'followUser',
-                    title: '关注的人'
-                },
-                {
-                    type: 'fans',
-                    title: '粉丝'
-                }
-            ]
+            userInfo: {}
         };
     },
     computed: {
-        articleType() {
-            return this.$route.params.articleType;
+        zoneType() {
+            return this.$route.params.zoneType;
         },
         userId() {
             return this.$route.params.userId;
         },
-        isFollow() {
-            return false;
-        },
-        createTime() {
-            return `加入日期： ${utils.formatDate.date(this.userInfo.createTime)}`;
+        // 当前登录用户Id
+        currentUserId() {
+            return localStorage.getItem('userId');
         }
     },
     watch: {
         userId: {
             handler(n, o) {
-                this.getUserInfo(n);
+                this.getZoneUserInfo(n);
             },
             immediate: true
         }
     },
     methods: {
-        getUserInfo(userId) {
+        getZoneUserInfo(followId) {
             const params = {
-                userId
+                userId: this.currentUserId || '',
+                followId
             };
-            api.getUserInfo(params).then((res) => {
+            api.getZoneUserInfo(params).then((res) => {
                 this.userInfo = res.data;
             });
         },
-        handleChange(type) {
-            this.$router.push(`/zone/${this.userId}/${type}`);
-        },
-        handleFollow() {
-            alert('开发中...');
+        handleFollow(followUserId) {
+            const params = {
+                followId: followUserId,
+                type: 0
+            };
+            api.follow(params).then(() => {
+                this.userInfo.isFollow = !this.userInfo.isFollow;
+            }).catch(() => {});
         }
     }
 };

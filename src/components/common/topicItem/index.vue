@@ -4,7 +4,7 @@
         :class="{'has-img': img}">
         <div class="topic__item-header">
             <span>{{ username }}</span>
-            <span :title="createTime">{{ createTime }}</span>
+            <span>{{ createTime }}</span>
         </div>
         <div class="topic__item-title">
             <span @click="handleRouterPush(topicId)">{{ title }}</span>
@@ -31,7 +31,7 @@ export default {
     },
     computed: {
         username() {
-            if (this.item && this.item.userId) return this.item.userId.username;
+            if (this.item && this.item.userId) return this.item.userId.nickname ? this.item.userId.nickname : this.item.userId.username;
         },
         title() {
             if (this.item && this.item.title) {
@@ -44,7 +44,11 @@ export default {
             if (this.item) return this.item._id || '';
         },
         createTime() {
-            if (this.item) return `${utils.formatDate.time(this.item.createTime)}`;
+            if (this.item) {
+                let end = utils.formatDate.time(this.item.createTime);
+                let start = utils.formatDate.now();
+                return utils.diffDate(start, end);
+            }
         },
         img() {
             return this.item.img ? this.item.img : '';
@@ -63,5 +67,5 @@ export default {
 </script>
 
 <style lang="less">
-@import './index.less';
+    @import './index.less';
 </style>

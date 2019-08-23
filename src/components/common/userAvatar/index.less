@@ -1,33 +1,87 @@
 .user-avatar{
     display: flex;
     background: #fff;
-    padding: 15px;
-    .img{
-        cursor: pointer;
-    }
-    .title{
+    padding: 5px;
+    border-radius: 60px 10px 10px 60px;
+    .content{
         flex: 1;
-        margin-left: 15px;
+        margin-left: 20px;
+        margin-right: 10px;
+        .header{
+            display: flex;
+        }
         .name{
-            padding: 6px 0 12px 0;
-            font-size: 16px;
-            strong{
+            flex: 1;
+            height: 50px;
+            line-height: 50px;
+            font-size: 20px;
+            color: #333;
+            i{
+                font-size: 12px;
+                color: #aaa;
+                margin-left: 20px;
+            }
+        }
+        .menu{
+            padding-top: 10px;
+            span{
+                margin-left: 10px;
                 cursor: pointer;
-                &:hover{
-                    text-decoration: underline;
+                display: inline-block;
+                border: 1px solid #539eff;
+                color: #539eff;
+                padding: 8px;
+                border-radius: 20px;
+                text-align: center;
+                font-size: 12px;
+                transition: all 0.3s;
+                i{font-style: normal;}
+                &.default{
+                    color: #bbb;
+                    border-color: #f5f5f5;
+                    &:hover{
+                        color: #539eff;
+                        border-color: #539eff;
+                    }
+                }
+                &.active{
+                    background: #539eff;
+                    color: #fff;
                 }
             }
-            span{
-                margin-left: 5px;
-                cursor: pointer;
+        }
+    }
+    .count{
+        display: flex;
+        text-align: center;
+        border-top: 1px solid #fafafa;
+        .list{
+            flex: 1;
+            color: #aaa;
+            cursor: pointer;
+            position: relative;
+            font-size: 14px;
+            padding: 4px;
+            &.active:before{
+                position: absolute;
+                content: "";
+                left: 50%;
+                bottom: -6px;
+                width: 10px;
+                margin-left: -5px;
+                height: 3px;
                 background: #539eff;
-                color: #fff;
-                padding: 3px 10px;
-                border-radius: 10px;
-                font-size: 12px;
-                i{
-                    font-style: normal;
+            }
+            &:hover,
+            &.active{
+                div{
+                    color: #539eff;
                 }
+            }
+            div{
+                line-height: 1.5;
+                transition: all 0.3s;
+                i{margin-right: 5px;}
             }
         }
     }

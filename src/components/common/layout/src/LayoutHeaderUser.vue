@@ -1,31 +1,35 @@
 <template>
     <div class="layout__header-login">
-        <div v-if="!isLogin">
+        <template v-if="!isLogin">
             <span @click="handleLog('login')">登录</span>
             <span @click="handleLog('register')">注册</span>
-        </div>
-        <div v-else>
-            <el-dropdown v-if="!isWrite" @command="handleCommand">
-                <span class="el-dropdown-link">
-                    <i class="el-icon-plus"></i>
+        </template>
+        <template v-else>
+            <el-dropdown v-if="!isWrite" @command="handleCommand" trigger="click">
+                <span class="el-dropdown-link write">
+                    <i class="icon icon-jia"></i>
                 </span>
                 <el-dropdown-menu slot="dropdown">
-                    <el-dropdown-item command="article">写文章</el-dropdown-item>
-                    <el-dropdown-item command="topic">创建专题</el-dropdown-item>
+                    <el-dropdown-item command="write">写文章</el-dropdown-item>
+                    <el-dropdown-item command="topicWrite">创建专题</el-dropdown-item>
                 </el-dropdown-menu>
             </el-dropdown>
-            <!-- <span v-else @click="handleRoutePush('/article/draft')"><i class="el-icon-suitcase"></i> 草稿箱</span> -->
-            <el-dropdown @command="handleCommand">
-                <span class="el-dropdown-link">
-                    {{ userName }}
+            <el-dropdown @command="handleCommand" trigger="click">
+                <span class="el-dropdown-link user-img">
+                    {{ userImg }}
                 </span>
                 <el-dropdown-menu slot="dropdown">
-                    <el-dropdown-item command="zone">我的空间</el-dropdown-item>
-                    <!-- <el-dropdown-item command="ww">设置</el-dropdown-item> -->
-                    <el-dropdown-item divided command="loginOut">退出</el-dropdown-item>
+                    <el-dropdown-item command="zone"><i class="icon icon-zuozhe"></i> {{ userName }}</el-dropdown-item>
+                    <el-dropdown-item divided command="zone"><i class="icon icon-wenzhang"></i> 文章</el-dropdown-item>
+                    <el-dropdown-item command="collect"><i class="icon icon-like"></i> 收藏</el-dropdown-item>
+                    <el-dropdown-item command="topic"><i class="icon icon-zhuanti"></i> 专题</el-dropdown-item>
+                    <el-dropdown-item divided command="followUser"><i class="icon icon-guanzhu"></i> 关注</el-dropdown-item>
+                    <el-dropdown-item command="fans"><i class="icon icon-fensi"></i> 粉丝</el-dropdown-item>
+                    <el-dropdown-item divided command="settings"><i class="el-icon-s-tools"></i> 设置</el-dropdown-item>
+                    <el-dropdown-item divided command="loginOut"><i class="icon icon-tuichu"></i> 退出登录</el-dropdown-item>
                 </el-dropdown-menu>
             </el-dropdown>
-        </div>
+        </template>
     </div>
 </template>
 
@@ -45,22 +49,20 @@ export default {
             userInfo: state => state.userInfo
         }),
         userName() {
-            return this.userInfo.username;
+            return this.userInfo.nickname ? this.userInfo.nickname : this.userInfo.username;
         },
         userId() {
             return this.userInfo._id;
         },
         isLogin() {
             if (localStorage.getItem('userId') && localStorage.getItem('token')) return true;
+        },
+        userImg() {
+            if (this.userName) return this.userName.split('')[0].toUpperCase();
         }
     },
     created() {
-        if (this.isLogin) {
-            const params = {
-                userId: localStorage.getItem('userId')
-            };
-            this.getUserInfo(params);
-        }
+        if (this.isLogin) this.getUserInfo();
     },
     methods: {
         ...mapMutations({
@@ -75,18 +77,23 @@ export default {
                 type
             });
         },
+        handleCommand(command) {
+            if (command === 'loginOut') this.handleLogOut();
+            if (command === 'write') this.handleRoutePush(`/write`);
+            if (command === 'topicWrite') this.handleRoutePush(`/topicWrite`);
+            if (command === 'zone') this.handleRoutePush(`/zone/${this.userId}/article`);
+            if (command === 'collect') this.handleRoutePush(`/zone/${this.userId}/collect`);
+            if (command === 'followUser') this.handleRoutePush(`/zone/${this.userId}/followUser`);
+            if (command === 'topic') this.handleRoutePush(`/zone/${this.userId}/topic`);
+            if (command === 'fans') this.handleRoutePush(`/zone/${this.userId}/fans`);
+            if (command === 'settings') this.handleRoutePush(`/settings`);
+        },
         handleLogOut() {
             localStorage.clear();
-            window.location.reload();
+            this.handleRoutePush('/');
         },
         handleRoutePush(url) {
             this.$router.push(url);
-        },
-        handleCommand(command) {
-            if (command === 'loginOut') this.handleLogOut();
-            if (command === 'article') this.handleRoutePush(`/write`);
-            if (command === 'topic') this.handleRoutePush(`/topicAdd`);
-            if (command === 'zone') this.handleRoutePush(`/zone/${this.userId}/article`);
         }
     }
 };

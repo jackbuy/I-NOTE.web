@@ -29,6 +29,8 @@ export default {
                     }
                 });
                 this.loading = false;
+            }).catch(() => {
+                this.loading = false;
             });
         },
         // 赞
@@ -46,6 +48,8 @@ export default {
                         }
                     }
                 });
+                this.loading = false;
+            }).catch(() => {
                 this.loading = false;
             });
         }

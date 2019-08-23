@@ -8,6 +8,10 @@ export default {
     userRegister: (params) => http('post', `${apiBaseUrl}/user/register`, params),
     // 已登录用户信息
     getUserInfo: (params) => http('post', `${apiBaseUrl}/user/userInfo`, params),
+    // 空间用户信息
+    getZoneUserInfo: (params) => http('post', `${apiBaseUrl}/user/zoneUserInfo`, params),
+    // 编辑用户信息
+    userInfoEdit: (params) => http('post', `${apiBaseUrl}/user/userInfoEdit`, params),
     // 用户推荐
     userRecommend: () => http('get', `${apiBaseUrl}/user/recommend`),
 
@@ -34,6 +38,8 @@ export default {
     topicRecommend: () => http('get', `${apiBaseUrl}/topic/recommend`),
     // 创建专题
     topicAdd: (params) => http('post', `${apiBaseUrl}/topic/add`, params),
+    // 编辑专题
+    topicEdit: (topicId, params) => http('put', `${apiBaseUrl}/topic/edit/${topicId}`, params),
     // 删除专题
     topicDelete: (topicId) => http('delete', `${apiBaseUrl}/topic/delete/${topicId}`),
     // 专题详情
@@ -59,6 +65,8 @@ export default {
     // 粉丝列表
     fansQuery: (params) => http('post', `${apiBaseUrl}/fans/query`, params),
     // 关注
-    follow: (params) => http('post', `${apiBaseUrl}/follow`, params)
+    follow: (params) => http('post', `${apiBaseUrl}/follow`, params),
+    // 发送邮件
+    sendEmail: (params) => http('post', `${apiBaseUrl}/sendEmail`, params)
 
 };

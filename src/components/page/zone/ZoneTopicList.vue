@@ -55,12 +55,15 @@ export default {
         // 当前登录用户Id
         currentUserId() {
             return localStorage.getItem('userId');
+        },
+        zone() {
+            return `${this.type}${this.userId}`;
         }
     },
     watch: {
-        type: {
+        zone: {
             handler(n, o) {
-                this.refresh(n);
+                this.refresh();
             },
             immediate: true
         }
@@ -90,7 +93,7 @@ export default {
         },
         handleRouterTopicEdit(topicId) {
             this.$router.push({
-                path: `/topicEdit/${topicId}`
+                path: `/topicWrite/${topicId}`
             });
         },
         handleDelete(row) {

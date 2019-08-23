@@ -9,7 +9,7 @@
         <template v-if="data.length === 0 && noMore && !loading">
             <div class="norecord">暂无数据！</div>
         </template>
-        <div v-if='loading' class="loading-tip">加载中...</div>
+        <div v-if='loading' class="loading-tip"><i class="el-icon-loading"></i> 加载中...</div>
         <div v-if='data.length > 0 && noMore && !loading' class="loading-tip">~ 我是有底线的 ~</div>
     </div>
 </template>

@@ -36,7 +36,7 @@ import LayoutHeaderSearch from './src/LayoutHeaderSearch';
 import LayoutHeaderUser from './src/LayoutHeaderUser';
 import LayoutContent from './src/LayoutContent';
 import Breadcrumb from '@/components/common/breadcrumb';
-import Login from '@/components/common/Login';
+import Login from '@/components/page/Login';
 export default {
     name: 'LayoutContainer',
     components: {
@@ -58,11 +58,6 @@ export default {
                     title: '发现',
                     url: '/'
                 },
-                // {
-                //     id: 14,
-                //     title: '专题',
-                //     url: '/'
-                // },
                 {
                     id: 2,
                     title: '消息',
@@ -74,7 +69,8 @@ export default {
     watch: {
         $route: {
             handler(to, from) {
-                // 新增、编辑文章时，隐藏面包屑
+                // || to.path.split('/')[1] === 'topicWrite'
+                // 创建文章、专题时，隐藏面包屑
                 if (to.path.split('/')[1] === 'write') {
                     this.hiddenBreadcrumb(true);
                 } else {

@@ -1,21 +1,6 @@
 <template>
     <detail-layout>
-        <div
-            class="article-author"
-            slot="author">
-            <user-avatar
-                v-if="userInfo"
-                :user="userInfo"
-                :follow="isFollow"
-                @doFollow="handleFollow">
-                <div class="article-detail__info">
-                    <span :title="createTime">{{ editTime }}</span>
-                    <span>{{ tag }}</span>
-                    <span>浏览 {{ viewCount }}</span>
-                </div>
-            </user-avatar>
-        </div>
-        <div class="article-detail__menu" slot="menu">
+        <div slot="menu" class="article-detail__menu">
             <button
                 :disabled="loading || currentUserId === userId"
                 :class="{'active': isSupport}"
@@ -32,18 +17,44 @@
                 <i v-else class="icon icon-like-o"></i>
                 <span v-if="collectCount > 0">{{ collectCount }}</span>
             </button>
-            <button
-                :disabled="loading || currentUserId === userId"
-                :class="{'active': isTopic}"
-                @click="handleOpenTopic()">
-                <i v-if="isTopic" class="icon icon-shoucang"></i>
-                <i v-else class="icon icon-shoucang3"></i>
-            </button>
+            <el-popover
+                popper-class="topic-list-box"
+                placement="right"
+                width="210">
+                <div class="list">
+                    <template v-if="topicList.length > 0">
+                        <div
+                            v-for="item in topicList"
+                            :key="item._id"
+                            :class="{'active': isAddTopicList(item)}"
+                            @click="handleAddTopicList(item)">
+                            <i class="el-icon-circle-check"></i>
+                            {{ item.title }}
+                        </div>
+                    </template>
+                </div>
+                <div class="add" @click="handleRouterPath('/topicWrite')">
+                    <i class="el-icon-circle-plus"></i>
+                    <span>创建专题</span>
+                </div>
+                <button
+                    slot="reference"
+                    :disabled="loading"
+                    :class="{'active': isTopic}">
+                    <i v-if="isTopic" class="icon icon-shoucang"></i>
+                    <i v-else class="icon icon-shoucang3"></i>
+                </button>
+            </el-popover>
         </div>
-        <div class="article-detail" slot="content">
+        <div slot="content" class="article-detail">
             <div class="article-detail__title">
                 {{ title }}
                 <span v-if="currentUserId === userId" @click="handleRouterEdit(articleId)">编辑</span>
+            </div>
+            <div class="article-detail__info">
+                <span :title="createTime">{{ editTime }}</span>
+                <span>{{ tag }}</span>
+                <span>浏览 {{ viewCount }}</span>
             </div>
             <div
                 v-highlight
@@ -60,6 +71,14 @@
                 @doDetail="handleRecommend">
             </article-recommend>
         </card>
+        <card slot="userinfo" :visible="false" icon="icon icon-zuozhe" title="关于作者">
+            <user-info
+                slot="content"
+                v-if="userInfo"
+                :user="userInfo"
+                @doFollow="handleFollow">
+            </user-info>
+        </card>
     </detail-layout>
 </template>
 
@@ -68,7 +87,7 @@ import { mapMutations } from 'vuex';
 import { SET_DOCUMENT_TITLE } from '@/store/mutation-types';
 import DetailLayout from './Layout';
 import Card from '@/components/common/card';
-import UserAvatar from '@/components/common/userAvatar';
+import UserInfo from '@/components/common/userInfo';
 import ArticleRecommend from '@/components/common/articleRecommend';
 import api from '@/utils/api';
 import utils from '@/utils/utils';
@@ -77,14 +96,15 @@ export default {
     components: {
         DetailLayout,
         Card,
-        UserAvatar,
+        UserInfo,
         ArticleRecommend
     },
     data() {
         return {
             loading: false,
             detail: {},
-            recommendData: []
+            recommendData: [],
+            topicList: []
         };
     },
     computed: {
@@ -124,9 +144,6 @@ export default {
         viewCount() {
             return this.detail.viewCount || 0;
         },
-        isFollow() {
-            return this.detail.isFollow;
-        },
         isSupport() {
             return this.detail.isSupport;
         },
@@ -134,7 +151,11 @@ export default {
             return this.detail.isCollect;
         },
         isTopic() {
-            return this.detail.isTopic;
+            let isTopic = false;
+            this.topicList.map((item) => {
+                if (this.isAddTopicList(item)) isTopic = true;
+            });
+            return isTopic;
         },
         recommendFilterData() {
             let arr = [];
@@ -156,6 +177,9 @@ export default {
             immediate: true
         }
     },
+    created() {
+        this.getTopicList();
+    },
     destroyed() {
         this.setDocumentTitle('');
     },
@@ -163,6 +187,12 @@ export default {
         ...mapMutations({
             setDocumentTitle: SET_DOCUMENT_TITLE
         }),
+        isAddTopicList(row) {
+            const { articleIds } = row;
+            let arr = articleIds.split(',');
+            const index = arr.indexOf(this.articleId);
+            return index > -1;
+        },
         getDetail(articleId) {
             const params = { articleId };
             api.getDetail(params).then((res) => {
@@ -171,15 +201,43 @@ export default {
                 this.recommend(this.detail.tagId._id);
             });
         },
-        // 关注
-        handleFollow() {
+        // 获取专题列表
+        getTopicList() {
             const params = {
-                followId: this.userId,
+                userId: this.currentUserId,
+                pageSize: 10000,
+                currentPage: 1
+            };
+            api.topicUserQuery(params).then((res) => {
+                this.topicList = res.data;
+            });
+        },
+        handleAddTopicList(row) {
+            const { _id, articleIds } = row;
+            const ids = this.getArticleIds(articleIds, this.articleId);
+            api.topicEdit(_id, { articleIds: ids }).then(() => {
+                this.getTopicList();
+            });
+        },
+        getArticleIds(str, articleId) {
+            let arr = str.length > 0 ? str.split(',') : [];
+            const index = arr.indexOf(articleId);
+            if (index === -1) {
+                arr.splice(index, 0, articleId);
+            } else {
+                arr.splice(index, 1);
+            }
+            return arr.join(',');
+        },
+        // 关注
+        handleFollow(followUserId) {
+            const params = {
+                followId: followUserId,
                 type: 0
             };
             api.follow(params).then(() => {
-                this.detail.isFollow = !this.detail.isFollow;
-            });
+                this.detail.userId.isFollow = !this.detail.userId.isFollow;
+            }).catch(() => {});
         },
         // 收藏
         handleCollect(type) {
@@ -192,6 +250,8 @@ export default {
                     this.detail.isCollect = false;
                     this.detail.collectCount--;
                 }
+                this.loading = false;
+            }).catch(() => {
                 this.loading = false;
             });
         },
@@ -207,11 +267,12 @@ export default {
                     this.detail.supportCount--;
                 }
                 this.loading = false;
+            }).catch(() => {
+                this.loading = false;
             });
         },
         // 打开专题
         handleOpenTopic() {
-            alert(4);
         },
         // 相关文章
         recommend(tagId) {
@@ -232,6 +293,9 @@ export default {
         // 编辑
         handleRouterEdit(articleId) {
             this.$router.push(`/write/${articleId}`);
+        },
+        handleRouterPath(path) {
+            this.$router.push(path);
         }
     }
 };

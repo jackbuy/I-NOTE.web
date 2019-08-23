@@ -37,10 +37,15 @@ export default {
             noMore: false // 没有更多数据
         };
     },
+    computed: {
+        zone() {
+            return `${this.type}${this.userId}`;
+        }
+    },
     watch: {
-        type: {
+        zone: {
             handler(n, o) {
-                this.refresh(n);
+                this.refresh();
             },
             immediate: true
         }

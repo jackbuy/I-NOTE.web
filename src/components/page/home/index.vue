@@ -1,68 +1,78 @@
 <template>
     <home-layout>
-        <article-sort slot="header">
-            <span :class="{'active': sortType === 'newest'}" @click="handleSort('newest')">最新</span>
-            <span :class="{'active': sortType === 'popular'}" @click="handleSort('popular')">热门</span>
-        </article-sort>
-        <infinite-scroll
-            slot="content"
-            :loading="loading"
-            :no-more="noMore"
-            :data="listData"
-            @loadData="getList(sortType)">
-            <article-item
-                slot-scope="scope"
-                :item="scope.row">
-                <template slot-scope="scopeInner">
-                    <button
-                        :disabled="loading || scopeInner.row.userId._id === currentUserId"
-                        :class="{'active': scopeInner.row.isSupport}"
-                        @click="handleSupport(scopeInner.row._id, scopeInner.row.isSupport)">
-                        <i v-if="scopeInner.row.isSupport" class="icon icon-dianzan"></i>
-                        <i v-else class="icon icon-dianzan-o"></i>
-                        {{ scopeInner.row.supportCount > 0 ? scopeInner.row.supportCount : '' }}
-                    </button>
-                    <button
-                        :disabled="loading || scopeInner.row.userId._id === currentUserId"
-                        :class="{'active': scopeInner.row.isCollect}"
-                        @click="handleCollect(scopeInner.row._id, scopeInner.row.isCollect)">
-                        <i v-if="scopeInner.row.isCollect" class="icon icon-like"></i>
-                        <i v-else class="icon icon-like-o"></i>
-                        {{ scopeInner.row.collectCount > 0 ? scopeInner.row.collectCount : '' }}
-                    </button>
+        <template slot="header">
+            <tab :activeName="sortType" @tabClick="handleSort">
+                <tab-label name="newest" label="最新"></tab-label>
+                <tab-label name="popular" label="热门"></tab-label>
+            </tab>
+        </template>
+        <template slot="content">
+            <infinite-scroll
+                :loading="loading"
+                :no-more="noMore"
+                :data="listData"
+                @loadData="getList(sortType)">
+                <template slot-scope="scope">
+                    <article-item :item="scope.row">
+                        <template slot-scope="scopeInner">
+                            <button
+                                :disabled="loading || scopeInner.row.userId._id === currentUserId"
+                                :class="{'active': scopeInner.row.isSupport}"
+                                @click="handleSupport(scopeInner.row._id, scopeInner.row.isSupport)">
+                                <i v-if="scopeInner.row.isSupport" class="icon icon-dianzan"></i>
+                                <i v-else class="icon icon-dianzan-o"></i>
+                                {{ scopeInner.row.supportCount > 0 ? scopeInner.row.supportCount : '' }}
+                            </button>
+                            <button
+                                :disabled="loading || scopeInner.row.userId._id === currentUserId"
+                                :class="{'active': scopeInner.row.isCollect}"
+                                @click="handleCollect(scopeInner.row._id, scopeInner.row.isCollect)">
+                                <i v-if="scopeInner.row.isCollect" class="icon icon-like"></i>
+                                <i v-else class="icon icon-like-o"></i>
+                                {{ scopeInner.row.collectCount > 0 ? scopeInner.row.collectCount : '' }}
+                            </button>
+                        </template>
+                    </article-item>
                 </template>
-            </article-item>
-        </infinite-scroll>
-        <card slot="tag" icon="icon icon-bq" title="标签">
-            <div slot="menu" class="menu">
-                <span @click="handleRouterPush('/tag')">全部</span>
-            </div>
-            <article-tag
-                slot="content"
-                v-for="item in tagRecommendData"
-                :key="item._id"
-                :item="item">
-            </article-tag>
-        </card>
-        <card slot="topic" icon="icon icon-zhuanti" title="专题榜">
-            <div slot="menu" class="menu">
-                <span @click="handleRouterPush('/topic')">全部</span>
-            </div>
-            <special-topic
-                slot="content"
-                v-for="item in topicRecommendData"
-                :key="item._id"
-                :item="item">
-            </special-topic>
-        </card>
-        <card slot="author" icon="icon icon-zuozhe" title="创作榜">
-            <author-hot
-                slot="content"
-                v-for="item in authorRecommendData"
-                :key="item._id"
-                :item="item">
-            </author-hot>
-        </card>
+            </infinite-scroll>
+        </template>
+        <template slot="tag">
+            <card icon="icon icon-bq" title="标签">
+                <template slot="menu">
+                    <div class="menu">
+                        <span class="menu-btn" @click="handleRouterPush('/tag')">全部</span>
+                    </div>
+                </template>
+                <article-tag
+                    v-for="item in tagRecommendData"
+                    :key="item._id"
+                    :item="item">
+                </article-tag>
+            </card>
+        </template>
+        <template slot="topic">
+            <card icon="icon icon-zhuanti" title="专题榜">
+                <template slot="menu">
+                    <div class="menu">
+                        <span class="menu-btn" @click="handleRouterPush('/topic')">全部</span>
+                    </div>
+                </template>
+                <special-topic
+                    v-for="item in topicRecommendData"
+                    :key="item._id"
+                    :item="item">
+                </special-topic>
+            </card>
+        </template>
+        <template slot="author">
+            <card icon="icon icon-zuozhe" title="创作榜">
+                <author-hot
+                    v-for="item in authorRecommendData"
+                    :key="item._id"
+                    :item="item">
+                </author-hot>
+            </card>
+        </template>
     </home-layout>
 </template>
 
@@ -74,7 +84,8 @@ import ArticleTag from '@/components/common/articleTag';
 import SpecialTopic from '@/components/common/specialTopic';
 import authorHot from '@/components/common/authorHot';
 import Card from '@/components/common/card';
-import ArticleSort from '@/components/common/articleSort';
+import Tab from '@/components/common/tab';
+import TabLabel from '@/components/common/tab/tabLabel';
 import articleCommon from '@/mixins/articleCommon';
 import api from '@/utils/api';
 
@@ -88,7 +99,8 @@ export default {
         SpecialTopic,
         authorHot,
         Card,
-        ArticleSort
+        Tab,
+        TabLabel
     },
     mixins: [ articleCommon ],
     data() {

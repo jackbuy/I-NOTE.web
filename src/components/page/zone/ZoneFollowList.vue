@@ -1,19 +1,38 @@
 <template>
-    <infinite-scroll
-        :loading="loading"
-        :no-more="noMore"
-        :data="listData"
-        @loadData="getList">
-        <follow-user-item
-            slot-scope="scope"
-            :item="scope.row">
-        </follow-user-item>
-    </infinite-scroll>
+    <div>
+        <div class="follow-tab">
+            <span :class="{'active': activeType === 0}" @click="handleTab(0)">作者</span>
+            <span :class="{'active': activeType === 1}" @click="handleTab(1)">专题</span>
+            <span :class="{'active': activeType === 2}" @click="handleTab(2)">标签</span>
+        </div>
+        <infinite-scroll
+            :loading="loading"
+            :no-more="noMore"
+            :data="listData"
+            @loadData="getList">
+            <template slot-scope="scope">
+                <follow-user-item
+                    v-if="activeType === 0"
+                    :item="scope.row">
+                </follow-user-item>
+                <follow-topic-item
+                    v-if="activeType === 1"
+                    :item="scope.row">
+                </follow-topic-item>
+                <follow-tag-item
+                    v-if="activeType === 2"
+                    :item="scope.row">
+                </follow-tag-item>
+            </template>
+        </infinite-scroll>
+    </div>
 </template>
 
 <script>
 import InfiniteScroll from '@/components/common/infiniteScrollList';
 import FollowUserItem from '@/components/common/followUserItem';
+import FollowTagItem from '@/components/common/followTagItem';
+import FollowTopicItem from '@/components/common/followTopicItem';
 import api from '@/utils/api';
 
 export default {
@@ -24,10 +43,13 @@ export default {
     },
     components: {
         InfiniteScroll,
-        FollowUserItem
+        FollowUserItem,
+        FollowTagItem,
+        FollowTopicItem
     },
     data() {
         return {
+            activeType: 0, // 默认显示
             listData: [],
             pageConfig: {
                 pageSize: 15,
@@ -57,9 +79,13 @@ export default {
             this.noMore = false;
             this.getList();
         },
+        handleTab(type) {
+            this.activeType = type;
+            this.refresh();
+        },
         getList() {
             const params = {
-                type: 0,
+                type: this.activeType,
                 userId: this.userId,
                 pageSize: this.pageConfig.pageSize,
                 currentPage: this.pageConfig.currentPage++

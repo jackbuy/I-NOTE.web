@@ -17,7 +17,7 @@
                     :key="item"
                     class="history-keyword-list-item"
                     @click="handleSearchHistory(item)">
-                    <i class="el-icon-time"></i>{{item}}
+                    <i class="el-icon-time"></i> {{item}}
                     <i class="el-icon-close delete" @click.stop="handleDelete(item)"></i>
                 </div>
             </div>
@@ -126,14 +126,28 @@ export default {
 .history-keyword-list{
     &-item{
         border-top: 1px solid #eee;
-        padding: 12px 0;
+        height: 40px;
+        line-height: 40px;
         cursor: pointer;
+        position: relative;
         &:first-child{
             border-top-width: 0;
         }
         i{
             vertical-align: middle;
-            margin-right: 6px;
+        }
+        .delete{
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 40px;
+            text-align: center;
+            height: 40px;
+            line-height: 40px;
+            z-index: 2;
+            &:hover{
+                color: #f60;
+            }
         }
     }
 }

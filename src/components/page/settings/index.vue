@@ -1,5 +1,13 @@
 <template>
     <div class="settings">
+        <set-item title="头像">
+            <set-avatar
+                :prop="userInfo.avatar"
+                :loading="loading"
+                label="avatar"
+                @submit="handleSave">
+            </set-avatar>
+        </set-item>
         <set-item title="昵称">
             <set-input
                 :prop="userInfo.nickname"
@@ -24,6 +32,7 @@
 <script>
 import { mapState, mapActions } from 'vuex';
 import { GET_USER_INFO } from '@/store/mutation-types';
+import SetAvatar from './SetAvatar';
 import SetInput from './SetInput';
 import SetItem from './SetItem';
 import api from '@/utils/api';
@@ -31,7 +40,8 @@ export default {
     name: 'TopicAddEdit',
     components: {
         SetInput,
-        SetItem
+        SetItem,
+        SetAvatar
     },
     data() {
         return {

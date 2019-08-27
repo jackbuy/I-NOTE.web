@@ -14,7 +14,7 @@
             <layout-header-user :is-write="isHiddenBreadcrumb"></layout-header-user>
         </layout-header>
         <layout-content>
-            <breadcrumb v-if="!isHiddenBreadcrumb"></breadcrumb>
+            <!-- <breadcrumb v-if="!isHiddenBreadcrumb"></breadcrumb> -->
             <keep-alive>
                 <router-view v-if="$route.meta.keepAlive"></router-view>
             </keep-alive>

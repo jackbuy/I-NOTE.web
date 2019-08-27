@@ -1,13 +1,12 @@
 <template>
     <infinite-scroll
+        :data="listData"
         :loading="loading"
         :no-more="noMore"
-        :data="listData"
         @loadData="getList">
-        <topic-item
-            slot-scope="scope"
-            :item="scope.row">
-        </topic-item>
+        <template slot-scope="scope">
+            <topic-item :item="scope.row"></topic-item>
+        </template>
     </infinite-scroll>
 </template>
 

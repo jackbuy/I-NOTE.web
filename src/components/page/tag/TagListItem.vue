@@ -2,7 +2,10 @@
     <div class="tag-content-list-item">
         <div
             class="title"
-            @click="handleArticle(tagId)">{{ title }}</div>
+            @click="handleArticle(tagId)">
+            {{ title }}
+        </div>
+        <div class="count">{{ count }}</div>
         <div
             class="follow"
             @click="handleFollow(tagId)">
@@ -27,6 +30,9 @@ export default {
         },
         tagId() {
             return this.item._id;
+        },
+        count() {
+            return `${this.item.articleCount} 篇`;
         },
         isFollow() {
             return this.item.isFollow;

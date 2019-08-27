@@ -64,16 +64,14 @@
         </div>
         <card slot="recommend" icon="icon icon-wenzhang" title="相关文章">
             <article-recommend
-                slot="content"
                 v-for="item in recommendFilterData"
                 :key="item._id"
                 :item="item"
                 @doDetail="handleRecommend">
             </article-recommend>
         </card>
-        <card slot="userinfo" :visible="false" icon="icon icon-zuozhe" title="关于作者">
+        <card slot="userinfo" :visible-header="false" icon="icon icon-zuozhe" title="关于作者">
             <user-info
-                slot="content"
                 v-if="userInfo"
                 :user="userInfo"
                 @doFollow="handleFollow">

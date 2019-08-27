@@ -6,19 +6,26 @@
             :no-more="noMore"
             :data="listData"
             @loadData="getList">
-            <article-item
-                slot-scope="scope"
-                :item="scope.row">
-            </article-item>
+            <template slot-scope="scope">
+                <article-item :item="scope.row"></article-item>
+            </template>
         </infinite-scroll>
-        <card slot="topic" icon="icon icon-zhuanti" :title="topicDetail.title">
-            <div v-if="img" slot="content" class="img" :style="{backgroundImage: 'url(' + img + ')'}"></div>
-            <div
-                slot="content"
-                class="topic-description">
-                {{ topicDetail.description }}
-            </div>
-            <div slot="content" class="time">{{ createTime }}</div>
+        <card slot="topicDetail" icon="icon icon-zhuanti" :title="topicDetail.title">
+            <template slot="menu">
+                <div class="menu">
+                    <div v-if="userId !== mine" @click="handleFollow(topicDetail._id)" class="menu-btn">
+                        <span v-if="!topicDetail.isFollow">关注</span>
+                        <span v-else>已关注</span>
+                    </div>
+                </div>
+            </template>
+            <template>
+                <div v-if="img" class="topic-img" :style="{backgroundImage: 'url(' + img + ')'}"></div>
+                <div class="topic-description">
+                    {{ topicDetail.description }}
+                </div>
+                <div class="time">{{ createTime }}</div>
+            </template>
         </card>
     </layout>
 </template>
@@ -28,6 +35,7 @@ import Layout from './Layout';
 import Card from '@/components/common/card';
 import InfiniteScroll from '@/components/common/infiniteScrollList';
 import ArticleItem from '@/components/common/articleItem';
+import UserInfo from '@/components/common/userInfo';
 import articleCommon from '@/mixins/articleCommon';
 import api from '@/utils/api';
 import utils from '@/utils/utils';
@@ -39,7 +47,8 @@ export default {
         Layout,
         Card,
         InfiniteScroll,
-        ArticleItem
+        ArticleItem,
+        UserInfo
     },
     data() {
         return {
@@ -62,6 +71,15 @@ export default {
         },
         createTime() {
             if (this.topicDetail) return `创建于 ${utils.formatDate.date(this.topicDetail.createTime)}`;
+        },
+        userInfo() {
+            if (this.topicDetail.userId) return this.topicDetail.userId;
+        },
+        mine() {
+            return localStorage.getItem('userId');
+        },
+        userId() {
+            if (this.topicDetail.userId) return this.topicDetail.userId._id;
         }
     },
     watch: {
@@ -100,6 +118,16 @@ export default {
             api.topicDetail({ topicId }).then((res) => {
                 this.topicDetail = res.data;
             });
+        },
+        // 关注
+        handleFollow(tagId) {
+            const params = {
+                followId: tagId,
+                type: 1
+            };
+            api.follow(params).then(() => {
+                this.topicDetail.isFollow = !this.topicDetail.isFollow;
+            }).catch(() => {});
         }
     }
 };

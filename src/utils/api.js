@@ -67,6 +67,9 @@ export default {
     // 关注
     follow: (params) => http('post', `${apiBaseUrl}/follow`, params),
     // 发送邮件
-    sendEmail: (params) => http('post', `${apiBaseUrl}/sendEmail`, params)
+    sendEmail: (params) => http('post', `${apiBaseUrl}/sendEmail`, params),
+
+    // 删除对应文件
+    deleteFile: (params) => http('post', `${apiBaseUrl}/deleteFile`, params)
 
 };

@@ -1,11 +1,11 @@
 <template>
     <div class="card">
-        <div v-if="visible" class="card__title">
+        <div v-if="visibleHeader" class="card__title">
             <div class="tit"><i v-if="icon" :class="icon"></i>{{ title }}</div>
             <slot name="menu"></slot>
         </div>
         <div class="card__content">
-            <slot name="content"></slot>
+            <slot></slot>
         </div>
     </div>
 </template>
@@ -19,7 +19,7 @@ export default {
             default: '标题'
         },
         icon: String,
-        visible: {
+        visibleHeader: {
             type: Boolean,
             default: true
         }

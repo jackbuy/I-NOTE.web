@@ -4,10 +4,10 @@
         :no-more="noMore"
         :data="listData"
         @loadData="getList">
-        <fans-item
-            slot-scope="scope"
-            :item="scope.row">
-        </fans-item>
+        <template slot-scope="scope">
+            <fans-item :item="scope.row">
+            </fans-item>
+        </template>
     </infinite-scroll>
 </template>
 

@@ -7,7 +7,7 @@
             @doFollow="handleFollow">
         </user-avatar>
         <zone-article-list
-            v-if="zoneType === 'article' || zoneType === 'draft'"
+            v-if="zoneType === 'article'"
             :type="zoneType"
             :user-id="userId"
             slot="content">
@@ -24,12 +24,12 @@
             :user-id="userId"
             slot="content">
         </zone-topic-list>
-        <zone-follow-user-list
+        <zone-follow-list
             v-if="zoneType === 'follow'"
             :type="zoneType"
             :user-id="userId"
             slot="content">
-        </zone-follow-user-list>
+        </zone-follow-list>
         <zone-fans-list
             v-if="zoneType === 'fans'"
             :type="zoneType"
@@ -44,7 +44,7 @@ import ZoneLayout from './Layout';
 import ZoneArticleList from './ZoneArticleList';
 import ZoneCollectList from './ZoneCollectList';
 import ZoneTopicList from './ZoneTopicList';
-import ZoneFollowUserList from './ZoneFollowUserList';
+import ZoneFollowList from './ZoneFollowList';
 import ZoneFansList from './ZoneFansList';
 import UserAvatar from '@/components/common/userAvatar';
 import api from '@/utils/api';
@@ -55,7 +55,7 @@ export default {
         ZoneArticleList,
         ZoneTopicList,
         ZoneCollectList,
-        ZoneFollowUserList,
+        ZoneFollowList,
         ZoneFansList,
         UserAvatar
     },
@@ -73,7 +73,7 @@ export default {
         },
         // 当前登录用户Id
         currentUserId() {
-            return localStorage.getItem('userId');
+            return localStorage.getItem('userId') || '';
         }
     },
     watch: {
@@ -85,15 +85,17 @@ export default {
         }
     },
     methods: {
+        // 用户信息
         getZoneUserInfo(followId) {
             const params = {
-                userId: this.currentUserId || '',
+                userId: this.currentUserId,
                 followId
             };
             api.getZoneUserInfo(params).then((res) => {
                 this.userInfo = res.data;
             });
         },
+        // 关注
         handleFollow(followUserId) {
             const params = {
                 followId: followUserId,

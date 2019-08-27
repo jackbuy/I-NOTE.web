@@ -1,14 +1,18 @@
 @import '../../../assets/less/common.less';
 .article-recommend{
-    padding: 15px 0;
+    padding: 10px 0;
     line-height: 1.5;
-    border-top: 1px solid #eee;
+    border-top: 1px solid #f9f9f9;
     transition: all 0.3s;
     color: #343434;
     cursor: pointer;
     .ovf-num();
     &:first-child{
         border-top-width: 0;
+        padding-top: 0;
+    }
+    &:last-child{
+        padding-bottom: 0;
     }
     &:hover{
         color: #539eff;

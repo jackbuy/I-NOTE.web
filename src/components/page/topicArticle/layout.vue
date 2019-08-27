@@ -5,9 +5,8 @@
             <slot name="content"></slot>
         </div>
         <div class="topic-article__side">
-            <slot name="tag"></slot>
-            <slot name="topic"></slot>
-            <slot name="author"></slot>
+            <slot name="userInfo"></slot>
+            <slot name="topicDetail"></slot>
         </div>
     </div>
 </template>

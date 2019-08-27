@@ -1,7 +1,8 @@
 <template>
     <div class="user-info">
         <div class="img">
-            <el-avatar :size="80">{{ userImg }}</el-avatar>
+            <el-avatar v-if="user.avatar" :size="100" :src="userImg"></el-avatar>
+            <el-avatar v-else :size="100"><i class="icon icon-yonghu"></i></el-avatar>
         </div>
         <div class="name" @click="handleZone('article')">
             <strong >{{ username }}</strong>
@@ -41,6 +42,7 @@
 </template>
 
 <script>
+import { imgBaseUrl } from '@/constants/url-config';
 export default {
     name: 'UserAvatar',
     props: {
@@ -78,7 +80,7 @@ export default {
             return this.user.fansCount;
         },
         userImg() {
-            if (this.username) return this.username.split('')[0].toUpperCase();
+            return this.user.avatar ? `${imgBaseUrl}/${this.user.avatar}` : '';
         }
     },
     methods: {

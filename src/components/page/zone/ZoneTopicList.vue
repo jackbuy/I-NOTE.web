@@ -4,22 +4,22 @@
         :no-more="noMore"
         :data="listData"
         @loadData="getList">
-        <topic-item
-            slot-scope="scope"
-            :item="scope.row">
-            <template slot-scope="scopeInner">
-                <button
-                    v-if="scopeInner.row.userId._id === currentUserId"
-                    @click="handleRouterTopicEdit(scopeInner.row._id)">
-                    <i class="el-icon-edit"></i>
-                </button>
-                <button
-                    v-if="scopeInner.row.userId._id === currentUserId"
-                    @click="handleDelete(scopeInner.row)">
-                    <i class="el-icon-delete"></i>
-                </button>
-            </template>
-        </topic-item>
+        <template slot-scope="scope">
+            <topic-item :item="scope.row">
+                <template slot-scope="scopeInner">
+                    <button
+                        v-if="scopeInner.row.userId._id === currentUserId"
+                        @click="handleRouterTopicEdit(scopeInner.row._id)">
+                        <i class="el-icon-edit"></i>
+                    </button>
+                    <button
+                        v-if="scopeInner.row.userId._id === currentUserId"
+                        @click="handleDelete(scopeInner.row)">
+                        <i class="el-icon-delete"></i>
+                    </button>
+                </template>
+            </topic-item>
+        </template>
     </infinite-scroll>
 </template>
 

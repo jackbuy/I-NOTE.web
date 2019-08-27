@@ -4,28 +4,28 @@
         :no-more="noMore"
         :data="listData"
         @loadData="getList(tagId)">
-        <article-item
-            slot-scope="scope"
-            :item="scope.row">
-            <template slot-scope="scopeInner">
-                <button
-                    :disabled="loading || scopeInner.row.userId._id === currentUserId"
-                    :class="{'active': scopeInner.row.isSupport}"
-                    @click="handleSupport(scopeInner.row._id, scopeInner.row.isSupport)">
-                    <i v-if="scopeInner.row.isSupport" class="icon icon-dianzan"></i>
-                    <i v-else class="icon icon-dianzan-o"></i>
-                    {{ scopeInner.row.supportCount > 0 ? scopeInner.row.supportCount : '' }}
-                </button>
-                <button
-                    :disabled="loading || scopeInner.row.userId._id === currentUserId"
-                    :class="{'active': scopeInner.row.isCollect}"
-                    @click="handleCollect(scopeInner.row._id, scopeInner.row.isCollect)">
-                    <i v-if="scopeInner.row.isCollect" class="icon icon-like"></i>
-                    <i v-else class="icon icon-like-o"></i>
-                    {{ scopeInner.row.collectCount > 0 ? scopeInner.row.collectCount : '' }}
-                </button>
-            </template>
-        </article-item>
+        <template slot-scope="scope">
+            <article-item :item="scope.row">
+                <template slot-scope="scopeInner">
+                    <button
+                        :disabled="loading || scopeInner.row.userId._id === currentUserId"
+                        :class="{'active': scopeInner.row.isSupport}"
+                        @click="handleSupport(scopeInner.row._id, scopeInner.row.isSupport)">
+                        <i v-if="scopeInner.row.isSupport" class="icon icon-dianzan"></i>
+                        <i v-else class="icon icon-dianzan-o"></i>
+                        {{ scopeInner.row.supportCount > 0 ? scopeInner.row.supportCount : '' }}
+                    </button>
+                    <button
+                        :disabled="loading || scopeInner.row.userId._id === currentUserId"
+                        :class="{'active': scopeInner.row.isCollect}"
+                        @click="handleCollect(scopeInner.row._id, scopeInner.row.isCollect)">
+                        <i v-if="scopeInner.row.isCollect" class="icon icon-like"></i>
+                        <i v-else class="icon icon-like-o"></i>
+                        {{ scopeInner.row.collectCount > 0 ? scopeInner.row.collectCount : '' }}
+                    </button>
+                </template>
+            </article-item>
+        </template>
     </infinite-scroll>
 </template>
 

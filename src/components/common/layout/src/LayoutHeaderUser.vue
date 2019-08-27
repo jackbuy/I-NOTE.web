@@ -16,14 +16,15 @@
             </el-dropdown>
             <el-dropdown @command="handleCommand" trigger="click">
                 <span class="el-dropdown-link user-img">
-                    {{ userImg }}
+                    <img v-if="userInfo.avatar" :src="userImg" alt="">
+                    <div v-else>{{ userImg }}</div>
                 </span>
                 <el-dropdown-menu slot="dropdown">
                     <el-dropdown-item command="zone"><i class="icon icon-zuozhe"></i> {{ userName }}</el-dropdown-item>
                     <el-dropdown-item divided command="zone"><i class="icon icon-wenzhang"></i> 文章</el-dropdown-item>
                     <el-dropdown-item command="collect"><i class="icon icon-like"></i> 收藏</el-dropdown-item>
                     <el-dropdown-item command="topic"><i class="icon icon-zhuanti"></i> 专题</el-dropdown-item>
-                    <el-dropdown-item divided command="followUser"><i class="icon icon-guanzhu"></i> 关注</el-dropdown-item>
+                    <el-dropdown-item divided command="follow"><i class="icon icon-guanzhu"></i> 关注</el-dropdown-item>
                     <el-dropdown-item command="fans"><i class="icon icon-fensi"></i> 粉丝</el-dropdown-item>
                     <el-dropdown-item divided command="settings"><i class="el-icon-s-tools"></i> 设置</el-dropdown-item>
                     <el-dropdown-item divided command="loginOut"><i class="icon icon-tuichu"></i> 退出登录</el-dropdown-item>
@@ -39,6 +40,7 @@ import {
     TOGGLE_LOGIN_MODAL,
     GET_USER_INFO
 } from '@/store/mutation-types';
+import { imgBaseUrl } from '@/constants/url-config';
 export default {
     name: 'LayoutHeaderUser',
     props: {
@@ -58,7 +60,11 @@ export default {
             if (localStorage.getItem('userId') && localStorage.getItem('token')) return true;
         },
         userImg() {
-            if (this.userName) return this.userName.split('')[0].toUpperCase();
+            if (this.userInfo.avatar) {
+                return `${imgBaseUrl}/${this.userInfo.avatar}`;
+            } else if (this.userName) {
+                return this.userName.split('')[0].toUpperCase();
+            }
         }
     },
     created() {
@@ -83,7 +89,7 @@ export default {
             if (command === 'topicWrite') this.handleRoutePush(`/topicWrite`);
             if (command === 'zone') this.handleRoutePush(`/zone/${this.userId}/article`);
             if (command === 'collect') this.handleRoutePush(`/zone/${this.userId}/collect`);
-            if (command === 'followUser') this.handleRoutePush(`/zone/${this.userId}/followUser`);
+            if (command === 'follow') this.handleRoutePush(`/zone/${this.userId}/follow`);
             if (command === 'topic') this.handleRoutePush(`/zone/${this.userId}/topic`);
             if (command === 'fans') this.handleRoutePush(`/zone/${this.userId}/fans`);
             if (command === 'settings') this.handleRoutePush(`/settings`);
@@ -91,6 +97,9 @@ export default {
         handleLogOut() {
             localStorage.clear();
             this.handleRoutePush('/');
+            setTimeout(() => {
+                window.location.reload();
+            });
         },
         handleRoutePush(url) {
             this.$router.push(url);

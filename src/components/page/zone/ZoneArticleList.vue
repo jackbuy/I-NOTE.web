@@ -4,9 +4,8 @@
         :no-more="noMore"
         :data="listData"
         @loadData="getList">
-        <article-item
-            slot-scope="scope"
-            :item="scope.row">
+        <template slot-scope="scope">
+            <article-item :item="scope.row">
                 <template slot-scope="scopeInner">
                     <button
                         :disabled="loading || scopeInner.row.userId._id === currentUserId"
@@ -35,7 +34,8 @@
                         <i class="el-icon-delete"></i>
                     </button>
                 </template>
-        </article-item>
+            </article-item>
+        </template>
     </infinite-scroll>
 </template>
 

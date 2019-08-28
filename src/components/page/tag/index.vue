@@ -1,44 +1,56 @@
 <template>
-    <tag-layout>
-        <tag-list slot="list">
-            <tag-list-item
-                v-for="item in tagListData"
-                :key="item._id"
-                :item="item"
-                @doFollow="handleFollow">
-            </tag-list-item>
-        </tag-list>
-    </tag-layout>
+    <infinite-scroll
+        :loading="loading"
+        :no-more="noMore"
+        :data="listData"
+        class="tag-list"
+        @loadData="getList()">
+        <template slot-scope="scope">
+            <tag-item :item="scope.row" @doFollow="handleFollow"></tag-item>
+        </template>
+    </infinite-scroll>
 </template>
 
 <script>
-import TagLayout from './Layout';
-import TagList from './TagList';
-import TagListItem from './TagListItem';
+import InfiniteScroll from '@/components/common/infiniteScrollList';
+import TagItem from '@/components/common/tagItem';
 import api from '@/utils/api';
 export default {
     name: 'Tag',
     components: {
-        TagLayout,
-        TagList,
-        TagListItem
+        InfiniteScroll,
+        TagItem
     },
     data() {
         return {
-            tagListData: []
+            listData: [],
+            pageConfig: {
+                pageSize: 40,
+                currentPage: 1
+            },
+            loading: false, // 加载中
+            noMore: false // 没有更多数据
         };
     },
     created() {
-        this.getArticleTag();
+        this.getList();
     },
     methods: {
-        getArticleTag() {
+        getList() {
             const params = {
-                pageSize: 1000,
-                currentPage: 1
+                pageSize: this.pageConfig.pageSize,
+                currentPage: this.pageConfig.currentPage++
             };
+            this.loading = true;
             api.tagQuery(params).then((res) => {
-                this.tagListData = res.data;
+                this.loading = false;
+                if (res.data.length > 0) {
+                    this.listData.push(...res.data);
+                } else {
+                    this.noMore = true;
+                }
+            }).catch(() => {
+                this.loading = false;
             });
         },
         // 关注

@@ -91,19 +91,19 @@ export default {
             return this.user.brief || '作者很懒，什么也没写！';
         },
         articleCount() {
-            return this.user.articleCount;
+            return this.user.articleCount || 0;
         },
         topicCount() {
-            return this.user.topicCount;
+            return this.user.topicCount || 0;
         },
         followCount() {
-            return this.user.followCount;
+            return this.user.followCount || 0;
         },
         collectCount() {
-            return this.user.collectCount;
+            return this.user.collectCount || 0;
         },
         fansCount() {
-            return this.user.fansCount;
+            return this.user.fansCount || 0;
         },
         userImg() {
             return this.user.avatar ? `${imgBaseUrl}/${this.user.avatar}` : '';

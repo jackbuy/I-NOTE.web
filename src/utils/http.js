@@ -24,7 +24,6 @@ axios.interceptors.response.use(function(response) {
         } else {
             if (response.data.msg && response.data.code === 500) {
                 Message.warning({ message: response.data.msg });
-                return Promise.reject(response.data);
             }
             if (response.data.code === 401) {
                 localStorage.clear();
@@ -33,8 +32,8 @@ axios.interceptors.response.use(function(response) {
                 } else {
                     store.default.commit('OPEN_LOGIN_MODAL');
                 }
-                return Promise.reject(response.data);
             }
+            return Promise.reject(response.data);
         }
     } else {
         Message.warning({message: '数据请求异常！'});

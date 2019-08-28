@@ -53,6 +53,8 @@ export default {
     tagFollowQuery: (params) => http('post', `${apiBaseUrl}/tag/Follow/query`, params),
     // Tag推荐
     tagRecommend: () => http('get', `${apiBaseUrl}/tag/recommend`),
+    // tag详情
+    tagDetail: (params) => http('post', `${apiBaseUrl}/tag/detail`, params),
 
     // 消息列表
     messageQuery: () => http('get', `${apiBaseUrl}/message/query`),

@@ -102,6 +102,8 @@ export default {
                 } else {
                     this.noMore = true;
                 }
+            }).catch(() => {
+                this.loading = false;
             });
         },
         handleDelete(row) {

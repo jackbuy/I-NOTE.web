@@ -1,5 +1,5 @@
 <template>
-    <div class="tag-content-list-item">
+    <div class="tag-list-item">
         <div
             class="title"
             @click="handleArticle(tagId)">
@@ -50,3 +50,7 @@ export default {
     }
 };
 </script>
+
+<style lang="less">
+    @import './index.less';
+</style>

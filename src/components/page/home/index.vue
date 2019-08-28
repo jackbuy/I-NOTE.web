@@ -43,11 +43,11 @@
                         <span class="menu-btn" @click="handleRouterPush('/tag')">全部</span>
                     </div>
                 </template>
-                <article-tag
+                <tag-recommend
                     v-for="item in tagRecommendData"
                     :key="item._id"
                     :item="item">
-                </article-tag>
+                </tag-recommend>
             </card>
         </template>
         <template slot="topic">
@@ -57,20 +57,20 @@
                         <span class="menu-btn" @click="handleRouterPush('/topic')">全部</span>
                     </div>
                 </template>
-                <special-topic
+                <topic-recommend
                     v-for="item in topicRecommendData"
                     :key="item._id"
                     :item="item">
-                </special-topic>
+                </topic-recommend>
             </card>
         </template>
         <template slot="author">
             <card icon="icon icon-zuozhe" title="创作榜">
-                <author-hot
+                <author-recommend
                     v-for="item in authorRecommendData"
                     :key="item._id"
                     :item="item">
-                </author-hot>
+                </author-recommend>
             </card>
         </template>
     </home-layout>
@@ -80,9 +80,9 @@
 import HomeLayout from './Layout';
 import InfiniteScroll from '@/components/common/infiniteScrollList';
 import ArticleItem from '@/components/common/articleItem';
-import ArticleTag from '@/components/common/articleTag';
-import SpecialTopic from '@/components/common/specialTopic';
-import authorHot from '@/components/common/authorHot';
+import TagRecommend from '@/components/common/tagRecommend';
+import TopicRecommend from '@/components/common/topicRecommend';
+import AuthorRecommend from '@/components/common/authorRecommend';
 import Card from '@/components/common/card';
 import Tab from '@/components/common/tab';
 import TabLabel from '@/components/common/tab/tabLabel';
@@ -95,9 +95,9 @@ export default {
         HomeLayout,
         InfiniteScroll,
         ArticleItem,
-        ArticleTag,
-        SpecialTopic,
-        authorHot,
+        TagRecommend,
+        TopicRecommend,
+        AuthorRecommend,
         Card,
         Tab,
         TabLabel
@@ -157,6 +157,8 @@ export default {
                 } else {
                     this.noMore = true;
                 }
+            }).catch(() => {
+                this.loading = false;
             });
         },
         handleSort(sortType) {

@@ -16,7 +16,7 @@
             </el-dropdown>
             <el-dropdown @command="handleCommand" trigger="click">
                 <span class="el-dropdown-link user-img">
-                    <img v-if="userInfo.avatar" :src="userImg" alt="">
+                    <img v-if="isAvatar" :src="userImg" alt="">
                     <div v-else>{{ userImg }}</div>
                 </span>
                 <el-dropdown-menu slot="dropdown">
@@ -60,11 +60,14 @@ export default {
             if (localStorage.getItem('userId') && localStorage.getItem('token')) return true;
         },
         userImg() {
-            if (this.userInfo.avatar) {
+            if (this.isAvatar) {
                 return `${imgBaseUrl}/${this.userInfo.avatar}`;
             } else if (this.userName) {
                 return this.userName.split('')[0].toUpperCase();
             }
+        },
+        isAvatar() {
+            return this.userInfo.avatar;
         }
     },
     created() {
@@ -96,10 +99,7 @@ export default {
         },
         handleLogOut() {
             localStorage.clear();
-            this.handleRoutePush('/');
-            setTimeout(() => {
-                window.location.reload();
-            });
+            window.location.reload();
         },
         handleRoutePush(url) {
             this.$router.push(url);

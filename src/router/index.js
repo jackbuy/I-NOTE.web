@@ -117,7 +117,7 @@ export default new Router({
                     path: '/Settings',
                     name: 'settings',
                     component: Settings,
-                    meta: { title: '设置' }
+                    meta: { title: '设置', requireAuth: true }
                 }
             ]
         },

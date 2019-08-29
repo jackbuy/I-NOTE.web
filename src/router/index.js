@@ -51,7 +51,7 @@ export default new Router({
                     path: '/tag',
                     name: 'tag',
                     component: Tag,
-                    meta: { title: '标签-全部' }
+                    meta: { title: '标签' }
                 },
                 {
                     path: '/tag/:tagId',
@@ -75,13 +75,13 @@ export default new Router({
                     path: '/topicWrite',
                     name: 'topicAdd',
                     component: TopicWrite,
-                    meta: { title: '专题-创建', requireAuth: true }
+                    meta: { title: '创建专题', requireAuth: true }
                 },
                 {
                     path: '/topicWrite/:topicId',
                     name: 'topicEdit',
                     component: TopicWrite,
-                    meta: { title: '专题-编辑', requireAuth: true }
+                    meta: { title: '编辑专题', requireAuth: true }
                 },
                 {
                     path: '/write',

@@ -57,7 +57,7 @@ export default {
     tagDetail: (params) => http('post', `${apiBaseUrl}/tag/detail`, params),
 
     // 消息列表
-    messageQuery: () => http('get', `${apiBaseUrl}/message/query`),
+    messageQuery: (params) => http('post', `${apiBaseUrl}/message/query`, params),
 
     // 收藏列表
     collectQuery: (params) => http('post', `${apiBaseUrl}/collect/query`, params),

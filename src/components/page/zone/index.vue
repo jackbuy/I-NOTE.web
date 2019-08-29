@@ -1,48 +1,45 @@
 <template>
-    <container :is-not-find="isNotFind" :loading="loading" tips="作者不存在">
-        <zone-layout>
-            <user-avatar
-                :user="userInfo"
-                :type="zoneType"
-                slot="header"
-                @doFollow="handleFollow">
-            </user-avatar>
-            <zone-article-list
-                v-if="zoneType === 'article'"
-                :type="zoneType"
-                :user-id="userId"
-                slot="content">
-            </zone-article-list>
-            <zone-collect-list
-                v-if="zoneType === 'collect'"
-                :type="zoneType"
-                :user-id="userId"
-                slot="content">
-            </zone-collect-list>
-            <zone-topic-list
-                v-if="zoneType === 'topic'"
-                :type="zoneType"
-                :user-id="userId"
-                slot="content">
-            </zone-topic-list>
-            <zone-follow-list
-                v-if="zoneType === 'follow'"
-                :type="zoneType"
-                :user-id="userId"
-                slot="content">
-            </zone-follow-list>
-            <zone-fans-list
-                v-if="zoneType === 'fans'"
-                :type="zoneType"
-                :user-id="userId"
-                slot="content">
-            </zone-fans-list>
-        </zone-layout>
-    </container>
+    <zone-layout>
+        <user-avatar
+            :user="userInfo"
+            :type="zoneType"
+            slot="header"
+            @doFollow="handleFollow">
+        </user-avatar>
+        <zone-article-list
+            v-if="zoneType === 'article'"
+            :type="zoneType"
+            :user-id="userId"
+            slot="content">
+        </zone-article-list>
+        <zone-collect-list
+            v-if="zoneType === 'collect'"
+            :type="zoneType"
+            :user-id="userId"
+            slot="content">
+        </zone-collect-list>
+        <zone-topic-list
+            v-if="zoneType === 'topic'"
+            :type="zoneType"
+            :user-id="userId"
+            slot="content">
+        </zone-topic-list>
+        <zone-follow-list
+            v-if="zoneType === 'follow'"
+            :type="zoneType"
+            :user-id="userId"
+            slot="content">
+        </zone-follow-list>
+        <zone-fans-list
+            v-if="zoneType === 'fans'"
+            :type="zoneType"
+            :user-id="userId"
+            slot="content">
+        </zone-fans-list>
+    </zone-layout>
 </template>
 
 <script>
-import Container from '@/components/common/container';
 import ZoneLayout from './Layout';
 import ZoneArticleList from './ZoneArticleList';
 import ZoneCollectList from './ZoneCollectList';
@@ -60,13 +57,10 @@ export default {
         ZoneCollectList,
         ZoneFollowList,
         ZoneFansList,
-        UserAvatar,
-        Container
+        UserAvatar
     },
     data() {
         return {
-            loading: false,
-            isNotFind: false,
             userInfo: {}
         };
     },
@@ -100,15 +94,9 @@ export default {
                 userId: this.currentUserId,
                 followId
             };
-            this.loading = true;
             api.getZoneUserInfo(params).then((res) => {
-                this.loading = false;
-                this.isNotFind = false;
                 this.userInfo = res.data;
-            }).catch(() => {
-                this.loading = false;
-                this.isNotFind = true;
-            });
+            }).catch(() => {});
         },
         // 关注
         handleFollow(followUserId) {

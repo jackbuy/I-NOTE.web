@@ -167,17 +167,17 @@ export default {
         getTagRecommend() {
             api.tagRecommend().then((res) => {
                 this.tagRecommendData = res.data;
-            });
+            }).catch(() => {});
         },
         getUserRecommend() {
             api.userRecommend().then((res) => {
                 this.authorRecommendData = res.data;
-            });
+            }).catch(() => {});
         },
         getTopicRecommend() {
             api.topicRecommend().then((res) => {
                 this.topicRecommendData = res.data;
-            });
+            }).catch(() => {});
         },
         handleRouterPush(path) {
             this.$router.push(path);

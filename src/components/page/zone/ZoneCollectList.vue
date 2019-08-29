@@ -93,7 +93,7 @@ export default {
                 api.articleCollect(_id).then(() => {
                     this.showSuccessMsg('删除成功！');
                     this.refresh();
-                });
+                }).catch(() => {});
             }).catch(() => {});
         }
     }

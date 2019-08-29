@@ -115,7 +115,7 @@ export default {
                 api.articleDelete(_id).then(() => {
                     this.refresh();
                     this.showSuccessMsg('删除成功！');
-                });
+                }).catch(() => {});
             }).catch(() => {});
         }
     }

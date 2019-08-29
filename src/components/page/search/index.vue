@@ -3,8 +3,6 @@
         <tab :activeName="activeTabName" @tabClick="handleTabClick">
             <tab-label name="article" label="文章"></tab-label>
             <tab-label name="topic" label="专题"></tab-label>
-            <!-- <tab-label name="author" label="作者"></tab-label>
-            <tab-label name="tag" label="标签"></tab-label> -->
         </tab>
         <infinite-scroll
             :loading="loading"

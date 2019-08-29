@@ -2,9 +2,11 @@
     <div class="topic-write">
         <el-form
             ref="form"
-            :model="form">
+            :model="form"
+            :rules="rules">
             <el-form-item
-                label="名称">
+                label="名称"
+                prop="title">
                 <el-input
                     v-model="form.title"
                     placeholder="输入名称"></el-input>
@@ -42,7 +44,12 @@ export default {
     data() {
         return {
             form: {},
-            loading: false
+            loading: false,
+            rules: {
+                title: [
+                    { required: true, message: '必填' }
+                ]
+            }
         };
     },
     computed: {
@@ -55,22 +62,26 @@ export default {
     },
     methods: {
         handleSave() {
-            this.loading = true;
-            if (this.topicId) {
-                api.topicEdit(this.topicId, { ...this.form }).then(() => {
-                    this.loading = false;
-                }).catch(() => {
-                    this.loading = false;
-                });
-            } else {
-                api.topicAdd({ ...this.form }).then((res) => {
-                    const { topicId } = res.data;
-                    this.$router.push(`/topicWrite/${topicId}`);
-                    this.loading = false;
-                }).catch(() => {
-                    this.loading = false;
-                });
-            }
+            this.$refs['form'].validate((valid) => {
+                if (valid) {
+                    this.loading = true;
+                    if (this.topicId) {
+                        api.topicEdit(this.topicId, { ...this.form }).then(() => {
+                            this.loading = false;
+                        }).catch(() => {
+                            this.loading = false;
+                        });
+                    } else {
+                        api.topicAdd({ ...this.form }).then((res) => {
+                            const { topicId } = res.data;
+                            this.$router.push(`/topicWrite/${topicId}`);
+                            this.loading = false;
+                        }).catch(() => {
+                            this.loading = false;
+                        });
+                    }
+                }
+            });
         },
         getDetail(topicId) {
             this.loading = true;

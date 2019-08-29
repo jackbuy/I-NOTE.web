@@ -113,7 +113,7 @@ export default {
                     title,
                     tagId
                 };
-            });
+            }).catch(() => {});
         },
         handleSave(obj) {
             let params = obj || {};

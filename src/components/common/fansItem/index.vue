@@ -19,7 +19,7 @@ export default {
     },
     computed: {
         username() {
-            if (this.item && this.item.userId) return this.item.userId.username;
+            if (this.item && this.item.userId) return this.item.userId.nickname ? this.item.userId.nickname : this.item.userId.username;
         },
         userId() {
             if (this.item && this.item.userId) return this.item.userId._id;

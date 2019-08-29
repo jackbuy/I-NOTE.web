@@ -1,85 +1,83 @@
 <template>
-    <container :is-not-find="isNotFind" :loading="loading" tips="文章不存在">
-        <detail-layout>
-            <div slot="menu" class="article-detail__menu">
+    <detail-layout>
+        <div slot="menu" class="article-detail__menu">
+            <button
+                :disabled="loading || currentUserId === userId"
+                :class="{'active': isSupport}"
+                @click="handleSupport(isSupport)">
+                <i v-if="isSupport" class="icon icon-dianzan"></i>
+                <i v-else class="icon icon-dianzan-o"></i>
+                <span v-if="supportCount > 0">{{ supportCount }}</span>
+            </button>
+            <button
+                :disabled="loading || currentUserId === userId"
+                :class="{'active': isCollect}"
+                @click="handleCollect(isCollect)">
+                <i v-if="isCollect" class="icon icon-like"></i>
+                <i v-else class="icon icon-like-o"></i>
+                <span v-if="collectCount > 0">{{ collectCount }}</span>
+            </button>
+            <el-popover
+                popper-class="topic-list-box"
+                placement="right"
+                width="210">
+                <div class="list">
+                    <template v-if="topicList.length > 0">
+                        <div
+                            v-for="item in topicList"
+                            :key="item._id"
+                            :class="{'active': isAddTopicList(item)}"
+                            @click="handleAddTopicList(item)">
+                            <i class="el-icon-circle-check"></i>
+                            {{ item.title }}
+                        </div>
+                    </template>
+                </div>
+                <div class="add" @click="handleCreateTopic">
+                    <i class="el-icon-circle-plus"></i>
+                    <span>创建专题</span>
+                </div>
                 <button
-                    :disabled="loading || currentUserId === userId"
-                    :class="{'active': isSupport}"
-                    @click="handleSupport(isSupport)">
-                    <i v-if="isSupport" class="icon icon-dianzan"></i>
-                    <i v-else class="icon icon-dianzan-o"></i>
-                    <span v-if="supportCount > 0">{{ supportCount }}</span>
+                    slot="reference"
+                    :disabled="loading"
+                    :class="{'active': isTopic}">
+                    <i v-if="isTopic" class="icon icon-shoucang"></i>
+                    <i v-else class="icon icon-shoucang3"></i>
                 </button>
-                <button
-                    :disabled="loading || currentUserId === userId"
-                    :class="{'active': isCollect}"
-                    @click="handleCollect(isCollect)">
-                    <i v-if="isCollect" class="icon icon-like"></i>
-                    <i v-else class="icon icon-like-o"></i>
-                    <span v-if="collectCount > 0">{{ collectCount }}</span>
-                </button>
-                <el-popover
-                    popper-class="topic-list-box"
-                    placement="right"
-                    width="210">
-                    <div class="list">
-                        <template v-if="topicList.length > 0">
-                            <div
-                                v-for="item in topicList"
-                                :key="item._id"
-                                :class="{'active': isAddTopicList(item)}"
-                                @click="handleAddTopicList(item)">
-                                <i class="el-icon-circle-check"></i>
-                                {{ item.title }}
-                            </div>
-                        </template>
-                    </div>
-                    <div class="add" @click="handleCreateTopic">
-                        <i class="el-icon-circle-plus"></i>
-                        <span>创建专题</span>
-                    </div>
-                    <button
-                        slot="reference"
-                        :disabled="loading"
-                        :class="{'active': isTopic}">
-                        <i v-if="isTopic" class="icon icon-shoucang"></i>
-                        <i v-else class="icon icon-shoucang3"></i>
-                    </button>
-                </el-popover>
+            </el-popover>
+        </div>
+        <div slot="content" class="article-detail">
+            <div class="article-detail__title">
+                {{ title }}
+                <span v-if="currentUserId === userId" @click="handleRouterEdit(articleId)">编辑</span>
             </div>
-            <div slot="content" class="article-detail">
-                <div class="article-detail__title">
-                    {{ title }}
-                    <span v-if="currentUserId === userId" @click="handleRouterEdit(articleId)">编辑</span>
-                </div>
-                <div class="article-detail__info">
-                    <span :title="createTime">{{ editTime }}</span>
-                    <span>{{ tag }}</span>
-                    <span>浏览 {{ viewCount }}</span>
-                </div>
-                <div
-                    v-highlight
-                    v-html="content"
-                    class="article-detail__content" >
-                </div>
+            <div class="article-detail__info">
+                <span :title="createTime">{{ editTime }}</span>
+                <span>{{ tag }}</span>
+                <span>浏览 {{ viewCount }}</span>
             </div>
-            <card slot="recommend" icon="icon icon-wenzhang" title="相关文章">
-                <article-recommend
-                    v-for="item in recommendFilterData"
-                    :key="item._id"
-                    :item="item"
-                    @doDetail="handleRecommend">
-                </article-recommend>
-            </card>
-            <card slot="userinfo" :visible-header="false" icon="icon icon-zuozhe" title="关于作者">
-                <user-info
-                    v-if="userInfo"
-                    :user="userInfo"
-                    @doFollow="handleFollow">
-                </user-info>
-            </card>
-        </detail-layout>
-    </container>
+            <div
+                v-highlight
+                v-html="content"
+                class="article-detail__content" >
+            </div>
+        </div>
+        <card slot="recommend" icon="icon icon-wenzhang" title="相关文章">
+            <article-recommend
+                v-for="item in recommendFilterData"
+                :key="item._id"
+                :item="item"
+                @doDetail="handleRecommend">
+            </article-recommend>
+        </card>
+        <card slot="userinfo" :visible-header="false" icon="icon icon-zuozhe" title="关于作者">
+            <user-info
+                v-if="userInfo"
+                :user="userInfo"
+                @doFollow="handleFollow">
+            </user-info>
+        </card>
+    </detail-layout>
 </template>
 
 <script>
@@ -89,7 +87,6 @@ import DetailLayout from './Layout';
 import Card from '@/components/common/card';
 import UserInfo from '@/components/common/userInfo';
 import ArticleRecommend from '@/components/common/articleRecommend';
-import Container from '@/components/common/container';
 import api from '@/utils/api';
 import utils from '@/utils/utils';
 export default {
@@ -98,16 +95,14 @@ export default {
         DetailLayout,
         Card,
         UserInfo,
-        ArticleRecommend,
-        Container
+        ArticleRecommend
     },
     data() {
         return {
             loading: false,
             detail: {},
             recommendData: [],
-            topicList: [],
-            isNotFind: false
+            topicList: []
         };
     },
     computed: {
@@ -176,6 +171,7 @@ export default {
         articleId: {
             handler(n, o) {
                 this.getDetail(n);
+                this.getTopicList();
             },
             immediate: true
         }
@@ -199,18 +195,11 @@ export default {
         },
         getDetail(articleId) {
             const params = { articleId };
-            this.loading = true;
             api.getDetail(params).then((res) => {
-                this.loading = false;
-                this.isNotFind = false;
                 this.detail = res.data;
                 this.setDocumentTitle(this.detail.title);
                 this.recommend(this.detail.tagId._id);
-                this.getTopicList();
-            }).catch(() => {
-                this.loading = false;
-                this.isNotFind = true;
-            });
+            }).catch(() => {});
         },
         // 获取专题列表
         getTopicList() {
@@ -222,7 +211,7 @@ export default {
                 };
                 api.topicUserQuery(params).then((res) => {
                     this.topicList = res.data;
-                });
+                }).catch(() => {});
             }
         },
         handleAddTopicList(row) {
@@ -230,7 +219,7 @@ export default {
             const ids = this.getArticleIds(articleIds, this.articleId);
             api.topicEdit(_id, { articleIds: ids }).then(() => {
                 this.getTopicList();
-            });
+            }).catch(() => {});
         },
         getArticleIds(str, articleId) {
             let arr = str.length > 0 ? str.split(',') : [];
@@ -294,7 +283,7 @@ export default {
             };
             api.articleQuery(params).then((res) => {
                 this.recommendData = res.data;
-            });
+            }).catch(() => {});
         },
         // 详情
         handleRecommend(articleId) {

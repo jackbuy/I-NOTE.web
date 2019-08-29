@@ -16,11 +16,5 @@ export default {
                 window.location.reload();
             }
         });
-    },
-    // 获取所有消息
-    [C.MESSAGE_QUERY]({commit}, params) {
-        api.messageQuery().then((res) => {
-            commit(C.MESSAGE_QUERY, res.data);
-        });
     }
 };

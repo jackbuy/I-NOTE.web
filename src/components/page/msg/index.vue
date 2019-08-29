@@ -1,32 +1,97 @@
 <template>
     <msg-layout>
-        <msg-list slot="content" :data="msgData"></msg-list>
+        <tab slot="header" :activeName="activeTabName" @tabClick="handleTabClick">
+            <tab-label name="notifications" label="未读"></tab-label>
+            <tab-label name="all" label="全部"></tab-label>
+            <tab-label name="support" label="点赞"></tab-label>
+            <tab-label name="collect" label="收藏"></tab-label>
+            <tab-label name="follow" label="关注"></tab-label>
+        </tab>
+        <infinite-scroll
+            slot="content"
+            :loading="loading"
+            :no-more="noMore"
+            :data="listData"
+            @loadData="getList()">
+            <template slot-scope="scope">
+                <msg-list-item :data="scope.row"></msg-list-item>
+            </template>
+        </infinite-scroll>
     </msg-layout>
 </template>
 
 <script>
-import { mapState, mapActions } from 'vuex';
-import { MESSAGE_QUERY } from '@/store/mutation-types';
+import Tab from '@/components/common/tab';
+import TabLabel from '@/components/common/tab/tabLabel';
+import InfiniteScroll from '@/components/common/infiniteScrollList';
 import MsgLayout from './Layout';
-import MsgList from './src/MsgList';
+import MsgListItem from './src/MsgListItem';
+import api from '@/utils/api';
 export default {
     name: 'MsgCenter',
     components: {
         MsgLayout,
-        MsgList
+        MsgListItem,
+        Tab,
+        TabLabel,
+        InfiniteScroll
     },
-    computed: {
-        ...mapState({
-            msgData: state => state.msgData
-        })
+    data() {
+        return {
+            activeTabName: 'notifications',
+            listData: [],
+            pageConfig: {
+                pageSize: 15,
+                currentPage: 1
+            },
+            loading: false, // 加载中
+            noMore: false // 没有更多数据
+        };
     },
     created() {
-        this.messageQuery();
+        this.getList();
     },
     methods: {
-        ...mapActions({
-            messageQuery: MESSAGE_QUERY
-        })
+        refresh() {
+            this.pageConfig.currentPage = 1;
+            this.listData = [];
+            this.noMore = false;
+            this.getList();
+        },
+        getList() {
+            let params = {
+                pageSize: this.pageConfig.pageSize,
+                currentPage: this.pageConfig.currentPage++
+            };
+            if (this.activeTabName === 'notifications') params.isRead = false;
+            if (this.activeTabName === 'support') {
+                params.type = 1;
+                params.isRead = false;
+            };
+            if (this.activeTabName === 'collect') {
+                params.type = 2;
+                params.isRead = false;
+            }
+            if (this.activeTabName === 'follow') {
+                params.type = 3;
+                params.isRead = false;
+            }
+            this.loading = true;
+            api.messageQuery({ ...params }).then((res) => {
+                this.loading = false;
+                if (res.data.length > 0) {
+                    this.listData.push(...res.data);
+                } else {
+                    this.noMore = true;
+                }
+            }).catch(() => {
+                this.loading = false;
+            });
+        },
+        handleTabClick(tabName) {
+            this.activeTabName = tabName;
+            this.refresh();
+        }
     }
 };
 </script>

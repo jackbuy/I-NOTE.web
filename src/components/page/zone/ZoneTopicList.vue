@@ -107,7 +107,7 @@ export default {
                 api.topicDelete(_id).then(() => {
                     this.showSuccessMsg('删除成功！');
                     this.refresh();
-                });
+                }).catch(() => {});
             }).catch(() => {});
         }
     }

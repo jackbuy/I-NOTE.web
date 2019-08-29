@@ -1,15 +1,14 @@
 <template>
     <div class="item">
-        <div v-if="data.type === 3 || data.type === 4">
-            <span class="user">{{ createUser }}</span>
+        <div v-if="data.type === 3">
+            <span class="user" @click="handleRouter(`/zone/${createUserId}/article`)">{{ createUser }}</span>
             <span>{{ msgType }}</span>
-            <span>你</span>
         </div>
         <div v-else>
             <span class="user">{{ createUser }}</span>
             <span>{{ msgType }}</span>
             <span>你的文章 [</span>
-            <span class="article" @click="handleRouter(articleId)">{{ articleTitle }}</span>
+            <span class="article" @click="handleRouter(`/detail/${relativeId}`)">{{ articleTitle }}</span>
             <span>]</span>
         </div>
     </div>
@@ -25,30 +24,31 @@ export default {
         }
     },
     computed: {
+        createUserId() {
+            if (this.data.createUserId) return this.data.createUserId._id;
+        },
         createUser() {
-            if (this.data.createUserId) return this.data.createUserId.username;
+            if (this.data.createUserId) return this.data.createUserId.nickname ? this.data.createUserId.nickname : this.data.createUserId.username;
         },
         receiveUser() {
             if (this.data.receiveUserId) return this.data.receiveUserId.username;
         },
         msgType() {
-            if (this.data.type === 1) return '收藏了';
-            if (this.data.type === 2) return '取消收藏了';
-            if (this.data.type === 3) return '关注了';
-            if (this.data.type === 4) return '取消关注了';
-            if (this.data.type === 5) return '赞了';
-            if (this.data.type === 6) return '取消赞了';
+            if (this.data.type === 1) return '赞了';
+            if (this.data.type === 2) return '收藏了';
+            if (this.data.type === 3) return '关注了你';
+            // if (this.data.type === 4) return '关注了你专题';
         },
         articleTitle() {
-            if (this.data.articleId) return this.data.articleId.title;
+            if (this.data.relativeId) return this.data.relativeId.title;
         },
-        articleId() {
-            if (this.data.articleId) return this.data.articleId._id;
+        relativeId() {
+            if (this.data.relativeId) return this.data.relativeId._id;
         }
     },
     methods: {
-        handleRouter(articleId) {
-            this.$router.push(`/detail/${articleId}`);
+        handleRouter(path) {
+            this.$router.push(path);
         }
     }
 };

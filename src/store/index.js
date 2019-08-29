@@ -16,7 +16,6 @@ const Store = {
             open: false,
             type: ''
         },
-        msgData: [],
         isHiddenBreadcrumb: false, // 是否隐藏面包屑
         documentTitle: ''
     },

@@ -1,38 +1,36 @@
 <template>
-    <container :is-not-find="isNotFind" :loading="loading" tips="专题不存在">
-        <layout>
-            <infinite-scroll
-                slot="content"
-                :loading="loading"
-                :no-more="noMore"
-                :data="listData"
-                @loadData="getList">
-                <template slot-scope="scope">
-                    <article-item :item="scope.row"></article-item>
-                </template>
-            </infinite-scroll>
-            <card slot="topicDetail" icon="icon icon-zhuanti" :title="topicTitle">
-                <template slot="menu">
-                    <div class="menu">
-                        <div v-if="userId !== mine" @click="handleFollow(topicDetail._id)" class="menu-btn">
-                            <span v-if="!topicDetail.isFollow">关注</span>
-                            <span v-else>已关注</span>
-                        </div>
+    <layout>
+        <infinite-scroll
+            slot="content"
+            :loading="loading"
+            :no-more="noMore"
+            :data="listData"
+            @loadData="getList">
+            <template slot-scope="scope">
+                <article-item :item="scope.row"></article-item>
+            </template>
+        </infinite-scroll>
+        <card slot="topicDetail" icon="icon icon-zhuanti" :title="topicTitle">
+            <template slot="menu">
+                <div class="menu">
+                    <div v-if="userId !== mine" @click="handleFollow(topicDetail._id)" class="menu-btn">
+                        <span v-if="!topicDetail.isFollow">关注</span>
+                        <span v-else>已关注</span>
                     </div>
-                </template>
-                <template>
-                    <div v-if="img" class="topic-img" :style="{backgroundImage: 'url(' + img + ')'}"></div>
-                    <div class="topic-description">
-                        {{ topicDetail.description }}
-                    </div>
-                    <div class="time">{{ createTime }}</div>
-                </template>
-            </card>
-            <card slot="author" icon="icon icon-zuozhe" title="管理员">
-                <author :item="userInfo"></author>
-            </card>
-        </layout>
-    </container>
+                </div>
+            </template>
+            <template>
+                <div v-if="img" class="topic-img" :style="{backgroundImage: 'url(' + img + ')'}"></div>
+                <div class="topic-description">
+                    {{ topicDetail.description }}
+                </div>
+                <div class="time">{{ createTime }}</div>
+            </template>
+        </card>
+        <card slot="author" icon="icon icon-zuozhe" title="管理员">
+            <author :item="userInfo"></author>
+        </card>
+    </layout>
 </template>
 
 <script>
@@ -41,7 +39,6 @@ import Card from '@/components/common/card';
 import InfiniteScroll from '@/components/common/infiniteScrollList';
 import ArticleItem from '@/components/common/articleItem';
 import Author from '@/components/common/author';
-import Container from '@/components/common/container';
 import articleCommon from '@/mixins/articleCommon';
 import api from '@/utils/api';
 import utils from '@/utils/utils';
@@ -51,7 +48,6 @@ export default {
     mixins: [ articleCommon ],
     components: {
         Layout,
-        Container,
         Card,
         InfiniteScroll,
         ArticleItem,
@@ -59,7 +55,6 @@ export default {
     },
     data() {
         return {
-            isNotFind: false,
             listData: [],
             topicDetail: {},
             pageConfig: {
@@ -107,10 +102,11 @@ export default {
             this.listData = [];
             this.noMore = false;
             this.getTopicInfo(topicId);
+            this.getList(topicId);
         },
-        getList() {
+        getList(topicId) {
             const params = {
-                topicId: this.topicId,
+                topicId,
                 pageSize: this.pageConfig.pageSize,
                 currentPage: this.pageConfig.currentPage++
             };
@@ -127,15 +123,10 @@ export default {
             });
         },
         getTopicInfo(topicId) {
-            this.loading = true;
             api.topicDetail({ topicId }).then((res) => {
-                this.loading = false;
-                this.isNotFind = false;
                 this.topicDetail = res.data;
-                this.getList(topicId);
-            }).catch(() => {
-                this.loading = false;
-                this.isNotFind = true;
+            }).catch((err) => {
+                if (err.code === 404) this.$router.replace('/404');
             });
         },
         // 关注

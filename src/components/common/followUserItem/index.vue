@@ -19,7 +19,7 @@ export default {
     },
     computed: {
         username() {
-            if (this.item && this.item.followId) return this.item.followId.username;
+            if (this.item && this.item.followId) return this.item.followId.nickname ? this.item.followId.nickname : this.item.followId.username;
         },
         userId() {
             if (this.item && this.item.followId) return this.item.followId._id;
@@ -28,7 +28,7 @@ export default {
     methods: {
         handleRouterPush(userId) {
             let path = `/zone/${userId}/article`;
-            this.$router.push({ path });
+            this.$router.push(path);
         }
     }
 };

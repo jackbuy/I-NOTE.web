@@ -84,14 +84,18 @@ export default {
             this.refresh();
         },
         getList() {
-            const params = {
-                type: this.activeType,
+            let params = {
                 userId: this.userId,
                 pageSize: this.pageConfig.pageSize,
                 currentPage: this.pageConfig.currentPage++
             };
+            let apiStr = '';
+            if (this.activeType === 0) apiStr = 'followUserQuery';
+            if (this.activeType === 1) apiStr = 'followTopicQuery';
+            if (this.activeType === 2) apiStr = 'followTagQuery';
+
             this.loading = true;
-            api.followQuery(params).then((res) => {
+            api[apiStr](params).then((res) => {
                 this.loading = false;
                 if (res.data.length > 0) {
                     this.listData.push(...res.data);

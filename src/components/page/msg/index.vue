@@ -3,9 +3,10 @@
         <tab slot="header" :activeName="activeTabName" @tabClick="handleTabClick">
             <tab-label name="notifications" label="未读"></tab-label>
             <tab-label name="all" label="全部"></tab-label>
-            <tab-label name="support" label="点赞"></tab-label>
+            <tab-label name="like" label="点赞"></tab-label>
             <tab-label name="collect" label="收藏"></tab-label>
-            <tab-label name="follow" label="关注"></tab-label>
+            <tab-label name="followUser" label="关注的作者"></tab-label>
+            <tab-label name="followTopic" label="关注的专题"></tab-label>
         </tab>
         <infinite-scroll
             slot="content"
@@ -64,15 +65,19 @@ export default {
                 currentPage: this.pageConfig.currentPage++
             };
             if (this.activeTabName === 'notifications') params.isRead = false;
-            if (this.activeTabName === 'support') {
-                params.type = 1;
+            if (this.activeTabName === 'like') {
+                params.type = 0;
                 params.isRead = false;
             };
             if (this.activeTabName === 'collect') {
+                params.type = 1;
+                params.isRead = false;
+            }
+            if (this.activeTabName === 'followUser') {
                 params.type = 2;
                 params.isRead = false;
             }
-            if (this.activeTabName === 'follow') {
+            if (this.activeTabName === 'followTopic') {
                 params.type = 3;
                 params.isRead = false;
             }

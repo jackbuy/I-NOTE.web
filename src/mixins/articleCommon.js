@@ -34,17 +34,17 @@ export default {
             });
         },
         // 赞
-        handleSupport(articleId, type) {
+        handleLike(articleId, type) {
             this.loading = true;
-            api.articleSupport(articleId).then(() => {
+            api.articleLike(articleId).then(() => {
                 this.listData.map((item) => {
                     if (item._id === articleId) {
                         if (!type) {
-                            item.isSupport = true;
-                            item.supportCount++;
+                            item.isLike = true;
+                            item.likeCount++;
                         } else {
-                            item.isSupport = false;
-                            item.supportCount--;
+                            item.isLike = false;
+                            item.likeCount--;
                         }
                     }
                 });

@@ -17,11 +17,11 @@
                         <template slot-scope="scopeInner">
                             <button
                                 :disabled="loading || scopeInner.row.userId._id === currentUserId"
-                                :class="{'active': scopeInner.row.isSupport}"
-                                @click="handleSupport(scopeInner.row._id, scopeInner.row.isSupport)">
-                                <i v-if="scopeInner.row.isSupport" class="icon icon-dianzan"></i>
+                                :class="{'active': scopeInner.row.isLike}"
+                                @click="handleLike(scopeInner.row._id, scopeInner.row.isLike)">
+                                <i v-if="scopeInner.row.isLike" class="icon icon-dianzan"></i>
                                 <i v-else class="icon icon-dianzan-o"></i>
-                                {{ scopeInner.row.supportCount > 0 ? scopeInner.row.supportCount : '' }}
+                                {{ scopeInner.row.likeCount > 0 ? scopeInner.row.likeCount : '' }}
                             </button>
                             <button
                                 :disabled="loading || scopeInner.row.userId._id === currentUserId"

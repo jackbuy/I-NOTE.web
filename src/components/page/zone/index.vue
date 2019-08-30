@@ -100,11 +100,7 @@ export default {
         },
         // 关注
         handleFollow(followUserId) {
-            const params = {
-                followId: followUserId,
-                type: 0
-            };
-            api.follow(params).then(() => {
+            api.followUser({ followUserId }).then(() => {
                 this.userInfo.isFollow = !this.userInfo.isFollow;
             }).catch(() => {});
         }

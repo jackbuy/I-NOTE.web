@@ -3,11 +3,11 @@
         <div slot="menu" class="article-detail__menu">
             <button
                 :disabled="loading || currentUserId === userId"
-                :class="{'active': isSupport}"
-                @click="handleSupport(isSupport)">
-                <i v-if="isSupport" class="icon icon-dianzan"></i>
+                :class="{'active': isLike}"
+                @click="handleLike(isLike)">
+                <i v-if="isLike" class="icon icon-dianzan"></i>
                 <i v-else class="icon icon-dianzan-o"></i>
-                <span v-if="supportCount > 0">{{ supportCount }}</span>
+                <span v-if="likeCount > 0">{{ likeCount }}</span>
             </button>
             <button
                 :disabled="loading || currentUserId === userId"
@@ -133,8 +133,8 @@ export default {
         tag() {
             if (this.detail.tagId) return this.detail.tagId.title;
         },
-        supportCount() {
-            return this.detail.supportCount || 0;
+        likeCount() {
+            return this.detail.likeCount || 0;
         },
         collectCount() {
             return this.detail.collectCount || 0;
@@ -142,8 +142,8 @@ export default {
         viewCount() {
             return this.detail.viewCount || 0;
         },
-        isSupport() {
-            return this.detail.isSupport;
+        isLike() {
+            return this.detail.isLike;
         },
         isCollect() {
             return this.detail.isCollect;
@@ -233,11 +233,7 @@ export default {
         },
         // 关注
         handleFollow(followUserId) {
-            const params = {
-                followId: followUserId,
-                type: 0
-            };
-            api.follow(params).then(() => {
+            api.followUser({ followUserId }).then(() => {
                 this.detail.userId.isFollow = !this.detail.userId.isFollow;
             }).catch(() => {});
         },
@@ -258,15 +254,15 @@ export default {
             });
         },
         // 赞
-        handleSupport(type) {
+        handleLike(type) {
             this.loading = true;
-            api.articleSupport(this.articleId).then(() => {
+            api.articleLike(this.articleId).then(() => {
                 if (!type) {
-                    this.detail.isSupport = true;
-                    this.detail.supportCount++;
+                    this.detail.isLike = true;
+                    this.detail.likeCount++;
                 } else {
-                    this.detail.isSupport = false;
-                    this.detail.supportCount--;
+                    this.detail.isLike = false;
+                    this.detail.likeCount--;
                 }
                 this.loading = false;
             }).catch(() => {

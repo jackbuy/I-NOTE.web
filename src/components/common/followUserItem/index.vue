@@ -19,10 +19,10 @@ export default {
     },
     computed: {
         username() {
-            if (this.item && this.item.followId) return this.item.followId.nickname ? this.item.followId.nickname : this.item.followId.username;
+            if (this.item && this.item.followUserId) return this.item.followUserId.nickname ? this.item.followUserId.nickname : this.item.followUserId.username;
         },
         userId() {
-            if (this.item && this.item.followId) return this.item.followId._id;
+            if (this.item && this.item.followUserId) return this.item.followUserId._id;
         }
     },
     methods: {

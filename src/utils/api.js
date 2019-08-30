@@ -18,7 +18,7 @@ export default {
     // 已发布文章列表
     articleQuery: (params) => http('post', `${apiBaseUrl}/article/query`, params),
     // 已发布文章点赞
-    articleSupport: (articleId) => http('get', `${apiBaseUrl}/article/support/${articleId}`),
+    articleLike: (articleId) => http('get', `${apiBaseUrl}/article/like/${articleId}`),
     // 已发布文章收藏
     articleCollect: (articleId) => http('get', `${apiBaseUrl}/article/collect/${articleId}`),
     // 文章详情
@@ -50,7 +50,7 @@ export default {
     // Tag列表
     tagQuery: (params) => http('post', `${apiBaseUrl}/tag/query`, params),
     // 已关注Tag
-    tagFollowQuery: (params) => http('post', `${apiBaseUrl}/tag/Follow/query`, params),
+    // tagFollowQuery: (params) => http('post', `${apiBaseUrl}/tag/Follow/query`, params),
     // Tag推荐
     tagRecommend: () => http('get', `${apiBaseUrl}/tag/recommend`),
     // tag详情
@@ -63,11 +63,15 @@ export default {
     collectQuery: (params) => http('post', `${apiBaseUrl}/collect/query`, params),
 
     // 关注列表
-    followQuery: (params) => http('post', `${apiBaseUrl}/follow/query`, params),
+    followUserQuery: (params) => http('post', `${apiBaseUrl}/follow/user/query`, params),
+    followTopicQuery: (params) => http('post', `${apiBaseUrl}/follow/topic/query`, params),
+    followTagQuery: (params) => http('post', `${apiBaseUrl}/follow/tag/query`, params),
     // 粉丝列表
     fansQuery: (params) => http('post', `${apiBaseUrl}/fans/query`, params),
     // 关注
-    follow: (params) => http('post', `${apiBaseUrl}/follow`, params),
+    followUser: (params) => http('post', `${apiBaseUrl}/follow/user`, params),
+    followTopic: (params) => http('post', `${apiBaseUrl}/follow/topic`, params),
+    followTag: (params) => http('post', `${apiBaseUrl}/follow/tag`, params),
     // 发送邮件
     sendEmail: (params) => http('post', `${apiBaseUrl}/sendEmail`, params),
 

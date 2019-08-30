@@ -56,11 +56,10 @@ export default {
         // 关注
         handleFollow(tagId) {
             const params = {
-                followId: tagId,
-                type: 2
+                followTagId: tagId
             };
-            api.follow(params).then((res) => {
-                this.tagListData.map((item) => {
+            api.followTag(params).then((res) => {
+                this.listData.map((item) => {
                     if (item._id === tagId) {
                         item.isFollow = !item.isFollow;
                     }

@@ -19,10 +19,10 @@ export default {
     },
     computed: {
         title() {
-            if (this.item && this.item.followId) return this.item.followId.title;
+            if (this.item && this.item.followTopicId) return this.item.followTopicId.title;
         },
         topicId() {
-            if (this.item && this.item.followId) return this.item.followId._id;
+            if (this.item && this.item.followTopicId) return this.item.followTopicId._id;
         }
     },
     methods: {

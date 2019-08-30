@@ -13,7 +13,7 @@
         <card slot="topicDetail" icon="icon icon-zhuanti" :title="topicTitle">
             <template slot="menu">
                 <div class="menu">
-                    <div v-if="userId !== mine" @click="handleFollow(topicDetail._id)" class="menu-btn">
+                    <div v-if="userId !== mine" @click="handleFollow(topicDetail._id, topicDetail.userId._id)" class="menu-btn">
                         <span v-if="!topicDetail.isFollow">关注</span>
                         <span v-else>已关注</span>
                     </div>
@@ -130,12 +130,12 @@ export default {
             });
         },
         // 关注
-        handleFollow(topicId) {
+        handleFollow(topicId, userId) {
             const params = {
-                followId: topicId,
-                type: 1
+                followTopicId: topicId,
+                followUserId: userId
             };
-            api.follow(params).then(() => {
+            api.followTopic(params).then(() => {
                 this.topicDetail.isFollow = !this.topicDetail.isFollow;
             }).catch(() => {});
         }

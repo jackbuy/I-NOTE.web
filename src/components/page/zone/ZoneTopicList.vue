@@ -96,7 +96,7 @@ export default {
         handleRouterTopicEdit(topicId) {
             this.$router.push({
                 path: `/topicWrite/${topicId}`
-            });
+            }).catch(() => {});
         },
         handleDelete(row) {
             const { _id } = row;

@@ -97,14 +97,17 @@ export default {
         }),
         handleSearch(keyword) {
             if (keyword.length > 0) {
-                this.$router.push({
-                    path: `/search/${keyword}`
-                });
+                const path = `/search/${keyword}`;
+                this.handleRouterPush(path);
             }
         },
-        handleRouterPush(url) {
-            this.$router.push(url);
+        handleRouterPush(path) {
+            this.$router.push(path).catch(() => {});
         }
     }
 };
 </script>
+
+<style lang="less">
+    @import './layout.less';
+</style>

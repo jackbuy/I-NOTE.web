@@ -103,5 +103,5 @@ export default {
 </script>
 <!-- https://blog.csdn.net/qq_39865491/article/details/88050596 -->
 <style lang="less">
-@import './index.less';
+    @import './index.less';
 </style>

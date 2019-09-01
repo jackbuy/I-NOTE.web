@@ -31,7 +31,7 @@ export default {
         handleRouterPush(id) {
             this.$router.push({
                 path: `/topic/${id}`
-            });
+            }).catch(() => {});
         }
     }
 };

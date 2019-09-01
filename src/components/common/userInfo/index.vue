@@ -88,7 +88,7 @@ export default {
             this.$emit('doFollow', followUserId);
         },
         handleZone(type) {
-            this.$router.push(`/zone/${this.userId}/${type}`);
+            this.$router.push(`/zone/${this.userId}/${type}`).catch(() => {});
         }
     }
 };

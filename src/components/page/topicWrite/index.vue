@@ -74,7 +74,7 @@ export default {
                     } else {
                         api.topicAdd({ ...this.form }).then((res) => {
                             const { topicId } = res.data;
-                            this.$router.push(`/topicWrite/${topicId}`);
+                            this.$router.push(`/topicWrite/${topicId}`).catch(() => {});
                             this.loading = false;
                         }).catch(() => {
                             this.loading = false;
@@ -102,5 +102,5 @@ export default {
 </script>
 
 <style lang="less">
-@import './layout.less';
+    @import './layout.less';
 </style>

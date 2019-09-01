@@ -11,7 +11,7 @@ export default {
     methods: {
         // 跳转文章编辑
         handleRouterEdit(articleId) {
-            this.$router.push(`/write/${articleId}`);
+            this.$router.push(`/write/${articleId}`).catch(() => {});
         },
         // 收藏
         handleCollect(articleId, type) {

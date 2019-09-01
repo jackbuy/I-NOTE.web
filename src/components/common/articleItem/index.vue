@@ -75,12 +75,12 @@ export default {
     methods: {
         handleDetail(articleId) {
             let path = this.publish ? `/detail/${articleId}` : `/write/${articleId}`;
-            this.$router.push({ path });
+            this.$router.push(path).catch(() => {});
         }
     }
 };
 </script>
 
 <style lang="less">
-@import './index.less';
+    @import './index.less';
 </style>

@@ -11,7 +11,7 @@ export default {
     name: 'Page404',
     methods: {
         handleToHome() {
-            this.$router.push('/');
+            this.$router.push('/').catch(() => {});
         }
     }
 };

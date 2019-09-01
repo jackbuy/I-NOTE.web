@@ -162,7 +162,8 @@ export default {
             });
         },
         handleSort(sortType) {
-            this.$router.push(`/find/${sortType}`);
+            let path = `/find/${sortType}`;
+            this.handleRouterPush(path);
         },
         getTagRecommend() {
             api.tagRecommend().then((res) => {
@@ -180,7 +181,7 @@ export default {
             }).catch(() => {});
         },
         handleRouterPush(path) {
-            this.$router.push(path);
+            this.$router.push(path).catch(() => {});
         }
     }
 };

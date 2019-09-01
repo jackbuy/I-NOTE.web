@@ -283,14 +283,16 @@ export default {
         },
         // 详情
         handleRecommend(articleId) {
-            this.$router.push(`/detail/${articleId}`);
+            let path = `/detail/${articleId}`;
+            this.handleRouterPath(path);
         },
         // 编辑
         handleRouterEdit(articleId) {
-            this.$router.push(`/write/${articleId}`);
+            let path = `/write/${articleId}`;
+            this.handleRouterPath(path);
         },
         handleRouterPath(path) {
-            this.$router.push(path);
+            this.$router.push(path).catch(() => {});
         }
     }
 };

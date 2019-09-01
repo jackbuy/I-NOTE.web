@@ -37,12 +37,12 @@ export default {
     },
     methods: {
         handleZone(userId) {
-            this.$router.push(`/zone/${userId}/article`);
+            this.$router.push(`/zone/${userId}/article`).catch(() => {});
         }
     }
 };
 </script>
 
 <style lang="less">
-@import './index.less';
+    @import './index.less';
 </style>

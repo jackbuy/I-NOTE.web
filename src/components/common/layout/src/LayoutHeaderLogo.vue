@@ -9,7 +9,7 @@ export default {
     name: 'LayoutHeaderLogo',
     methods: {
         handleRoutePush() {
-            this.$router.push('/');
+            this.$router.push('/').catch(() => {});
         }
     }
 };

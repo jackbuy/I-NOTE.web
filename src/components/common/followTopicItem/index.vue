@@ -28,12 +28,12 @@ export default {
     methods: {
         handleRouterPush(topicId) {
             let path = `/topic/${topicId}`;
-            this.$router.push({ path });
+            this.$router.push({ path }).catch(() => {});
         }
     }
 };
 </script>
 
 <style lang="less">
-@import './index.less';
+    @import './index.less';
 </style>

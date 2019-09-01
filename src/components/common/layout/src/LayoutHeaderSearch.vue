@@ -1,11 +1,5 @@
 <template>
     <div class="layout__header-search">
-        <!-- <form @submit.prevent="handleSearch">
-            <input
-                v-model.trim="keyword"
-                type="text"
-                placeholder="搜索">
-        </form> -->
         <el-popover
             v-model="historyKeywordVisible"
             placement="bottom"

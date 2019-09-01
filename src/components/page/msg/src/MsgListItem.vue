@@ -56,7 +56,7 @@ export default {
     },
     methods: {
         handleRouter(path) {
-            this.$router.push(path);
+            this.$router.push(path).catch(() => {});
         }
     }
 };

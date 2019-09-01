@@ -40,9 +40,8 @@ export default {
     },
     methods: {
         handleArticle(tagId) {
-            this.$router.push({
-                path: `/tag/${tagId}`
-            });
+            let path = `/tag/${tagId}`;
+            this.$router.push(path).catch(() => {});
         },
         handleFollow(tagId) {
             this.$emit('doFollow', tagId);

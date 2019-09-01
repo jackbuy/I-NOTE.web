@@ -133,19 +133,20 @@ export default {
                     this.saved = true;
                     this.isSaving = false;
                     const { articleId } = res.data;
-                    this.$router.push(`/write/${articleId}`);
+                    let path = `/write/${articleId}`;
+                    this.handleRoutePush(path);
                 }).catch(() => {
                     this.isSaving = false;
                 });
             }
         },
         handleRoutePush(path) {
-            this.$router.push(path);
+            this.$router.push(path).catch(() => {});
         }
     }
 };
 </script>
 
 <style lang="less">
-@import './layout.less';
+    @import './layout.less';
 </style>

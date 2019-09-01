@@ -13,5 +13,5 @@
 </template>
 
 <style lang="less">
-@import './layout.less';
+    @import './layout.less';
 </style>

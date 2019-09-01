@@ -49,8 +49,6 @@ export default {
 
     // Tag列表
     tagQuery: (params) => http('post', `${apiBaseUrl}/tag/query`, params),
-    // 已关注Tag
-    // tagFollowQuery: (params) => http('post', `${apiBaseUrl}/tag/Follow/query`, params),
     // Tag推荐
     tagRecommend: () => http('get', `${apiBaseUrl}/tag/recommend`),
     // tag详情

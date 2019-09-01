@@ -12,18 +12,18 @@
             :user-id="userId"
             slot="content">
         </zone-article-list>
-        <zone-collect-list
-            v-if="zoneType === 'collect'"
-            :type="zoneType"
-            :user-id="userId"
-            slot="content">
-        </zone-collect-list>
         <zone-topic-list
             v-if="zoneType === 'topic'"
             :type="zoneType"
             :user-id="userId"
             slot="content">
         </zone-topic-list>
+        <zone-collect-list
+            v-if="zoneType === 'collect'"
+            :type="zoneType"
+            :user-id="userId"
+            slot="content">
+        </zone-collect-list>
         <zone-follow-list
             v-if="zoneType === 'follow'"
             :type="zoneType"
@@ -89,10 +89,10 @@ export default {
     },
     methods: {
         // 用户信息
-        getZoneUserInfo(followId) {
+        getZoneUserInfo(followUserId) {
             const params = {
                 userId: this.currentUserId,
-                followId
+                followUserId
             };
             api.getZoneUserInfo(params).then((res) => {
                 this.userInfo = res.data;

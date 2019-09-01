@@ -87,7 +87,7 @@ export default {
             });
         },
         handleCommand(command) {
-            if (command === 'loginOut') this.handleLogOut();
+            if (command === 'loginOut') this.handleLogOut('/');
             if (command === 'write') this.handleRoutePush(`/write`);
             if (command === 'topicWrite') this.handleRoutePush(`/topicWrite`);
             if (command === 'zone') this.handleRoutePush(`/zone/${this.userId}/article`);
@@ -97,12 +97,15 @@ export default {
             if (command === 'fans') this.handleRoutePush(`/zone/${this.userId}/fans`);
             if (command === 'settings') this.handleRoutePush(`/settings`);
         },
-        handleLogOut() {
+        handleLogOut(path) {
             localStorage.clear();
-            window.location.reload();
+            this.handleRoutePush(path);
+            setTimeout(() => {
+                window.location.reload();
+            });
         },
-        handleRoutePush(url) {
-            this.$router.push(url);
+        handleRoutePush(path) {
+            this.$router.push(path);
         }
     }
 };

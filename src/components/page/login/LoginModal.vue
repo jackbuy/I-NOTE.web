@@ -1,6 +1,6 @@
 <template>
-    <div>
-        <div>没有账号？ <span @click="goRegisterModal">注册</span></div>
+    <div class="login">
+        <div class="header">没有账号？ <span @click="goRegisterModal">注册</span></div>
         <el-form
             ref="form"
             :model="form"
@@ -9,7 +9,7 @@
                 prop="email">
                 <el-input
                     v-model="form.email"
-                    prefix-icon="el-icon-lock"
+                    prefix-icon="el-icon-message"
                     placeholder="邮箱"></el-input>
             </el-form-item>
             <el-form-item
@@ -22,6 +22,8 @@
             </el-form-item>
             <el-form-item>
                 <el-button
+                    class="submit"
+                    type="primary"
                     native-type="submit"
                     @click="handleLogin">
                     登录
@@ -40,7 +42,14 @@ export default {
     data() {
         return {
             form: {},
-            rules: {}
+            rules: {
+                email: [
+                    { required: true, message: '必填' }
+                ],
+                password: [
+                    { required: true, message: '必填' }
+                ]
+            }
         };
     },
     methods: {
@@ -66,7 +75,7 @@ export default {
                 localStorage.setItem('token', token);
                 localStorage.setItem('userId', userId);
                 window.location.reload();
-            });
+            }).catch(() => {});
         }
     }
 };

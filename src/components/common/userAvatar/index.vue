@@ -24,36 +24,32 @@
                 </div>
             </div>
             <div class="count">
-                <!-- <div :class="{'active': type === 'active'}" class="list" @click="handleZone('active')">
-                    <div class="c">{{ articleCount }}</div>
-                    <div>动态</div>
-                </div> -->
-                <div :class="{'active': type === 'article'}" class="list" @click="handleZone('article')">
-                    <div>
+                <div :class="{'active': type === 'article'}" class="list">
+                    <div @click="handleZone('article')">
                         <div class="c">{{ articleCount }}</div>
                         <div>文章</div>
                     </div>
                 </div>
-                <div :class="{'active': type === 'collect'}" class="list" @click="handleZone('collect')">
-                    <div>
-                        <div class="c">{{ collectCount }}</div>
-                        <div>收藏</div>
-                    </div>
-                </div>
-                <div :class="{'active': type === 'topic'}" class="list" @click="handleZone('topic')">
-                    <div>
+                <div :class="{'active': type === 'topic'}" class="list">
+                    <div @click="handleZone('topic')">
                         <div class="c">{{ topicCount }}</div>
                         <div>专题</div>
                     </div>
                 </div>
-                <div :class="{'active': type === 'follow'}" class="list" @click="handleZone('follow')">
-                    <div>
+                <div :class="{'active': type === 'collect'}" class="list">
+                    <div @click="handleZone('collect')">
+                        <div class="c">{{ collectCount }}</div>
+                        <div>收藏</div>
+                    </div>
+                </div>
+                <div :class="{'active': type === 'follow'}" class="list">
+                    <div @click="handleZone('follow')">
                         <div class="c">{{ followCount }}</div>
                         <div>关注</div>
                     </div>
                 </div>
-                <div :class="{'active': type === 'fans'}" class="list" @click="handleZone('fans')">
-                    <div>
+                <div :class="{'active': type === 'fans'}" class="list">
+                    <div @click="handleZone('fans')">
                         <div class="c">{{ fansCount }}</div>
                         <div>粉丝</div>
                     </div>

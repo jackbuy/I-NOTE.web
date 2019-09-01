@@ -5,8 +5,8 @@
             <tab-label name="all" label="全部"></tab-label>
             <tab-label name="like" label="点赞"></tab-label>
             <tab-label name="collect" label="收藏"></tab-label>
-            <tab-label name="followUser" label="关注的作者"></tab-label>
-            <tab-label name="followTopic" label="关注的专题"></tab-label>
+            <tab-label name="followUser" label="粉丝"></tab-label>
+            <tab-label name="followTopic" label="专题"></tab-label>
         </tab>
         <infinite-scroll
             slot="content"

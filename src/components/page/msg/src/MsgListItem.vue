@@ -39,10 +39,10 @@ export default {
             if (this.data.fromUserId) return this.data.fromUserId.nickname ? this.data.fromUserId.nickname : this.data.fromUserId.username;
         },
         msgType() {
-            if (this.data.type === 0) return '赞了';
-            if (this.data.type === 1) return '收藏了';
-            if (this.data.type === 2) return '关注了你';
-            if (this.data.type === 3) return '关注了你专题';
+            if (this.data.type === 0) return '赞了你的文章';
+            if (this.data.type === 1) return '收藏了你的文章';
+            if (this.data.type === 2) return '关注了你，成为了你的粉丝';
+            if (this.data.type === 3) return '关注了你的专题';
         },
         likeArticleTitle() {
             if (this.data.likeId) return this.data.likeId.title;

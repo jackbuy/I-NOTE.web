@@ -5,12 +5,14 @@
                 <span class="label">{{ tips }}</span>
             </span>
             <el-button
+                :disabled="isSaving"
                 size="mini"
                 round
                 @click="handleRoutePush('/article/draft')">
                 草稿
             </el-button>
             <el-button
+                :disabled="isSaving"
                 size="mini"
                 type="primary"
                 round

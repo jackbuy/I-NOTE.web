@@ -4,6 +4,34 @@
             background: #fff;
             padding: 20px;
             border-top: 1px solid #f5f5f5;
+            display: flex;
+            &-title{
+                flex: 1;
+                i{
+                    color: #ddd;
+                    margin-right: 5px;
+                }
+                .not-read{
+                    color: #333;
+                }
+            }
+            &-menu{
+                span{
+                    display: inline-block;
+                    width: 30px;
+                    text-align: center;
+                    cursor: pointer;
+                    i{
+                        color: #aaa;
+                        transition: all 0.3s;
+                    }
+                    &:hover{
+                        i{
+                            color: #409EFF;
+                        }
+                    }
+                }
+            }
         }
         .user,
         .article{

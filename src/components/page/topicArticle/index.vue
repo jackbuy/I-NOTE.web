@@ -5,7 +5,7 @@
             :loading="loading"
             :no-more="noMore"
             :data="listData"
-            @loadData="getList">
+            @loadData="getList(topicId)">
             <template slot-scope="scope">
                 <article-item :item="scope.row"></article-item>
             </template>
@@ -21,10 +21,8 @@
             </template>
             <template>
                 <div v-if="img" class="topic-img" :style="{backgroundImage: 'url(' + img + ')'}"></div>
-                <div class="topic-description">
-                    {{ topicDetail.description }}
-                </div>
-                <div class="time">{{ createTime }}</div>
+                <div v-if="description" class="topic-description">{{ description }}</div>
+                <div class="topic-time">{{ createTime }}</div>
             </template>
         </card>
         <card slot="author" icon="icon icon-zuozhe" title="管理员">
@@ -74,6 +72,9 @@ export default {
         },
         topicId() {
             return this.$route.params.topicId;
+        },
+        description() {
+            return this.topicDetail.description;
         },
         createTime() {
             return this.topicDetail.createTime ? `创建于 ${utils.formatDate.date(this.topicDetail.createTime)}` : '';

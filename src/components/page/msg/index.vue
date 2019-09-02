@@ -15,7 +15,10 @@
             :data="listData"
             @loadData="getList()">
             <template slot-scope="scope">
-                <msg-list-item :data="scope.row"></msg-list-item>
+                <msg-list-item
+                    :data="scope.row"
+                    @del="handleDelete"
+                    @read="handleRead"></msg-list-item>
             </template>
         </infinite-scroll>
     </msg-layout>
@@ -27,9 +30,11 @@ import TabLabel from '@/components/common/tab/tabLabel';
 import InfiniteScroll from '@/components/common/infiniteScrollList';
 import MsgLayout from './Layout';
 import MsgListItem from './src/MsgListItem';
+import message from '@/mixins/message';
 import api from '@/utils/api';
 export default {
     name: 'MsgCenter',
+    mixins: [ message ],
     components: {
         MsgLayout,
         MsgListItem,
@@ -67,19 +72,15 @@ export default {
             if (this.activeTabName === 'notifications') params.isRead = false;
             if (this.activeTabName === 'like') {
                 params.type = 0;
-                params.isRead = false;
             };
             if (this.activeTabName === 'collect') {
                 params.type = 1;
-                params.isRead = false;
             }
             if (this.activeTabName === 'followUser') {
                 params.type = 2;
-                params.isRead = false;
             }
             if (this.activeTabName === 'followTopic') {
                 params.type = 3;
-                params.isRead = false;
             }
             this.loading = true;
             api.messageQuery({ ...params }).then((res) => {
@@ -96,6 +97,25 @@ export default {
         handleTabClick(tabName) {
             this.activeTabName = tabName;
             this.refresh();
+        },
+        handleRead(messageId) {
+            api.messageRead(messageId).then(() => {
+                let _ids = this.listData.map((item) => item._id);
+                let index = _ids.indexOf(messageId);
+                if (this.activeTabName === 'notifications') {
+                    this.listData.splice(index, 1);
+                }
+                this.listData[index].isRead = true;
+                this.showSuccessMsg('标记为已读');
+            }).catch(() => {});
+        },
+        handleDelete(messageId) {
+            api.messageDelete(messageId).then(() => {
+                let _ids = this.listData.map((item) => item._id);
+                let index = _ids.indexOf(messageId);
+                this.listData.splice(index, 1);
+                this.showSuccessMsg('删除成功');
+            }).catch(() => {});
         }
     }
 };

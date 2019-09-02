@@ -56,6 +56,10 @@ export default {
 
     // 消息列表
     messageQuery: (params) => http('post', `${apiBaseUrl}/message/query`, params),
+    // 标记为已读
+    messageRead: (messageId) => http('put', `${apiBaseUrl}/message/read/${messageId}`),
+    // 消息删除
+    messageDelete: (messageId) => http('delete', `${apiBaseUrl}/message/delete/${messageId}`),
 
     // 收藏列表
     collectQuery: (params) => http('post', `${apiBaseUrl}/collect/query`, params),

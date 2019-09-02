@@ -1,23 +1,40 @@
 <template>
     <div class="item">
-        <div v-if="data.type === 0">
-            <span class="user">{{ createUser }}</span>
-            <span>{{ msgType }}</span>
-            <span class="article" @click="handleRouter(`/detail/${relativeId}`)">{{ likeArticleTitle }}</span>
+        <div class="item-title">
+            <i v-if="!isRead" class="icon icon-weidu not-read"></i>
+            <i v-else class="icon icon-yidu"></i>
+            <template v-if="data.type === 0">
+                <span class="user">{{ createUser }}</span>
+                <span>{{ msgType }}</span>
+                <span class="article" @click="handleRouter(`/detail/${relativeId}`)">{{ likeArticleTitle }}</span>
+            </template>
+            <template v-if="data.type === 1">
+                <span class="user">{{ createUser }}</span>
+                <span>{{ msgType }}</span>
+                <span class="article" @click="handleRouter(`/detail/${relativeId}`)">{{ collectArticleTitle }}</span>
+            </template>
+            <template v-if="data.type === 2">
+                <span class="user" @click="handleRouter(`/zone/${createUserId}/article`)">{{ createUser }}</span>
+                <span>{{ msgType }}</span>
+            </template>
+            <template v-if="data.type === 3">
+                <span class="user">{{ createUser }}</span>
+                <span>{{ msgType }}</span>
+                <span class="article" @click="handleRouter(`/detail/${relativeId}`)">{{ topicTitle }}</span>
+            </template>
         </div>
-        <div v-if="data.type === 1">
-            <span class="user">{{ createUser }}</span>
-            <span>{{ msgType }}</span>
-            <span class="article" @click="handleRouter(`/detail/${relativeId}`)">{{ collectArticleTitle }}</span>
-        </div>
-        <div v-if="data.type === 2">
-            <span class="user" @click="handleRouter(`/zone/${createUserId}/article`)">{{ createUser }}</span>
-            <span>{{ msgType }}</span>
-        </div>
-        <div v-if="data.type === 3">
-            <span class="user">{{ createUser }}</span>
-            <span>{{ msgType }}</span>
-            <span class="article" @click="handleRouter(`/detail/${relativeId}`)">{{ topicTitle }}</span>
+        <div class="item-menu">
+            <span
+                v-if="!isRead"
+                title="标记为已读"
+                @click="handleRead(messageId)">
+                <i class="icon icon-yidu1"></i>
+            </span>
+            <span
+                title="删除"
+                @click="handleDelete(messageId)">
+                <i class="el-icon-close"></i>
+            </span>
         </div>
     </div>
 </template>
@@ -32,6 +49,12 @@ export default {
         }
     },
     computed: {
+        messageId() {
+            return this.data._id;
+        },
+        isRead() {
+            return this.data.isRead;
+        },
         createUserId() {
             if (this.data.fromUserId) return this.data.fromUserId._id;
         },
@@ -57,6 +80,12 @@ export default {
     methods: {
         handleRouter(path) {
             this.$router.push(path).catch(() => {});
+        },
+        handleRead(messageId) {
+            this.$emit('read', messageId);
+        },
+        handleDelete(messageId) {
+            this.$emit('del', messageId);
         }
     }
 };

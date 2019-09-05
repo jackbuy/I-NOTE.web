@@ -32,7 +32,7 @@
         <card slot="detail" icon="icon icon-bq" :title="tagDetail.title">
             <template v-if="tagDetailId" slot="menu">
                 <div class="menu">
-                    <div @click="handleFollow(tagDetailId)" class="menu-btn">
+                    <div @click="handleFollow(tagDetailId)" class="menu-btn round">
                         <span v-if="!tagDetail.isFollow">关注</span>
                         <span v-else>已关注</span>
                     </div>

@@ -104,8 +104,9 @@ export default {
                 let index = _ids.indexOf(messageId);
                 if (this.activeTabName === 'notifications') {
                     this.listData.splice(index, 1);
+                } else {
+                    this.listData[index].isRead = true;
                 }
-                this.listData[index].isRead = true;
                 this.showSuccessMsg('标记为已读');
             }).catch(() => {});
         },

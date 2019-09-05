@@ -4,6 +4,7 @@
         <div class="detail-content">
             <slot name="author"></slot>
             <slot name="content"></slot>
+            <slot name="comment"></slot>
             <slot name="recommend"></slot>
         </div>
         <div class="detail-side">

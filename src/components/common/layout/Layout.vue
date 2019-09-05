@@ -5,6 +5,7 @@
             <layout-header-menu
                 v-if="menuDate.length > 0 && !isHiddenBreadcrumb"
                 :data="menuDate"
+                :msg-count="socketMsgCount"
                 @push="handleRouterPush">
             </layout-header-menu>
             <layout-header-search
@@ -37,6 +38,7 @@ import LayoutHeaderUser from './src/LayoutHeaderUser';
 import LayoutContent from './src/LayoutContent';
 import Breadcrumb from '@/components/common/breadcrumb';
 import Login from '@/components/page/Login';
+import api from '@/utils/api';
 export default {
     name: 'LayoutContainer',
     components: {
@@ -55,21 +57,23 @@ export default {
             baseMenuDate: [
                 {
                     id: 1,
+                    name: 'find',
                     title: '发现',
                     url: '/'
                 },
                 {
                     id: 2,
+                    name: 'msg',
                     title: '消息',
                     url: '/msg'
                 }
-            ]
+            ],
+            socketMsgCount: 0
         };
     },
     watch: {
         $route: {
             handler(to, from) {
-                // || to.path.split('/')[1] === 'topicWrite'
                 // 创建文章、专题时，隐藏面包屑
                 if (to.path.split('/')[1] === 'write') {
                     this.hiddenBreadcrumb(true);
@@ -78,17 +82,27 @@ export default {
                 }
             },
             immediate: true
+        },
+        socketMsg: {
+            handler(n, o) {
+                this.pushMsg(n);
+            },
+            immediate: true
         }
     },
     computed: {
         ...mapState({
-            isHiddenBreadcrumb: state => state.isHiddenBreadcrumb
+            isHiddenBreadcrumb: state => state.isHiddenBreadcrumb,
+            socketMsg: state => state.socketMsg
         }),
         isLogin() {
             if (localStorage.getItem('userId') && localStorage.getItem('token')) return true;
         },
         menuDate() {
             return this.isLogin ? this.baseMenuDate : [];
+        },
+        currentUserId() {
+            return localStorage.getItem('userId');
         }
     },
     methods: {
@@ -103,6 +117,18 @@ export default {
         },
         handleRouterPush(path) {
             this.$router.push(path).catch(() => {});
+        },
+        // 请求消息
+        pushMsg(msg) {
+            const { type, data } = msg;
+            if (type === 'newMsg') {
+                const { toUserId } = data;
+                if (this.currentUserId === toUserId) {
+                    api.getNewMessage({ toUserId }).then((res) => {
+                        this.socketMsgCount = res.data;
+                    }).catch(() => {});
+                }
+            }
         }
     }
 };

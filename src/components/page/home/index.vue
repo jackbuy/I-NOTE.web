@@ -31,6 +31,11 @@
                                 <i v-else class="icon icon-like-o"></i>
                                 {{ scopeInner.row.collectCount > 0 ? scopeInner.row.collectCount : '' }}
                             </button>
+                            <button
+                                @click="handleComment(scopeInner.row._id)">
+                                <i class="icon icon-pinglun"></i>
+                                {{ scopeInner.row.commentCount > 0 ? scopeInner.row.commentCount : '' }}
+                            </button>
                         </template>
                     </article-item>
                 </template>

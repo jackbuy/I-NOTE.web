@@ -5,7 +5,7 @@
         <div class="article__item-header">
             <span v-if="isTop" class="article-top">置顶</span>
             <span>{{ username }}</span>
-            <span>{{ createTime }}</span>
+            <span>{{ editTime }}</span>
             <span v-if="publish">{{ tag }}</span>
             <span v-if="publish && viewCount > 0">浏览 {{ viewCount }}</span>
         </div>
@@ -49,9 +49,9 @@ export default {
         articleId() {
             if (this.item) return this.item._id || '';
         },
-        createTime() {
+        editTime() {
             if (this.item) {
-                let end = utils.formatDate.time(this.item.createTime);
+                let end = utils.formatDate.time(this.item.editTime);
                 let start = utils.formatDate.now();
                 return `${utils.diffDate(start, end)}`;
             }

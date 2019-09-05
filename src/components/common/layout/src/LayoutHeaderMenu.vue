@@ -5,6 +5,7 @@
             :key="list.id"
             @click="handleRoute(list.url)">
             {{ list.title }}
+            <span v-if="list.name === 'msg' && isNewMsg" class="new-msg"></span>
         </div>
     </div>
 </template>
@@ -16,6 +17,12 @@ export default {
         data: {
             type: Array,
             default: () => ([])
+        },
+        msgCount: Number
+    },
+    computed: {
+        isNewMsg() {
+            return this.msgCount > 0;
         }
     },
     methods: {

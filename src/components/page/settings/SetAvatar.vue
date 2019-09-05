@@ -11,6 +11,7 @@
                 <el-upload
                     class="avatar-uploader"
                     :action="actionUrl"
+                    :headers="headers"
                     :show-file-list="false"
                     :on-success="handleAvatarSuccess"
                     :before-upload="beforeAvatarUpload">
@@ -39,6 +40,13 @@ export default {
             return `${apiBaseUrl}/uploadfile`;
         }
     },
+    data() {
+        return {
+            headers: {
+                token: localStorage.getItem('token')
+            }
+        };
+    },
     methods: {
         handleAvatarSuccess(res, file) {
             const { filename } = res.data[0];
@@ -50,13 +58,13 @@ export default {
         },
         beforeAvatarUpload(file) {
             const isJPG = file.type === 'image/jpeg';
-            const isLt2M = file.size / 1024 / 1024 < 2;
+            const isLt2M = file.size / 1024 / 1024 < 1;
 
             if (!isJPG) {
                 this.$message.error('上传头像图片只能是 JPG 格式!');
             }
             if (!isLt2M) {
-                this.$message.error('上传头像图片大小不能超过 2MB!');
+                this.$message.error('上传头像图片大小不能超过 1MB!');
             }
             return isJPG && isLt2M;
         }

@@ -1,22 +1,20 @@
 import Vue from 'vue';
 import router from './router';
 import store from './store';
-import './directive';
 import App from './App';
-
+import { apiBaseUrl } from '@/constants/url-config';
 import ElementUI from 'element-ui';
-import 'element-ui/lib/theme-chalk/index.css';
-
-// 进度条
+// import 'element-ui/lib/theme-chalk/index.css';
 import NProgress from 'nprogress';
 import 'nprogress/nprogress.css';
-
-// 富文本编辑器
 import VueQuillEditor from 'vue-quill-editor';
 import 'quill/dist/quill.core.css';
 import 'quill/dist/quill.snow.css';
 import 'quill/dist/quill.bubble.css';
+import VueSocketio from 'vue-socket.io';
+import Highlight from './directive/highlight';
 
+Vue.use(Highlight);
 Vue.use(ElementUI, {size: 'small'});
 Vue.use(VueQuillEditor, {/* { default global options } */});
 
@@ -36,6 +34,21 @@ router.beforeEach((to, from, next) => {
         next();
     }
 });
+
+Vue.use(new VueSocketio({
+    debug: false,
+    connection: apiBaseUrl,
+    vuex: {
+        store,
+        actionPrefix: 'SOCKET_',
+        mutationPrefix: 'SOCKET_'
+    },
+    options: { // Optional options
+        query: {
+            token: localStorage.getItem('token')
+        }
+    }
+}));
 
 router.afterEach(transition => {
     window.scrollTo(0, 0);

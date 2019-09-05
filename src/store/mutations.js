@@ -5,6 +5,15 @@
 
 import * as C from './mutation-types';
 export default {
+    [C.SOCKET_ONLINE_USER](state, payload) {
+        state.socketOnlineUser = payload;
+    },
+    [C.SOCKET_NEW_MSG](state, payload) {
+        state.socketMsg = payload;
+    },
+    [C.SOCKET_MESSAGE_COUNT](state, payload) {
+        state.socketMsgCount = payload.count;
+    },
     [C.GET_USER_INFO](state, payload) {
         state.userInfo = payload;
     },

@@ -1,6 +1,11 @@
 <template>
     <div class="follow-user__item">
         <span
+            class="img"
+            @click="handleRouterPush(userId)">
+            <img :src="avatar" alt="">
+        </span>
+        <span
             class="name"
             @click="handleRouterPush(userId)">
             {{ username }}
@@ -9,6 +14,7 @@
 </template>
 
 <script>
+import { imgBaseUrl } from '@/constants/url-config';
 export default {
     name: 'FansItem',
     props: {
@@ -23,6 +29,9 @@ export default {
         },
         userId() {
             if (this.item && this.item.followUserId) return this.item.followUserId._id;
+        },
+        avatar() {
+            if (this.item && this.item.followUserId) return `${imgBaseUrl}/${this.item.followUserId.avatar}`;
         }
     },
     methods: {

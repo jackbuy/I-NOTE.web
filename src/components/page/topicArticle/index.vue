@@ -13,7 +13,7 @@
         <card slot="topicDetail" icon="icon icon-zhuanti" :title="topicTitle">
             <template slot="menu">
                 <div class="menu">
-                    <div v-if="userId !== mine" @click="handleFollow(topicDetail._id, topicDetail.userId._id)" class="menu-btn">
+                    <div v-if="userId !== mine" @click="handleFollow(topicDetail._id, topicDetail.userId._id)" class="menu-btn round">
                         <span v-if="!topicDetail.isFollow">关注</span>
                         <span v-else>已关注</span>
                     </div>

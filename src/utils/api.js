@@ -56,6 +56,8 @@ export default {
 
     // 消息列表
     messageQuery: (params) => http('post', `${apiBaseUrl}/message/query`, params),
+    // 新消息
+    getNewMessage: (params) => http('post', `${apiBaseUrl}/message/query/new/count`, params),
     // 标记为已读
     messageRead: (messageId) => http('put', `${apiBaseUrl}/message/read/${messageId}`),
     // 消息删除
@@ -78,6 +80,11 @@ export default {
     sendEmail: (params) => http('post', `${apiBaseUrl}/sendEmail`, params),
 
     // 删除对应文件
-    deleteFile: (params) => http('post', `${apiBaseUrl}/deleteFile`, params)
+    deleteFile: (params) => http('post', `${apiBaseUrl}/deleteFile`, params),
+
+    // 评论
+    commentQuery: (params) => http('post', `${apiBaseUrl}/comment/query`, params),
+    commentSave: (params) => http('post', `${apiBaseUrl}/comment/save`, params),
+    commentReply: (params) => http('post', `${apiBaseUrl}/comment/reply`, params)
 
 };

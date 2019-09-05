@@ -33,6 +33,9 @@ export default {
                 this.loading = false;
             });
         },
+        handleComment(articleId) {
+            this.$router.push(`/detail/${articleId}`).catch(() => {});
+        },
         // 赞
         handleLike(articleId, type) {
             this.loading = true;

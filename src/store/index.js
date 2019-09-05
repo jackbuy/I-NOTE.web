@@ -17,7 +17,10 @@ const Store = {
             type: ''
         },
         isHiddenBreadcrumb: false, // 是否隐藏面包屑
-        documentTitle: ''
+        documentTitle: '',
+        socketMsg: {},
+        socketMsgCount: 0, // 未读消息数量
+        socketOnlineUser: [] // 在线用户
     },
     getters: {},
     mutations: mutations,

@@ -16,6 +16,13 @@ const env = process.env.NODE_ENV === 'testing'
   : require('../config/prod.env')
 
 const webpackConfig = merge(baseWebpackConfig, {
+  // 排除不打包
+  externals: {
+    'vue': 'Vue',
+    'element-ui': 'ELEMENT',
+    'vue-quill-editor': 'VueQuillEditor',
+    'highlight.js': 'hljs'
+  },
   module: {
     rules: utils.styleLoaders({
       sourceMap: config.build.productionSourceMap,
@@ -66,7 +73,7 @@ const webpackConfig = merge(baseWebpackConfig, {
       filename: process.env.NODE_ENV === 'testing'
         ? 'index.html'
         : config.build.index,
-      template: 'index.html',
+      template: 'index.prod.html',
       inject: true,
       minify: {
         removeComments: true,
@@ -109,7 +116,7 @@ const webpackConfig = merge(baseWebpackConfig, {
       name: 'app',
       async: 'vendor-async',
       children: true,
-      minChunks: 3
+      minChunks: 5
     }),
 
     // copy custom static assets

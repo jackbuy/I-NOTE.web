@@ -2,7 +2,7 @@
     <detail-layout>
         <div slot="menu" class="article-detail__menu">
             <button
-                :disabled="loading || currentUserId === userId"
+                :disabled="loading || currentUserId === authorId"
                 :class="{'active': isLike}"
                 @click="handleLike(isLike)">
                 <i v-if="isLike" class="icon icon-dianzan"></i>
@@ -10,7 +10,7 @@
                 <span v-if="likeCount > 0">{{ likeCount }}</span>
             </button>
             <button
-                :disabled="loading || currentUserId === userId"
+                :disabled="loading || currentUserId === authorId"
                 :class="{'active': isCollect}"
                 @click="handleCollect(isCollect)">
                 <i v-if="isCollect" class="icon icon-like"></i>
@@ -49,7 +49,7 @@
         <div slot="content" class="article-detail">
             <div class="article-detail__title">
                 {{ title }}
-                <span v-if="currentUserId === userId" @click="handleRouterEdit(articleId)">编辑</span>
+                <span v-if="currentUserId === authorId" @click="handleRouterEdit(articleId)">编辑</span>
             </div>
             <div class="article-detail__info">
                 <span :title="createTime">{{ editTime }}</span>
@@ -57,12 +57,19 @@
                 <span>浏览 {{ viewCount }}</span>
             </div>
             <div
-                v-highlight
+                v-highlightB
                 v-html="content"
-                class="article-detail__content" >
+                class="article-detail__content">
             </div>
         </div>
-        <card slot="recommend" icon="icon icon-wenzhang" title="相关文章">
+        <card slot="userinfo" :visible-header="false" icon="icon icon-zuozhe" title="关于作者">
+            <user-info
+                v-if="userInfo"
+                :user="userInfo"
+                @doFollow="handleFollow">
+            </user-info>
+        </card>
+        <card slot="userinfo" icon="icon icon-wenzhang" title="相关文章">
             <article-recommend
                 v-for="item in recommendFilterData"
                 :key="item._id"
@@ -70,12 +77,10 @@
                 @doDetail="handleRecommend">
             </article-recommend>
         </card>
-        <card slot="userinfo" :visible-header="false" icon="icon icon-zuozhe" title="关于作者">
-            <user-info
-                v-if="userInfo"
-                :user="userInfo"
-                @doFollow="handleFollow">
-            </user-info>
+        <card slot="comment" icon="icon icon-pinglun" title="评论">
+            <article-comment
+                :articleId="articleId"
+                :authorId="authorId"></article-comment>
         </card>
     </detail-layout>
 </template>
@@ -87,6 +92,7 @@ import DetailLayout from './Layout';
 import Card from '@/components/common/card';
 import UserInfo from '@/components/common/userInfo';
 import ArticleRecommend from '@/components/common/articleRecommend';
+import ArticleComment from '@/components/common/articleComment';
 import api from '@/utils/api';
 import utils from '@/utils/utils';
 export default {
@@ -95,7 +101,8 @@ export default {
         DetailLayout,
         Card,
         UserInfo,
-        ArticleRecommend
+        ArticleRecommend,
+        ArticleComment
     },
     data() {
         return {
@@ -118,11 +125,8 @@ export default {
         userInfo() {
             if (this.detail.userId) return this.detail.userId;
         },
-        username() {
-            if (this.detail.userId) return this.detail.userId.username;
-        },
-        userId() {
-            if (this.detail.userId) return this.detail.userId._id;
+        authorId() {
+            if (this.userInfo) return this.userInfo._id;
         },
         createTime() {
             return `创建于 ${utils.formatDate.time(this.detail.createTime)}`;

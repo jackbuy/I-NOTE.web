@@ -20,6 +20,7 @@ const Settings = () => import('@/components/page/settings');
 Vue.use(Router);
 
 export default new Router({
+    mode: 'history',
     routes: [
         {
             path: '/',

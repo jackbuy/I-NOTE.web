@@ -9,6 +9,7 @@
         <!-- 文件上传input 将它隐藏-->
         <el-upload
             :action="uploadUrl"
+            :headers="headers"
             :show-file-list="false"
             :before-upload='editorbeforeupload'
             :on-success='editorSuccess'
@@ -39,6 +40,9 @@ export default {
     },
     data() {
         return {
+            headers: {
+                token: localStorage.getItem('token')
+            },
             editorOption: {
                 // some quill options 一些参数，为空时，加载全部参数
                 // theme: 'bubble', // 气泡模式

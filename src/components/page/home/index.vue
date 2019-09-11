@@ -13,30 +13,10 @@
                 :data="listData"
                 @loadData="getList(sortType)">
                 <template slot-scope="scope">
-                    <article-item :item="scope.row">
-                        <template slot-scope="scopeInner">
-                            <button
-                                :disabled="loading || scopeInner.row.userId._id === currentUserId"
-                                :class="{'active': scopeInner.row.isLike}"
-                                @click="handleLike(scopeInner.row._id, scopeInner.row.isLike)">
-                                <i v-if="scopeInner.row.isLike" class="icon icon-dianzan"></i>
-                                <i v-else class="icon icon-dianzan-o"></i>
-                                {{ scopeInner.row.likeCount > 0 ? scopeInner.row.likeCount : '' }}
-                            </button>
-                            <button
-                                :disabled="loading || scopeInner.row.userId._id === currentUserId"
-                                :class="{'active': scopeInner.row.isCollect}"
-                                @click="handleCollect(scopeInner.row._id, scopeInner.row.isCollect)">
-                                <i v-if="scopeInner.row.isCollect" class="icon icon-like"></i>
-                                <i v-else class="icon icon-like-o"></i>
-                                {{ scopeInner.row.collectCount > 0 ? scopeInner.row.collectCount : '' }}
-                            </button>
-                            <button
-                                @click="handleComment(scopeInner.row._id)">
-                                <i class="icon icon-pinglun"></i>
-                                {{ scopeInner.row.commentCount > 0 ? scopeInner.row.commentCount : '' }}
-                            </button>
-                        </template>
+                    <article-item
+                        :item="scope.row"
+                        :show-menu-edit="false"
+                        :show-menu-delete="false">
                     </article-item>
                 </template>
             </infinite-scroll>
@@ -91,7 +71,6 @@ import AuthorRecommend from '@/components/common/authorRecommend';
 import Card from '@/components/common/card';
 import Tab from '@/components/common/tab';
 import TabLabel from '@/components/common/tab/tabLabel';
-import articleCommon from '@/mixins/articleCommon';
 import api from '@/utils/api';
 
 export default {
@@ -107,7 +86,6 @@ export default {
         Tab,
         TabLabel
     },
-    mixins: [ articleCommon ],
     data() {
         return {
             listData: [],

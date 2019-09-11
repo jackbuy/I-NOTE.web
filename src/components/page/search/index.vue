@@ -10,25 +10,11 @@
             :data="listData"
             @loadData="getList(keyword, activeTabName)">
             <template slot-scope="scope">
-                <article-item v-if="activeTabName === 'article'"  :item="scope.row">
-                    <template slot-scope="scopeInner">
-                        <button
-                            :disabled="scopeInner.row.userId._id === currentUserId"
-                            :class="{'active': scopeInner.row.isLike}"
-                            @click="handleLike(scopeInner.row._id, scopeInner.row.isLike)">
-                            <i v-if="scopeInner.row.isLike" class="icon icon-dianzan"></i>
-                            <i v-else class="icon icon-dianzan-o"></i>
-                            {{ scopeInner.row.likeCount > 0 ? scopeInner.row.likeCount : '' }}
-                        </button>
-                        <button
-                            :disabled="scopeInner.row.userId._id === currentUserId"
-                            :class="{'active': scopeInner.row.isCollect}"
-                            @click="handleCollect(scopeInner.row._id, scopeInner.row.isCollect)">
-                            <i v-if="scopeInner.row.isCollect" class="icon icon-like"></i>
-                            <i v-else class="icon icon-like-o"></i>
-                            {{ scopeInner.row.collectCount > 0 ? scopeInner.row.collectCount : '' }}
-                        </button>
-                    </template>
+                <article-item
+                    v-if="activeTabName === 'article'"
+                    :item="scope.row"
+                    :show-menu-edit="false"
+                    :show-menu-delete="false">
                 </article-item>
                 <topic-item v-if="activeTabName === 'topic'" :item="scope.row"></topic-item>
             </template>
@@ -42,12 +28,10 @@ import ArticleItem from '@/components/common/articleItem';
 import TopicItem from '@/components/common/topicItem';
 import Tab from '@/components/common/tab';
 import TabLabel from '@/components/common/tab/tabLabel';
-import articleCommon from '@/mixins/articleCommon';
 import api from '@/utils/api';
 
 export default {
     name: 'Search',
-    mixins: [ articleCommon ],
     components: {
         InfiniteScroll,
         ArticleItem,

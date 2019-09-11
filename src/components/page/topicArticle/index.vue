@@ -1,5 +1,5 @@
 <template>
-    <layout>
+    <layout :is-has="isHas">
         <infinite-scroll
             slot="content"
             :loading="loading"
@@ -7,7 +7,12 @@
             :data="listData"
             @loadData="getList(topicId)">
             <template slot-scope="scope">
-                <article-item :item="scope.row"></article-item>
+                <article-item
+                    :item="scope.row.articleId"
+                    :show-menu-edit="false"
+                    :item-id="scope.row._id"
+                    @delete="handleDelete">
+                </article-item>
             </template>
         </infinite-scroll>
         <card slot="topicDetail" icon="icon icon-zhuanti" :title="topicTitle">
@@ -37,13 +42,13 @@ import Card from '@/components/common/card';
 import InfiniteScroll from '@/components/common/infiniteScrollList';
 import ArticleItem from '@/components/common/articleItem';
 import Author from '@/components/common/author';
-import articleCommon from '@/mixins/articleCommon';
+import message from '@/mixins/message';
 import api from '@/utils/api';
 import utils from '@/utils/utils';
 
 export default {
     name: 'TopicArticle',
-    mixins: [ articleCommon ],
+    mixins: [ message ],
     components: {
         Layout,
         Card,
@@ -53,6 +58,7 @@ export default {
     },
     data() {
         return {
+            isHas: true,
             listData: [],
             topicDetail: {},
             pageConfig: {
@@ -103,7 +109,6 @@ export default {
             this.listData = [];
             this.noMore = false;
             this.getTopicInfo(topicId);
-            this.getList(topicId);
         },
         getList(topicId) {
             const params = {
@@ -126,8 +131,10 @@ export default {
         getTopicInfo(topicId) {
             api.topicDetail({ topicId }).then((res) => {
                 this.topicDetail = res.data;
-            }).catch((err) => {
-                if (err.code === 404) this.$router.replace('/404');
+                this.getList(topicId);
+                this.isHas = true;
+            }).catch(() => {
+                this.isHas = false;
             });
         },
         // 关注
@@ -138,6 +145,20 @@ export default {
             };
             api.followTopic(params).then(() => {
                 this.topicDetail.isFollow = !this.topicDetail.isFollow;
+            }).catch(() => {});
+        },
+        // 删除专题文章
+        handleDelete(itemId) {
+            this.confirmWarning({
+                title: '提示',
+                content: '确认删除吗？'
+            }).then(() => {
+                api.topicArticleDelete(itemId).then(() => {
+                    let _ids = this.listData.map((item) => item._id);
+                    let index = _ids.indexOf(itemId);
+                    this.listData.splice(index, 1);
+                    this.showSuccessMsg('删除成功');
+                });
             }).catch(() => {});
         }
     }

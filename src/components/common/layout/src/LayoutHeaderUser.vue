@@ -22,8 +22,8 @@
                 <el-dropdown-menu slot="dropdown">
                     <el-dropdown-item command="zone"><i class="icon icon-zuozhe"></i> {{ userName }}</el-dropdown-item>
                     <el-dropdown-item divided command="zone"><i class="icon icon-wenzhang"></i> 文章</el-dropdown-item>
-                    <el-dropdown-item command="collect"><i class="icon icon-like"></i> 收藏</el-dropdown-item>
                     <el-dropdown-item command="topic"><i class="icon icon-zhuanti"></i> 专题</el-dropdown-item>
+                    <el-dropdown-item command="collect"><i class="icon icon-like"></i> 收藏</el-dropdown-item>
                     <el-dropdown-item divided command="follow"><i class="icon icon-guanzhu"></i> 关注</el-dropdown-item>
                     <el-dropdown-item command="fans"><i class="icon icon-fensi"></i> 粉丝</el-dropdown-item>
                     <el-dropdown-item divided command="settings"><i class="el-icon-s-tools"></i> 设置</el-dropdown-item>

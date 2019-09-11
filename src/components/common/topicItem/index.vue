@@ -6,8 +6,8 @@
             <span>{{ username }}</span>
             <span>{{ createTime }}</span>
         </div>
-        <div class="topic__item-title">
-            <span @click="handleRouterPush(topicId)">{{ title }}</span>
+        <div class="topic__item-title" @click="handleRouterPush(topicId)">
+            {{ title }}
         </div>
         <div v-if="description" class="topic__item-description">
             {{ description }}

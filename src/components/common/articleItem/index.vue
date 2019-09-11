@@ -2,18 +2,33 @@
     <div
         class="article__item"
         :class="{'has-img': img}">
-        <div class="article__item-header">
+        <div class="article__item-menu">
+            <button v-if="showMenuEdit" @click="handleEdit(itemId)"><i class="el-icon-edit"></i></button>
+            <button v-if="showMenuDelete" @click="handleDelete(itemId)"><i class="el-icon-delete"></i></button>
+        </div>
+        <div v-if="item" class="article__item-header">
             <span v-if="isTop" class="article-top">置顶</span>
             <span>{{ username }}</span>
-            <span>{{ editTime }}</span>
+            <span>{{ time }}</span>
             <span v-if="publish">{{ tag }}</span>
             <span v-if="publish && viewCount > 0">浏览 {{ viewCount }}</span>
         </div>
         <div class="article__item-title">
             <span @click="handleDetail(articleId)">{{ title }}</span>
         </div>
-        <div class="article__item-action">
-            <slot :row="item"></slot>
+        <div v-if="itemType !== 'draft'" class="article__item-action">
+            <span>
+                <i class="icon icon-dianzan"></i>
+                {{ likeCount }}
+            </span>
+            <span>
+                <i class="icon icon-like"></i>
+                {{ collectCount }}
+            </span>
+            <span>
+                <i class="icon icon-pinglun"></i>
+                {{ commentCount }}
+            </span>
         </div>
         <div class="article__item-img" v-if="img" v-html="img"></div>
     </div>
@@ -27,6 +42,16 @@ export default {
         item: {
             type: Object,
             default: () => ({})
+        },
+        itemId: String,
+        itemType: String,
+        showMenuEdit: {
+            type: Boolean,
+            default: true
+        },
+        showMenuDelete: {
+            type: Boolean,
+            default: true
         }
     },
     computed: {
@@ -49,9 +74,10 @@ export default {
         articleId() {
             if (this.item) return this.item._id || '';
         },
-        editTime() {
-            if (this.item) {
-                let end = utils.formatDate.time(this.item.editTime);
+        time() {
+            if (this.item && this.item.title) {
+                let time = this.item && this.item.editTime ? this.item.editTime : this.item.createTime;
+                let end = utils.formatDate.time(time);
                 let start = utils.formatDate.now();
                 return `${utils.diffDate(start, end)}`;
             }
@@ -61,6 +87,15 @@ export default {
         },
         viewCount() {
             if (this.item) return this.item.viewCount || 0;
+        },
+        likeCount() {
+            if (this.item) return this.item.likeCount > 0 ? this.item.likeCount : '';
+        },
+        collectCount() {
+            if (this.item) return this.item.collectCount > 0 ? this.item.collectCount : '';
+        },
+        commentCount() {
+            if (this.item) return this.item.commentCount > 0 ? this.item.commentCount : '';
         },
         img() {
             return '';
@@ -74,8 +109,14 @@ export default {
     },
     methods: {
         handleDetail(articleId) {
-            let path = this.publish ? `/detail/${articleId}` : `/write/${articleId}`;
+            let path = this.itemType === 'draft' ? `/write/${articleId}` : `/detail/${articleId}`;
             this.$router.push(path).catch(() => {});
+        },
+        handleEdit(itemId) {
+            this.$emit('edit', itemId);
+        },
+        handleDelete(itemId) {
+            this.$emit('delete', itemId);
         }
     }
 };

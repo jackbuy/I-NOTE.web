@@ -1,5 +1,5 @@
 <template>
-    <detail-layout>
+    <detail-layout :is-has="isHas">
         <div slot="menu" class="article-detail__menu">
             <button
                 :disabled="loading || currentUserId === authorId"
@@ -26,7 +26,7 @@
                         <div
                             v-for="item in topicList"
                             :key="item._id"
-                            :class="{'active': isAddTopicList(item)}"
+                            :class="{'active': item.isTopic}"
                             @click="handleAddTopicList(item)">
                             <i class="el-icon-circle-check"></i>
                             {{ item.title }}
@@ -39,10 +39,10 @@
                 </div>
                 <button
                     slot="reference"
-                    :disabled="loading"
-                    :class="{'active': isTopic}">
+                    :class="{'active': isTopic}"
+                    :disabled="loading">
                     <i v-if="isTopic" class="icon icon-shoucang"></i>
-                    <i v-else class="icon icon-shoucang3"></i>
+                    <i v-else class="icon icon-shoucang-o"></i>
                 </button>
             </el-popover>
         </div>
@@ -109,7 +109,8 @@ export default {
             loading: false,
             detail: {},
             recommendData: [],
-            topicList: []
+            topicList: [],
+            isHas: true
         };
     },
     computed: {
@@ -155,7 +156,7 @@ export default {
         isTopic() {
             let isTopic = false;
             this.topicList.map((item) => {
-                if (this.isAddTopicList(item)) isTopic = true;
+                if (item.isTopic) isTopic = true;
             });
             return isTopic;
         },
@@ -175,7 +176,6 @@ export default {
         articleId: {
             handler(n, o) {
                 this.getDetail(n);
-                this.getTopicList();
             },
             immediate: true
         }
@@ -191,49 +191,45 @@ export default {
         handleCreateTopic() {
             this.currentUserId ? this.handleRouterPath('/topicWrite') : this.openLoginModal();
         },
-        isAddTopicList(row) {
-            const { articleIds } = row;
-            let arr = articleIds.split(',');
-            const index = arr.indexOf(this.articleId);
-            return index > -1;
-        },
+        // 获取文章详情
         getDetail(articleId) {
             const params = { articleId };
             api.getDetail(params).then((res) => {
                 this.detail = res.data;
                 this.setDocumentTitle(this.detail.title);
                 this.recommend(this.detail.tagId._id);
-            }).catch(() => {});
+                this.getIsTopicList(articleId);
+                this.isHas = true;
+            }).catch(() => {
+                this.isHas = false;
+            });
         },
         // 获取专题列表
-        getTopicList() {
+        getIsTopicList(articleId) {
             if (this.currentUserId) { // 登录用户才发请求
                 const params = {
-                    userId: this.currentUserId,
+                    articleId,
                     pageSize: 10000,
                     currentPage: 1
                 };
-                api.topicUserQuery(params).then((res) => {
+                api.getTopicList(params).then((res) => {
                     this.topicList = res.data;
                 }).catch(() => {});
             }
         },
+        // 加入专题
         handleAddTopicList(row) {
-            const { _id, articleIds } = row;
-            const ids = this.getArticleIds(articleIds, this.articleId);
-            api.topicEdit(_id, { articleIds: ids }).then(() => {
-                this.getTopicList();
-            }).catch(() => {});
-        },
-        getArticleIds(str, articleId) {
-            let arr = str.length > 0 ? str.split(',') : [];
-            const index = arr.indexOf(articleId);
-            if (index === -1) {
-                arr.splice(index, 0, articleId);
-            } else {
-                arr.splice(index, 1);
+            const { _id, isTopic } = row;
+            if (!isTopic) {
+                const params = {
+                    topicId: _id,
+                    articleId: this.articleId,
+                    articleTitle: this.detail.title
+                };
+                api.topicArticleAdd(params).then(() => {
+                    this.getIsTopicList(this.articleId);
+                }).catch(() => {});
             }
-            return arr.join(',');
         },
         // 关注
         handleFollow(followUserId) {
@@ -243,8 +239,14 @@ export default {
         },
         // 收藏
         handleCollect(type) {
+            const { _id, title } = this.detail;
+            const params = {
+                articleId: _id,
+                articleTitle: title
+            };
+
             this.loading = true;
-            api.articleCollect(this.articleId).then(() => {
+            api.articleCollect(params).then(() => {
                 if (!type) {
                     this.detail.isCollect = true;
                     this.detail.collectCount++;
@@ -259,8 +261,14 @@ export default {
         },
         // 赞
         handleLike(type) {
+            const { _id, title } = this.detail;
+            const params = {
+                articleId: _id,
+                articleTitle: title
+            };
+
             this.loading = true;
-            api.articleLike(this.articleId).then(() => {
+            api.articleLike(params).then(() => {
                 if (!type) {
                     this.detail.isLike = true;
                     this.detail.likeCount++;

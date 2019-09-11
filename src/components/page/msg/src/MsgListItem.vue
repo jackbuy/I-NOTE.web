@@ -28,7 +28,7 @@
                 v-if="!isRead"
                 title="标记为已读"
                 @click="handleRead(messageId)">
-                <i class="icon icon-yidu1"></i>
+                <i class="icon icon-biaoji"></i>
             </span>
             <span
                 title="删除"

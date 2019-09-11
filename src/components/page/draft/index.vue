@@ -5,19 +5,12 @@
         :data="listData"
         @loadData="getList">
         <template slot-scope="scope">
-            <article-item :item="scope.row">
-                <template slot-scope="scopeInner">
-                    <button
-                        v-if="scopeInner.row.userId._id === currentUserId"
-                        @click="handleRouterEdit(scopeInner.row._id)">
-                        <i class="el-icon-edit"></i>
-                    </button>
-                    <button
-                        v-if="scopeInner.row.userId._id === currentUserId"
-                        @click="handleDelete(scopeInner.row)">
-                        <i class="el-icon-delete"></i>
-                    </button>
-                </template>
+            <article-item
+                :item="scope.row"
+                :item-id="scope.row._id"
+                item-type="draft"
+                @edit="handleRouterEdit"
+                @delete="handleDelete">
             </article-item>
         </template>
     </infinite-scroll>
@@ -26,12 +19,12 @@
 <script>
 import InfiniteScroll from '@/components/common/infiniteScrollList';
 import ArticleItem from '@/components/common/articleItem';
-import articleCommon from '@/mixins/articleCommon';
+import message from '@/mixins/message';
 import api from '@/utils/api';
 
 export default {
     name: 'Draft',
-    mixins: [ articleCommon ],
+    mixins: [ message ],
     components: {
         InfiniteScroll,
         ArticleItem
@@ -76,13 +69,15 @@ export default {
                 this.loading = false;
             });
         },
-        handleDelete(row) {
-            const { _id } = row;
+        handleRouterEdit(articleId) {
+            this.$router.push(`/write/${articleId}`).catch(() => {});
+        },
+        handleDelete(itemId) {
             this.confirmWarning({
                 title: '提示',
                 content: '确认删除吗？'
             }).then(() => {
-                api.articleDelete(_id).then(() => {
+                api.articleDelete(itemId).then(() => {
                     this.refresh();
                     this.showSuccessMsg('删除成功！');
                 });

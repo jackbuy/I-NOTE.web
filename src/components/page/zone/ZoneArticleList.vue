@@ -5,35 +5,11 @@
         :data="listData"
         @loadData="getList">
         <template slot-scope="scope">
-            <article-item :item="scope.row">
-                <template slot-scope="scopeInner">
-                    <button
-                        :disabled="loading || scopeInner.row.userId._id === currentUserId"
-                        :class="{'active': scopeInner.row.isLike}"
-                        @click="handleLike(scopeInner.row._id, scopeInner.row.isLike)">
-                        <i v-if="scopeInner.row.isLike" class="icon icon-dianzan"></i>
-                        <i v-else class="icon icon-dianzan-o"></i>
-                        {{ scopeInner.row.likeCount > 0 ? scopeInner.row.likeCount : '' }}
-                    </button>
-                    <button
-                        :disabled="loading || scopeInner.row.userId._id === currentUserId"
-                        :class="{'active': scopeInner.row.isCollect}"
-                        @click="handleCollect(scopeInner.row._id, scopeInner.row.isCollect)">
-                        <i v-if="scopeInner.row.isCollect" class="icon icon-like"></i>
-                        <i v-else class="icon icon-like-o"></i>
-                        {{ scopeInner.row.collectCount > 0 ? scopeInner.row.collectCount : '' }}
-                    </button>
-                    <button
-                        v-if="scopeInner.row.userId._id === currentUserId"
-                        @click="handleRouterEdit(scopeInner.row._id)">
-                        <i class="el-icon-edit"></i>
-                    </button>
-                    <button
-                        v-if="scopeInner.row.userId._id === currentUserId"
-                        @click="handleDelete(scopeInner.row)">
-                        <i class="el-icon-delete"></i>
-                    </button>
-                </template>
+            <article-item
+                :item="scope.row"
+                :item-id="scope.row._id"
+                @edit="handleRouterEdit"
+                @delete="handleDelete">
             </article-item>
         </template>
     </infinite-scroll>
@@ -42,7 +18,7 @@
 <script>
 import InfiniteScroll from '@/components/common/infiniteScrollList';
 import ArticleItem from '@/components/common/articleItem';
-import articleCommon from '@/mixins/articleCommon';
+import message from '@/mixins/message';
 import api from '@/utils/api';
 
 export default {
@@ -51,7 +27,7 @@ export default {
         type: String,
         userId: String
     },
-    mixins: [ articleCommon ],
+    mixins: [ message ],
     components: {
         InfiniteScroll,
         ArticleItem
@@ -106,17 +82,20 @@ export default {
                 this.loading = false;
             });
         },
-        handleDelete(row) {
-            const { _id } = row;
+        handleDelete(itemId) {
             this.confirmWarning({
                 title: '提示',
                 content: '确认删除吗？'
             }).then(() => {
-                api.articleDelete(_id).then(() => {
+                api.articleDelete(itemId).then(() => {
                     this.refresh();
                     this.showSuccessMsg('删除成功！');
                 }).catch(() => {});
             }).catch(() => {});
+        },
+        // 跳转文章编辑
+        handleRouterEdit(articleId) {
+            this.$router.push(`/write/${articleId}`).catch(() => {});
         }
     }
 };

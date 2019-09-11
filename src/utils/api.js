@@ -18,9 +18,9 @@ export default {
     // 已发布文章列表
     articleQuery: (params) => http('post', `${apiBaseUrl}/article/query`, params),
     // 已发布文章点赞
-    articleLike: (articleId) => http('get', `${apiBaseUrl}/article/like/${articleId}`),
+    articleLike: (params) => http('post', `${apiBaseUrl}/article/like`, params),
     // 已发布文章收藏
-    articleCollect: (articleId) => http('get', `${apiBaseUrl}/article/collect/${articleId}`),
+    articleCollect: (params) => http('post', `${apiBaseUrl}/article/collect`, params),
     // 文章详情
     getDetail: (params) => http('post', `${apiBaseUrl}/article/detail`, params),
     // 文章新增
@@ -34,6 +34,8 @@ export default {
     topicQuery: (params) => http('post', `${apiBaseUrl}/topic/query`, params),
     // 我的专题
     topicUserQuery: (params) => http('post', `${apiBaseUrl}/topic/user/query`, params),
+    // 我的专题 - 返回文章是否加入专题
+    getTopicList: (params) => http('post', `${apiBaseUrl}/topic/user/list`, params),
     // 专题推荐
     topicRecommend: () => http('get', `${apiBaseUrl}/topic/recommend`),
     // 创建专题
@@ -46,6 +48,10 @@ export default {
     topicDetail: (params) => http('post', `${apiBaseUrl}/topic/detail`, params),
     // 专题文章
     topicArticleQuery: (params) => http('post', `${apiBaseUrl}/topic/article/query`, params),
+    // 专题文章添加
+    topicArticleAdd: (params) => http('post', `${apiBaseUrl}/topic/article/add`, params),
+    // 专题文章删除
+    topicArticleDelete: (topicArticleId) => http('delete', `${apiBaseUrl}/topic/article/delete/${topicArticleId}`),
 
     // Tag列表
     tagQuery: (params) => http('post', `${apiBaseUrl}/tag/query`, params),
@@ -65,6 +71,8 @@ export default {
 
     // 收藏列表
     collectQuery: (params) => http('post', `${apiBaseUrl}/collect/query`, params),
+    // 收藏删除
+    collectDelete: (collectId) => http('delete', `${apiBaseUrl}/collect/delete/${collectId}`),
 
     // 关注列表
     followUserQuery: (params) => http('post', `${apiBaseUrl}/follow/user/query`, params),

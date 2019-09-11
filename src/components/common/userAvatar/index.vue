@@ -26,31 +26,31 @@
             <div class="count">
                 <div :class="{'active': type === 'article'}" class="list">
                     <div @click="handleZone('article')">
-                        <div class="c">{{ articleCount }}</div>
+                        <!-- <div class="c">{{ articleCount }}</div> -->
                         <div>文章</div>
                     </div>
                 </div>
                 <div :class="{'active': type === 'topic'}" class="list">
                     <div @click="handleZone('topic')">
-                        <div class="c">{{ topicCount }}</div>
+                        <!-- <div class="c">{{ topicCount }}</div> -->
                         <div>专题</div>
                     </div>
                 </div>
                 <div :class="{'active': type === 'collect'}" class="list">
                     <div @click="handleZone('collect')">
-                        <div class="c">{{ collectCount }}</div>
+                        <!-- <div class="c">{{ collectCount }}</div> -->
                         <div>收藏</div>
                     </div>
                 </div>
                 <div :class="{'active': type === 'follow'}" class="list">
                     <div @click="handleZone('follow')">
-                        <div class="c">{{ followCount }}</div>
+                        <!-- <div class="c">{{ followCount }}</div> -->
                         <div>关注</div>
                     </div>
                 </div>
                 <div :class="{'active': type === 'fans'}" class="list">
                     <div @click="handleZone('fans')">
-                        <div class="c">{{ fansCount }}</div>
+                        <!-- <div class="c">{{ fansCount }}</div> -->
                         <div>粉丝</div>
                     </div>
                 </div>

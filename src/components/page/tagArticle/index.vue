@@ -1,5 +1,5 @@
 <template>
-    <layout>
+    <layout :is-has="isHas">
         <infinite-scroll
             slot="content"
             :loading="loading"
@@ -7,25 +7,10 @@
             :data="listData"
             @loadData="getList(tagId)">
             <template slot-scope="scope">
-                <article-item :item="scope.row">
-                    <template slot-scope="scopeInner">
-                        <button
-                            :disabled="loading || scopeInner.row.userId._id === currentUserId"
-                            :class="{'active': scopeInner.row.isLike}"
-                            @click="handleLike(scopeInner.row._id, scopeInner.row.isLike)">
-                            <i v-if="scopeInner.row.isLike" class="icon icon-dianzan"></i>
-                            <i v-else class="icon icon-dianzan-o"></i>
-                            {{ scopeInner.row.likeCount > 0 ? scopeInner.row.likeCount : '' }}
-                        </button>
-                        <button
-                            :disabled="loading || scopeInner.row.userId._id === currentUserId"
-                            :class="{'active': scopeInner.row.isCollect}"
-                            @click="handleCollect(scopeInner.row._id, scopeInner.row.isCollect)">
-                            <i v-if="scopeInner.row.isCollect" class="icon icon-like"></i>
-                            <i v-else class="icon icon-like-o"></i>
-                            {{ scopeInner.row.collectCount > 0 ? scopeInner.row.collectCount : '' }}
-                        </button>
-                    </template>
+                <article-item
+                    :item="scope.row"
+                    :show-menu-edit="false"
+                    :show-menu-delete="false">
                 </article-item>
             </template>
         </infinite-scroll>
@@ -48,12 +33,10 @@ import Layout from './layout';
 import Card from '@/components/common/card';
 import InfiniteScroll from '@/components/common/infiniteScrollList';
 import ArticleItem from '@/components/common/articleItem';
-import articleCommon from '@/mixins/articleCommon';
 import api from '@/utils/api';
 
 export default {
     name: 'Draft',
-    mixins: [ articleCommon ],
     components: {
         InfiniteScroll,
         ArticleItem,
@@ -62,6 +45,7 @@ export default {
     },
     data() {
         return {
+            isHas: true,
             tagDetail: {},
             listData: [],
             pageConfig: {
@@ -97,7 +81,6 @@ export default {
             this.listData = [];
             this.noMore = false;
             this.getTagDetail(tagId);
-            this.getList(tagId);
         },
         getList(tagId) {
             const params = {
@@ -108,12 +91,13 @@ export default {
             };
             this.loading = true;
             api.articleQuery(params).then((res) => {
-                this.loading = false;
                 if (res.data.length > 0) {
                     this.listData.push(...res.data);
                 } else {
                     this.noMore = true;
                 }
+                this.isHas = true;
+                this.loading = false;
             }).catch(() => {
                 this.loading = false;
             });
@@ -121,7 +105,11 @@ export default {
         getTagDetail(tagId) {
             api.tagDetail({ tagId }).then((res) => {
                 this.tagDetail = res.data;
-            }).catch(() => {});
+                this.isHas = true;
+                this.getList(tagId);
+            }).catch(() => {
+                this.isHas = false;
+            });
         },
         // 关注
         handleFollow(tagId) {

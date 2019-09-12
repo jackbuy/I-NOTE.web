@@ -45,6 +45,7 @@ import Author from '@/components/common/author';
 import message from '@/mixins/message';
 import api from '@/utils/api';
 import utils from '@/utils/utils';
+import { imgBaseUrl } from '@/constants/url-config';
 
 export default {
     name: 'TopicArticle',
@@ -71,10 +72,10 @@ export default {
     },
     computed: {
         img() {
-            return this.topicDetail.img ? this.topicDetail.img : '';
+            return this.topicDetail.img ? `${imgBaseUrl}/${this.topicDetail.img}` : '';
         },
         topicTitle() {
-            return this.topicDetail.title;
+            return this.topicDetail.title || '未命名专题';
         },
         topicId() {
             return this.$route.params.topicId;

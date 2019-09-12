@@ -3,7 +3,23 @@
         <el-form
             ref="form"
             :model="form"
-            :rules="rules">
+            :rules="rules"
+            :label-width="labelWidth">
+            <el-form-item
+                label="专题封面">
+                <el-upload
+                    class="avatar-uploader"
+                    :action="actionUrl"
+                    :headers="headers"
+                    :data="dataOptions"
+                    :show-file-list="false"
+                    :on-success="handleAvatarSuccess"
+                    :before-upload="beforeAvatarUpload">
+                    <img v-if="imageUrl" :src="imageUrl" class="avatar">
+                    <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+                </el-upload>
+                <input v-model="form.img" type="hidden">
+            </el-form-item>
             <el-form-item
                 label="名称"
                 prop="title">
@@ -16,18 +32,9 @@
                 prop="description">
                 <el-input
                     v-model="form.description"
-                    :rows="5"
-                    type="textarea"
-                    placeholder="输入描述 <=200"></el-input>
-            </el-form-item>
-            <el-form-item
-                label="封面URL"
-                prop="description">
-                <el-input
-                    v-model="form.img"
                     :rows="4"
                     type="textarea"
-                    placeholder="输入封面URL"></el-input>
+                    placeholder="输入描述 <=200"></el-input>
             </el-form-item>
             <el-form-item>
                 <el-button
@@ -40,19 +47,32 @@
 </template>
 
 <script>
+import { imgBaseUrl, apiBaseUrl } from '@/constants/url-config';
 import api from '@/utils/api';
 export default {
     name: 'TopicAddEdit',
     data() {
         return {
-            form: {},
+            form: {
+                img: '',
+                title: '',
+                description: ''
+            },
             loading: false,
+            labelWidth: '90px',
+            headers: {
+                token: localStorage.getItem('token')
+            },
+            dataOptions: {
+                type: 2
+            },
             rules: {
                 title: [
-                    { required: true, message: '必填' },
+                    // { required: true, message: '必填' },
                     { max: 20, message: '超过最大字符限制20' }
                 ],
                 description: [
+                    // { required: true, message: '必填' },
                     { max: 200, message: '超过最大字符限制200' }
                 ]
             }
@@ -61,12 +81,37 @@ export default {
     computed: {
         topicId() {
             return this.$route.params.topicId;
+        },
+        imageUrl() {
+            return this.form.img ? `${imgBaseUrl}/${this.form.img}` : '';
+        },
+        actionUrl() {
+            return `${apiBaseUrl}/uploadfile`;
         }
     },
     created() {
         if (this.topicId) this.getDetail(this.topicId);
     },
     methods: {
+        handleAvatarSuccess(res, file) {
+            const { filename } = res.data[0];
+            api.deleteFile({ filename: this.form.img }).then(() => {
+                this.form.img = filename;
+                this.handleSave();
+            });
+        },
+        beforeAvatarUpload(file) {
+            const isImg = file.type === 'image/jpeg' || file.type === 'image/png';
+            const isLt2M = file.size / 1024 / 1024 < 1;
+
+            if (!isImg) {
+                this.$message.error('上传头像图片只能是 JPG或png 格式!');
+            }
+            if (!isLt2M) {
+                this.$message.error('上传头像图片大小不能超过 1MB!');
+            }
+            return isImg && isLt2M;
+        },
         handleSave() {
             this.$refs['form'].validate((valid) => {
                 if (valid) {

@@ -12,6 +12,7 @@
                     class="avatar-uploader"
                     :action="actionUrl"
                     :headers="headers"
+                    :data="dataOptions"
                     :show-file-list="false"
                     :on-success="handleAvatarSuccess"
                     :before-upload="beforeAvatarUpload">
@@ -44,6 +45,9 @@ export default {
         return {
             headers: {
                 token: localStorage.getItem('token')
+            },
+            dataOptions: {
+                type: 1
             }
         };
     },
@@ -57,16 +61,16 @@ export default {
             });
         },
         beforeAvatarUpload(file) {
-            const isJPG = file.type === 'image/jpeg';
+            const isImg = file.type === 'image/jpeg' || file.type === 'image/png';
             const isLt2M = file.size / 1024 / 1024 < 1;
 
-            if (!isJPG) {
-                this.$message.error('上传头像图片只能是 JPG 格式!');
+            if (!isImg) {
+                this.$message.error('上传头像图片只能是 JPG或png 格式!');
             }
             if (!isLt2M) {
                 this.$message.error('上传头像图片大小不能超过 1MB!');
             }
-            return isJPG && isLt2M;
+            return isImg && isLt2M;
         }
     }
 };

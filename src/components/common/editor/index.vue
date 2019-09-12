@@ -10,6 +10,7 @@
         <el-upload
             :action="uploadUrl"
             :headers="headers"
+            :data="dataOptions"
             :show-file-list="false"
             :before-upload='editorbeforeupload'
             :on-success='editorSuccess'
@@ -43,6 +44,9 @@ export default {
             headers: {
                 token: localStorage.getItem('token')
             },
+            dataOptions: {
+                type: 0
+            },
             editorOption: {
                 // some quill options 一些参数，为空时，加载全部参数
                 // theme: 'bubble', // 气泡模式
@@ -65,7 +69,7 @@ export default {
     },
     computed: {
         uploadUrl() {
-            return `${imgBaseUrl}/uploadfile`;
+            return `${imgBaseUrl}/single/uploadfile`;
         }
     },
     mounted() {
@@ -95,7 +99,7 @@ export default {
         },
         editorSuccess(response, file, fileList) {
             if (response.code === 200) {
-                let value = `${imgBaseUrl}/${response.data[0].filename}`;
+                let value = `${imgBaseUrl}/${response.data}`;
                 this.addImgRange = this.$refs.quillEditor.quill.getSelection();
                 let index = this.addImgRange != null ? this.addImgRange.index : 0;
                 this.$refs.quillEditor.quill.insertEmbed(index, 'image', value);

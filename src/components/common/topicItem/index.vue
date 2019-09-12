@@ -9,7 +9,7 @@
         <div class="topic__item-title" @click="handleRouterPush(topicId)">
             {{ title }}
         </div>
-        <div v-if="description" class="topic__item-description">
+        <div class="topic__item-description">
             {{ description }}
         </div>
         <div class="topic__item-action">
@@ -21,6 +21,7 @@
 
 <script>
 import utils from '@/utils/utils';
+import { imgBaseUrl } from '@/constants/url-config';
 export default {
     name: 'TopicItem',
     props: {
@@ -37,7 +38,7 @@ export default {
             if (this.item && this.item.title) {
                 return this.item.title;
             } else {
-                return '无标题';
+                return '未命名专题';
             }
         },
         topicId() {
@@ -51,7 +52,7 @@ export default {
             }
         },
         img() {
-            return this.item.img ? this.item.img : '';
+            return this.item.img ? `${imgBaseUrl}/${this.item.img}` : '';
         },
         description() {
             return this.item.description ? this.item.description : '';

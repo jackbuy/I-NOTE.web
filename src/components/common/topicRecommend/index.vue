@@ -8,6 +8,7 @@
 </template>
 
 <script>
+import { imgBaseUrl } from '@/constants/url-config';
 export default {
     name: 'ArticleTagItem',
     props: {
@@ -21,10 +22,10 @@ export default {
             return this.item._id;
         },
         title() {
-            return this.item.title;
+            return this.item.title || '未命名专题';
         },
         img() {
-            return this.item.img;
+            return this.item.img ? `${imgBaseUrl}/${this.item.img}` : '';
         }
     },
     methods: {

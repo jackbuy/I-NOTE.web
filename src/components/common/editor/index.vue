@@ -73,6 +73,7 @@ export default {
         }
     },
     mounted() {
+        // 重新绑定image事件
         this.$refs.quillEditor.quill.getModule('toolbar').addHandler('image', this.imgHandler);
     },
     methods: {

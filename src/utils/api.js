@@ -93,6 +93,7 @@ export default {
     // 评论
     commentQuery: (params) => http('post', `${apiBaseUrl}/comment/query`, params),
     commentSave: (params) => http('post', `${apiBaseUrl}/comment/save`, params),
-    commentReply: (params) => http('post', `${apiBaseUrl}/comment/reply`, params)
+    commentReply: (params) => http('post', `${apiBaseUrl}/comment/reply`, params),
+    commentDelete: (commentId, params) => http('post', `${apiBaseUrl}/comment/delete/${commentId}`, params)
 
 };

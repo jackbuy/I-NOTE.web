@@ -14,6 +14,7 @@
                 <span>{{ createTime }}</span>
             </div>
             <div class="header-menu">
+                <span v-if="currentUserId === commentUserId" @click="handleDelete">删除</span>
                 <span @click="handleToggleReply">回复</span>
             </div>
         </div>
@@ -72,6 +73,9 @@ export default {
         commentId() {
             if (this.item) return this.item._id;
         },
+        commentUserId() {
+            if (this.item) return this.item.commentUserId._id;
+        },
         parentId() {
             if (this.item) return this.item.parentId;
         },
@@ -102,6 +106,9 @@ export default {
             };
             this.$emit('input', true);
             this.$emit('reply', params);
+        },
+        handleDelete() {
+            this.$emit('delete', this.commentId);
         }
     }
 };

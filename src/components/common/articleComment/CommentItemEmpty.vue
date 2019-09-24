@@ -1,6 +1,6 @@
 <template>
     <div class="comment-item-empty">
-        沙发快抢!
+        <i class="icon icon-shafa"></i> 抢沙发
     </div>
 </template>
 

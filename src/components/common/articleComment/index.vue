@@ -7,14 +7,16 @@
                 v-model="isReply"
                 :key="item._id"
                 :item="item"
-                @reply="openReply">
+                @reply="openReply"
+                @delete="commentDelete">
                 <template slot-scope="scope">
                     <comment-item
                         v-for="item in scope.reply"
                         v-model="isReply"
                         :key="item._id"
                         :item="item"
-                        @reply="openReply">
+                        @reply="openReply"
+                        @delete="commentDelete">
                     </comment-item>
                 </template>
             </comment-item>
@@ -114,6 +116,15 @@ export default {
             api.commentQuery({ articleId }).then((res) => {
                 this.commentList = res.data;
             }).catch(() => {});
+        },
+        // 删除评论
+        commentDelete(commentId) {
+            const params = {
+                articleId: this.articleId
+            };
+            api.commentDelete(commentId, params).then((res) => {
+                this.getCommentList(this.articleId);
+            });
         }
     }
 };

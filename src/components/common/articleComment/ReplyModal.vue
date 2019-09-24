@@ -2,6 +2,7 @@
     <modal
         :title="modalTitle"
         :visible="modalVisible"
+        class="reply"
         @submit.native.prevent
         @handleClose="handleCloseModal">
         <comment-input
@@ -48,3 +49,9 @@ export default {
     }
 };
 </script>
+
+<style>
+.reply .el-dialog__body{
+    padding: 10px 15px 0 15px;
+}
+</style>

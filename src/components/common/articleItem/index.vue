@@ -7,14 +7,20 @@
             <button v-if="showMenuDelete" @click="handleDelete(itemId)"><i class="el-icon-delete"></i></button>
         </div>
         <div v-if="item" class="article__item-header">
+            <span class="img" :style="{backgroundImage: 'url(' + userImg + ')'}"></span>
+            <span class="name">{{ username }}</span>
             <span v-if="isTop" class="article-top">置顶</span>
-            <span>{{ username }}</span>
             <span>{{ time }}</span>
-            <span v-if="publish">{{ tag }}</span>
             <span v-if="publish && viewCount > 0">浏览 {{ viewCount }}</span>
+            <span v-if="publish" class="tag">{{ tag }}</span>
+            <!-- <span class="menu edit">编辑</span>
+            <span class="menu del">删除</span> -->
         </div>
         <div class="article__item-title">
             <span @click="handleDetail(articleId)">{{ title }}</span>
+        </div>
+        <div class="article__item-description">
+            {{ description }}
         </div>
         <div v-if="itemType !== 'draft'" class="article__item-action">
             <span>
@@ -35,6 +41,7 @@
 </template>
 
 <script>
+import { imgBaseUrl } from '@/constants/url-config';
 import utils from '@/utils/utils';
 export default {
     name: 'ArticleListItem',
@@ -58,12 +65,18 @@ export default {
         username() {
             if (this.item && this.item.userId) return this.item.userId.nickname ? this.item.userId.nickname : this.item.userId.username;
         },
+        userImg() {
+            if (this.item && this.item.userId) return this.item.userId && this.item.userId.avatar ? `${imgBaseUrl}/${this.item.userId.avatar}` : '';
+        },
         title() {
             if (this.item && this.item.title) {
                 return this.item.title;
             } else {
                 return '无标题';
             }
+        },
+        description() {
+            if (this.item && this.item.contentText) return this.item.contentText;
         },
         isTop() {
             if (this.item) return this.item.top;

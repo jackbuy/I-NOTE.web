@@ -8,6 +8,8 @@
             <article-item
                 :item="scope.row"
                 :item-id="scope.row._id"
+                :show-menu-edit="scope.row.userId._id === currentUserId"
+                :show-menu-delete="scope.row.userId._id === currentUserId"
                 @edit="handleRouterEdit"
                 @delete="handleDelete">
             </article-item>
@@ -44,6 +46,10 @@ export default {
         };
     },
     computed: {
+        // 当前登录用户Id
+        currentUserId() {
+            return localStorage.getItem('userId');
+        },
         zone() {
             return `${this.type}${this.userId}`;
         }

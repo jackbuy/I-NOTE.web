@@ -1,12 +1,12 @@
 @import '../../../assets/less/common.less';
 .topic{
     &__item{
-        padding: 20px;
-        border-top: 1px solid #f5f5f5;
         position: relative;
+        padding: 15px;
         background: #fff;
+        border-top: 1px solid #f5f5f5;
         &.has-img{
-            padding-right: 200px;
+            padding-right: 190px;
             .topic__item-img{
                 display: block;
             }
@@ -14,64 +14,22 @@
         &:first-child{
             border-top-width: 1px;
         }
-        &-header{
-            font-size: 12px;
-            color: #999;
-            padding-bottom: 15px;
-            span{
-                margin-right: 10px;
-            }
-            .article-top{
-                color: #539eff;
-            }
-        }
-        &-title{
-            cursor: pointer;
-            font-size: 18px;
-            font-weight: bold;
-            line-height: 1.5;
-            color: #333;
-            transition: all 0.3s;
-            &:hover{
-                color: #539eff;
-            }
-            .ovf-1();
-        }
-        &-img{
-            display: none;
+        &-menu{
             position: absolute;
-            top: 20px;
-            right: 20px;
-            width: 160px;
-            height: 80px;
-            overflow: hidden;
-            background-color: #eee;
-            background-position: center;
-            background-repeat: no-repeat;
-            background-size: cover;
-            border-radius: 10px;
-        }
-        &-description{
-            font-size: 12px;
-            margin-top: 10px;
-            line-height: 1.5;
-            min-height: 12px;
-            color: #aaa;
-            .ovf-1();
-        }
-        &-action{
+            top: 5px;
+            right: 0;
             font-size: 0;
             button{
-                margin-top: 20px;
                 display: inline-block;
                 padding: 5px 10px;
-                border: 1px solid #e5e5e5;
+                border: 1px solid #f5f5f5;
                 font-size: 14px;
                 color: #666;
                 background: #fff;
-                margin-right: -1px;
+                margin-right: 10px;
                 cursor: pointer;
                 transition: all 0.3s;
+                border-radius: 20px;
                 &:hover,
                 &.active{
                     color: #539eff;
@@ -81,6 +39,69 @@
                     color: #999;
                 }
             }
+        }
+        &-header{
+            font-size: 12px;
+            color: #ccc;
+            padding-bottom: 10px;
+            span{
+                display: inline-block;
+                vertical-align: middle;
+                margin-right: 10px;
+            }
+            .name{
+                color: #333;
+                font-size: 14px;
+            }
+            .img{
+                width: 30px;
+                height: 30px;
+                border-radius: 30px;
+                background-color: #eee;
+                background-position: center;
+                background-repeat: no-repeat;
+                background-size: cover;
+            }
+            .menu{
+                cursor: pointer;
+                &:hover{
+                    color: #999;
+                }
+            }
+        }
+        &-title{
+            padding-left: 45px;
+            span{
+                cursor: pointer;
+                font-size: 18px;
+                color: #333;
+                transition: all 0.3s;
+                &:hover{
+                    color: #539eff;
+                }
+                .ovf-1();
+            }
+        }
+        &-description{
+            padding-left: 45px;
+            font-size: 12px;
+            margin-top: 12px;
+            color: #aaa;
+            .ovf-1();
+        }
+        &-img{
+            display: none;
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            width: 160px;
+            height: 80px;
+            overflow: hidden;
+            background-color: #eee;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+            border-radius: 10px;
         }
     }
 }

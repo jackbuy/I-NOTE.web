@@ -9,6 +9,7 @@
                 :item="scope.row.articleId"
                 :item-id="scope.row._id"
                 :show-menu-edit="false"
+                :show-menu-delete="scope.row.createUserId === currentUserId"
                 @delete="handleDelete">
             </article-item>
         </template>
@@ -44,6 +45,10 @@ export default {
         };
     },
     computed: {
+        // 当前登录用户Id
+        currentUserId() {
+            return localStorage.getItem('userId');
+        },
         zone() {
             return `${this.type}${this.userId}`;
         }

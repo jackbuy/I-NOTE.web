@@ -4,7 +4,7 @@ import store from './store';
 import App from './App';
 import { apiBaseUrl } from '@/constants/url-config';
 import ElementUI from 'element-ui';
-// import 'element-ui/lib/theme-chalk/index.css';
+import 'element-ui/lib/theme-chalk/index.css';
 import NProgress from 'nprogress';
 import 'nprogress/nprogress.css';
 import VueQuillEditor from 'vue-quill-editor';

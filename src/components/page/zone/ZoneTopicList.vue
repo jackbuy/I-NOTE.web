@@ -5,19 +5,13 @@
         :data="listData"
         @loadData="getList">
         <template slot-scope="scope">
-            <topic-item :item="scope.row">
-                <template slot-scope="scopeInner">
-                    <button
-                        v-if="scopeInner.row.userId._id === currentUserId"
-                        @click="handleRouterTopicEdit(scopeInner.row._id)">
-                        <i class="el-icon-edit"></i>
-                    </button>
-                    <button
-                        v-if="scopeInner.row.userId._id === currentUserId"
-                        @click="handleDelete(scopeInner.row)">
-                        <i class="el-icon-delete"></i>
-                    </button>
-                </template>
+            <topic-item
+                :item="scope.row"
+                :item-id="scope.row._id"
+                :show-menu-edit="scope.row.userId._id === currentUserId"
+                :show-menu-delete="scope.row.userId._id === currentUserId"
+                @edit="handleRouterTopicEdit"
+                @delete="handleDelete">
             </topic-item>
         </template>
     </infinite-scroll>
@@ -98,13 +92,12 @@ export default {
                 path: `/topicWrite/${topicId}`
             }).catch(() => {});
         },
-        handleDelete(row) {
-            const { _id } = row;
+        handleDelete(topicId) {
             this.confirmWarning({
                 title: '提示',
                 content: '确认删除吗？'
             }).then(() => {
-                api.topicDelete(_id).then(() => {
+                api.topicDelete(topicId).then(() => {
                     this.showSuccessMsg('删除成功！');
                     this.refresh();
                 }).catch(() => {});

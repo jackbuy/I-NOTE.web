@@ -68,7 +68,7 @@ export default {
             if (this.isSaving) {
                 return '保存中...';
             } else {
-                return this.saved ? '已保存' : '文章将自动保存到';
+                return this.saved ? '已保存' : '未发布的文章将自动保存到';
             }
         }
     },

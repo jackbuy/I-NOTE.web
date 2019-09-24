@@ -23,6 +23,9 @@
 
 <script>
 import { imgBaseUrl } from '@/constants/url-config';
+// import hljs from 'highlight.js';
+// import 'quill/dist/quill.snow.css';
+// import 'highlight.js/styles/monokai-sublime.css';
 export default {
     name: 'Editor',
     model: {
@@ -64,6 +67,9 @@ export default {
                         ['clean']
                     ]
                 }
+                // syntax: {
+                //     highlight: text => hljs.highlightAuto(text).value
+                // }
             }
         };
     },
@@ -75,6 +81,10 @@ export default {
     mounted() {
         // 重新绑定image事件
         this.$refs.quillEditor.quill.getModule('toolbar').addHandler('image', this.imgHandler);
+        // 配置高亮
+        // this.editorOption.modules.syntax = {
+        //     highlight: text => hljs.highlightAuto(text).value
+        // };
     },
     methods: {
         onEditorChange({ quill, html, text }) {

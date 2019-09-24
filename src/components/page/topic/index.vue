@@ -5,7 +5,11 @@
         :no-more="noMore"
         @loadData="getList">
         <template slot-scope="scope">
-            <topic-item :item="scope.row"></topic-item>
+            <topic-item
+                :item="scope.row"
+                :show-menu-edit="false"
+                :show-menu-delete="false">
+            </topic-item>
         </template>
     </infinite-scroll>
 </template>

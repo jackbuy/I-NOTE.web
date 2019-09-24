@@ -2,18 +2,22 @@
     <div
         class="topic__item"
         :class="{'has-img': img}">
+        <!-- <div class="topic__item-menu">
+            <button v-if="showMenuEdit" @click="handleEdit(itemId)"><i class="el-icon-edit"></i></button>
+            <button v-if="showMenuDelete" @click="handleDelete(itemId)"><i class="el-icon-delete"></i></button>
+        </div> -->
         <div class="topic__item-header">
-            <span>{{ username }}</span>
-            <span>{{ createTime }}</span>
+            <span class="img" :style="{backgroundImage: 'url(' + userImg + ')'}"></span>
+            <span class="name">{{ username }}</span>
+            <span class="time">{{ createTime }}</span>
+            <span class="menu edit" v-if="showMenuEdit" @click="handleEdit(itemId)">编辑</span>
+            <span class="menu del" v-if="showMenuDelete" @click="handleDelete(itemId)">删除</span>
         </div>
-        <div class="topic__item-title" @click="handleRouterPush(topicId)">
-            {{ title }}
+        <div class="topic__item-title">
+            <span @click="handleRouterPush(topicId)">{{ title }}</span>
         </div>
         <div class="topic__item-description">
             {{ description }}
-        </div>
-        <div class="topic__item-action">
-            <slot :row="item"></slot>
         </div>
         <div class="topic__item-img" :style="{backgroundImage: 'url(' + img + ')'}"></div>
     </div>
@@ -28,6 +32,15 @@ export default {
         item: {
             type: Object,
             default: () => ({})
+        },
+        itemId: String,
+        showMenuEdit: {
+            type: Boolean,
+            default: true
+        },
+        showMenuDelete: {
+            type: Boolean,
+            default: true
         }
     },
     computed: {
@@ -51,6 +64,9 @@ export default {
                 return utils.diffDate(start, end);
             }
         },
+        userImg() {
+            return this.item.userId && this.item.userId.avatar ? `${imgBaseUrl}/${this.item.userId.avatar}` : '';
+        },
         img() {
             return this.item.img ? `${imgBaseUrl}/${this.item.img}` : '';
         },
@@ -62,6 +78,12 @@ export default {
         handleRouterPush(topicId) {
             let path = `/topic/${topicId}`;
             this.$router.push({ path }).catch(() => {});
+        },
+        handleEdit(itemId) {
+            this.$emit('edit', itemId);
+        },
+        handleDelete(itemId) {
+            this.$emit('delete', itemId);
         }
     }
 };

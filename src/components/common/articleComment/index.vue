@@ -1,27 +1,32 @@
 <template>
     <div class="comment">
-        <comment-input @save="handleSaveComment"></comment-input>
-        <comment-item
-            v-for="item in commentList"
-            v-model="isReply"
-            :key="item._id"
-            :item="item"
-            @reply="openReply">
-            <template slot-scope="scope">
-                <comment-item
-                    v-for="item in scope.reply"
-                    v-model="isReply"
-                    :key="item._id"
-                    :item="item"
-                    @reply="openReply">
-                </comment-item>
-            </template>
-        </comment-item>
-        <reply-modal
-            v-if="isReply"
-            v-model="isReply"
-            @save="handleReplyComment">
-        </reply-modal>
+        <comment-input v-if="currentUserId" @save="handleSaveComment"></comment-input>
+        <template v-if="commentList && commentList.length > 0">
+            <comment-item
+                v-for="item in commentList"
+                v-model="isReply"
+                :key="item._id"
+                :item="item"
+                @reply="openReply">
+                <template slot-scope="scope">
+                    <comment-item
+                        v-for="item in scope.reply"
+                        v-model="isReply"
+                        :key="item._id"
+                        :item="item"
+                        @reply="openReply">
+                    </comment-item>
+                </template>
+            </comment-item>
+            <reply-modal
+                v-if="isReply"
+                v-model="isReply"
+                @save="handleReplyComment">
+            </reply-modal>
+        </template>
+        <template v-else>
+            <comment-item-empty></comment-item-empty>
+        </template>
     </div>
 </template>
 
@@ -29,6 +34,7 @@
 import api from '@/utils/api';
 import CommentInput from './CommentInput';
 import CommentItem from './CommentItem';
+import CommentItemEmpty from './CommentItemEmpty';
 import ReplyModal from './ReplyModal';
 export default {
     name: '',
@@ -45,6 +51,7 @@ export default {
     components: {
         CommentInput,
         CommentItem,
+        CommentItemEmpty,
         ReplyModal
     },
     data() {
@@ -56,6 +63,10 @@ export default {
         };
     },
     computed: {
+        // 当前登录用户Id
+        currentUserId() {
+            return localStorage.getItem('userId');
+        }
     },
     watch: {
         articleId: {

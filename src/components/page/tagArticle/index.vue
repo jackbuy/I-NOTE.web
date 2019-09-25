@@ -61,10 +61,10 @@ export default {
             return this.$route.params.tagId;
         },
         tagDetailId() {
-            if (this.tagDetail._id) return this.tagDetail._id;
+            if (this.tagDetail) return this.tagDetail._id;
         },
         articleCount() {
-            if (this.tagDetail.articleCount) return `共 ${this.tagDetail.articleCount} 篇文章`;
+            if (this.tagDetail) return `共 ${this.tagDetail.articleCount} 篇文章`;
         }
     },
     watch: {

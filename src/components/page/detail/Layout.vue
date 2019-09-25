@@ -8,7 +8,9 @@
             <slot name="recommend"></slot>
         </div>
         <div class="detail-side">
-            <slot name="userinfo"></slot>
+            <div class="fixed">
+                <slot name="userinfo"></slot>
+            </div>
         </div>
     </div>
     <div v-else class="no-has">文章不存在</div>

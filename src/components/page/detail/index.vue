@@ -62,6 +62,11 @@
                 class="article-detail__content">
             </div>
         </div>
+        <card slot="comment" icon="icon icon-pinglun" title="评论">
+            <article-comment
+                :articleId="articleId"
+                :authorId="authorId"></article-comment>
+        </card>
         <card slot="userinfo" :visible-header="false" icon="icon icon-zuozhe" title="关于作者">
             <user-info
                 v-if="userInfo"
@@ -76,11 +81,6 @@
                 :item="item"
                 @doDetail="handleRecommend">
             </article-recommend>
-        </card>
-        <card slot="comment" icon="icon icon-pinglun" title="评论">
-            <article-comment
-                :articleId="articleId"
-                :authorId="authorId"></article-comment>
         </card>
     </detail-layout>
 </template>
@@ -285,7 +285,7 @@ export default {
         recommend(tagId) {
             const params = {
                 publish: true,
-                pageSize: 6,
+                pageSize: 5,
                 currentPage: 1,
                 tagId
             };

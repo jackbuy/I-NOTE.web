@@ -28,7 +28,7 @@ export default new Router({
             children: [
                 {
                     path: '',
-                    redirect: '/find/newest'
+                    redirect: '/find/popular'
                 },
                 {
                     path: '/find/:sortType',

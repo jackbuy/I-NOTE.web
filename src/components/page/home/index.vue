@@ -2,8 +2,8 @@
     <home-layout>
         <template slot="header">
             <tab :activeName="sortType" @tabClick="handleSort">
-                <tab-label name="newest" label="最新"></tab-label>
                 <tab-label name="popular" label="热门"></tab-label>
+                <tab-label name="newest" label="最新"></tab-label>
             </tab>
         </template>
         <template slot="content">

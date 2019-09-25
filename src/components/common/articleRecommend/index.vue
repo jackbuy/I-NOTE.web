@@ -1,8 +1,11 @@
 <template>
-    <div
-        class="article-recommend"
-        @click="doDetail(articleId)">
-        <div class="title">{{ title }}</div>
+    <div class="article-recommend">
+        <div
+            class="list"
+            :title="title"
+            @click="doDetail(articleId)">
+            {{ title }}
+        </div>
     </div>
 </template>
 

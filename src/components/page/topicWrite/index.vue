@@ -25,7 +25,7 @@
                 prop="title">
                 <el-input
                     v-model="form.title"
-                    placeholder="输入名称 <=20"></el-input>
+                    placeholder="输入名称 <=50"></el-input>
             </el-form-item>
             <el-form-item
                 label="描述"
@@ -34,7 +34,7 @@
                     v-model="form.description"
                     :rows="4"
                     type="textarea"
-                    placeholder="输入描述 <=200"></el-input>
+                    placeholder="输入描述 <=300"></el-input>
             </el-form-item>
             <el-form-item>
                 <el-button
@@ -69,11 +69,11 @@ export default {
             rules: {
                 title: [
                     // { required: true, message: '必填' },
-                    { max: 20, message: '超过最大字符限制20' }
+                    { max: 50, message: '超过最大字符限制50' }
                 ],
                 description: [
                     // { required: true, message: '必填' },
-                    { max: 200, message: '超过最大字符限制200' }
+                    { max: 300, message: '超过最大字符限制300' }
                 ]
             }
         };

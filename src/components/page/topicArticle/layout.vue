@@ -4,8 +4,10 @@
             <slot name="content"></slot>
         </div>
         <div class="topic-article__side">
-            <slot name="topicDetail"></slot>
-            <slot name="author"></slot>
+            <div class="fixed">
+                <slot name="topicDetail"></slot>
+                <slot name="author"></slot>
+            </div>
         </div>
     </div>
     <div v-else class="no-has">专题不存在</div>

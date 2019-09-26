@@ -68,24 +68,26 @@
     }
     &__title{
         line-height: 1.4;
-        padding: 10px 0 20px 0;
+        padding: 0px 0 15px 0;
+        margin-bottom: 15px;
         font-size: 26px;
-        span{
-            font-size: 12px;
-            color: #409EFF;
-            padding-left: 20px;
-            cursor: pointer;
-            &:hover{
-                text-decoration: underline;
-            }
-        }
+        border-bottom: 1px solid #f5f5f5;
     }
     &__info{
         font-size: 12px;
         color: #999;
-        padding-bottom: 20px;
+        padding-top: 15px;
+        border-top: 1px solid #f5f5f5;
         span{
             margin-right: 10px;
+        }
+        .edit{
+            font-size: 12px;
+            color: #409EFF;
+            cursor: pointer;
+            &:hover{
+                text-decoration: underline;
+            }
         }
     }
     &__content{
@@ -109,8 +111,6 @@
         }
         img{
             max-width: 100%;
-            margin-left: auto;
-            margin-right: auto;
         }
         iframe{
             width: 100%;
@@ -123,8 +123,10 @@
             background: #fafafa;
         }
         pre{
-            background: #13312a;
+            background: #2d2d2d;
             border-radius: 4px;
+            line-height: 1.6;
+            font-size: 14px;
             padding: 20px;
         }
         ul,

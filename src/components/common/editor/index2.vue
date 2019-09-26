@@ -7,7 +7,7 @@
             @change="onEditorChange($event)">
         </quill-editor>
         <!-- 文件上传input 将它隐藏-->
-        <el-upload
+        <!-- <el-upload
             :action="uploadUrl"
             :headers="headers"
             :data="dataOptions"
@@ -17,13 +17,19 @@
             style="display:none"
             ref="uniqueId"
             id="uniqueId">
-        </el-upload >
+        </el-upload > -->
     </div>
 </template>
 
 <script>
 import { imgBaseUrl } from '@/constants/url-config';
-import hljs from 'highlight.js';
+import { quillEditor, Quill } from 'vue-quill-editor';
+import {container, ImageExtend, QuillWatch} from 'quill-image-extend-module';
+
+Quill.register('modules/ImageExtend', ImageExtend);
+// import hljs from 'highlight.js';
+// import 'quill/dist/quill.snow.css';
+// import 'highlight.js/styles/monokai-sublime.css';
 export default {
     name: 'Editor',
     model: {
@@ -40,6 +46,9 @@ export default {
             default: '请输入内容...'
         }
     },
+    components: {
+        quillEditor
+    },
     data() {
         return {
             headers: {
@@ -53,18 +62,39 @@ export default {
                 // theme: 'bubble', // 气泡模式
                 placeholder: this.placeholder,
                 modules: {
-                    toolbar: [
-                        ['bold', 'italic', 'underline', 'strike'],
-                        ['blockquote', 'code-block'],
-                        [{'list': 'ordered'}, {'list': 'bullet'}],
-                        [{'header': [1, 2, 3, 4, 5, 6, false]}],
-                        [{'color': []}, {'background': []}],
-                        // [{'font': []}],
-                        [{'align': []}],
-                        ['link', 'image', 'video'],
-                        ['clean']
-                    ]
+                    ImageExtend: {
+                        loading: true,
+                        name: 'img',
+                        action: this.uploadUrl,
+                        response: (res) => {
+                            console.log(this.uploadUrl);
+                            console.log(res);
+                            return res.info;
+                        }
+                    },
+                    toolbar: {
+                        container: container,
+                        handlers: {
+                            'image': function() {
+                                QuillWatch.emit(this.quill.id);
+                            }
+                        }
+                    }
+                    // toolbar: [
+                    //     ['bold', 'italic', 'underline', 'strike'],
+                    //     ['blockquote', 'code-block'],
+                    //     [{'list': 'ordered'}, {'list': 'bullet'}],
+                    //     [{'header': [1, 2, 3, 4, 5, 6, false]}],
+                    //     [{'color': []}, {'background': []}],
+                    //     // [{'font': []}],
+                    //     [{'align': []}],
+                    //     ['link', 'image', 'video'],
+                    //     ['clean']
+                    // ]
                 }
+                // syntax: {
+                //     highlight: text => hljs.highlightAuto(text).value
+                // }
             }
         };
     },
@@ -73,15 +103,13 @@ export default {
             return `${imgBaseUrl}/single/uploadfile`;
         }
     },
-    created() {
-        // 配置代码高亮
-        this.editorOption.modules.syntax = {
-            highlight: text => hljs.highlightAuto(text).value
-        };
-    },
     mounted() {
         // 重新绑定image事件
-        this.$refs.quillEditor.quill.getModule('toolbar').addHandler('image', this.imgHandler);
+        // this.$refs.quillEditor.quill.getModule('toolbar').addHandler('image', this.imgHandler);
+        // 配置高亮
+        // this.editorOption.modules.syntax = {
+        //     highlight: text => hljs.highlightAuto(text).value
+        // };
     },
     methods: {
         onEditorChange({ quill, html, text }) {
@@ -119,9 +147,5 @@ export default {
 </script>
 <!-- https://blog.csdn.net/qq_39865491/article/details/88050596 -->
 <style lang="less">
-    @import 'quill/dist/quill.core.css';
-    @import 'quill/dist/quill.snow.css';
-    @import 'quill/dist/quill.bubble.css';
-    @import 'highlight.js/styles/monokai-sublime.css';
     @import './index.less';
 </style>

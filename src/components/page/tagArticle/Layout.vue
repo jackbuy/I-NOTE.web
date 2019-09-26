@@ -4,7 +4,9 @@
             <slot name="content"></slot>
         </div>
         <div class="tag-article__side">
-            <slot name="detail"></slot>
+            <div class="fixed">
+                <slot name="detail"></slot>
+            </div>
         </div>
     </div>
     <div v-else class="no-has">标签不存在</div>

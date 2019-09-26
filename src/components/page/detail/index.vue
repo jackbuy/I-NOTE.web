@@ -49,17 +49,20 @@
         <div slot="content" class="article-detail">
             <div class="article-detail__title">
                 {{ title }}
-                <span v-if="currentUserId === authorId" @click="handleRouterEdit(articleId)">编辑</span>
-            </div>
-            <div class="article-detail__info">
-                <span :title="createTime">{{ editTime }}</span>
-                <span>{{ tag }}</span>
-                <span>浏览 {{ viewCount }}</span>
             </div>
             <div
                 v-highlightB
                 v-html="content"
                 class="article-detail__content">
+            </div>
+            <div class="article-detail__info">
+                <span>{{ tag }}</span>
+                <span>浏览 {{ viewCount }}</span>
+                <span :title="createTime">{{ editTime }}</span>
+                <span
+                    v-if="currentUserId === authorId"
+                    class="edit"
+                    @click="handleRouterEdit(articleId)">编辑</span>
             </div>
         </div>
         <card slot="comment" icon="icon icon-pinglun" title="评论">

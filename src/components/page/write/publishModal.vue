@@ -29,7 +29,6 @@
 
 <script>
 import Modal from '@/components/common/modal';
-import api from '@/utils/api';
 export default {
     name: 'PublishModal',
     components: {
@@ -37,7 +36,11 @@ export default {
     },
     props: {
         value: Boolean,
-        data: Object
+        tagId: String,
+        tagOptions: {
+            type: Array,
+            default: () => []
+        }
     },
     computed: {
         isVisible() {
@@ -46,27 +49,18 @@ export default {
     },
     data() {
         return {
-            title: '发布',
-            form: {},
-            tagOptions: []
+            title: '发布设置',
+            form: {
+                tagId: this.tagId
+            }
         };
-    },
-    created() {
-        this.getArticleTag();
-        if (this.data.tagId) this.form.tagId = this.data.tagId;
     },
     methods: {
         handleClose() {
             this.$emit('input', false);
         },
-        getArticleTag() {
-            api.tagQuery().then((res) => {
-                this.tagOptions = res.data;
-            });
-        },
         handlePublish() {
             const params = {
-                ...this.data,
                 publish: true,
                 ...this.form
             };

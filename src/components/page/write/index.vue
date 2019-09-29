@@ -12,12 +12,20 @@
                 草稿
             </el-button>
             <el-button
+                v-if="form.publish"
+                :disabled="isSaving"
+                size="mini"
+                round
+                @click="handleCancelPublish">
+                取消发布
+            </el-button>
+            <el-button
                 :disabled="isSaving"
                 size="mini"
                 type="primary"
                 round
                 @click="handleOpenPublishModal">
-                发布
+                {{ isPublish }}
             </el-button>
         </div>
         <div class="write__title">
@@ -32,8 +40,9 @@
         <publish-modal
             v-if="showPublishModal"
             v-model="showPublishModal"
-            :data="form"
-            @handlePublish="handleSave">
+            :tag-id="tagId"
+            :tag-options="tagOptions"
+            @handlePublish="handlePublish">
         </publish-modal>
     </div>
 </template>
@@ -64,12 +73,18 @@ export default {
         articleId() {
             return this.$route.params.articleId;
         },
+        tagId() {
+            return this.form.tagId ? this.form.tagId : '';
+        },
         tips() {
             if (this.isSaving) {
                 return '保存中...';
             } else {
                 return this.saved ? '已保存' : '未发布的文章将自动保存到';
             }
+        },
+        isPublish() {
+            return this.form.publish ? '已发布' : '发布';
         }
     },
     watch: {
@@ -86,6 +101,7 @@ export default {
         }
     },
     created() {
+        this.getArticleTag();
         if (this.articleId) this.getDetail(this.articleId);
     },
     mounted() {
@@ -113,7 +129,7 @@ export default {
                     contentHtml,
                     publish,
                     title,
-                    tagId
+                    tagId: tagId && tagId._id ? tagId._id : ''
                 };
             }).catch(() => {});
         },
@@ -140,8 +156,26 @@ export default {
                 });
             }
         },
+        // 取消发布
+        handleCancelPublish() {
+            Object.assign(this.form, {
+                publish: false
+            });
+
+            this.handleSave();
+        },
+        // 发布
+        handlePublish(obj) {
+            Object.assign(this.form, obj);
+            this.handleSave();
+        },
         handleRoutePush(path) {
             this.$router.push(path).catch(() => {});
+        },
+        getArticleTag() {
+            api.tagQuery().then((res) => {
+                this.tagOptions = res.data;
+            });
         }
     }
 };

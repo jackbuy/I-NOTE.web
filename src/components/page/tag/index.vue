@@ -1,35 +1,33 @@
 <template>
-    <infinite-scroll
-        :loading="loading"
-        :no-more="noMore"
-        :data="listData"
-        class="tag-list"
-        @loadData="getList()">
-        <template slot-scope="scope">
-            <tag-item :item="scope.row" @doFollow="handleFollow"></tag-item>
-        </template>
-    </infinite-scroll>
+    <div class="tag">
+        <div
+            v-for="item in listData"
+            :key="item._id">
+            <div class="tag-header">{{ item.title }}</div>
+            <div class="tag-list">
+                <tag-item
+                    v-for="child in item.children"
+                    :key="child._id"
+                    :item="child"
+                    @doFollow="handleFollow">
+                </tag-item>
+            </div>
+        </div>
+    </div>
 </template>
 
 <script>
-import InfiniteScroll from '@/components/common/infiniteScrollList';
-import TagItem from '@/components/common/tagItem';
+import TagItem from './TagItem';
 import api from '@/utils/api';
 export default {
     name: 'Tag',
     components: {
-        InfiniteScroll,
         TagItem
     },
     data() {
         return {
             listData: [],
-            pageConfig: {
-                pageSize: 40,
-                currentPage: 1
-            },
-            loading: false, // 加载中
-            noMore: false // 没有更多数据
+            loading: false // 加载中
         };
     },
     created() {
@@ -37,18 +35,10 @@ export default {
     },
     methods: {
         getList() {
-            const params = {
-                pageSize: this.pageConfig.pageSize,
-                currentPage: this.pageConfig.currentPage++
-            };
             this.loading = true;
-            api.tagQuery(params).then((res) => {
+            api.tagQuery().then((res) => {
                 this.loading = false;
-                if (res.data.length > 0) {
-                    this.listData.push(...res.data);
-                } else {
-                    this.noMore = true;
-                }
+                this.listData = res.data;
             }).catch(() => {
                 this.loading = false;
             });
@@ -60,12 +50,18 @@ export default {
             };
             api.followTag(params).then((res) => {
                 this.listData.map((item) => {
-                    if (item._id === tagId) {
-                        item.isFollow = !item.isFollow;
-                    }
+                    item.children.map((child) => {
+                        if (child._id === tagId) {
+                            child.isFollow = !child.isFollow;
+                        }
+                    });
                 });
             }).catch(() => {});
         }
     }
 };
 </script>
+
+<style lang="less">
+    @import './index.less';
+</style>

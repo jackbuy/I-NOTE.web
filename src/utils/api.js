@@ -55,6 +55,8 @@ export default {
 
     // Tag列表
     tagQuery: (params) => http('post', `${apiBaseUrl}/tag/query`, params),
+    // Tag子级列表
+    tagChildQuery: () => http('post', `${apiBaseUrl}/tag/child/query`),
     // Tag推荐
     tagRecommend: () => http('get', `${apiBaseUrl}/tag/recommend`),
     // tag详情

@@ -173,7 +173,7 @@ export default {
             this.$router.push(path).catch(() => {});
         },
         getArticleTag() {
-            api.tagQuery().then((res) => {
+            api.tagChildQuery().then((res) => {
                 this.tagOptions = res.data;
             });
         }

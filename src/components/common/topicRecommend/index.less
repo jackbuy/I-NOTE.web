@@ -1,27 +1,28 @@
+@import '../../../assets/less/base.less';
+
 .special-topic{
     display: flex;
     align-items:center;
-    border: 1px solid #fff;
     padding: 5px;
     height: 52px;
     font-size: 13px;
     margin-top: 10px;
     cursor: pointer;
     transition: all 0.3s;
+    color: @fontMainColor;
     &:first-child{
         margin-top: 0px;
     }
     &:hover,
     &.active{
-        color: #539eff;
-        border-color: #539eff;
+        color: @fontActiveColor;
     }
     .img{
         width: 60px;
         height: 40px;
         overflow: hidden;
         border-radius: 20px;
-        background-color: #eee;
+        background-color: @imgBgColor;
         background-position: center;
         background-repeat: no-repeat;
         background-size: cover;

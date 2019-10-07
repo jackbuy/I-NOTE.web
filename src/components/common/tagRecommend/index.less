@@ -1,16 +1,19 @@
+@import '../../../assets/less/base.less';
+
 .article-tag{
     display: inline-block;
     border-radius: 20px;
-    border: 1px solid #eee;
+    border: 1px solid @borderColor;
     padding: 6px 15px;
     font-size: 13px;
     margin: 5px 0;
     margin-right: 10px;
     cursor: pointer;
     transition: all 0.3s;
+    color: @fontMainColor;
     &:hover,
     &.active{
-        color: #539eff;
-        border-color: #539eff;
+        color: @fontActiveColor;
+        border-color: @fontActiveColor;
     }
 }

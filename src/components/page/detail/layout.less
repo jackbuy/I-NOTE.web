@@ -1,7 +1,8 @@
+@import '../../../assets/less/base.less';
 @import '../../../assets/less/common.less';
+
 .detail{
     display: flex;
-    padding-bottom: 15px;
     &-content{
         flex: 1;
         width: 70%;
@@ -20,7 +21,7 @@
 .article-detail{
     padding: 15px;
     margin-bottom: 15px;
-    background: #fff;
+    background: @boxBgColor;
     &__menu{
         position: fixed;
         left: 50%;
@@ -34,31 +35,26 @@
             height: 40px;
             line-height: 40px;
             text-align: center;
-            background: #fff;
+            background: @boxBgColor;
             border-radius: 50%;
             border-width: 0;
             margin: 15px 0;
             cursor: pointer;
-            color: #999;
             position: relative;
             box-shadow: 0 0 3px rgba(0, 0, 0, .1);
             &.active{
-                color: #409EFF;
+                color: @fontActiveColor;
             }
             &[disabled]{
                 cursor: not-allowed;
-                color: #999;
             }
             span{
                 position: absolute;
                 right: -10px;
                 top: -5px;
-                background: #fff;
                 line-height: 1;
                 font-size: 12px;
                 padding: 1px 5px;
-                color: #fff;
-                background: #aaa;
                 border-radius: 10px;
             }
             i{
@@ -71,19 +67,19 @@
         padding: 0px 0 15px 0;
         margin-bottom: 15px;
         font-size: 26px;
-        border-bottom: 1px solid #f5f5f5;
+        color: @fontMainColor;
+        border-bottom: 1px solid @borderColor;
     }
     &__info{
         font-size: 12px;
-        color: #999;
         padding-top: 15px;
-        border-top: 1px solid #f5f5f5;
+        border-top: 1px solid @borderColor;
         span{
             margin-right: 10px;
         }
         .edit{
             font-size: 12px;
-            color: #409EFF;
+            color: @fontActiveColor;
             cursor: pointer;
             &:hover{
                 text-decoration: underline;
@@ -94,6 +90,7 @@
         overflow: auto;
         line-height: 1.8;
         font-size: 16px;
+        color: @fontMainColor;
         h1,
         h2,
         h3,
@@ -120,10 +117,11 @@
         blockquote{
             border-left: 5px solid #e5e5e5;
             padding: 20px;
-            background: #fafafa;
+            background: @formBgColor;
         }
         pre{
-            background: #2d2d2d;
+            background: @formBgColor;
+            color: @fontSubColor;
             border-radius: 4px;
             line-height: 1.6;
             font-size: 14px;
@@ -139,7 +137,7 @@
             list-style: decimal;
         }
         a{
-            color: #409EFF;
+            color: @fontActiveColor;
             &:hover{
                 text-decoration: underline;
             }
@@ -156,34 +154,41 @@
             cursor: pointer;
             line-height: 1.8;
             font-size: 12px;
-            color: #888;
+            color: @fontSubColor;
             transition: all 0.3s;
             .ovf-1();
             i{
-                color: #ccc;
+                color: @fontColor;
                 padding-right: 4px;
             }
             &:hover{
-                color: #333;
+                color: @fontMainColor;
             }
             &.active{
-                color: #409EFF;
+                color: @fontActiveColor;
                 i{
-                    color: #409EFF;
+                    color: @fontActiveColor;
                 }
             }
         }
     }
     .add{
         line-height: 32px;
-        border-top: 1px solid #f5f5f5;
+        border-top: 1px solid @borderColor;
         text-align: center;
-        color: #ccc;
         font-size: 12px;
         cursor: pointer;
         transition: all 0.3s;
         &:hover{
-            color: #333;
+            color: @fontMainColor;
+        }
+    }
+}
+
+@media (max-width: @mediaWidth) {
+    .detail{
+        &-side{
+            display: none;
         }
     }
 }

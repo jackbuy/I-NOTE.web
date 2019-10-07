@@ -1,55 +1,56 @@
+@import '../../../assets/less/base.less';
+
 .comment{
     &-input{
         padding-top: 5px;
         padding-bottom: 15px;
         textarea{
             width: 100%;
-            background: #fafafa;
             border-radius: 8px;
             margin-bottom: 10px;
-            border: 1px solid #fafafa;
+            border: 1px solid @borderColor;
             padding: 8px;
             line-height: 1.5;
             transition: all 0.3s;
             font-size: 12px;
+            color: @fontMainColor;
+            background: @formBgColor;
             &:focus{
-                border-color: #e5e5e5;
-                background: #f2f2f2;
+                border-color: @formFocusBorderColor;
+                background: @formFocusBgColor;
             }
         }
         button{
             width: 60px;
             height: 30px;
-            background: #f5f5f5;
+            background: @formBgColor;
             border-radius: 15px;
             border-width: 0;
             cursor: pointer;
             &.save{
-                background: #409EFF;
+                background: @formActiveBgColor;
                 color: #fff;
                 &[disabled]{
                     cursor: not-allowed;
-                    background: #a7cff7;
+                    background: @formDisabledBgColor;
                 }
             }
         }
     }
     &-item{
         padding: 15px 0;
-        border-top: 1px solid #f5f5f5;
+        border-top: 1px solid @borderColor;
         &:first-child{
             border-top-width: 0;
         }
         &-empty{
             text-align: center;
-            color: #aaa;
             font-size: 12px;
             padding: 30px;
         }
         .header{
             display: flex;
             font-size: 12px;
-            color: #999;
             &-title{
                 flex: 1;
             }
@@ -58,13 +59,16 @@
                 display: inline-block;
                 vertical-align: middle;
                 margin-right: 4px;
+                &.name{
+                    color: @fontSubColor;
+                }
             }
             .img{
                 width: 36px;
                 height: 36px;
-                background: #eee;
                 border-radius: 36px;
                 overflow: hidden;
+                background: @imgBgColor;
                 img{
                     width: 100%;
                 }
@@ -76,7 +80,7 @@
                 span{
                     margin-left: 6px;
                     cursor: pointer;
-                    color: #aaa;
+                    color: @fontSubColor;
                     &:hover{
                         text-decoration: underline;
                     }
@@ -84,12 +88,10 @@
             }
         }
         .content{
-            padding: 6px 15px;
             margin-left: 40px;
             line-height: 1.8;
-            color: #454445;
-            background: #fcfcfc;
             border-radius: 8px;
+            color: @fontMainColor;
         }
         .children{
             padding-left: 50px;

@@ -1,7 +1,8 @@
+@import '../../../assets/less/base.less';
+
 .author-hot{
     display: flex;
     align-items:center;
-    border: 1px solid #fff;
     padding: 5px;
     height: 52px;
     font-size: 13px;
@@ -13,8 +14,9 @@
     }
     &:hover,
     &.active{
-        color: #539eff;
-        border-color: #539eff;
+        .title{
+            color: @fontHoverColor;
+        }
     }
     .img{
         width: 40px;
@@ -22,9 +24,8 @@
         border-radius: 40px;
         line-height: 40px;
         text-align: center;
-        color: #999;
         overflow: hidden;
-        background-color: #eee;
+        background-color: @imgBgColor;
         background-position: center;
         background-repeat: no-repeat;
         background-size: cover;
@@ -34,6 +35,8 @@
         font-size: 13px;
         padding: 0 10px;
         line-height: 1.4;
+        color: @fontMainColor;
+        transition: all 0.3s;
         overflow : hidden;
         text-overflow: ellipsis;
         display: -webkit-box;
@@ -44,6 +47,6 @@
     .description{
         padding-top: 5px;
         font-size: 12px;
-        color: #aaa;
+        color: @fontColor;
     }
 }

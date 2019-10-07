@@ -1,10 +1,10 @@
 <template>
     <div>
-        <div class="follow-tab">
-            <span :class="{'active': activeType === 0}" @click="handleTab(0)">作者</span>
-            <span :class="{'active': activeType === 1}" @click="handleTab(1)">专题</span>
-            <span :class="{'active': activeType === 2}" @click="handleTab(2)">标签</span>
-        </div>
+        <tab :activeName="activeType" @tabClick="handleTab">
+            <tab-label name="followUser" label="作者"></tab-label>
+            <tab-label name="followTopic" label="专题"></tab-label>
+            <tab-label name="followTag" label="标签"></tab-label>
+        </tab>
         <infinite-scroll
             :loading="loading"
             :no-more="noMore"
@@ -12,15 +12,15 @@
             @loadData="getList">
             <template slot-scope="scope">
                 <follow-user-item
-                    v-if="activeType === 0"
+                    v-if="activeType === 'followUser'"
                     :item="scope.row">
                 </follow-user-item>
                 <follow-topic-item
-                    v-if="activeType === 1"
+                    v-if="activeType === 'followTopic'"
                     :item="scope.row">
                 </follow-topic-item>
                 <follow-tag-item
-                    v-if="activeType === 2"
+                    v-if="activeType === 'followTag'"
                     :item="scope.row">
                 </follow-tag-item>
             </template>
@@ -33,6 +33,8 @@ import InfiniteScroll from '@/components/common/infiniteScrollList';
 import FollowUserItem from '@/components/common/followUserItem';
 import FollowTagItem from '@/components/common/followTagItem';
 import FollowTopicItem from '@/components/common/followTopicItem';
+import Tab from '@/components/common/tab';
+import TabLabel from '@/components/common/tab/tabLabel';
 import api from '@/utils/api';
 
 export default {
@@ -45,11 +47,13 @@ export default {
         InfiniteScroll,
         FollowUserItem,
         FollowTagItem,
-        FollowTopicItem
+        FollowTopicItem,
+        Tab,
+        TabLabel
     },
     data() {
         return {
-            activeType: 0, // 默认显示
+            activeType: 'followUser', // 默认显示
             listData: [],
             pageConfig: {
                 pageSize: 15,
@@ -90,9 +94,9 @@ export default {
                 currentPage: this.pageConfig.currentPage++
             };
             let apiStr = '';
-            if (this.activeType === 0) apiStr = 'followUserQuery';
-            if (this.activeType === 1) apiStr = 'followTopicQuery';
-            if (this.activeType === 2) apiStr = 'followTagQuery';
+            if (this.activeType === 'followUser') apiStr = 'followUserQuery';
+            if (this.activeType === 'followTopic') apiStr = 'followTopicQuery';
+            if (this.activeType === 'followTag') apiStr = 'followTagQuery';
 
             this.loading = true;
             api[apiStr](params).then((res) => {

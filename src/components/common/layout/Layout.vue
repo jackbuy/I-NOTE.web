@@ -61,6 +61,12 @@ export default {
                     title: '发现',
                     url: '/'
                 },
+                // {
+                //     id: 3,
+                //     name: 'follow',
+                //     title: '关注',
+                //     url: '/'
+                // },
                 {
                     id: 2,
                     name: 'msg',
@@ -111,7 +117,12 @@ export default {
         }),
         handleSearch(keyword) {
             if (keyword.length > 0) {
-                const path = `/search/${keyword}`;
+                const path = {
+                    path: `/search`,
+                    query: {
+                        keyword
+                    }
+                };
                 this.handleRouterPush(path);
             }
         },

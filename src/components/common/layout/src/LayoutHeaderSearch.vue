@@ -21,7 +21,7 @@
                 <el-form-item>
                     <el-input
                         v-model.trim="keyword"
-                        placeholder="搜索"
+                        placeholder="搜 文章 / 专题"
                         size="mini"
                         clearable
                         @blur="openSearchHistory"

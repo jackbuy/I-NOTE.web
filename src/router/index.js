@@ -28,7 +28,7 @@ export default new Router({
             children: [
                 {
                     path: '',
-                    redirect: '/find/popular'
+                    redirect: '/find/newest'
                 },
                 {
                     path: '/find/:sortType',
@@ -43,7 +43,7 @@ export default new Router({
                     meta: { title: '详情' }
                 },
                 {
-                    path: '/search/:keyword',
+                    path: '/search',
                     name: 'search',
                     component: Search,
                     meta: { title: '搜索' }

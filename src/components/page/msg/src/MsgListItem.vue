@@ -4,23 +4,23 @@
             <i v-if="!isRead" class="icon icon-weidu not-read"></i>
             <i v-else class="icon icon-yidu"></i>
             <template v-if="data.type === 0">
-                <span class="user">{{ createUser }}</span>
+                <span class="user" @click="handleRouter(`/zone/${createUserId}/article`)">{{ createUser }}</span>
                 <span>{{ msgType }}</span>
-                <span class="article" @click="handleRouter(`/detail/${relativeId}`)">{{ likeArticleTitle }}</span>
+                <span class="article" @click="handleRouter(`/detail/${likeArticleId}`)">{{ likeArticleTitle }}</span>
             </template>
             <template v-if="data.type === 1">
-                <span class="user">{{ createUser }}</span>
+                <span class="user" @click="handleRouter(`/zone/${createUserId}/article`)">{{ createUser }}</span>
                 <span>{{ msgType }}</span>
-                <span class="article" @click="handleRouter(`/detail/${relativeId}`)">{{ collectArticleTitle }}</span>
+                <span class="article" @click="handleRouter(`/detail/${collectArticleId}`)">{{ collectArticleTitle }}</span>
             </template>
             <template v-if="data.type === 2">
                 <span class="user" @click="handleRouter(`/zone/${createUserId}/article`)">{{ createUser }}</span>
                 <span>{{ msgType }}</span>
             </template>
             <template v-if="data.type === 3">
-                <span class="user">{{ createUser }}</span>
+                <span class="user" @click="handleRouter(`/zone/${createUserId}/article`)">{{ createUser }}</span>
                 <span>{{ msgType }}</span>
-                <span class="article" @click="handleRouter(`/detail/${relativeId}`)">{{ topicTitle }}</span>
+                <span class="article" @click="handleRouter(`/topic/${topicId}`)">{{ topicTitle }}</span>
             </template>
         </div>
         <div class="item-menu">
@@ -41,7 +41,7 @@
 
 <script>
 export default {
-    name: 'Msg',
+    name: 'MsgItem',
     props: {
         data: {
             type: Object,
@@ -64,17 +64,26 @@ export default {
         msgType() {
             if (this.data.type === 0) return '赞了你的文章';
             if (this.data.type === 1) return '收藏了你的文章';
-            if (this.data.type === 2) return '关注了你，成为了你的粉丝';
+            if (this.data.type === 2) return '关注了你';
             if (this.data.type === 3) return '关注了你的专题';
         },
         likeArticleTitle() {
             if (this.data.likeId) return this.data.likeId.title;
         },
+        likeArticleId() {
+            if (this.data.likeId) return this.data.likeId._id;
+        },
         collectArticleTitle() {
             if (this.data.collectId) return this.data.collectId.title;
         },
+        collectArticleId() {
+            if (this.data.collectId) return this.data.collectId._id;
+        },
         topicTitle() {
             if (this.data.topicId) return this.data.topicId.title;
+        },
+        topicId() {
+            if (this.data.topicId) return this.data.topicId._id;
         }
     },
     methods: {

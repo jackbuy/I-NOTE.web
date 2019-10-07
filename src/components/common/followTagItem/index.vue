@@ -1,5 +1,5 @@
 <template>
-    <div class="follow-user__item">
+    <div class="follow-tag__item">
         <span
             class="name"
             @click="handleRouterPush(tagId)">

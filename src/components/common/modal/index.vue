@@ -35,11 +35,16 @@ export default {
 </script>
 
 <style lang="less">
+    @import '../../../assets/less/base.less';
+    .el-dialog, .el-pager li{
+        background: @boxBgColor !important;
+        width: 96% !important;
+    }
     .el-dialog__title{
         font-size: 16px;
     }
     .el-dialog__header{
-        border-bottom: 1px solid #eee;
+        border-bottom: 1px solid @borderColor !important;
         padding: 15px;
     }
     .el-dialog__body{

@@ -5,6 +5,7 @@
             <span @click="handleLog('register')">注册</span>
         </template>
         <template v-else>
+            <span class="search-btn" @click="handleRoutePush('/search')"><i class="icon icon-sousuo"></i></span>
             <el-dropdown v-if="!isWrite" @command="handleCommand" trigger="click">
                 <span class="el-dropdown-link write">
                     <i class="icon icon-jia"></i>

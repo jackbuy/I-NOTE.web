@@ -1,10 +1,12 @@
+@import '../../../assets/less/base.less';
 @import '../../../assets/less/common.less';
+
 .topic{
     &__item{
         position: relative;
         padding: 15px;
-        background: #fff;
-        border-top: 1px solid #f5f5f5;
+        background: @boxBgColor;
+        margin-bottom: 1px;
         &.has-img{
             padding-right: 190px;
             .topic__item-img{
@@ -22,27 +24,23 @@
             button{
                 display: inline-block;
                 padding: 5px 10px;
-                border: 1px solid #f5f5f5;
+                border: 1px solid @borderColor;
                 font-size: 14px;
-                color: #666;
-                background: #fff;
                 margin-right: 10px;
                 cursor: pointer;
                 transition: all 0.3s;
                 border-radius: 20px;
                 &:hover,
                 &.active{
-                    color: #539eff;
+                    color: @fontActiveColor;
                 }
                 &[disabled]{
                     cursor: not-allowed;
-                    color: #999;
                 }
             }
         }
         &-header{
             font-size: 12px;
-            color: #ccc;
             padding-bottom: 10px;
             span{
                 display: inline-block;
@@ -50,22 +48,23 @@
                 margin-right: 10px;
             }
             .name{
-                color: #333;
+                color: @fontSubColor;
                 font-size: 14px;
             }
             .img{
                 width: 30px;
                 height: 30px;
                 border-radius: 30px;
-                background-color: #eee;
+                background-color: @imgBgColor;
                 background-position: center;
                 background-repeat: no-repeat;
                 background-size: cover;
             }
             .menu{
                 cursor: pointer;
+                color: @fontSubColor;
                 &:hover{
-                    color: #999;
+                    text-decoration: underline;
                 }
             }
         }
@@ -73,20 +72,20 @@
             padding-left: 45px;
             span{
                 cursor: pointer;
-                font-size: 18px;
-                color: #333;
+                font-size: 16px;
+                line-height: 1.5;
+                color: @fontMainColor;
                 transition: all 0.3s;
                 &:hover{
-                    color: #539eff;
+                    color: @fontHoverColor;
                 }
-                .ovf-1();
+                // .ovf-1();
             }
         }
         &-description{
             padding-left: 45px;
             font-size: 12px;
             margin-top: 12px;
-            color: #aaa;
             .ovf-1();
         }
         &-img{
@@ -97,11 +96,23 @@
             width: 160px;
             height: 80px;
             overflow: hidden;
-            background-color: #eee;
+            background-color: @imgBgColor;
             background-position: center;
             background-repeat: no-repeat;
             background-size: cover;
             border-radius: 10px;
+        }
+    }
+}
+
+@media (max-width: @mediaWidth) {
+    .topic__item{
+        &.has-img{
+            padding-right: 100px;
+        }
+        &-img{
+            width: 80px;
+
         }
     }
 }

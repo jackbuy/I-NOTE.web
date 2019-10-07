@@ -1,20 +1,23 @@
+@import '../../../assets/less/base.less';
+
 .follow-topic{
     &__item{
-        padding: 20px;
-        border-top: 1px solid #f5f5f5;
-        background: #fff;
+        padding: 15px;
+        margin-bottom: 1px;
+        background: @boxBgColor;
         span{
             cursor: pointer;
             display: inline-block;
             vertical-align: middle;
-            margin-left: 8px;
+            color: @fontMainColor;
         }
         .img{
             width: 50px;
             height: 30px;
-            background: #eee;
+            background: @imgBgColor;
             overflow: hidden;
             border-radius: 30px;
+            margin-right: 10px;
             img{
                 width: 100%;
             }

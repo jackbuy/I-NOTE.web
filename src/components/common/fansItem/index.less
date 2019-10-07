@@ -1,10 +1,28 @@
+@import '../../../assets/less/base.less';
+
 .fans{
     &__item{
-        padding: 20px;
-        border-top: 1px solid #f5f5f5;
-        background: #fff;
-        .name{
+        padding: 15px;
+        margin-bottom: 1px;
+        background: @boxBgColor;
+        span{
             cursor: pointer;
+            display: inline-block;
+            vertical-align: middle;
+        }
+        .img{
+            width: 30px;
+            height: 30px;
+            background: @imgBgColor;
+            border-radius: 30px;
+            overflow: hidden;
+            margin-right: 10px;
+            img{
+                width: 100%;
+            }
+        }
+        .name{
+            color: @fontMainColor;
             &:hover{
                 text-decoration: underline;
             }

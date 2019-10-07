@@ -1,9 +1,11 @@
+@import '../../../assets/less/base.less';
+
 .article{
     &__item{
         position: relative;
         padding: 15px;
-        background: #fff;
-        border-top: 1px solid #f5f5f5;
+        background: @boxBgColor;
+        margin-bottom: 1px;
         &.has-img{
             padding-right: 200px;
             .article-list__item-img{
@@ -21,27 +23,26 @@
             button{
                 display: inline-block;
                 padding: 5px 10px;
-                border: 1px solid #f5f5f5;
+                border: 1px solid @borderColor;
                 font-size: 14px;
-                color: #666;
-                background: #fff;
                 margin-right: 10px;
                 cursor: pointer;
                 transition: all 0.3s;
                 border-radius: 20px;
+                background: transparent;
+                color: @fontSubColor;
                 &:hover,
                 &.active{
-                    color: #539eff;
+                    color: @fontActiveColor;
                 }
                 &[disabled]{
                     cursor: not-allowed;
-                    color: #999;
+                    color: @fontColor;
                 }
             }
         }
         &-header{
             font-size: 12px;
-            color: #ccc;
             padding-bottom: 6px;
             span{
                 display: inline-block;
@@ -49,25 +50,25 @@
                 margin-right: 10px;
             }
             .name{
-                color: #888;
+                color: @fontSubColor;
                 font-size: 14px;
             }
             .img{
                 width: 30px;
                 height: 30px;
                 border-radius: 30px;
-                background-color: #eee;
+                background-color: @imgBgColor;
                 background-position: center;
                 background-repeat: no-repeat;
                 background-size: cover;
             }
             .article-top{
-                color: #539eff;
+                color: @fontActiveColor;
             }
             .menu{
                 cursor: pointer;
                 &:hover{
-                    color: #999;
+                    color: @fontSubColor;
                 }
             }
         }
@@ -77,10 +78,10 @@
                 cursor: pointer;
                 font-size: 16px;
                 line-height: 1.5;
-                color: #212121;
+                color: @fontMainColor;
                 transition: all 0.3s;
                 &:hover{
-                    color: #539eff;
+                    color: @fontHoverColor;
                 }
             }
         }
@@ -92,7 +93,6 @@
                 margin-right: 25px;
                 display: inline-block;
                 font-size: 12px;
-                color: #ccc;
                 i{
                     font-size: 12px;
                 }
@@ -103,11 +103,11 @@
             position: absolute;
             top: 20px;
             right: 20px;
-            background: #ccc;
             width: 160px;
             height: 100px;
             overflow: hidden;
             text-align: center;
+            background: @imgBgColor;
             img{
                 height: 100px;
             }

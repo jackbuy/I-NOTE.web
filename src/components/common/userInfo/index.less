@@ -1,9 +1,10 @@
+@import '../../../assets/less/base.less';
+
 .user-info{
     text-align: center;
     padding: 5px 0;
     .el-avatar{
-        color: #d5d5d5;
-        background: #f5f5f5;
+        background: @imgBgColor;
         i{
             font-size: 40px;
         }
@@ -12,13 +13,13 @@
         padding: 10px 0 10px 0;
         font-size: 16px;
         cursor: pointer;
+        color: @fontSubColor;
         &:hover{
             text-decoration: underline;
         }
     }
     .brief{
         font-size: 12px;
-        color: #aaa;
         line-height: 2;
         padding: 0px 15px;
     }
@@ -28,8 +29,8 @@
             margin: 10px 10px 5px 10px;
             display: inline-block;
             cursor: pointer;
-            border: 1px solid #539eff;
-            color: #539eff;
+            border: 1px solid @fontActiveColor;
+            color: @fontActiveColor;
             padding: 8px 15px;
             border-radius: 20px;
             font-size: 12px;
@@ -37,31 +38,33 @@
                 font-style: normal;
             }
             &.active{
-                background: #539eff;
+                background: @fontActiveColor;
                 color: #fff;
             }
         }
     }
     .count{
         display: flex;
-        padding-top: 5px;
+        padding-top: 10px;
         margin-top: 10px;
-        border-top: 1px solid #f9f9f9;
+        border-top: 1px solid @borderColor;
         .list{
             flex: 1;
             font-size: 12px;
-            color: #aaa;
             cursor: pointer;
             &:hover{
                 div{
-                    color: #539eff;
+                    color: @fontActiveColor;
+                    &.c{
+                        color: @fontActiveColor;
+                    }
                 }
             }
             div{
                 line-height: 1.4;
                 transition: all 0.3s;
                 &.c{
-                    color: #666;
+                    color: @fontSubColor;
                     font-size: 16px;
                 }
                 

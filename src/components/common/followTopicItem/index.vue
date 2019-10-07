@@ -14,7 +14,7 @@
 </template>
 
 <script>
-// import { imgBaseUrl } from '@/constants/url-config';
+import { imgBaseUrl } from '@/constants/url-config';
 export default {
     name: 'FansItem',
     props: {
@@ -31,7 +31,7 @@ export default {
             if (this.item && this.item.followTopicId) return this.item.followTopicId._id;
         },
         img() {
-            if (this.item && this.item.followTopicId) return `${this.item.followTopicId.img}`;
+            if (this.item && this.item.followTopicId) return `${imgBaseUrl}/${this.item.followTopicId.img}`;
         }
     },
     methods: {

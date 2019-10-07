@@ -1,32 +1,9 @@
+@import '../../../assets/less/base.less';
+
 .zone{
     &__header{
         margin-bottom: 15px;
     }
     &__content{
-        .follow-tab{
-            background: #fff;
-            padding: 0px 15px;
-            span{
-                cursor: pointer;
-                display: inline-block;
-                padding: 15px;
-                color: #aaa;
-                font-size: 12px;
-                position: relative;
-                &.active{
-                    color: #5fb0ee;
-                    &::before{
-                        position: absolute;
-                        content: "";
-                        left: 50%;
-                        bottom: -1px;
-                        width: 10px;
-                        height: 1px;
-                        margin-left: -5px;
-                        background: #539eff;
-                    }
-                }
-            }
-        }
     }
 }

@@ -1,11 +1,14 @@
+@import '../../../assets/less/base.less';
+
 .user-avatar{
     display: flex;
-    background: #fff;
+    background: @boxBgColor;
     padding: 5px;
-    border-radius: 10px;
+    // border-radius: 10px;
     .el-avatar{
-        color: #d5d5d5;
-        background: #f5f5f5;
+        background: @imgBgColor;
+        margin-top: 10px;
+        margin-left: 10px;
         i{
             font-size: 40px;
         }
@@ -22,10 +25,10 @@
             height: 50px;
             line-height: 50px;
             font-size: 20px;
-            color: #333;
+            color: @fontMainColor;
             i{
                 font-size: 12px;
-                color: #ccc;
+                color: @fontColor;
                 margin-left: 20px;
                 font-style: normal;
             }
@@ -36,8 +39,8 @@
                 margin-left: 10px;
                 cursor: pointer;
                 display: inline-block;
-                border: 1px solid #539eff;
-                color: #539eff;
+                border: 1px solid @fontActiveColor;
+                color: @fontActiveColor;
                 padding: 8px;
                 border-radius: 20px;
                 text-align: center;
@@ -45,15 +48,14 @@
                 transition: all 0.3s;
                 i{font-style: normal;}
                 &.default{
-                    color: #bbb;
-                    border-color: #f5f5f5;
+                    border-color: @borderColor;
                     &:hover{
-                        color: #539eff;
-                        border-color: #539eff;
+                        color: @fontActiveColor;
+                        border-color: @fontActiveColor;
                     }
                 }
                 &.active{
-                    background: #539eff;
+                    background: @fontActiveColor;
                     color: #fff;
                 }
             }
@@ -61,11 +63,11 @@
     }
     .count{
         display: flex;
-        border-top: 1px solid #fafafa;
+        border-top: 1px solid @borderColor;
         padding-top: 8px;
         .list{
             flex: 1;
-            color: #666;
+            color: @fontSubColor;
             font-size: 14px;
             padding: 10px 4px;
             &.active>div:before{
@@ -76,12 +78,12 @@
                 width: 10px;
                 height: 3px;
                 margin-left: -5px;
-                background: #539eff;
+                background: @fontActiveColor;
             }
             &:hover,
             &.active{
                 div{
-                    color: #539eff;
+                    color: @fontActiveColor;
                 }
             }
             &>div{

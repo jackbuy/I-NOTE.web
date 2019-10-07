@@ -1,8 +1,8 @@
 <template>
     <div class="user-avatar">
         <div class="side">
-            <el-avatar v-if="user.avatar" :size="100" :src="userImg"></el-avatar>
-            <el-avatar v-else :size="100"><i class="icon icon-yonghu"></i></el-avatar>
+            <el-avatar v-if="user.avatar" :size="80" :src="userImg"></el-avatar>
+            <el-avatar v-else :size="80"><i class="icon icon-yonghu"></i></el-avatar>
         </div>
         <div class="content">
             <div class="header">

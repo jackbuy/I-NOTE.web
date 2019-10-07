@@ -6,10 +6,10 @@
                     class="img">
                     <img :src="avatar" alt="">
                 </span>
-                <span>{{ nickName }}</span>
+                <span class="name">{{ nickName }}</span>
                 <span v-if="replyUserNickName && !isMine">
                     <span>回复</span>
-                    <span>{{ replyUserNickName }}</span>
+                    <span class="name">{{ replyUserNickName }}</span>
                 </span>
                 <span>{{ createTime }}</span>
             </div>

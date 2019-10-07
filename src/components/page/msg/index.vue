@@ -2,11 +2,12 @@
     <msg-layout>
         <tab slot="header" :activeName="activeTabName" @tabClick="handleTabClick">
             <tab-label name="notifications" label="未读"></tab-label>
+            <tab-label name="read" label="已读"></tab-label>
             <tab-label name="all" label="全部"></tab-label>
-            <tab-label name="like" label="点赞"></tab-label>
+            <!-- <tab-label name="like" label="点赞"></tab-label>
             <tab-label name="collect" label="收藏"></tab-label>
-            <tab-label name="followUser" label="粉丝"></tab-label>
-            <tab-label name="followTopic" label="专题"></tab-label>
+            <tab-label name="followUser" label="关注"></tab-label>
+            <tab-label name="followTopic" label="专题"></tab-label> -->
         </tab>
         <infinite-scroll
             slot="content"
@@ -70,6 +71,7 @@ export default {
                 currentPage: this.pageConfig.currentPage++
             };
             if (this.activeTabName === 'notifications') params.isRead = false;
+            if (this.activeTabName === 'read') params.isRead = true;
             if (this.activeTabName === 'like') {
                 params.type = 0;
             };

@@ -53,13 +53,15 @@ export default {
     },
     computed: {
         keyword() {
-            return this.$route.params.keyword;
+            return this.$route.query.keyword;
         }
     },
     watch: {
         keyword: {
             handler(n, o) {
-                this.refresh(n, this.activeTabName);
+                if (n) {
+                    this.refresh(n, this.activeTabName);
+                }
             },
             immediate: true
         }
@@ -99,7 +101,9 @@ export default {
         },
         handleTabClick(tabName) {
             this.activeTabName = tabName;
-            this.refresh(this.keyword, tabName);
+            if (this.keyword) {
+                this.refresh(this.keyword, tabName);
+            }
         }
     }
 };

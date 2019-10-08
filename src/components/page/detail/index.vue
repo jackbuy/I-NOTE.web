@@ -77,14 +77,14 @@
                 @doFollow="handleFollow">
             </user-info>
         </card>
-        <card slot="userinfo" icon="icon icon-wenzhang" title="相关文章">
+        <!-- <card slot="userinfo" icon="icon icon-wenzhang" title="相关文章">
             <article-recommend
                 v-for="item in recommendFilterData"
                 :key="item._id"
                 :item="item"
                 @doDetail="handleRecommend">
             </article-recommend>
-        </card>
+        </card> -->
     </detail-layout>
 </template>
 

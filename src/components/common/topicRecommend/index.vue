@@ -5,7 +5,7 @@
         <div class="img" :style="{backgroundImage: 'url(' + img + ')'}"></div>
         <div class="content">
             <div class="title">{{ title }}</div>
-            <div class="description">{{ description }}</div>
+            <!-- <div class="description">{{ description }}</div> -->
         </div>
     </div>
 </template>

@@ -1,4 +1,5 @@
 @import '../../../assets/less/base.less';
+@import '../../../assets/less/common.less';
 
 .topic-write{
     width: 700px;
@@ -33,5 +34,19 @@
         width: 180px;
         height: 120px;
         display: block;
+    }
+}
+
+@media (max-width: @mediaWidth) {
+    .topic-write{
+        width: 100%;
+    }
+
+    .el-input__inner,
+    .el-textarea__inner{
+        background: @formBgColor !important;
+        border-color: @borderColor !important;
+        color: @fontMainColor !important;
+        .palceholder(@formPalceholderColor);
     }
 }

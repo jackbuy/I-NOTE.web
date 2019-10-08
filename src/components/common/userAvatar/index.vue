@@ -6,53 +6,39 @@
         </div>
         <div class="content">
             <div class="header">
-                <div class="name">{{ username }}<i>{{ brief }}</i></div>
-                <div class="menu">
-                    <span
-                        v-if="userId !== mine"
-                        :class="{'active': isFollow}"
-                        @click="handleFollow(userId)">
-                        <i v-if="!isFollow">关注</i>
-                        <i v-else>已关注</i>
-                    </span>
-                    <span
-                        v-if="userId === mine"
-                        class="default"
-                        @click="handleSettings()">
-                        <i class="el-icon-s-tools"></i>
-                    </span>
-                </div>
+                <div class="name">{{ username }}</div>
+                <div class="brief">{{ brief }}</div>
+            </div>
+            <div class="menu">
+                <span
+                    v-if="userId !== mine"
+                    :class="{'active': isFollow}"
+                    @click="handleFollow(userId)">
+                    <i v-if="!isFollow">关注</i>
+                    <i v-else>已关注</i>
+                </span>
+                <span
+                    v-if="userId === mine"
+                    class="default"
+                    @click="handleSettings()">
+                    <i class="el-icon-s-tools"></i>
+                </span>
             </div>
             <div class="count">
                 <div :class="{'active': type === 'article'}" class="list">
-                    <div @click="handleZone('article')">
-                        <!-- <div class="c">{{ articleCount }}</div> -->
-                        <div>文章</div>
-                    </div>
+                    <div @click="handleZone('article')">文章</div>
                 </div>
                 <div :class="{'active': type === 'topic'}" class="list">
-                    <div @click="handleZone('topic')">
-                        <!-- <div class="c">{{ topicCount }}</div> -->
-                        <div>专题</div>
-                    </div>
+                    <div @click="handleZone('topic')">专题</div>
                 </div>
                 <div :class="{'active': type === 'collect'}" class="list">
-                    <div @click="handleZone('collect')">
-                        <!-- <div class="c">{{ collectCount }}</div> -->
-                        <div>收藏</div>
-                    </div>
+                    <div @click="handleZone('collect')">收藏</div>
                 </div>
                 <div :class="{'active': type === 'follow'}" class="list">
-                    <div @click="handleZone('follow')">
-                        <!-- <div class="c">{{ followCount }}</div> -->
-                        <div>关注</div>
-                    </div>
+                    <div @click="handleZone('follow')">关注</div>
                 </div>
                 <div :class="{'active': type === 'fans'}" class="list">
-                    <div @click="handleZone('fans')">
-                        <!-- <div class="c">{{ fansCount }}</div> -->
-                        <div>粉丝</div>
-                    </div>
+                    <div @click="handleZone('fans')">粉丝</div>
                 </div>
             </div>
         </div>
@@ -85,21 +71,6 @@ export default {
         },
         brief() {
             return this.user.brief || '作者很懒，什么也没写！';
-        },
-        articleCount() {
-            return this.user.articleCount || 0;
-        },
-        topicCount() {
-            return this.user.topicCount || 0;
-        },
-        followCount() {
-            return this.user.followCount || 0;
-        },
-        collectCount() {
-            return this.user.collectCount || 0;
-        },
-        fansCount() {
-            return this.user.fansCount || 0;
         },
         userImg() {
             return this.user.avatar ? `${imgBaseUrl}/${this.user.avatar}` : '';

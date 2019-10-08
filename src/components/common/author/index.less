@@ -1,20 +1,13 @@
 @import '../../../assets/less/base.less';
+@import '../../../assets/less/common.less';
 
-.author-hots{
+.authors{
     display: flex;
     align-items:center;
-    padding: 5px;
-    height: 52px;
-    font-size: 13px;
-    margin-top: 10px;
+    margin-top: 15px;
     cursor: pointer;
-    transition: all 0.3s;
     &:first-child{
-        margin-top: 0px;
-    }
-    &:hover,
-    &.active{
-        color: @fontHoverColor;
+        margin-top: 0;
     }
     .img{
         width: 40px;
@@ -22,27 +15,28 @@
         border-radius: 40px;
         line-height: 40px;
         text-align: center;
-        overflow: hidden;
         background-color: @imgBgColor;
         background-position: center;
         background-repeat: no-repeat;
         background-size: cover;
     }
-    .title{
+    .content{
         flex: 1;
-        font-size: 13px;
-        padding: 0 10px;
-        line-height: 1.4;
-        overflow : hidden;
-        text-overflow: ellipsis;
-        display: -webkit-box;
-        -webkit-line-clamp: 2;
-        -webkit-box-orient: vertical;
-        color: @fontSubColor;
+        padding-left: 10px;
+        .title{
+            color: @fontMainColor;
+            transition: all 0.3s;
+            .ovf-num(1);
+        }
+        .description{
+            font-size: 12px;
+            margin-top: 7px;
+        }
     }
-    .description{
-        padding-top: 5px;
-        font-size: 12px;
-        color: @fontColor;
+    // hover
+    &:hover{
+        .content .title{
+            color: @fontHoverColor;
+        }
     }
 }

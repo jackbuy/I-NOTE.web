@@ -1,9 +1,9 @@
 <template>
     <msg-layout>
         <tab slot="header" :activeName="activeTabName" @tabClick="handleTabClick">
-            <tab-label name="notifications" label="未读"></tab-label>
-            <tab-label name="read" label="已读"></tab-label>
             <tab-label name="all" label="全部"></tab-label>
+            <tab-label name="read" label="已读"></tab-label>
+            <tab-label name="notifications" label="未读"></tab-label>
             <!-- <tab-label name="like" label="点赞"></tab-label>
             <tab-label name="collect" label="收藏"></tab-label>
             <tab-label name="followUser" label="关注"></tab-label>

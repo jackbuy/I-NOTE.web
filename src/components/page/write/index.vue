@@ -128,9 +128,9 @@ export default {
                 this.form = {
                     contentHtml,
                     publish,
-                    title,
-                    tagId: tagId && tagId._id ? tagId._id : ''
+                    title
                 };
+                if (tagId && tagId._id) this.form.tagId = tagId._id;
             }).catch(() => {});
         },
         handleSave(obj) {

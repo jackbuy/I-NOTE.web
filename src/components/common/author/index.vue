@@ -1,11 +1,11 @@
 <template>
     <div
-        class="author-hots"
+        class="authors"
         @click="handleZone(userId)">
         <div v-if="imgUrl" class="img" :style="{backgroundImage: 'url(' + imgUrl + ')'}"></div>
         <div v-else class="img"><i class="icon icon-yonghu"></i></div>
-        <div class="title">
-            <div>{{ username }}</div>
+        <div class="content">
+            <div class="title">{{ username }}</div>
             <div class="description">{{ description }}</div>
         </div>
     </div>

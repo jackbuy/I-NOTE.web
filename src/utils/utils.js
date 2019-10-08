@@ -134,16 +134,19 @@ export default {
             // 一天内
             case timestamp >= 3600 && timestamp < 86400:
                 var hours = parseInt(timestamp / 3600 + '');
-                var minutes = parseInt(((timestamp - (3600 * hours)) / 60) + '');
-                time = hours + '小时 ' + minutes + '分钟前';
+                // var minutes = parseInt(((timestamp - (3600 * hours)) / 60) + '');
+                time = hours + '小时前';
+                // time = hours + '小时 ' + minutes + '分钟前';
                 break;
             // 一年内
             case timestamp >= 86400 && timestamp < 31536000:
-                time = Math.floor(timestamp / 86400) + '天前';
+                // time = Math.floor(timestamp / 86400) + '天前';
+                time = moment(date2).format('MM月DD日');
                 break;
-            // 大于一天
+            // 大于一年
             default:
-                time = Math.floor(timestamp / 31536000) + '年前';
+                // time = Math.floor(timestamp / 31536000) + '年前';
+                time = moment(date2).format('YYYY年MM月DD日');
         }
         return time;
     }

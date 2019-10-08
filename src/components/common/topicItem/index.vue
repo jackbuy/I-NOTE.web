@@ -2,10 +2,10 @@
     <div
         class="topic__item"
         :class="{'has-img': img}">
-        <!-- <div class="topic__item-menu">
+        <div class="topic__item-menu">
             <button v-if="showMenuEdit" @click="handleEdit(itemId)"><i class="el-icon-edit"></i></button>
             <button v-if="showMenuDelete" @click="handleDelete(itemId)"><i class="el-icon-delete"></i></button>
-        </div> -->
+        </div>
         <div class="topic__item-header">
             <div class="img" :style="{backgroundImage: 'url(' + userImg + ')'}"></div>
             <div class="name">{{ username }}</div>

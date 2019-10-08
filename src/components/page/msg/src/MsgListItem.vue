@@ -5,20 +5,24 @@
             <i v-else class="icon icon-yidu"></i>
             <template v-if="data.type === 0">
                 <span class="user" @click="handleRouter(`/zone/${createUserId}/article`)">{{ createUser }}</span>
+                <span>{{ msgTime }}</span>
                 <span>{{ msgType }}</span>
                 <span class="article" @click="handleRouter(`/detail/${likeArticleId}`)">{{ likeArticleTitle }}</span>
             </template>
             <template v-if="data.type === 1">
                 <span class="user" @click="handleRouter(`/zone/${createUserId}/article`)">{{ createUser }}</span>
+                <span>{{ msgTime }}</span>
                 <span>{{ msgType }}</span>
                 <span class="article" @click="handleRouter(`/detail/${collectArticleId}`)">{{ collectArticleTitle }}</span>
             </template>
             <template v-if="data.type === 2">
                 <span class="user" @click="handleRouter(`/zone/${createUserId}/article`)">{{ createUser }}</span>
+                <span>{{ msgTime }}</span>
                 <span>{{ msgType }}</span>
             </template>
             <template v-if="data.type === 3">
                 <span class="user" @click="handleRouter(`/zone/${createUserId}/article`)">{{ createUser }}</span>
+                <span>{{ msgTime }}</span>
                 <span>{{ msgType }}</span>
                 <span class="article" @click="handleRouter(`/topic/${topicId}`)">{{ topicTitle }}</span>
             </template>
@@ -40,6 +44,7 @@
 </template>
 
 <script>
+import utils from '@/utils/utils';
 export default {
     name: 'MsgItem',
     props: {
@@ -66,6 +71,13 @@ export default {
             if (this.data.type === 1) return '收藏了你的文章';
             if (this.data.type === 2) return '关注了你';
             if (this.data.type === 3) return '关注了你的专题';
+        },
+        msgTime() {
+            if (this.data.createTime) {
+                let end = utils.formatDate.time(this.data.createTime);
+                let start = utils.formatDate.now();
+                return `${utils.diffDate(start, end)}`;
+            }
         },
         likeArticleTitle() {
             if (this.data.likeId) return this.data.likeId.title;

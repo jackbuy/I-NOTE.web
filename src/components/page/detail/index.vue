@@ -1,50 +1,60 @@
 <template>
     <detail-layout :is-has="isHas">
         <div slot="menu" class="article-detail__menu">
-            <button
-                :disabled="loading || currentUserId === authorId"
-                :class="{'active': isLike}"
-                @click="handleLike(isLike)">
-                <i v-if="isLike" class="icon icon-dianzan"></i>
-                <i v-else class="icon icon-dianzan-o"></i>
-                <span v-if="likeCount > 0">{{ likeCount }}</span>
-            </button>
-            <button
-                :disabled="loading || currentUserId === authorId"
-                :class="{'active': isCollect}"
-                @click="handleCollect(isCollect)">
-                <i v-if="isCollect" class="icon icon-like"></i>
-                <i v-else class="icon icon-like-o"></i>
-                <span v-if="collectCount > 0">{{ collectCount }}</span>
-            </button>
-            <el-popover
-                popper-class="topic-list-box"
-                placement="right"
-                width="210">
-                <div class="list">
-                    <template v-if="topicList.length > 0">
-                        <div
-                            v-for="item in topicList"
-                            :key="item._id"
-                            :class="{'active': item.isTopic}"
-                            @click="handleAddTopicList(item)">
-                            <i class="el-icon-circle-check"></i>
-                            {{ item.title }}
-                        </div>
-                    </template>
-                </div>
-                <div class="add" @click="handleCreateTopic">
-                    <i class="el-icon-circle-plus"></i>
-                    <span>创建专题</span>
-                </div>
+            <div>
                 <button
-                    slot="reference"
-                    :class="{'active': isTopic}"
-                    :disabled="loading">
-                    <i v-if="isTopic" class="icon icon-shoucang"></i>
-                    <i v-else class="icon icon-shoucang-o"></i>
+                    :disabled="loading || currentUserId === authorId"
+                    :class="{'active': isLike}"
+                    @click="handleLike(isLike)">
+                    <i v-if="isLike" class="icon icon-dianzan"></i>
+                    <i v-else class="icon icon-dianzan-o"></i>
+                    <span v-if="likeCount > 0">{{ likeCount }}</span>
                 </button>
-            </el-popover>
+                <div class="title">赞</div>
+            </div>
+            <div>
+                <button
+                    :disabled="loading || currentUserId === authorId"
+                    :class="{'active': isCollect}"
+                    @click="handleCollect(isCollect)">
+                    <i v-if="isCollect" class="icon icon-like"></i>
+                    <i v-else class="icon icon-like-o"></i>
+                    <span v-if="collectCount > 0">{{ collectCount }}</span>
+                </button>
+                <div class="title">收藏</div>
+            </div>
+            <div>
+                <el-popover
+                    popper-class="topic-list-box"
+                    placement="right"
+                    width="210">
+                    <div class="list">
+                        <template v-if="topicList.length > 0">
+                            <div
+                                v-for="item in topicList"
+                                :key="item._id"
+                                :class="{'active': item.isTopic}"
+                                @click="handleAddTopicList(item)">
+                                <i class="el-icon-circle-check"></i>
+                                {{ item.title }}
+                            </div>
+                        </template>
+                    </div>
+                    <div class="add" @click="handleCreateTopic">
+                        <i class="el-icon-circle-plus"></i>
+                        <span>创建专题</span>
+                    </div>
+                    <div slot="reference">
+                        <button
+                            :class="{'active': isTopic}"
+                            :disabled="loading">
+                            <i v-if="isTopic" class="icon icon-shoucang"></i>
+                            <i v-else class="icon icon-shoucang-o"></i>
+                        </button>
+                        <div class="title">加入专题</div>
+                    </div>
+                </el-popover>
+            </div>
         </div>
         <div slot="content" class="article-detail">
             <div class="article-detail__title">

@@ -7,11 +7,11 @@
             <button v-if="showMenuDelete" @click="handleDelete(itemId)"><i class="el-icon-delete"></i></button>
         </div> -->
         <div class="topic__item-header">
-            <span class="img" :style="{backgroundImage: 'url(' + userImg + ')'}"></span>
-            <span class="name">{{ username }}</span>
-            <span class="time">{{ createTime }}</span>
-            <span class="menu edit" v-if="showMenuEdit" @click="handleEdit(itemId)">编辑</span>
-            <span class="menu del" v-if="showMenuDelete" @click="handleDelete(itemId)">删除</span>
+            <div class="img" :style="{backgroundImage: 'url(' + userImg + ')'}"></div>
+            <div class="name">{{ username }}</div>
+            <div class="time">{{ createTime }}</div>
+            <!-- <span class="menu edit" v-if="showMenuEdit" @click="handleEdit(itemId)">编辑</span>
+            <span class="menu del" v-if="showMenuDelete" @click="handleDelete(itemId)">删除</span> -->
         </div>
         <div class="topic__item-title">
             <span @click="handleRouterPush(topicId)">{{ title }}</span>

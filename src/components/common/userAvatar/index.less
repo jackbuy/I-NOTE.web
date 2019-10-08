@@ -3,8 +3,6 @@
 .user-avatar{
     display: flex;
     background: @boxBgColor;
-    padding: 5px;
-    // border-radius: 10px;
     .el-avatar{
         background: @imgBgColor;
         margin-top: 10px;
@@ -15,8 +13,7 @@
     }
     .content{
         flex: 1;
-        margin-left: 20px;
-        margin-right: 10px;
+        margin: 0 15px;
         .header{
             display: flex;
         }
@@ -95,6 +92,34 @@
                     line-height: 1.5;
                     transition: all 0.3s;
                     i{margin-right: 5px;}
+                }
+            }
+        }
+    }
+}
+
+@media (max-width: @mediaWidth) {
+    .user-avatar{
+        .el-avatar{
+            display: none;
+        }
+        .content{
+            margin: 0 10px;
+            .name{
+                font-size: 14px;
+                i{
+                    display: none;
+                }
+            }
+            .count{
+                padding: 0;
+                .list{
+                    text-align: center;
+                    >div{
+                        padding: 4px 12px;
+                        background: @formHoverBgColor;
+                        border-radius: 20px;
+                    }
                 }
             }
         }

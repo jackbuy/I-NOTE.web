@@ -3,7 +3,10 @@
         class="special-topic"
         @click="handleRouterPush(id)">
         <div class="img" :style="{backgroundImage: 'url(' + img + ')'}"></div>
-        <div class="title">{{ title }}</div>
+        <div class="content">
+            <div class="title">{{ title }}</div>
+            <div class="description">{{ description }}</div>
+        </div>
     </div>
 </template>
 
@@ -26,6 +29,9 @@ export default {
         },
         img() {
             return this.item.img ? `${imgBaseUrl}/${this.item.img}` : '';
+        },
+        description() {
+            return `文章：20 / 关注：342`;
         }
     },
     methods: {

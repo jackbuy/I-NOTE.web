@@ -1,15 +1,15 @@
 <template>
     <div class="fans__item">
-        <span
+        <div
             class="img"
             @click="handleRouterPush(userId)">
             <img :src="avatar" alt="">
-        </span>
-        <span
+        </div>
+        <div
             class="name"
             @click="handleRouterPush(userId)">
             {{ username }}
-        </span>
+        </div>
     </div>
 </template>
 

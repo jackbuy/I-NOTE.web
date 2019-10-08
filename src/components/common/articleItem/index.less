@@ -1,4 +1,5 @@
 @import '../../../assets/less/base.less';
+@import '../../../assets/less/common.less';
 
 .article{
     &__item{
@@ -44,23 +45,27 @@
         &-header{
             font-size: 12px;
             padding-bottom: 6px;
-            span{
-                display: inline-block;
-                vertical-align: middle;
-                margin-right: 10px;
-            }
+            display: flex;
+            align-items:center; /*垂直居中*/
             .name{
+                max-width: 160px;
                 color: @fontSubColor;
                 font-size: 14px;
+                padding: 0 10px;
+                line-height: 1.5;
+                .ovf-1();
             }
             .img{
-                width: 30px;
-                height: 30px;
-                border-radius: 30px;
+                width: 20px;
+                height: 20px;
+                border-radius: 20px;
                 background-color: @imgBgColor;
                 background-position: center;
                 background-repeat: no-repeat;
                 background-size: cover;
+            }
+            .time{
+                flex: 1;
             }
             .article-top{
                 color: @fontActiveColor;
@@ -73,7 +78,7 @@
             }
         }
         &-title{
-            padding-left: 45px;
+            padding-left: 30px;
             span{
                 cursor: pointer;
                 font-size: 16px;
@@ -87,10 +92,10 @@
         }
         &-action{
             font-size: 0;
-            padding-left: 45px;
+            padding-left: 30px;
             margin-top: 10px;
             span{
-                margin-right: 25px;
+                margin-right: 20px;
                 display: inline-block;
                 font-size: 12px;
                 i{

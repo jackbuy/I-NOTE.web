@@ -7,14 +7,10 @@
             <button v-if="showMenuDelete" @click="handleDelete(itemId)"><i class="el-icon-delete"></i></button>
         </div>
         <div v-if="item" class="article__item-header">
-            <span class="img" :style="{backgroundImage: 'url(' + userImg + ')'}"></span>
-            <span class="name">{{ username }}</span>
-            <span v-if="isTop" class="article-top">置顶</span>
-            <span>{{ time }}</span>
-            <span v-if="publish && viewCount > 0">浏览 {{ viewCount }}</span>
-            <span v-if="publish" class="tag">{{ tag }}</span>
-            <!-- <span class="menu edit">编辑</span>
-            <span class="menu del">删除</span> -->
+            <div class="img" :style="{backgroundImage: 'url(' + userImg + ')'}"></div>
+            <div class="name">{{ username }}</div>
+            <div class="time">{{ time }}</div>
+            <!-- <span v-if="isTop" class="article-top">置顶</span> -->
         </div>
         <div class="article__item-title">
             <span @click="handleDetail(articleId)">{{ title }}</span>
@@ -34,6 +30,14 @@
             <span>
                 <i class="icon icon-pinglun"></i>
                 {{ commentCount }}
+            </span>
+            <span>
+                <i class="icon icon-chakan1"></i>
+                {{ viewCount }}
+            </span>
+            <span>
+                <i class="icon icon-bq"></i>
+                {{ tag }}
             </span>
         </div>
         <div class="article__item-img" v-if="img" v-html="img"></div>
@@ -99,7 +103,7 @@ export default {
             if (this.item && this.item.tagId) return this.item.tagId.title;
         },
         viewCount() {
-            if (this.item) return this.item.viewCount || 0;
+            if (this.item) return this.item.viewCount > 0 ? this.item.viewCount : '';
         },
         likeCount() {
             if (this.item) return this.item.likeCount > 0 ? this.item.likeCount : '';

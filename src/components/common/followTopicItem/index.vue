@@ -1,15 +1,15 @@
 <template>
     <div class="follow-topic__item">
-        <span
+        <div
             class="img"
             @click="handleRouterPush(topicId)">
             <img :src="img" alt="">
-        </span>
-        <span
+        </div>
+        <div
             class="name"
             @click="handleRouterPush(topicId)">
             {{ title }}
-        </span>
+        </div>
     </div>
 </template>
 

@@ -1,3 +1,5 @@
+@import '../../../assets/less/base.less';
+
 .ql-container{
     font-size: 16px !important;
 }
@@ -5,6 +7,7 @@
     margin-bottom: 15px !important;
 }
 .ql-editor{
+    color: @fontMainColor;
     h1,
     h2,
     h3,
@@ -29,12 +32,12 @@
         margin: 0 auto !important;
     }
     blockquote{
-        border-left: 5px solid #e5e5e5 !important;
+        border-left: 5px solid @borderColor !important;
         padding: 20px !important;
-        background: #fafafa !important;
+        background: @formBgColor !important;
     }
     pre{
-        background: #2d2d2d !important;
+        background: @formBgColor !important;
         font-size: 14px !important;
         border-radius: 4px !important;
         padding: 20px !important;
@@ -48,14 +51,14 @@
         list-style: decimal !important;
     }
     a{
-        color: #409EFF !important;
+        color: @fontActiveColor !important;
         &:hover{
             text-decoration: underline !important;
         }
     }
 }
 .quill-editor{
-    background: #fff;
+    background: @boxBgColor;
 }
 .ql-snow .ql-picker{
     line-height: 24px !important;
@@ -74,7 +77,7 @@
     border-width: 0 !important;
 }
 .ql-toolbar.ql-snow{
-    border-color: #f5f5f5 !important;
+    border-color: @borderColor !important;
     border-width: 0 !important;
     border-bottom-width: 1px !important;
     padding: 5px 8px !important;
@@ -82,4 +85,20 @@
 }
 .ql-editor.ql-blank::before{
     font-style: normal !important;
+}
+
+.ql-editor.ql-blank::before{
+    color: @formPalceholderColor;
+}
+
+// 编辑器按钮颜色
+.ql-snow .ql-stroke {
+    stroke: @fontSubColor;
+}
+.ql-snow .ql-stroke-miter {
+    stroke: @fontSubColor;
+}
+.ql-snow .ql-fill,
+.ql-snow .ql-stroke.ql-fill {
+    fill: @fontSubColor;
 }

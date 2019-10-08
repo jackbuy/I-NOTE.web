@@ -1,8 +1,8 @@
 @import '../../../assets/less/base.less';
+@import '../../../assets/less/common.less';
 
 .user-info{
     text-align: center;
-    padding: 5px 0;
     .el-avatar{
         background: @imgBgColor;
         i{
@@ -10,23 +10,26 @@
         }
     }
     .name{
-        padding: 10px 0 10px 0;
+        margin: 15px 0;
         font-size: 16px;
-        cursor: pointer;
         color: @fontSubColor;
+        font-weight: bold;
+        cursor: pointer;
+        .ovf-1();
         &:hover{
             text-decoration: underline;
         }
     }
     .brief{
         font-size: 12px;
-        line-height: 2;
-        padding: 0px 15px;
+        line-height: 1.5;
+        .ovf-num();
     }
     .menu{
         font-size: 0;
         span{
-            margin: 10px 10px 5px 10px;
+            margin: 0 15px;
+            margin-top: 15px;
             display: inline-block;
             cursor: pointer;
             border: 1px solid @fontActiveColor;
@@ -45,8 +48,8 @@
     }
     .count{
         display: flex;
-        padding-top: 10px;
-        margin-top: 10px;
+        padding-top: 15px;
+        margin-top: 15px;
         border-top: 1px solid @borderColor;
         .list{
             flex: 1;
@@ -61,11 +64,12 @@
                 }
             }
             div{
-                line-height: 1.4;
+                line-height: 1;
                 transition: all 0.3s;
                 &.c{
                     color: @fontSubColor;
                     font-size: 16px;
+                    margin-bottom: 4px;
                 }
                 
             }

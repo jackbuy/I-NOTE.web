@@ -1,6 +1,7 @@
+@import '../../../assets/less/base.less';
+
 .write{
     &__header{
-        color: #ccc;
         padding-bottom: 12px;
         text-align: right;
         .label{
@@ -13,8 +14,8 @@
             width: 100%;
             padding: 12px 15px;
             font-size: 28px;
-            font-weight: bold;
-            color: #454545;
+            color: @fontMainColor;
+            background: @boxBgColor;
         }
     }
 }
@@ -27,6 +28,14 @@
 }
 .publish-title{
     font-size: 12px;
-    color: #999;
     vertical-align: middle;
+}
+
+@media (max-width: @mediaWidth) {
+    .write__header{
+        padding: 0 5px 5px 5px;
+        .label{
+            font-size: 12px;
+        }
+    }
 }

@@ -42,19 +42,22 @@
         &-header{
             font-size: 12px;
             padding-bottom: 10px;
-            span{
-                display: inline-block;
-                vertical-align: middle;
-                margin-right: 10px;
-            }
+            display: flex;
+            align-items:center; /*垂直居中*/
             .name{
+                max-width: 160px;
+                padding: 0 10px;
                 color: @fontSubColor;
                 font-size: 14px;
+                .ovf-1();
+            }
+            .time{
+                flex: 1;
             }
             .img{
-                width: 30px;
-                height: 30px;
-                border-radius: 30px;
+                width: 20px;
+                height: 20px;
+                border-radius: 20px;
                 background-color: @imgBgColor;
                 background-position: center;
                 background-repeat: no-repeat;
@@ -69,7 +72,7 @@
             }
         }
         &-title{
-            padding-left: 45px;
+            padding-left: 30px;
             span{
                 cursor: pointer;
                 font-size: 16px;
@@ -83,7 +86,7 @@
             }
         }
         &-description{
-            padding-left: 45px;
+            padding-left: 30px;
             font-size: 12px;
             margin-top: 12px;
             .ovf-1();

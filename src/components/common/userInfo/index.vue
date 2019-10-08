@@ -5,7 +5,7 @@
             <el-avatar v-else :size="80"><i class="icon icon-yonghu"></i></el-avatar>
         </div>
         <div class="name" @click="handleZone('article')">
-            <strong >{{ username }}</strong>
+            {{ username }}
         </div>
         <div class="brief">
             {{ brief }}

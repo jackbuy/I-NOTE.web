@@ -1,0 +1,53 @@
+
+.topic-write(
+    @boxBgColor,
+    @formBgColor,
+    @formHoverBgColor,
+    @fontSubColor,
+    @mediaWidth,
+    @borderColor,
+    @fontMainColor,
+    @formPalceholderColor
+) {
+    .topic-write{
+        width: 700px;
+        padding-bottom: 30px;
+        margin: 0px auto;
+        .el-form{
+            padding: 20px 20px 10px 20px;
+            background: @boxBgColor;
+        }
+        .avatar-uploader{
+            height: 120px;
+        }
+        .avatar-uploader .el-upload {
+            border-radius: 6px;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            background: @formBgColor;
+        }
+        .avatar-uploader .el-upload:hover {
+            background: @formHoverBgColor;
+        }
+        .avatar-uploader-icon {
+            font-size: 28px;
+            color: @fontSubColor;
+            width: 180px;
+            height: 120px;
+            line-height: 120px;
+            text-align: center;
+        }
+        .avatar {
+            width: 180px;
+            height: 120px;
+            display: block;
+        }
+    }
+    
+    @media (max-width: @mediaWidth) {
+        .topic-write{
+            width: 100%;
+        }
+    }
+}

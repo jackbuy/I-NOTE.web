@@ -27,6 +27,14 @@
                 @click="handleOpenPublishModal">
                 {{ isPublish }}
             </el-button>
+            <!-- <el-button
+                :disabled="isSaving"
+                size="mini"
+                type="primary"
+                round
+                @click="handleSave">
+                保存
+            </el-button> -->
         </div>
         <div class="write__title">
             <input
@@ -34,13 +42,18 @@
                 type="text"
                 placeholder="输入标题...">
         </div>
-        <editor
-            placeholder="输入正文..."
-            v-model="form.contentHtml"></editor>
+        <quill-editor
+            v-model="form.contentHtml"
+            placeholder="输入正文...">
+        </quill-editor>
+        <!-- <wang-editor
+            v-model="form.contentHtml"
+            :menus="editorMenus">
+        </wang-editor> -->
         <publish-modal
             v-if="showPublishModal"
             v-model="showPublishModal"
-            :tag-id="tagId"
+            :tag-id="publishTagId"
             :tag-options="tagOptions"
             @handlePublish="handlePublish">
         </publish-modal>
@@ -48,14 +61,16 @@
 </template>
 
 <script>
-import Editor from '@/components/common/editor';
+import WangEditor from '@/components/common/wangEditor';
+import QuillEditor from '@/components/common/quillEditor';
 import PublishModal from './publishModal';
 import message from '@/mixins/message';
 import api from '@/utils/api';
 export default {
     name: 'ArticleAdd',
     components: {
-        Editor,
+        QuillEditor,
+        WangEditor,
         PublishModal
     },
     mixins: [ message ],
@@ -64,6 +79,17 @@ export default {
             showPublishModal: false,
             form: {},
             tagOptions: [],
+            editorMenus: [
+                'bold',
+                'italic',
+                'strikeThrough',
+                'link',
+                'image',
+                'video',
+                'quote',
+                'code'
+            ],
+            publishTagId: '',
             isSaving: false,
             saved: false,
             timer: null
@@ -73,14 +99,11 @@ export default {
         articleId() {
             return this.$route.params.articleId;
         },
-        tagId() {
-            return this.form.tagId ? this.form.tagId : '';
-        },
         tips() {
             if (this.isSaving) {
                 return '保存中...';
             } else {
-                return this.saved ? '已保存' : '未发布的文章将自动保存到';
+                return this.saved ? '已保存' : '';
             }
         },
         isPublish() {
@@ -114,13 +137,20 @@ export default {
     methods: {
         // 设置编辑器高度
         setEditorHeight() {
+            // quillEditor
             let edit = document.getElementsByClassName('ql-container ql-snow')[0];
-            edit.style.height = window.innerHeight - 202 - 12 + 'px';
+            edit.style.height = window.innerHeight - 158 - 12 + 'px';
+
+            // wangEditor
+            // let edit = document.getElementsByClassName('text')[0];
+            // edit.style.height = window.innerHeight - 155 - 12 + 'px';
+            // edit.style.height = window.innerHeight - 192 - 12 + 'px';
         },
         handleOpenPublishModal() {
             if (!this.form.title || this.form.title.length === 0) return this.showWarningMsg('标题不能为空！');
             if (!this.form.contentHtml || this.form.contentHtml.length === 0) return this.showWarningMsg('正文不能为空！');
             this.showPublishModal = true;
+            this.publishTagId = this.form.tagId ? this.form.tagId : '';
         },
         getDetail(articleId) {
             api.getDetail({ articleId, isEdit: true }).then((res) => {
@@ -173,14 +203,10 @@ export default {
             this.$router.push(path).catch(() => {});
         },
         getArticleTag() {
-            api.tagChildQuery().then((res) => {
+            api.tagQuery().then((res) => {
                 this.tagOptions = res.data;
             });
         }
     }
 };
 </script>
-
-<style lang="less">
-    @import './layout.less';
-</style>

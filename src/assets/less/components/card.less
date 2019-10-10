@@ -1,0 +1,65 @@
+
+.card(
+    @boxBgColor,
+    @borderColor,
+    @fontSubColor,
+    @fontActiveColor,
+    @fontHoverColor,
+    @mediaWidth
+) {
+    .card{
+        width: 100%;
+        margin-bottom: 15px;
+        background: @boxBgColor;
+        border-radius: 10px;
+        &__title{
+            padding: 0px 15px;
+            display: flex;
+            border-bottom: 1px solid @borderColor;
+            .tit{
+                flex: 1;
+                padding: 15px 0;
+                color: @fontSubColor;
+                .ovf-1();
+                i{
+                    color: @fontSubColor;
+                    margin-right: 5px;
+                }
+            }
+            .menu{
+                padding-top: 10px;
+                &-btn{
+                    display: inline-block;
+                    color: @fontActiveColor;
+                    font-size: 12px;
+                    cursor: pointer;
+                    transition: all 0.3s;
+                    margin-left: 10px;
+                    padding: 6px 0px;
+                    border-radius: 20px;
+                    &.round{
+                        border: 1px solid @fontActiveColor;
+                        padding: 5px 8px;
+                    }
+                    &:hover{
+                        color: @fontHoverColor;
+                    }
+                }
+            }
+        }
+        &__content{
+            padding: 15px;
+            .norecord{
+                font-size: 12px;
+                text-align: center;
+                padding: 20px;
+            }
+        }
+    }
+    
+    @media (max-width: @mediaWidth) {
+        .card{
+            margin-bottom: 5px;
+        }
+    }
+}

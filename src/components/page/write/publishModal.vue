@@ -3,20 +3,15 @@
         :title="title"
         :visible="isVisible"
         @handleClose="handleClose">
-        <el-select
+        <el-cascader
             v-model="form.tagId"
-            :popper-append-to-body="false"
+            placeholder="选择一个标签( 可搜索 )"
+            :options="tagOptions"
+            :props="props"
             class="width100"
             clearable
-            filterable
-            placeholder="选择一个标签( 可搜索 )">
-            <el-option
-                v-for="item in tagOptions"
-                :key="item._id"
-                :label="item.title"
-                :value="item._id">
-            </el-option>
-        </el-select>
+            filterable>
+        </el-cascader>
         <el-button
             :disabled="!form.tagId"
             class="mt15"
@@ -52,6 +47,11 @@ export default {
             title: '发布设置',
             form: {
                 tagId: this.tagId
+            },
+            props: {
+                checkStrictly: true,
+                label: 'title',
+                value: '_id'
             }
         };
     },
@@ -62,7 +62,7 @@ export default {
         handlePublish() {
             const params = {
                 publish: true,
-                ...this.form
+                tagId: this.form.tagId[this.form.tagId.length - 1]
             };
             this.$emit('handlePublish', params);
             this.handleClose();

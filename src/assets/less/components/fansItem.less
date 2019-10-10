@@ -1,0 +1,38 @@
+
+.fans-item(
+    @boxBgColor,
+    @fontMainColor,
+    @imgBgColor
+){
+    .fans{
+        &__item{
+            padding: 15px;
+            margin-bottom: 1px;
+            background: @boxBgColor;
+            color: @fontMainColor;
+            display: flex;
+            align-items:center; /*垂直居中*/
+            .img{
+                width: 30px;
+                height: 30px;
+                background: @imgBgColor;
+                border-radius: 30px;
+                overflow: hidden;
+                margin-right: 10px;
+                cursor: pointer;
+                img{
+                    width: 100%;
+                }
+            }
+            .name{
+                flex: 1;
+                line-height: 1.5;
+                cursor: pointer;
+                .ovf-1();
+                &:hover{
+                    text-decoration: underline;
+                }
+            }
+        }
+    }
+}

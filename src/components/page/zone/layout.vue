@@ -15,7 +15,3 @@ export default {
     props: {}
 };
 </script>
-
-<style lang="less">
-    @import './layout.less';
-</style>

@@ -1,15 +1,13 @@
 import Vue from 'vue';
+import ElementUI from 'element-ui';
+import NProgress from 'nprogress';
+import VueQuillEditor from 'vue-quill-editor';
+import VueSocketio from 'vue-socket.io';
 import router from './router';
 import store from './store';
 import App from './App';
-import { apiBaseUrl } from '@/constants/url-config';
-import ElementUI from 'element-ui';
-import 'element-ui/lib/theme-chalk/index.css';
-import NProgress from 'nprogress';
-import 'nprogress/nprogress.css';
-import VueQuillEditor from 'vue-quill-editor';
-import VueSocketio from 'vue-socket.io';
 import Highlight from './directive/highlight';
+import { apiBaseUrl } from '@/constants/url-config';
 
 Vue.use(Highlight);
 Vue.use(ElementUI, {size: 'small'});

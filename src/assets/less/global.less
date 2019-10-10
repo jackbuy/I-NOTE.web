@@ -1,7 +1,7 @@
 @import './reset.less';
-@import './base.less';
 @import './common.less';
 @import './animation.less';
+@import './theme.less';
 
 // 全部标签启用盒子模型（兼容IE8+）
 *,*:before,*:after{
@@ -13,11 +13,6 @@
     .clearfix();
 }
 
-html{
-    background-color: @bodyBgColor;
-    color: @fontColor;
-}
-
 // 没有记录，加载提示
 .loading-tip,
 .norecord,
@@ -27,4 +22,68 @@ html{
     line-height: 50px;
     font-size: 12px;
     text-align: center;
+}
+
+// 主题 - 白天
+.theme-light{
+    .theme(
+        @containerWidth: 1000px,
+        @mediaWidth: 1020px,
+        @mediaContainerWidth: 100%,
+
+        @bodyBgColor: #f4f5f5,
+        @boxBgColor: #fff,
+        @borderColor: #f5f5f5,
+
+        @fontColor: #aaa,
+        @fontMainColor: #151515,
+        @fontSubColor: #666,
+        @fontActiveColor: #539eff,
+        @fontHoverColor: #539eff,
+
+        @formBgColor: #f5f5f5,
+        @formHoverBgColor: #f5f5f5,
+        @formFocusBgColor: #e5e5e5,
+        @formFocusBorderColor: #ddd,
+        @formActiveBgColor: #539eff,
+        @formActiveHoverBgColor: #66b1ff,
+        @formDisabledBgColor: #a7cff7,
+        @formPalceholderColor: #ccc,
+
+        @preBg: #2d2d2d,
+        @imgBgColor: #eee,
+        @shadow: 0 0 6px rgba(0, 0, 0, 0.05)
+    );
+}
+
+// 主题 - 夜间
+.theme-dark{
+    .theme(
+        @containerWidth: 1000px,
+        @mediaWidth: 1020px,
+        @mediaContainerWidth: 100%,
+
+        @bodyBgColor: #111,
+        @boxBgColor: #333,
+        @borderColor: #444,
+
+        @fontColor: #666,
+        @fontMainColor: #ccc,
+        @fontSubColor: #888,
+        @fontActiveColor: #539eff,
+        @fontHoverColor: #539eff,
+
+        @formBgColor: #444,
+        @formHoverBgColor: #444,
+        @formFocusBgColor: #555,
+        @formFocusBorderColor: #555,
+        @formActiveBgColor: #539eff,
+        @formActiveHoverBgColor: #66b1ff,
+        @formDisabledBgColor: #444,
+        @formPalceholderColor: #888,
+
+        @preBg: #2d2d2d,
+        @imgBgColor: #555,
+        @shadow: 0 0 6px rgba(0, 0, 0, 0.5)
+    );
 }

@@ -20,6 +20,10 @@
         </div>
         <div v-if="itemType !== 'draft'" class="article__item-action">
             <span>
+                <i class="icon icon-bq"></i>
+                {{ tag }}
+            </span>
+            <span>
                 <i class="icon icon-dianzan"></i>
                 {{ likeCount }}
             </span>
@@ -34,10 +38,6 @@
             <span>
                 <i class="icon icon-chakan1"></i>
                 {{ viewCount }}
-            </span>
-            <span>
-                <i class="icon icon-bq"></i>
-                {{ tag }}
             </span>
         </div>
         <div class="article__item-img" v-if="img" v-html="img"></div>
@@ -100,7 +100,9 @@ export default {
             }
         },
         tag() {
-            if (this.item && this.item.tagId) return this.item.tagId.title;
+            if (this.item && this.item.tagId && this.item.tagId.parentId) {
+                return `${this.item.tagId.parentId.title} . ${this.item.tagId.title}`;
+            };
         },
         viewCount() {
             if (this.item) return this.item.viewCount > 0 ? this.item.viewCount : '';
@@ -138,7 +140,3 @@ export default {
     }
 };
 </script>
-
-<style lang="less">
-    @import './index.less';
-</style>

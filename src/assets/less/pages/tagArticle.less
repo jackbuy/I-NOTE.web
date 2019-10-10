@@ -1,0 +1,33 @@
+
+.tag-article(
+    @fontSubColor,
+    @mediaWidth
+){
+    .tag-article{
+        display: flex;
+        &__content{
+            flex: 1;
+        }
+        &__side{
+            width: 30%;
+            padding-left: 15px;
+            .fixed{
+                position: fixed;
+                width: 285px;
+                top: 69px;
+            }
+            .count{
+                padding: 5px 10px;
+                color: @fontSubColor;
+            }
+        }
+    }
+    
+    @media (max-width: @mediaWidth) {
+        .tag-article{
+            &__side{
+                display: none;
+            }
+        }
+    }
+}

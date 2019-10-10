@@ -16,18 +16,3 @@ export default {
     }
 };
 </script>
-
-<style lang="less">
-    .page403{
-        padding: 50px;
-        &-title{
-            font-size: 24px;
-        }
-        &-descript{
-            padding-top: 20px;
-        }
-        &-button{
-            margin-top: 15px;
-        }
-    }
-</style>

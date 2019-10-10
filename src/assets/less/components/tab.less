@@ -1,0 +1,36 @@
+.tab(
+    @boxBgColor,
+    @borderColor,
+    @fontSubColor,
+    @fontActiveColor
+){
+    .tab{
+        padding: 0 20px;
+        background: @boxBgColor;
+        border-bottom: 1px solid @borderColor;
+        span{
+            display: inline-block;
+            padding: 15px 0;
+            margin-right: 25px;
+            color: @fontSubColor;
+            cursor: pointer;
+            transition: all 0.3s;
+            position: relative;
+            &.active::after{
+                content: "";
+                position: absolute;
+                left: 50%;
+                bottom: -2px;
+                width: 14px;
+                height: 3px;
+                margin-left: -7px;
+                background: @fontActiveColor;
+                z-index: 10;
+            }
+            &.active,
+            &:hover{
+                color: @fontActiveColor;
+            }
+        }
+    }
+}

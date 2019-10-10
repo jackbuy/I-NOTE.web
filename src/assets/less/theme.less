@@ -1,0 +1,320 @@
+// components
+@import './components/layout.less';
+@import './components/articleComment.less';
+@import './components/articleItem.less';
+@import './components/articleRecommend.less';
+@import './components/authorRecommend.less';
+@import './components/card.less';
+@import './components/modal.less';
+@import './components/tab.less';
+@import './components/page403.less';
+@import './components/page404.less';
+@import './components/tagRecommend.less';
+@import './components/topicItem.less';
+@import './components/topicRecommend.less';
+@import './components/userAvatar.less';
+@import './components/userInfo.less';
+@import './components/wEditor.less';
+@import './components/quillEditor.less';
+@import './components/followUserItem.less';
+@import './components/followTopicItem.less';
+@import './components/followTagItem.less';
+@import './components/fansItem.less';
+@import './components/elementUI.less';
+
+// pages
+@import './pages/home.less';
+@import './pages/detail.less';
+@import './pages/settings.less';
+@import './pages/msg.less';
+@import './pages/login.less';
+@import './pages/write.less';
+@import './pages/zone.less';
+@import './pages/tag.less';
+@import './pages/tagArticle.less';
+@import './pages/topicWrite.less';
+@import './pages/topicArticle.less';
+
+// 主题公共函数
+.theme(
+    @containerWidth,
+    @mediaWidth,
+    @mediaContainerWidth,
+
+    @bodyBgColor,
+    @boxBgColor,
+    @borderColor,
+
+    @fontColor,
+    @fontMainColor,
+    @fontSubColor,
+    @fontActiveColor,
+    @fontHoverColor,
+
+    @formBgColor,
+    @formHoverBgColor,
+    @formFocusBgColor,
+    @formFocusBorderColor,
+    @formActiveBgColor,
+    @formActiveHoverBgColor,
+    @formDisabledBgColor,
+    @formPalceholderColor,
+
+    @preBg,
+    @imgBgColor,
+    @shadow
+) {
+
+    // html
+    background-color: @bodyBgColor;
+    color: @fontColor;
+
+    .layout(
+        @fontMainColor,
+        @boxBgColor,
+        @shadow,
+        @containerWidth,
+        @fontHoverColor,
+        @formBgColor,
+        @formFocusBgColor,
+        @formPalceholderColor,
+        @fontActiveColor,
+        @mediaWidth
+    );
+
+    .home(@mediaWidth);
+
+    .login(@fontActiveColor);
+
+    .zone(@mediaWidth);
+
+    .tag(
+        @fontSubColor,
+        @boxBgColor,
+        @fontMainColor,
+        @fontActiveColor,
+        @borderColor,
+        @mediaWidth
+    );
+
+    .tag-article(
+        @fontSubColor,
+        @mediaWidth
+    );
+
+    .write(
+        @boxBgColor,
+        @fontMainColor,
+        @mediaWidth
+    );
+
+    .detail(
+        @fontMainColor,
+        @borderColor,
+        @formBgColor,
+        @fontActiveColor,
+        @boxBgColor,
+        @fontSubColor,
+        @fontColor,
+        @mediaWidth
+    );
+
+    .msg(
+        @boxBgColor,
+        @fontColor,
+        @fontMainColor,
+        @fontSubColor,
+        @fontActiveColor,
+        @mediaWidth
+    );
+
+    .topic-write(
+        @boxBgColor,
+        @formBgColor,
+        @formHoverBgColor,
+        @fontSubColor,
+        @mediaWidth,
+        @borderColor,
+        @fontMainColor,
+        @formPalceholderColor
+    );
+
+    .topic-article(
+        @fontSubColor,
+        @borderColor,
+        @mediaWidth
+    );
+
+    .settings(
+        @boxBgColor,
+        @borderColor,
+        @fontSubColor,
+        @imgBgColor,
+        @fontActiveColor,
+        @fontColor,
+        @fontMainColor,
+        @formBgColor,
+        @mediaWidth
+    );
+
+    .modal(
+        @boxBgColor,
+        @fontSubColor,
+        @borderColor,
+        @mediaWidth
+    );
+
+    .tab(
+        @boxBgColor,
+        @borderColor,
+        @fontSubColor,
+        @fontActiveColor
+    );
+
+    .user-avatar(
+        @boxBgColor,
+        @imgBgColor,
+        @fontMainColor,
+        @borderColor,
+        @fontSubColor,
+        @formHoverBgColor,
+        @fontActiveColor,
+        @mediaWidth
+    );
+
+    .user-info(
+        @imgBgColor,
+        @fontMainColor,
+        @fontActiveColor,
+        @borderColor,
+        @fontSubColor
+    );
+
+    .quill-editor(
+        @fontMainColor,
+        @borderColor,
+        @formBgColor,
+        @fontActiveColor,
+        @boxBgColor,
+        @formPalceholderColor,
+        @fontSubColor,
+        @preBg
+    );
+
+    .w-editor(
+        @boxBgColor,
+        @borderColor,
+        @fontHoverColor,
+        @fontMainColor,
+        @formBgColor,
+        @fontActiveColor,
+        @preBg
+    );
+
+    .article-tag(
+        @borderColor,
+        @fontMainColor,
+        @fontActiveColor
+    );
+
+    .topic-item(
+        @boxBgColor,
+        @borderColor,
+        @fontActiveColor,
+        @fontSubColor,
+        @fontMainColor,
+        @fontHoverColor,
+        @imgBgColor,
+        @mediaWidth
+    );
+
+    .topic-recommend(
+        @imgBgColor,
+        @fontMainColor,
+        @fontActiveColor
+    );
+
+    // 评论
+    .articleComment(
+        @borderColor,
+        @fontMainColor,
+        @fontSubColor,
+        @formBgColor,
+        @formFocusBgColor,
+        @formFocusBorderColor,
+        @formActiveBgColor,
+        @formDisabledBgColor,
+        @imgBgColor
+    );
+
+    .articleItem(
+        @boxBgColor,
+        @borderColor,
+        @fontColor,
+        @fontMainColor,
+        @fontSubColor,
+        @fontActiveColor,
+        @fontHoverColor,
+        @imgBgColor
+    );
+
+    .article-recommend(
+        @borderColor,
+        @fontMainColor,
+        @fontHoverColor
+    );
+
+    .author(
+        @imgBgColor,
+        @fontMainColor,
+        @fontHoverColor
+    );
+
+    .card(
+        @boxBgColor,
+        @borderColor,
+        @fontSubColor,
+        @fontActiveColor,
+        @fontHoverColor,
+        @mediaWidth
+    );
+
+    .follow-user(
+        @boxBgColor,
+        @fontMainColor,
+        @imgBgColor
+    );
+
+    .follow-topic(
+        @boxBgColor,
+        @fontMainColor,
+        @imgBgColor
+    );
+
+    .follow-tag(
+        @boxBgColor,
+        @fontMainColor
+    );
+
+    .fans-item(
+        @boxBgColor,
+        @fontMainColor,
+        @imgBgColor
+    );
+
+    .page403();
+    .page404();
+
+    .element-ui(
+        @formBgColor,
+        @formHoverBgColor,
+        @formFocusBgColor,
+        @formFocusBorderColor,
+        @formActiveBgColor,
+        @formActiveHoverBgColor,
+        @formDisabledBgColor,
+        @formPalceholderColor,
+        @borderColor,
+        @fontMainColor
+    );
+}

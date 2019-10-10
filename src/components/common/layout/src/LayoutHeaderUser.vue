@@ -15,6 +15,10 @@
                     <el-dropdown-item command="topicWrite">创建专题</el-dropdown-item>
                 </el-dropdown-menu>
             </el-dropdown>
+            <span class="theme" @click="handleTheme()">
+                <i v-if="themeLight" class="icon icon-baitian"></i>
+                <i v-else class="icon icon-yejian"></i>
+            </span>
             <el-dropdown @command="handleCommand" trigger="click">
                 <span class="el-dropdown-link user-img">
                     <img v-if="isAvatar" :src="userImg" alt="">
@@ -42,6 +46,7 @@ import {
     GET_USER_INFO
 } from '@/store/mutation-types';
 import { imgBaseUrl } from '@/constants/url-config';
+import api from '@/utils/api';
 export default {
     name: 'LayoutHeaderUser',
     props: {
@@ -69,6 +74,17 @@ export default {
         },
         isAvatar() {
             return this.userInfo.avatar;
+        },
+        themeLight() {
+            return this.userInfo.theme === 'light';
+        }
+    },
+    watch: {
+        userInfo: {
+            handler(n, o) {
+                if (n && n.theme) this.setTheme(`theme-${n.theme}`);
+            },
+            immediate: true
         }
     },
     created() {
@@ -81,6 +97,18 @@ export default {
         ...mapActions({
             getUserInfo: GET_USER_INFO
         }),
+        handleTheme() {
+            const params = {
+                theme: this.userInfo.theme === 'light' ? 'dark' : 'light'
+            };
+            api.userInfoEdit(params).then(() => {
+                this.setTheme(`theme-${params.theme}`);
+                this.getUserInfo();
+            });
+        },
+        setTheme(theme) {
+            document.querySelector('html').setAttribute('class', theme);
+        },
         handleLog(type) {
             this.toggleLoginModal({
                 open: true,

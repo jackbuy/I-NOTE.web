@@ -97,6 +97,13 @@
       "unicode_decimal": 59784
     },
     {
+      "icon_id": "3365786",
+      "name": "夜间",
+      "font_class": "yejian",
+      "unicode": "e604",
+      "unicode_decimal": 58884
+    },
+    {
       "icon_id": "4083051",
       "name": "jia",
       "font_class": "jia",
@@ -179,6 +186,13 @@
       "font_class": "biaoji",
       "unicode": "e6bf",
       "unicode_decimal": 59071
+    },
+    {
+      "icon_id": "9660764",
+      "name": "白天",
+      "font_class": "baitian",
+      "unicode": "e613",
+      "unicode_decimal": 58899
     },
     {
       "icon_id": "9762988",

@@ -66,8 +66,14 @@
                 class="article-detail__content">
             </div>
             <div class="article-detail__info">
-                <span>{{ tag }}</span>
-                <span>浏览 {{ viewCount }}</span>
+                <span>
+                    <i class="icon icon-bq"></i>
+                    {{ tag }}
+                </span>
+                <span>
+                    <i class="icon icon-chakan1"></i>
+                    {{ viewCount }}
+                </span>
                 <span :title="createTime">{{ editTime }}</span>
                 <span
                     v-if="currentUserId === authorId"
@@ -149,7 +155,9 @@ export default {
             return `${utils.formatDate.time(this.detail.editTime)}`;
         },
         tag() {
-            if (this.detail.tagId) return this.detail.tagId.title;
+            if (this.detail && this.detail.tagId && this.detail.tagId.parentId) {
+                return `${this.detail.tagId.parentId.title} . ${this.detail.tagId.title}`;
+            };
         },
         likeCount() {
             return this.detail.likeCount || 0;

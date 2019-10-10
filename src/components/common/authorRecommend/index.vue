@@ -1,6 +1,6 @@
 <template>
     <div
-        class="author-hot"
+        class="author"
         @click="handleZone(userId)">
         <div v-if="imgUrl" class="img" :style="{backgroundImage: 'url(' + imgUrl + ')'}"></div>
         <div v-else class="img"><i class="icon icon-yonghu"></i></div>
@@ -42,7 +42,3 @@ export default {
     }
 };
 </script>
-
-<style lang="less">
-    @import './index.less';
-</style>

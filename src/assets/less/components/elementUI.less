@@ -1,0 +1,59 @@
+// elementUI 样式改造
+.element-ui(
+    @formBgColor,
+    @formHoverBgColor,
+    @formFocusBgColor,
+    @formFocusBorderColor,
+    @formActiveBgColor,
+    @formActiveHoverBgColor,
+    @formDisabledBgColor,
+    @formPalceholderColor,
+    @borderColor,
+    @fontMainColor
+){
+
+    .el-input-group__append, .el-input-group__prepend{
+        border-color: @borderColor;
+    }
+
+    .el-input__inner,
+    .el-textarea__inner{
+        background: @formBgColor;
+        border-color: @borderColor;
+        color: @fontMainColor;
+        &:focus{
+            border-color: @formFocusBorderColor;
+        }
+        .palceholder(@formPalceholderColor);
+    }
+    .el-button{
+        background: @formBgColor;
+        border-color: @borderColor;
+        color: @fontMainColor;
+        &:focus,
+        &:hover{
+            border-color: @formFocusBorderColor;
+            background-color: @formFocusBgColor;
+        }
+        &--primary {
+            color: #fff;
+            border-color: @formActiveBgColor;
+            background-color: @formActiveBgColor;
+            &:focus,
+            &:hover{
+                border-color: @formActiveHoverBgColor;
+                background-color: @formActiveHoverBgColor;
+            }
+        }
+        &.is-disabled,
+        &.is-disabled:focus,
+        &.is-disabled:hover{
+            color: #fff;
+            cursor: not-allowed;
+            background-image: none;
+            background-color: @formDisabledBgColor;
+            border-color: @formDisabledBgColor;
+        }
+    }
+
+}

@@ -1,8 +1,8 @@
 import Vue from 'vue';
 import Router from 'vue-router';
-const Page404 = () => import('@/components/common/Page404');
-const Page403 = () => import('@/components/common/Page403');
-const Layout = () => import('@/components/common/layout/Layout');
+const Page404 = () => import('@/components/common/page404');
+const Page403 = () => import('@/components/common/page403');
+const Layout = () => import('@/components/common/layout');
 const Home = () => import('@/components/page/home');
 const Msg = () => import('@/components/page/msg');
 const Search = () => import('@/components/page/search');

@@ -11,7 +11,3 @@
         </div>
     </div>
 </template>
-
-<style lang="less">
-    @import './layout.less';
-</style>

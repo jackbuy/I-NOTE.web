@@ -32,6 +32,8 @@ export default {
 </script>
 
 <style lang="less">
-    @import './assets/fonts/iconfont.css';
     @import './assets/less/global.less';
+
+    /* 发布构建时，需注释掉 */
+    @import './assets/fonts/iconfont.css';
 </style>

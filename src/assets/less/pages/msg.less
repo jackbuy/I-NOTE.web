@@ -1,6 +1,7 @@
 
 .msg(
     @boxBgColor,
+    @borderColor,
     @fontColor,
     @fontMainColor,
     @fontSubColor,
@@ -10,10 +11,10 @@
     .msg{
         &__content{
             .item{
-                background: @boxBgColor;
-                padding: 20px;
-                margin-bottom: 1px;
                 display: flex;
+                padding: 20px;
+                background: @boxBgColor;
+                .borderTop(@borderColor);
                 &-title{
                     flex: 1;
                     span{

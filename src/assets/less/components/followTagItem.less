@@ -1,16 +1,17 @@
 
 .follow-tag(
     @boxBgColor,
+    @borderColor,
     @fontMainColor
 ){
     .follow-tag{
         &__item{
             padding: 15px;
-            margin-bottom: 1px;
             background: @boxBgColor;
             color: @fontMainColor;
             display: flex;
             align-items:center; /*垂直居中*/
+            .borderTop(@borderColor);
             .name{
                 flex: 1;
                 cursor: pointer;

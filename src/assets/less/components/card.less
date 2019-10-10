@@ -12,6 +12,7 @@
         margin-bottom: 15px;
         background: @boxBgColor;
         border-radius: 10px;
+        overflow: hidden;
         &__title{
             padding: 0px 15px;
             display: flex;
@@ -48,17 +49,16 @@
             }
         }
         &__content{
-            padding: 15px;
-            .norecord{
-                font-size: 12px;
-                text-align: center;
-                padding: 20px;
+            &.padding{
+                padding: 15px;
             }
         }
     }
     
     @media (max-width: @mediaWidth) {
         .card{
+            width: 98%;
+            margin: 0 auto;
             margin-bottom: 5px;
         }
     }

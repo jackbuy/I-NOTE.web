@@ -69,6 +69,11 @@
     background-color: @bodyBgColor;
     color: @fontColor;
 
+    // 没有更多
+    .no-more{
+        border-top: 1px solid @borderColor;
+    }
+
     .layout(
         @fontMainColor,
         @boxBgColor,
@@ -121,6 +126,7 @@
 
     .msg(
         @boxBgColor,
+        @borderColor,
         @fontColor,
         @fontMainColor,
         @fontSubColor,
@@ -281,23 +287,27 @@
 
     .follow-user(
         @boxBgColor,
+        @borderColor,
         @fontMainColor,
         @imgBgColor
     );
 
     .follow-topic(
         @boxBgColor,
+        @borderColor,
         @fontMainColor,
         @imgBgColor
     );
 
     .follow-tag(
         @boxBgColor,
+        @borderColor,
         @fontMainColor
     );
 
     .fans-item(
         @boxBgColor,
+        @borderColor,
         @fontMainColor,
         @imgBgColor
     );

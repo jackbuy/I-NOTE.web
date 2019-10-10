@@ -1,20 +1,21 @@
 <template>
     <layout :is-has="isHas">
-        <infinite-scroll
-            slot="content"
-            :loading="loading"
-            :no-more="noMore"
-            :data="listData"
-            @loadData="getList(topicId)">
-            <template slot-scope="scope">
-                <article-item
-                    :item="scope.row.articleId"
-                    :show-menu-edit="false"
-                    :item-id="scope.row._id"
-                    @delete="handleDelete">
-                </article-item>
-            </template>
-        </infinite-scroll>
+        <card slot="content" :visible-header="true" :padding="false">
+            <infinite-scroll
+                :loading="loading"
+                :no-more="noMore"
+                :data="listData"
+                @loadData="getList(topicId)">
+                <template slot-scope="scope">
+                    <article-item
+                        :item="scope.row.articleId"
+                        :show-menu-edit="false"
+                        :item-id="scope.row._id"
+                        @delete="handleDelete">
+                    </article-item>
+                </template>
+            </infinite-scroll>
+        </card>
         <card slot="topicDetail" icon="icon icon-zhuanti" :title="topicTitle">
             <template slot="menu">
                 <div class="menu">

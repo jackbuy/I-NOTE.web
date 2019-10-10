@@ -1,12 +1,10 @@
 <template>
     <home-layout>
-        <template slot="header">
+        <card slot="content" :visible-header="true" :padding="false">
             <tab :activeName="sortType" @tabClick="handleSort">
                 <tab-label name="newest" label="最新"></tab-label>
                 <tab-label name="popular" label="热门"></tab-label>
             </tab>
-        </template>
-        <template slot="content">
             <infinite-scroll
                 :loading="loading"
                 :no-more="noMore"
@@ -20,44 +18,38 @@
                     </article-item>
                 </template>
             </infinite-scroll>
-        </template>
-        <template slot="tag">
-            <card icon="icon icon-bq" title="标签">
-                <template slot="menu">
-                    <div class="menu">
-                        <span class="menu-btn" @click="handleRouterPush('/tag')">全部</span>
-                    </div>
-                </template>
-                <tag-recommend
-                    v-for="item in tagRecommendData"
-                    :key="item._id"
-                    :item="item">
-                </tag-recommend>
-            </card>
-        </template>
-        <template slot="topic">
-            <card icon="icon icon-zhuanti" title="专题榜">
-                <template slot="menu">
-                    <div class="menu">
-                        <span class="menu-btn" @click="handleRouterPush('/topic')">全部</span>
-                    </div>
-                </template>
-                <topic-recommend
-                    v-for="item in topicRecommendData"
-                    :key="item._id"
-                    :item="item">
-                </topic-recommend>
-            </card>
-        </template>
-        <template slot="author">
-            <card icon="icon icon-zuozhe" title="创作榜">
-                <author-recommend
-                    v-for="item in authorRecommendData"
-                    :key="item._id"
-                    :item="item">
-                </author-recommend>
-            </card>
-        </template>
+        </card>
+        <card slot="tag" icon="icon icon-bq" title="标签">
+            <template slot="menu">
+                <div class="menu">
+                    <span class="menu-btn" @click="handleRouterPush('/tag')">全部</span>
+                </div>
+            </template>
+            <tag-recommend
+                v-for="item in tagRecommendData"
+                :key="item._id"
+                :item="item">
+            </tag-recommend>
+        </card>
+        <card slot="topic" icon="icon icon-zhuanti" title="专题榜">
+            <template slot="menu">
+                <div class="menu">
+                    <span class="menu-btn" @click="handleRouterPush('/topic')">全部</span>
+                </div>
+            </template>
+            <topic-recommend
+                v-for="item in topicRecommendData"
+                :key="item._id"
+                :item="item">
+            </topic-recommend>
+        </card>
+        <card slot="author" icon="icon icon-zuozhe" title="创作榜">
+            <author-recommend
+                v-for="item in authorRecommendData"
+                :key="item._id"
+                :item="item">
+            </author-recommend>
+        </card>
     </home-layout>
 </template>
 

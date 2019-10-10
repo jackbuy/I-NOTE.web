@@ -1,56 +1,62 @@
 <template>
-    <div class="topic-write">
-        <el-form
-            ref="form"
-            :model="form"
-            :rules="rules"
-            :label-width="labelWidth">
-            <el-form-item
-                label="专题封面">
-                <el-upload
-                    class="avatar-uploader"
-                    :action="actionUrl"
-                    :headers="headers"
-                    :data="dataOptions"
-                    :show-file-list="false"
-                    :on-success="handleAvatarSuccess"
-                    :before-upload="beforeAvatarUpload">
-                    <img v-if="imageUrl" :src="imageUrl" class="avatar">
-                    <i v-else class="el-icon-plus avatar-uploader-icon"></i>
-                </el-upload>
-                <input v-model="form.img" type="hidden">
-            </el-form-item>
-            <el-form-item
-                label="名称"
-                prop="title">
-                <el-input
-                    v-model="form.title"
-                    placeholder="输入名称 <=50"></el-input>
-            </el-form-item>
-            <el-form-item
-                label="描述"
-                prop="description">
-                <el-input
-                    v-model="form.description"
-                    :rows="4"
-                    type="textarea"
-                    placeholder="输入描述 <=300"></el-input>
-            </el-form-item>
-            <el-form-item>
-                <el-button
-                    :loading="loading"
-                    type="primary"
-                    @click="handleSave">{{ loading ? '稍候...' : '保存'}}</el-button>
-            </el-form-item>
-        </el-form>
-    </div>
+    <card slot="content" :visible-header="true" :padding="false">
+        <div class="topic-write">
+            <el-form
+                ref="form"
+                :model="form"
+                :rules="rules"
+                :label-width="labelWidth">
+                <el-form-item
+                    label="专题封面">
+                    <el-upload
+                        class="avatar-uploader"
+                        :action="actionUrl"
+                        :headers="headers"
+                        :data="dataOptions"
+                        :show-file-list="false"
+                        :on-success="handleAvatarSuccess"
+                        :before-upload="beforeAvatarUpload">
+                        <img v-if="imageUrl" :src="imageUrl" class="avatar">
+                        <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+                    </el-upload>
+                    <input v-model="form.img" type="hidden">
+                </el-form-item>
+                <el-form-item
+                    label="名称"
+                    prop="title">
+                    <el-input
+                        v-model="form.title"
+                        placeholder="输入名称 <=50"></el-input>
+                </el-form-item>
+                <el-form-item
+                    label="描述"
+                    prop="description">
+                    <el-input
+                        v-model="form.description"
+                        :rows="4"
+                        type="textarea"
+                        placeholder="输入描述 <=300"></el-input>
+                </el-form-item>
+                <el-form-item>
+                    <el-button
+                        :loading="loading"
+                        type="primary"
+                        @click="handleSave">{{ loading ? '稍候...' : '保存'}}</el-button>
+                </el-form-item>
+            </el-form>
+        </div>
+    </card>
 </template>
 
 <script>
+import Card from '@/components/common/card';
 import { imgBaseUrl, apiBaseUrl } from '@/constants/url-config';
 import api from '@/utils/api';
 export default {
     name: 'TopicAddEdit',
+    components: {
+        Card
+    },
     data() {
         return {
             form: {

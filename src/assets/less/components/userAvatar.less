@@ -14,6 +14,7 @@
         background: @boxBgColor;
         padding: 10px;
         position: relative;
+        border-radius: 10px;
         .el-avatar{
             position: absolute;
             left: 50%;
@@ -117,6 +118,8 @@
     
     @media (max-width: @mediaWidth) {
         .user-avatar{
+            width: 98%;
+            margin: 0 auto;
             .el-avatar{
                 top: 10px !important;
             }

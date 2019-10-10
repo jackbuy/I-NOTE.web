@@ -1,29 +1,33 @@
 <template>
-    <infinite-scroll
-        :data="listData"
-        :loading="loading"
-        :no-more="noMore"
-        @loadData="getList">
-        <template slot-scope="scope">
-            <topic-item
-                :item="scope.row"
-                :show-menu-edit="false"
-                :show-menu-delete="false">
-            </topic-item>
-        </template>
-    </infinite-scroll>
+    <card :visible-header="true" :padding="false">
+        <infinite-scroll
+            :data="listData"
+            :loading="loading"
+            :no-more="noMore"
+            @loadData="getList">
+            <template slot-scope="scope">
+                <topic-item
+                    :item="scope.row"
+                    :show-menu-edit="false"
+                    :show-menu-delete="false">
+                </topic-item>
+            </template>
+        </infinite-scroll>
+    </card>
 </template>
 
 <script>
 import InfiniteScroll from '@/components/common/infiniteScrollList';
 import TopicItem from '@/components/common/topicItem';
+import Card from '@/components/common/card';
 import api from '@/utils/api';
 
 export default {
     name: 'Search',
     components: {
         InfiniteScroll,
-        TopicItem
+        TopicItem,
+        Card
     },
     data() {
         return {

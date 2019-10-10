@@ -1,7 +1,7 @@
 <template>
     <div class="home">
         <div class="home-content">
-            <slot name="header"></slot>
+            <!-- <slot name="header"></slot> -->
             <slot name="content"></slot>
         </div>
         <div class="home-side">

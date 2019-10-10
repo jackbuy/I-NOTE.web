@@ -1,33 +1,35 @@
 <template>
     <msg-layout>
-        <tab slot="header" :activeName="activeTabName" @tabClick="handleTabClick">
-            <tab-label name="all" label="全部"></tab-label>
-            <tab-label name="read" label="已读"></tab-label>
-            <tab-label name="notifications" label="未读"></tab-label>
-            <!-- <tab-label name="like" label="点赞"></tab-label>
-            <tab-label name="collect" label="收藏"></tab-label>
-            <tab-label name="followUser" label="关注"></tab-label>
-            <tab-label name="followTopic" label="专题"></tab-label> -->
-        </tab>
-        <infinite-scroll
-            slot="content"
-            :loading="loading"
-            :no-more="noMore"
-            :data="listData"
-            @loadData="getList()">
-            <template slot-scope="scope">
-                <msg-list-item
-                    :data="scope.row"
-                    @del="handleDelete"
-                    @read="handleRead"></msg-list-item>
-            </template>
-        </infinite-scroll>
+        <card slot="content" :visible-header="true" :padding="false">
+            <tab :activeName="activeTabName" @tabClick="handleTabClick">
+                <tab-label name="all" label="全部"></tab-label>
+                <tab-label name="read" label="已读"></tab-label>
+                <tab-label name="notifications" label="未读"></tab-label>
+                <!-- <tab-label name="like" label="点赞"></tab-label>
+                <tab-label name="collect" label="收藏"></tab-label>
+                <tab-label name="followUser" label="关注"></tab-label>
+                <tab-label name="followTopic" label="专题"></tab-label> -->
+            </tab>
+            <infinite-scroll
+                :loading="loading"
+                :no-more="noMore"
+                :data="listData"
+                @loadData="getList()">
+                <template slot-scope="scope">
+                    <msg-list-item
+                        :data="scope.row"
+                        @del="handleDelete"
+                        @read="handleRead"></msg-list-item>
+                </template>
+            </infinite-scroll>
+        </card>
     </msg-layout>
 </template>
 
 <script>
 import Tab from '@/components/common/tab';
 import TabLabel from '@/components/common/tab/tabLabel';
+import Card from '@/components/common/card';
 import InfiniteScroll from '@/components/common/infiniteScrollList';
 import MsgLayout from './Layout';
 import MsgListItem from './src/MsgListItem';
@@ -37,6 +39,7 @@ export default {
     name: 'MsgCenter',
     mixins: [ message ],
     components: {
+        Card,
         MsgLayout,
         MsgListItem,
         Tab,

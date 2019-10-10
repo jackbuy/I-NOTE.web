@@ -1,10 +1,12 @@
 <template>
     <div class="card">
-        <div v-if="visibleHeader" class="card__title">
+        <div v-if="!visibleHeader" class="card__title">
             <div class="tit"><i v-if="icon" :class="icon"></i>{{ title }}</div>
             <slot name="menu"></slot>
         </div>
-        <div class="card__content">
+        <div
+            class="card__content"
+            :class="{'padding': padding}">
             <slot></slot>
         </div>
     </div>
@@ -20,6 +22,10 @@ export default {
         },
         icon: String,
         visibleHeader: {
+            type: Boolean,
+            default: false
+        },
+        padding: {
             type: Boolean,
             default: true
         }

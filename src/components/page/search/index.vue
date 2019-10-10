@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <card slot="content" :visible-header="true" :padding="false">
         <tab :activeName="activeTabName" @tabClick="handleTabClick">
             <tab-label name="article" label="文章"></tab-label>
             <tab-label name="topic" label="专题"></tab-label>
@@ -19,13 +19,14 @@
                 <topic-item v-if="activeTabName === 'topic'" :item="scope.row"></topic-item>
             </template>
         </infinite-scroll>
-    </div>
+    </card>
 </template>
 
 <script>
 import InfiniteScroll from '@/components/common/infiniteScrollList';
 import ArticleItem from '@/components/common/articleItem';
 import TopicItem from '@/components/common/topicItem';
+import Card from '@/components/common/card';
 import Tab from '@/components/common/tab';
 import TabLabel from '@/components/common/tab/tabLabel';
 import api from '@/utils/api';
@@ -37,7 +38,8 @@ export default {
         ArticleItem,
         TopicItem,
         Tab,
-        TabLabel
+        TabLabel,
+        Card
     },
     data() {
         return {

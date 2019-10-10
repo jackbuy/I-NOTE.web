@@ -1,17 +1,18 @@
 
 .fans-item(
     @boxBgColor,
+    @borderColor,
     @fontMainColor,
     @imgBgColor
 ){
     .fans{
         &__item{
-            padding: 15px;
-            margin-bottom: 1px;
-            background: @boxBgColor;
-            color: @fontMainColor;
             display: flex;
             align-items:center; /*垂直居中*/
+            padding: 15px;
+            background: @boxBgColor;
+            color: @fontMainColor;
+            .borderTop(@borderColor);
             .img{
                 width: 30px;
                 height: 30px;

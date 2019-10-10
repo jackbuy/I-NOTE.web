@@ -14,15 +14,12 @@
             position: relative;
             padding: 15px;
             background: @boxBgColor;
-            margin-bottom: 1px;
+            .borderTop(@borderColor);
             &.has-img{
                 padding-right: 150px;
                 .topic__item-img{
                     display: block;
                 }
-            }
-            &:first-child{
-                border-top-width: 1px;
             }
             &-menu{
                 position: absolute;

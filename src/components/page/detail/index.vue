@@ -56,51 +56,53 @@
                 </el-popover>
             </div>
         </div>
-        <div slot="content" class="article-detail">
-            <div class="article-detail__title">
-                {{ title }}
+        <card slot="content" :visible-header="true" :padding="false">
+            <div class="article-detail">
+                <div class="article-detail__title">
+                    {{ title }}
+                </div>
+                <div
+                    v-highlightB
+                    v-html="content"
+                    class="article-detail__content">
+                </div>
+                <div class="article-detail__info">
+                    <span>
+                        <i class="icon icon-bq"></i>
+                        {{ tag }}
+                    </span>
+                    <span>
+                        <i class="icon icon-chakan1"></i>
+                        {{ viewCount }}
+                    </span>
+                    <span :title="createTime">{{ editTime }}</span>
+                    <span
+                        v-if="currentUserId === authorId"
+                        class="edit"
+                        @click="handleRouterEdit(articleId)">编辑</span>
+                </div>
             </div>
-            <div
-                v-highlightB
-                v-html="content"
-                class="article-detail__content">
-            </div>
-            <div class="article-detail__info">
-                <span>
-                    <i class="icon icon-bq"></i>
-                    {{ tag }}
-                </span>
-                <span>
-                    <i class="icon icon-chakan1"></i>
-                    {{ viewCount }}
-                </span>
-                <span :title="createTime">{{ editTime }}</span>
-                <span
-                    v-if="currentUserId === authorId"
-                    class="edit"
-                    @click="handleRouterEdit(articleId)">编辑</span>
-            </div>
-        </div>
+        </card>
         <card slot="comment" icon="icon icon-pinglun" title="评论">
             <article-comment
                 :articleId="articleId"
                 :authorId="authorId"></article-comment>
         </card>
-        <card slot="userinfo" :visible-header="false" icon="icon icon-zuozhe" title="关于作者">
+        <card slot="userinfo" :visible-header="true" icon="icon icon-zuozhe" title="关于作者">
             <user-info
                 v-if="userInfo"
                 :user="userInfo"
                 @doFollow="handleFollow">
             </user-info>
         </card>
-        <!-- <card slot="userinfo" icon="icon icon-wenzhang" title="相关文章">
+        <card slot="userinfo" icon="icon icon-wenzhang" title="相关文章">
             <article-recommend
                 v-for="item in recommendFilterData"
                 :key="item._id"
                 :item="item"
                 @doDetail="handleRecommend">
             </article-recommend>
-        </card> -->
+        </card>
     </detail-layout>
 </template>
 

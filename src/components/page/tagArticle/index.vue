@@ -1,19 +1,20 @@
 <template>
     <layout :is-has="isHas">
-        <infinite-scroll
-            slot="content"
-            :loading="loading"
-            :no-more="noMore"
-            :data="listData"
-            @loadData="getList(tagId)">
-            <template slot-scope="scope">
-                <article-item
-                    :item="scope.row"
-                    :show-menu-edit="false"
-                    :show-menu-delete="false">
-                </article-item>
-            </template>
-        </infinite-scroll>
+        <card slot="content" :visible-header="true" :padding="false">
+            <infinite-scroll
+                :loading="loading"
+                :no-more="noMore"
+                :data="listData"
+                @loadData="getList(tagId)">
+                <template slot-scope="scope">
+                    <article-item
+                        :item="scope.row"
+                        :show-menu-edit="false"
+                        :show-menu-delete="false">
+                    </article-item>
+                </template>
+            </infinite-scroll>
+        </card>
         <card slot="detail" icon="icon icon-bq" :title="tagDetail.title">
             <template v-if="tagDetailId" slot="menu">
                 <div class="menu">

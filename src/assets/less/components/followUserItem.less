@@ -1,17 +1,18 @@
 
 .follow-user(
     @boxBgColor,
+    @borderColor,
     @fontMainColor,
     @imgBgColor
 ) {
     .follow-user{
         &__item{
             padding: 15px;
-            margin-bottom: 1px;
             background: @boxBgColor;
             color: @fontMainColor;
             display: flex;
             align-items:center; /*垂直居中*/
+            .borderTop(@borderColor);
             .img{
                 width: 30px;
                 height: 30px;

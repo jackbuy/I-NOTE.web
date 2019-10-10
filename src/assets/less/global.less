@@ -13,10 +13,13 @@
     .clearfix();
 }
 
-// 没有记录，加载提示
+// 加载提示
 .loading-tip,
+// 没有数据
 .norecord,
-.no-has{
+// 文章、标签、专题不存在
+.no-has,
+.no-more{
     width: 100%;
     height: 50px;
     line-height: 50px;
@@ -73,7 +76,7 @@
         @fontActiveColor: #539eff,
         @fontHoverColor: #539eff,
 
-        @formBgColor: #444,
+        @formBgColor: #3a3a3a,
         @formHoverBgColor: #444,
         @formFocusBgColor: #555,
         @formFocusBorderColor: #555,

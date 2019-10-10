@@ -1,14 +1,14 @@
 <template>
     <div class="settings">
-        <set-item title="头像">
+        <card title="头像">
             <set-avatar
                 :prop="userInfo.avatar"
                 :loading="loading"
                 label="avatar"
                 @submit="handleSave">
             </set-avatar>
-        </set-item>
-        <set-item title="昵称">
+        </card>
+        <card title="昵称">
             <set-input
                 :prop="userInfo.nickname"
                 :loading="loading"
@@ -16,8 +16,8 @@
                 label="nickname"
                 @submit="handleSave">
             </set-input>
-        </set-item>
-        <set-item title="简介">
+        </card>
+        <card title="简介">
             <set-input
                 :prop="userInfo.brief"
                 :loading="loading"
@@ -25,7 +25,7 @@
                 label="brief"
                 @submit="handleSave">
             </set-input>
-        </set-item>
+        </card>
     </div>
 </template>
 
@@ -34,13 +34,13 @@ import { mapState, mapActions } from 'vuex';
 import { GET_USER_INFO } from '@/store/mutation-types';
 import SetAvatar from './SetAvatar';
 import SetInput from './SetInput';
-import SetItem from './SetItem';
+import Card from '@/components/common/card';
 import api from '@/utils/api';
 export default {
     name: 'TopicAddEdit',
     components: {
+        Card,
         SetInput,
-        SetItem,
         SetAvatar
     },
     data() {

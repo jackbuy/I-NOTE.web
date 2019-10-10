@@ -5,6 +5,14 @@
 	-webkit-box-sizing: border-box;
 }
 
+// 上边框
+.borderTop(@borderColor: #f5f5f5){
+	border-top: 1px solid @borderColor;
+	&:first-child{
+		border-top-width: 0;
+	}
+}
+
 // 过渡动画
 .trs(@time:0.3s){
 	transition: all @time;

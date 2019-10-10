@@ -13,13 +13,6 @@
       "unicode_decimal": 58881
     },
     {
-      "icon_id": "34813",
-      "name": "查看",
-      "font_class": "chakan",
-      "unicode": "e61e",
-      "unicode_decimal": 58910
-    },
-    {
       "icon_id": "252364",
       "name": "用户",
       "font_class": "yonghu",
@@ -92,7 +85,7 @@
     {
       "icon_id": "3033799",
       "name": "查看",
-      "font_class": "chakan1",
+      "font_class": "chakan",
       "unicode": "e988",
       "unicode_decimal": 59784
     },
@@ -125,13 +118,6 @@
       "unicode_decimal": 58957
     },
     {
-      "icon_id": "4765178",
-      "name": "查看",
-      "font_class": "chakan2",
-      "unicode": "e64c",
-      "unicode_decimal": 58956
-    },
-    {
       "icon_id": "5801335",
       "name": "专题",
       "font_class": "zhuanti",
@@ -158,13 +144,6 @@
       "font_class": "shafa",
       "unicode": "e714",
       "unicode_decimal": 59156
-    },
-    {
-      "icon_id": "7376679",
-      "name": "查看",
-      "font_class": "chakan3",
-      "unicode": "e615",
-      "unicode_decimal": 58901
     },
     {
       "icon_id": "7402003",

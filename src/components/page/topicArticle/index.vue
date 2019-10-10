@@ -23,11 +23,14 @@
                         <span v-if="!topicDetail.isFollow">关注</span>
                         <span v-else>已关注</span>
                     </div>
+                    <div v-else class="menu-btn round" @click="handleEdit(topicDetail._id)">编辑</div>
                 </div>
             </template>
             <template>
                 <div v-if="img" class="topic-img" :style="{backgroundImage: 'url(' + img + ')'}"></div>
                 <div v-if="description" class="topic-description">{{ description }}</div>
+                <div class="topic-count">{{ articleCount }}</div>
+                <div class="topic-count">{{ followCount }}</div>
                 <div class="topic-time">{{ createTime }}</div>
             </template>
         </card>
@@ -86,6 +89,12 @@ export default {
         },
         createTime() {
             return this.topicDetail.createTime ? `创建于 ${utils.formatDate.date(this.topicDetail.createTime)}` : '';
+        },
+        followCount() {
+            return `关注 ${this.topicDetail.followCount} 人`;
+        },
+        articleCount() {
+            return `文章 ${this.topicDetail.articleCount} 篇`;
         },
         userInfo() {
             return this.topicDetail.userId;
@@ -155,13 +164,17 @@ export default {
                 title: '提示',
                 content: '确认删除吗？'
             }).then(() => {
-                api.topicArticleDelete(itemId).then(() => {
+                api.topicArticleDelete(this.topicId, itemId).then(() => {
                     let _ids = this.listData.map((item) => item._id);
                     let index = _ids.indexOf(itemId);
                     this.listData.splice(index, 1);
                     this.showSuccessMsg('删除成功');
                 });
             }).catch(() => {});
+        },
+        // 编辑
+        handleEdit(topicId) {
+            this.$router.push(`/topicWrite/${topicId}`).catch(() => {});
         }
     }
 };

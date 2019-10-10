@@ -5,7 +5,7 @@
         <div class="img" :style="{backgroundImage: 'url(' + img + ')'}"></div>
         <div class="content">
             <div class="title">{{ title }}</div>
-            <!-- <div class="description">{{ description }}</div> -->
+            <div class="description">{{ description }}</div>
         </div>
     </div>
 </template>
@@ -30,8 +30,14 @@ export default {
         img() {
             return this.item.img ? `${imgBaseUrl}/${this.item.img}` : '';
         },
+        followCount() {
+            return this.item.followCount;
+        },
+        articleCount() {
+            return this.item.articleCount;
+        },
         description() {
-            return `文章：20 / 关注：342`;
+            return `文章：${this.articleCount} / 关注：${this.followCount}`;
         }
     },
     methods: {

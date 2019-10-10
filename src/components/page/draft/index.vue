@@ -1,5 +1,5 @@
 <template>
-    <card slot="content" :visible-header="true" :padding="false">
+    <card slot="content" :visible-header="false" :padding="false" title="我的草稿" icon="icon icon-wenzhang">
         <infinite-scroll
             :loading="loading"
             :no-more="noMore"

@@ -139,7 +139,7 @@ export default {
         setEditorHeight() {
             // quillEditor
             let edit = document.getElementsByClassName('ql-container ql-snow')[0];
-            edit.style.height = window.innerHeight - 158 - 12 + 'px';
+            edit.style.height = window.innerHeight - 158 + 'px';
 
             // wangEditor
             // let edit = document.getElementsByClassName('text')[0];

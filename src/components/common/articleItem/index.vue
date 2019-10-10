@@ -36,7 +36,7 @@
                 {{ commentCount }}
             </span>
             <span>
-                <i class="icon icon-chakan1"></i>
+                <i class="icon icon-chakan"></i>
                 {{ viewCount }}
             </span>
         </div>

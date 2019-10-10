@@ -56,7 +56,15 @@
                 </el-popover>
             </div>
         </div>
-        <card slot="content" :visible-header="true" :padding="false">
+        <card slot="content" :padding="false" :title="tag">
+            <div slot="menu" class="menu">
+                <div
+                    v-if="currentUserId === authorId"
+                    class="menu-btn round"
+                    @click="handleRouterEdit(articleId)">
+                    编辑
+                </div>
+            </div>
             <div class="article-detail">
                 <div class="article-detail__title">
                     {{ title }}
@@ -67,19 +75,15 @@
                     class="article-detail__content">
                 </div>
                 <div class="article-detail__info">
-                    <span>
+                    <!-- <span>
                         <i class="icon icon-bq"></i>
                         {{ tag }}
-                    </span>
+                    </span> -->
                     <span>
-                        <i class="icon icon-chakan1"></i>
+                        <i class="icon icon-chakan"></i>
                         {{ viewCount }}
                     </span>
                     <span :title="createTime">{{ editTime }}</span>
-                    <span
-                        v-if="currentUserId === authorId"
-                        class="edit"
-                        @click="handleRouterEdit(articleId)">编辑</span>
                 </div>
             </div>
         </card>
@@ -95,7 +99,7 @@
                 @doFollow="handleFollow">
             </user-info>
         </card>
-        <card slot="userinfo" icon="icon icon-wenzhang" title="相关文章">
+        <card slot="userinfo" icon="icon icon-wenzhang" title="Ta的热文">
             <article-recommend
                 v-for="item in recommendFilterData"
                 :key="item._id"
@@ -220,7 +224,7 @@ export default {
             api.getDetail(params).then((res) => {
                 this.detail = res.data;
                 this.setDocumentTitle(this.detail.title);
-                this.recommend(this.detail.tagId._id);
+                this.recommend(this.detail.userId._id);
                 this.getIsTopicList(articleId);
                 this.isHas = true;
             }).catch(() => {
@@ -305,12 +309,13 @@ export default {
             });
         },
         // 相关文章
-        recommend(tagId) {
+        recommend(userId) {
             const params = {
                 publish: true,
                 pageSize: 5,
                 currentPage: 1,
-                tagId
+                sortType: 'popular',
+                userId
             };
             api.articleQuery(params).then((res) => {
                 this.recommendData = res.data;

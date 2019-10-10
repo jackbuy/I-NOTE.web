@@ -1,5 +1,5 @@
 <template>
-    <card slot="content" :visible-header="true" :padding="false">
+    <card slot="content" :padding="false" :title="cardTitle" icon="icon icon-zhuanti">
         <div class="topic-write">
             <el-form
                 ref="form"
@@ -93,10 +93,26 @@ export default {
         },
         actionUrl() {
             return `${apiBaseUrl}/uploadfile`;
+        },
+        cardTitle() {
+            return this.topicId ? '编辑专题' : '创建专题';
         }
     },
-    created() {
-        if (this.topicId) this.getDetail(this.topicId);
+    watch: {
+        '$route.params.topicId': {
+            handler(n, o) {
+                if (n) {
+                    this.getDetail(this.topicId);
+                } else {
+                    this.form = {
+                        img: '',
+                        title: '',
+                        description: ''
+                    };
+                };
+            },
+            immediate: true
+        }
     },
     methods: {
         handleAvatarSuccess(res, file) {
@@ -131,7 +147,7 @@ export default {
                     } else {
                         api.topicAdd({ ...this.form }).then((res) => {
                             const { topicId } = res.data;
-                            this.$router.push(`/topicWrite/${topicId}`).catch(() => {});
+                            this.$router.push(`/topic/${topicId}`).catch(() => {});
                             this.loading = false;
                         }).catch(() => {
                             this.loading = false;

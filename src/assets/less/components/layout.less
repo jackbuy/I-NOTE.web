@@ -115,12 +115,13 @@
                 line-height: @headerH;
                 float: right;
                 span{
-                    display: inline-block;
-                    margin-left: 15px;
+                    position: relative;
                     width: 32px;
+                    margin-left: 15px;
+                    display: inline-block;
                     text-align: center;
                     font-size: 12px;
-                    position: relative;
+                    transition: all 0.3s;
                     cursor: pointer;
                     &::before{
                         content: '';
@@ -145,6 +146,9 @@
                     }
                     &.write{
                         color: @fontMainColor;
+                        &:hover{
+                            color: @fontHoverColor;
+                        }
                         &.active{
                             color: @fontActiveColor;
                         }

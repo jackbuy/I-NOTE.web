@@ -44,14 +44,24 @@ export default {
                     // 'underline',
                     'strike'
                 ],
+                // [{'script': 'sub'}, {'script': 'super'}],
                 ['blockquote', 'code-block'],
+                [{'indent': '-1'}, {'indent': '+1'}],
+                // [{'direction': 'rtl'}],
                 [{'list': 'ordered'}, {'list': 'bullet'}],
                 // [{'header': [1, 2, 3, 4, 5, 6, false]}],
                 // [{'color': []}, {'background': []}],
                 // [{'font': []}],
                 // [{'align': []}],
-                ['link', 'image', 'video'],
+                [
+                    'link',
+                    'image',
+                    'video'
+                    // 'formula'
+                ],
                 ['clean']
+                // [{'header': 1}, {'header': 2}],
+                // [{'size': ['small', false, 'large', 'huge']}]
             ]
         },
         placeholder: {

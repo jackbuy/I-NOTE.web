@@ -11,7 +11,7 @@
 ) {
     .user-avatar{
         margin-top: 50px;
-        background: @boxBgColor;
+        background: @boxBgColor url('../../../../static/zone/banner/1.png') no-repeat center;
         padding: 10px;
         position: relative;
         border-radius: 10px;
@@ -19,16 +19,19 @@
             position: absolute;
             left: 50%;
             top: -10px;
+            z-index: 1;
             margin-left: -40px;
             background: @imgBgColor;
-            border: 5px solid @borderColor;
+            border: 5px solid @boxBgColor;
             i{
                 font-size: 40px;
             }
         }
         .content{
             position: relative;
+            padding: 10px;
             padding-top: 80px;
+            background-size: cover;
             .header{
                 text-align: center;
                 padding: 0 20px;

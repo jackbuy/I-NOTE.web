@@ -14,6 +14,8 @@ export default {
     userInfoEdit: (params) => http('post', `${apiBaseUrl}/user/userInfoEdit`, params),
     // 用户推荐
     userRecommend: () => http('get', `${apiBaseUrl}/user/recommend`),
+    // 用户列表
+    userQuery: (params) => http('post', `${apiBaseUrl}/user/query`, params),
 
     // 已发布文章列表
     articleQuery: (params) => http('post', `${apiBaseUrl}/article/query`, params),
@@ -74,7 +76,7 @@ export default {
     // 收藏列表
     collectQuery: (params) => http('post', `${apiBaseUrl}/collect/query`, params),
     // 收藏删除
-    collectDelete: (collectId) => http('delete', `${apiBaseUrl}/collect/delete/${collectId}`),
+    collectDelete: (collectId, articleId) => http('delete', `${apiBaseUrl}/collect/delete/${collectId}/${articleId}`),
 
     // 关注列表
     followUserQuery: (params) => http('post', `${apiBaseUrl}/follow/user/query`, params),

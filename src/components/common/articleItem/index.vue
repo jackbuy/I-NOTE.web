@@ -19,26 +19,11 @@
             {{ description }}
         </div>
         <div v-if="itemType !== 'draft'" class="article__item-action">
-            <span>
-                <i class="icon icon-bq"></i>
-                {{ tag }}
-            </span>
-            <span>
-                <i class="icon icon-dianzan"></i>
-                {{ likeCount }}
-            </span>
-            <span>
-                <i class="icon icon-like"></i>
-                {{ collectCount }}
-            </span>
-            <span>
-                <i class="icon icon-pinglun"></i>
-                {{ commentCount }}
-            </span>
-            <span>
-                <i class="icon icon-chakan"></i>
-                {{ viewCount }}
-            </span>
+            <span class="tag">{{ tag }}</span>
+            <span v-if="viewCount > 0"><i class="icon icon-chakan"></i> {{ viewCount }}</span>
+            <span v-if="collectCount > 0"><i class="icon icon-like"></i> {{ collectCount }}</span>
+            <span v-if="commentCount > 0"><i class="icon icon-pinglun"></i> {{ commentCount }}</span>
+            <span v-if="likeCount > 0"><i class="icon icon-dianzan"></i> {{ likeCount }}</span>
         </div>
         <div class="article__item-img" v-if="img" v-html="img"></div>
     </div>
@@ -101,7 +86,7 @@ export default {
         },
         tag() {
             if (this.item && this.item.tagId && this.item.tagId.parentId) {
-                return `${this.item.tagId.parentId.title} . ${this.item.tagId.title}`;
+                return `${this.item.tagId.parentId.title} · ${this.item.tagId.title}`;
             };
         },
         viewCount() {

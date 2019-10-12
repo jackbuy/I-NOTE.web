@@ -1,8 +1,4 @@
-.author(
-    @imgBgColor,
-    @fontMainColor,
-    @fontHoverColor
-) {
+.author() {
     .author{
         display: flex;
         align-items:center;
@@ -30,9 +26,14 @@
                 transition: all 0.3s;
                 .ovf-num(1);
             }
-            .description{
-                font-size: 12px;
+            .info{
                 margin-top: 7px;
+                font-size: 0;
+                span{
+                    font-size: 12px;
+                    padding: 0 11px;
+                    .point(@fontColor);
+                }
             }
         }
         // hover

@@ -1,6 +1,6 @@
 <template>
     <div
-        class="author"
+        class="author-item"
         @click="handleZone(userId)">
         <div v-if="imgUrl" class="img" :style="{backgroundImage: 'url(' + imgUrl + ')'}"></div>
         <div v-else class="img"><i class="icon icon-yonghu"></i></div>

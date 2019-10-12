@@ -3,6 +3,7 @@
 @import './components/articleComment.less';
 @import './components/articleItem.less';
 @import './components/articleRecommend.less';
+@import './components/authorItem.less';
 @import './components/authorRecommend.less';
 @import './components/card.less';
 @import './components/modal.less';
@@ -20,6 +21,7 @@
 @import './components/followTopicItem.less';
 @import './components/followTagItem.less';
 @import './components/fansItem.less';
+@import './components/searchBox.less';
 @import './components/elementUI.less';
 
 // pages
@@ -34,6 +36,7 @@
 @import './pages/tagArticle.less';
 @import './pages/topicWrite.less';
 @import './pages/topicArticle.less';
+@import './pages/search.less';
 
 // 主题公共函数
 .theme(
@@ -74,257 +77,75 @@
         border-top: 1px solid @borderColor;
     }
 
-    .layout(
-        @fontMainColor,
-        @boxBgColor,
-        @shadow,
-        @containerWidth,
-        @fontHoverColor,
-        @formBgColor,
-        @formFocusBgColor,
-        @formPalceholderColor,
-        @fontActiveColor,
-        @mediaWidth
-    );
+    .search-box();
 
-    .home(@mediaWidth);
+    .layout();
 
-    .login(@fontActiveColor);
+    .home();
 
-    .zone(@mediaWidth);
+    .login();
 
-    .tag(
-        @fontSubColor,
-        @boxBgColor,
-        @fontMainColor,
-        @fontActiveColor,
-        @borderColor,
-        @mediaWidth
-    );
+    .zone();
 
-    .tag-article(
-        @fontSubColor,
-        @mediaWidth
-    );
+    .tag();
 
-    .write(
-        @boxBgColor,
-        @fontMainColor,
-        @mediaWidth
-    );
+    .tag-article();
 
-    .detail(
-        @fontMainColor,
-        @borderColor,
-        @formBgColor,
-        @fontActiveColor,
-        @boxBgColor,
-        @fontSubColor,
-        @fontColor,
-        @mediaWidth
-    );
+    .write();
 
-    .msg(
-        @boxBgColor,
-        @borderColor,
-        @fontColor,
-        @fontMainColor,
-        @fontSubColor,
-        @fontActiveColor,
-        @mediaWidth
-    );
+    .detail();
 
-    .topic-write(
-        @boxBgColor,
-        @formBgColor,
-        @formHoverBgColor,
-        @fontSubColor,
-        @mediaWidth,
-        @borderColor,
-        @fontMainColor,
-        @formPalceholderColor
-    );
+    .msg();
 
-    .topic-article(
-        @fontSubColor,
-        @borderColor,
-        @mediaWidth
-    );
+    .topic-write();
 
-    .settings(
-        @boxBgColor,
-        @borderColor,
-        @fontSubColor,
-        @imgBgColor,
-        @fontActiveColor,
-        @fontColor,
-        @fontMainColor,
-        @formBgColor,
-        @mediaWidth
-    );
+    .topic-article();
 
-    .modal(
-        @boxBgColor,
-        @fontSubColor,
-        @borderColor,
-        @mediaWidth
-    );
+    .settings();
 
-    .tab(
-        @boxBgColor,
-        @borderColor,
-        @fontSubColor,
-        @fontActiveColor
-    );
+    .modal();
 
-    .user-avatar(
-        @boxBgColor,
-        @imgBgColor,
-        @fontMainColor,
-        @borderColor,
-        @fontSubColor,
-        @formHoverBgColor,
-        @fontActiveColor,
-        @mediaWidth
-    );
+    .tab();
 
-    .user-info(
-        @imgBgColor,
-        @fontMainColor,
-        @fontActiveColor,
-        @borderColor,
-        @fontSubColor
-    );
+    .user-avatar();
 
-    .quill-editor(
-        @fontMainColor,
-        @borderColor,
-        @formBgColor,
-        @fontActiveColor,
-        @boxBgColor,
-        @formPalceholderColor,
-        @fontSubColor,
-        @preBg
-    );
+    .user-info();
 
-    .w-editor(
-        @boxBgColor,
-        @borderColor,
-        @fontHoverColor,
-        @fontMainColor,
-        @formBgColor,
-        @fontActiveColor,
-        @preBg
-    );
+    .quill-editor();
 
-    .article-tag(
-        @borderColor,
-        @fontMainColor,
-        @fontActiveColor
-    );
+    .w-editor();
 
-    .topic-item(
-        @boxBgColor,
-        @borderColor,
-        @fontActiveColor,
-        @fontSubColor,
-        @fontMainColor,
-        @fontHoverColor,
-        @imgBgColor,
-        @mediaWidth
-    );
+    .article-tag();
 
-    .topic-recommend(
-        @imgBgColor,
-        @fontMainColor,
-        @fontActiveColor
-    );
+    .author-item();
+
+    .topic-item();
+
+    .topic-recommend();
 
     // 评论
-    .articleComment(
-        @borderColor,
-        @fontMainColor,
-        @fontSubColor,
-        @formBgColor,
-        @formFocusBgColor,
-        @formFocusBorderColor,
-        @formActiveBgColor,
-        @formDisabledBgColor,
-        @imgBgColor
-    );
+    .articleComment();
 
-    .articleItem(
-        @boxBgColor,
-        @borderColor,
-        @fontColor,
-        @fontMainColor,
-        @fontSubColor,
-        @fontActiveColor,
-        @fontHoverColor,
-        @imgBgColor
-    );
+    .articleItem();
 
-    .article-recommend(
-        @borderColor,
-        @fontMainColor,
-        @fontHoverColor
-    );
+    .article-recommend();
 
-    .author(
-        @imgBgColor,
-        @fontMainColor,
-        @fontHoverColor
-    );
+    .author();
 
-    .card(
-        @boxBgColor,
-        @borderColor,
-        @fontSubColor,
-        @fontActiveColor,
-        @fontHoverColor,
-        @mediaWidth
-    );
+    .card();
 
-    .follow-user(
-        @boxBgColor,
-        @borderColor,
-        @fontMainColor,
-        @imgBgColor
-    );
+    .follow-user();
 
-    .follow-topic(
-        @boxBgColor,
-        @borderColor,
-        @fontMainColor,
-        @imgBgColor
-    );
+    .follow-topic();
 
-    .follow-tag(
-        @boxBgColor,
-        @borderColor,
-        @fontMainColor
-    );
+    .follow-tag();
 
-    .fans-item(
-        @boxBgColor,
-        @borderColor,
-        @fontMainColor,
-        @imgBgColor
-    );
+    .fans-item();
+
+    .search();
 
     .page403();
     .page404();
 
-    .element-ui(
-        @formBgColor,
-        @formHoverBgColor,
-        @formFocusBgColor,
-        @formFocusBorderColor,
-        @formActiveBgColor,
-        @formActiveHoverBgColor,
-        @formDisabledBgColor,
-        @formPalceholderColor,
-        @borderColor,
-        @fontMainColor
-    );
+    .element-ui();
 }

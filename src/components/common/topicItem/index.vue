@@ -19,6 +19,10 @@
         <div class="topic__item-description">
             {{ description }}
         </div>
+        <div class="topic__item-info">
+            <span>文章 {{ articleCount }}</span>
+            <span>关注 {{ followCount }}</span>
+        </div>
         <div class="topic__item-img" :style="{backgroundImage: 'url(' + img + ')'}"></div>
     </div>
 </template>
@@ -72,6 +76,12 @@ export default {
         },
         description() {
             return this.item.description ? this.item.description : '';
+        },
+        followCount() {
+            return this.item.followCount;
+        },
+        articleCount() {
+            return this.item.articleCount;
         }
     },
     methods: {

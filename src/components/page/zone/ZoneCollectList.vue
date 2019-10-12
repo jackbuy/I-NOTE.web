@@ -10,7 +10,7 @@
                 :item-id="scope.row._id"
                 :show-menu-edit="false"
                 :show-menu-delete="scope.row.createUserId === currentUserId"
-                @delete="handleDelete">
+                @delete="handleDelete(scope.row._id, scope.row.articleId._id)">
             </article-item>
         </template>
     </infinite-scroll>
@@ -86,12 +86,14 @@ export default {
                 this.loading = false;
             });
         },
-        handleDelete(itemId) {
+        handleDelete(collectId, articleId) {
+            console.log(collectId);
+            console.log(articleId);
             this.confirmWarning({
                 title: '提示',
                 content: '确认删除吗？'
             }).then(() => {
-                api.collectDelete(itemId).then(() => {
+                api.collectDelete(collectId, articleId).then(() => {
                     this.showSuccessMsg('删除成功！');
                     this.refresh();
                 }).catch(() => {});

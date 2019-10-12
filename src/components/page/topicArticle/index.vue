@@ -29,8 +29,8 @@
             <template>
                 <div v-if="img" class="topic-img" :style="{backgroundImage: 'url(' + img + ')'}"></div>
                 <div v-if="description" class="topic-description">{{ description }}</div>
-                <div class="topic-count">{{ articleCount }}</div>
-                <div class="topic-count">{{ followCount }}</div>
+                <div v-if="articleCount > 0" class="topic-count">文章 {{ articleCount }} 篇</div>
+                <div v-if="followCount > 0" class="topic-count">关注 {{ followCount }} 人</div>
                 <div class="topic-time">{{ createTime }}</div>
             </template>
         </card>
@@ -91,10 +91,10 @@ export default {
             return this.topicDetail.createTime ? `创建于 ${utils.formatDate.date(this.topicDetail.createTime)}` : '';
         },
         followCount() {
-            return `关注 ${this.topicDetail.followCount} 人`;
+            return this.topicDetail.followCount;
         },
         articleCount() {
-            return `文章 ${this.topicDetail.articleCount} 篇`;
+            return this.topicDetail.articleCount;
         },
         userInfo() {
             return this.topicDetail.userId;

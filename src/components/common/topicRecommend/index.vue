@@ -5,7 +5,10 @@
         <div class="img" :style="{backgroundImage: 'url(' + img + ')'}"></div>
         <div class="content">
             <div class="title">{{ title }}</div>
-            <div class="description">{{ description }}</div>
+            <div class="info">
+                <span>文章 {{ articleCount }}</span>
+                <span>关注 {{ followCount }}</span>
+            </div>
         </div>
     </div>
 </template>
@@ -35,9 +38,6 @@ export default {
         },
         articleCount() {
             return this.item.articleCount;
-        },
-        description() {
-            return `文章：${this.articleCount} / 关注：${this.followCount}`;
         }
     },
     methods: {

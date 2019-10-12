@@ -1,32 +1,50 @@
 <template>
-    <card slot="content" :visible-header="true" :padding="false">
-        <tab :activeName="activeTabName" @tabClick="handleTabClick">
-            <tab-label name="article" label="文章"></tab-label>
-            <tab-label name="topic" label="专题"></tab-label>
-        </tab>
-        <infinite-scroll
-            :loading="loading"
-            :no-more="noMore"
-            :data="listData"
-            @loadData="getList(keyword, activeTabName)">
-            <template slot-scope="scope">
-                <article-item
-                    v-if="activeTabName === 'article'"
-                    :item="scope.row"
-                    :show-menu-edit="false"
-                    :show-menu-delete="false">
-                </article-item>
-                <topic-item v-if="activeTabName === 'topic'" :item="scope.row"></topic-item>
-            </template>
-        </infinite-scroll>
-    </card>
+    <div class="search">
+        <search-box
+            placeholder="搜 文章 · 专题 · 作者"
+            @search="handlSearch">
+        </search-box>
+        <card :visible-header="true" :padding="false">
+            <tab :activeName="activeTabName" @tabClick="handleTabClick">
+                <tab-label name="article" label="文章"></tab-label>
+                <tab-label name="topic" label="专题"></tab-label>
+                <tab-label name="author" label="作者"></tab-label>
+            </tab>
+            <infinite-scroll
+                :loading="loading"
+                :no-more="noMore"
+                :data="listData"
+                @loadData="getList(keyword, activeTabName)">
+                <template slot-scope="scope">
+                    <article-item
+                        v-if="activeTabName === 'article'"
+                        :item="scope.row"
+                        :show-menu-edit="false"
+                        :show-menu-delete="false">
+                    </article-item>
+                    <topic-item
+                        v-if="activeTabName === 'topic'"
+                        :item="scope.row"
+                        :show-menu-edit="false"
+                        :show-menu-delete="false">
+                    </topic-item>
+                    <author-item
+                        v-if="activeTabName === 'author'"
+                        :item="scope.row">
+                    </author-item>
+                </template>
+            </infinite-scroll>
+        </card>
+    </div>
 </template>
 
 <script>
 import InfiniteScroll from '@/components/common/infiniteScrollList';
+import AuthorItem from '@/components/common/authorItem';
 import ArticleItem from '@/components/common/articleItem';
 import TopicItem from '@/components/common/topicItem';
 import Card from '@/components/common/card';
+import SearchBox from '@/components/common/searchBox';
 import Tab from '@/components/common/tab';
 import TabLabel from '@/components/common/tab/tabLabel';
 import api from '@/utils/api';
@@ -37,9 +55,11 @@ export default {
         InfiniteScroll,
         ArticleItem,
         TopicItem,
+        AuthorItem,
         Tab,
         TabLabel,
-        Card
+        Card,
+        SearchBox
     },
     data() {
         return {
@@ -89,6 +109,9 @@ export default {
             if (tabName === 'topic') {
                 apiName = 'topicQuery';
             };
+            if (tabName === 'author') {
+                apiName = 'userQuery';
+            };
             this.loading = true;
             api[apiName]({ ...params }).then((res) => {
                 this.loading = false;
@@ -105,6 +128,17 @@ export default {
             this.activeTabName = tabName;
             if (this.keyword) {
                 this.refresh(this.keyword, tabName);
+            }
+        },
+        handlSearch(keyword) {
+            if (keyword.length > 0) {
+                const path = {
+                    path: `/search`,
+                    query: {
+                        keyword
+                    }
+                };
+                this.$router.push(path).catch(() => {});
             }
         }
     }

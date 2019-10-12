@@ -75,10 +75,6 @@
                     class="article-detail__content">
                 </div>
                 <div class="article-detail__info">
-                    <!-- <span>
-                        <i class="icon icon-bq"></i>
-                        {{ tag }}
-                    </span> -->
                     <span>
                         <i class="icon icon-chakan"></i>
                         {{ viewCount }}
@@ -162,7 +158,7 @@ export default {
         },
         tag() {
             if (this.detail && this.detail.tagId && this.detail.tagId.parentId) {
-                return `${this.detail.tagId.parentId.title} . ${this.detail.tagId.title}`;
+                return `${this.detail.tagId.parentId.title} · ${this.detail.tagId.title}`;
             };
         },
         likeCount() {

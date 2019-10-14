@@ -1,5 +1,5 @@
 <template>
-    <layout :is-has="isHas">
+    <layout :is-has="isHas" :loading="pageLoading">
         <card slot="content" :visible-header="true" :padding="false">
             <infinite-scroll
                 :loading="loading"
@@ -24,7 +24,7 @@
                     </div>
                 </div>
             </template>
-            <div class="count">{{ articleCount }}</div>
+            <div class="count">文章 {{ articleCount }} 篇</div>
         </card>
     </layout>
 </template>
@@ -34,7 +34,8 @@ import Layout from './layout';
 import Card from '@/components/common/card';
 import InfiniteScroll from '@/components/common/infiniteScrollList';
 import ArticleItem from '@/components/common/articleItem';
-import api from '@/utils/api';
+import api from '_u/api';
+import To from '_u/to';
 
 export default {
     name: 'Draft',
@@ -49,6 +50,7 @@ export default {
             isHas: true,
             tagDetail: {},
             listData: [],
+            pageLoading: false,
             pageConfig: {
                 pageSize: 15,
                 currentPage: 1
@@ -65,7 +67,7 @@ export default {
             if (this.tagDetail) return this.tagDetail._id;
         },
         articleCount() {
-            if (this.tagDetail) return `共 ${this.tagDetail.articleCount} 篇文章`;
+            if (this.tagDetail) return this.tagDetail.articleCount;
         }
     },
     watch: {
@@ -97,20 +99,22 @@ export default {
                 } else {
                     this.noMore = true;
                 }
-                this.isHas = true;
                 this.loading = false;
             }).catch(() => {
                 this.loading = false;
             });
         },
-        getTagDetail(tagId) {
-            api.tagDetail({ tagId }).then((res) => {
-                this.tagDetail = res.data;
-                this.isHas = true;
-                this.getList(tagId);
-            }).catch(() => {
+        async getTagDetail(tagId) {
+            this.pageLoading = true;
+            const [ err, result ] = await To(api.tagDetail({ tagId }));
+            if (err || !result || !result.data) {
                 this.isHas = false;
-            });
+                this.pageLoading = false;
+            }
+            this.tagDetail = result.data;
+            this.isHas = true;
+            this.pageLoading = false;
+            await this.getList(tagId);
         },
         // 关注
         handleFollow(tagId) {

@@ -21,7 +21,7 @@
                     v-if="userId === mine"
                     class="default"
                     @click="handleSettings()">
-                    <i class="el-icon-s-tools"></i>
+                    <i class="icon icon-settings"></i>
                 </span>
             </div>
             <div class="count">

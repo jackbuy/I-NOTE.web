@@ -15,10 +15,9 @@
             <layout-header-user :is-write="isHiddenBreadcrumb"></layout-header-user>
         </layout-header>
         <layout-content>
-            <keep-alive>
-                <router-view v-if="$route.meta.keepAlive"></router-view>
+            <keep-alive include="Home">
+                <router-view></router-view>
             </keep-alive>
-            <router-view v-if="!$route.meta.keepAlive"></router-view>
         </layout-content>
         <login></login>
         <el-backtop></el-backtop>

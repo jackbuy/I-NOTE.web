@@ -1,19 +1,22 @@
 <template>
-    <infinite-scroll
-        :loading="loading"
-        :no-more="noMore"
-        :data="listData"
-        @loadData="getList">
-        <template slot-scope="scope">
-            <fans-item :item="scope.row">
-            </fans-item>
-        </template>
-    </infinite-scroll>
+    <card :visible-header="true" :padding="false">
+        <infinite-scroll
+            :loading="loading"
+            :no-more="noMore"
+            :data="listData"
+            @loadData="getList">
+            <template slot-scope="scope">
+                <fans-item :item="scope.row">
+                </fans-item>
+            </template>
+        </infinite-scroll>
+    </card>
 </template>
 
 <script>
 import InfiniteScroll from '@/components/common/infiniteScrollList';
 import FansItem from '@/components/common/fansItem';
+import Card from '@/components/common/card';
 import api from '@/utils/api';
 
 export default {
@@ -24,7 +27,8 @@ export default {
     },
     components: {
         InfiniteScroll,
-        FansItem
+        FansItem,
+        Card
     },
     data() {
         return {

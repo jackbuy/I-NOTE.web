@@ -1,24 +1,27 @@
 <template>
-    <infinite-scroll
-        :loading="loading"
-        :no-more="noMore"
-        :data="listData"
-        @loadData="getList">
-        <template slot-scope="scope">
-            <article-item
-                :item="scope.row.articleId"
-                :item-id="scope.row._id"
-                :show-menu-edit="false"
-                :show-menu-delete="scope.row.createUserId === currentUserId"
-                @delete="handleDelete(scope.row._id, scope.row.articleId._id)">
-            </article-item>
-        </template>
-    </infinite-scroll>
+    <card :visible-header="true" :padding="false">
+        <infinite-scroll
+            :loading="loading"
+            :no-more="noMore"
+            :data="listData"
+            @loadData="getList">
+            <template slot-scope="scope">
+                <article-item
+                    :item="scope.row.articleId"
+                    :item-id="scope.row._id"
+                    :show-menu-edit="false"
+                    :show-menu-delete="scope.row.createUserId === currentUserId"
+                    @delete="handleDelete(scope.row._id, scope.row.articleId._id)">
+                </article-item>
+            </template>
+        </infinite-scroll>
+    </card>
 </template>
 
 <script>
 import InfiniteScroll from '@/components/common/infiniteScrollList';
 import ArticleItem from '@/components/common/articleItem';
+import Card from '@/components/common/card';
 import message from '@/mixins/message';
 import api from '@/utils/api';
 
@@ -31,7 +34,8 @@ export default {
     mixins: [ message ],
     components: {
         InfiniteScroll,
-        ArticleItem
+        ArticleItem,
+        Card
     },
     data() {
         return {
@@ -87,8 +91,6 @@ export default {
             });
         },
         handleDelete(collectId, articleId) {
-            console.log(collectId);
-            console.log(articleId);
             this.confirmWarning({
                 title: '提示',
                 content: '确认删除吗？'

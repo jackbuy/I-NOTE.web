@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <card :visible-header="true" :padding="false">
         <tab :activeName="activeType" @tabClick="handleTab">
             <tab-label name="followUser" label="作者"></tab-label>
             <tab-label name="followTopic" label="专题"></tab-label>
@@ -25,7 +25,7 @@
                 </follow-tag-item>
             </template>
         </infinite-scroll>
-    </div>
+    </card>
 </template>
 
 <script>
@@ -33,6 +33,7 @@ import InfiniteScroll from '@/components/common/infiniteScrollList';
 import FollowUserItem from '@/components/common/followUserItem';
 import FollowTagItem from '@/components/common/followTagItem';
 import FollowTopicItem from '@/components/common/followTopicItem';
+import Card from '@/components/common/card';
 import Tab from '@/components/common/tab';
 import TabLabel from '@/components/common/tab/tabLabel';
 import api from '@/utils/api';
@@ -49,7 +50,8 @@ export default {
         FollowTagItem,
         FollowTopicItem,
         Tab,
-        TabLabel
+        TabLabel,
+        Card
     },
     data() {
         return {

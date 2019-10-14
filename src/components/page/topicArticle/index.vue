@@ -1,5 +1,5 @@
 <template>
-    <layout :is-has="isHas">
+    <layout :is-has="isHas" :loading="pageLoading">
         <card slot="content" :visible-header="true" :padding="false">
             <infinite-scroll
                 :loading="loading"
@@ -66,6 +66,7 @@ export default {
             isHas: true,
             listData: [],
             topicDetail: {},
+            pageLoading: false,
             pageConfig: {
                 pageSize: 15,
                 currentPage: 1
@@ -140,12 +141,15 @@ export default {
             });
         },
         getTopicInfo(topicId) {
+            this.pageLoading = true;
             api.topicDetail({ topicId }).then((res) => {
                 this.topicDetail = res.data;
                 this.getList(topicId);
                 this.isHas = true;
+                this.pageLoading = false;
             }).catch(() => {
                 this.isHas = false;
+                this.pageLoading = false;
             });
         },
         // 关注

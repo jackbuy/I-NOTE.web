@@ -9,7 +9,7 @@
                 size="mini"
                 round
                 @click="handleRoutePush('/article/draft')">
-                草稿
+                我的草稿
             </el-button>
             <el-button
                 v-if="form.publish"
@@ -27,14 +27,6 @@
                 @click="handleOpenPublishModal">
                 {{ isPublish }}
             </el-button>
-            <!-- <el-button
-                :disabled="isSaving"
-                size="mini"
-                type="primary"
-                round
-                @click="handleSave">
-                保存
-            </el-button> -->
         </div>
         <div class="write__title">
             <input

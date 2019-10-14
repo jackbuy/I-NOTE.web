@@ -7,33 +7,36 @@
             @doFollow="handleFollow">
         </user-avatar>
 
-        <card slot="content" :visible-header="true" :padding="false">
-            <zone-article-list
-                v-if="zoneType === 'article'"
-                :type="zoneType"
-                :user-id="userId">
-            </zone-article-list>
-            <zone-topic-list
-                v-if="zoneType === 'topic'"
-                :type="zoneType"
-                :user-id="userId">
-            </zone-topic-list>
-            <zone-collect-list
-                v-if="zoneType === 'collect'"
-                :type="zoneType"
-                :user-id="userId">
-            </zone-collect-list>
-            <zone-follow-list
-                v-if="zoneType === 'follow'"
-                :type="zoneType"
-                :user-id="userId">
-            </zone-follow-list>
-            <zone-fans-list
-                v-if="zoneType === 'fans'"
-                :type="zoneType"
-                :user-id="userId">
-            </zone-fans-list>
-        </card>
+        <zone-article-list
+            v-if="zoneType === 'article'"
+            slot="content"
+            :type="zoneType"
+            :user-id="userId">
+        </zone-article-list>
+        <zone-topic-list
+            v-if="zoneType === 'topic'"
+            slot="content"
+            :type="zoneType"
+            :user-id="userId">
+        </zone-topic-list>
+        <zone-collect-list
+            v-if="zoneType === 'collect'"
+            slot="content"
+            :type="zoneType"
+            :user-id="userId">
+        </zone-collect-list>
+        <zone-follow-list
+            v-if="zoneType === 'follow'"
+            slot="content"
+            :type="zoneType"
+            :user-id="userId">
+        </zone-follow-list>
+        <zone-fans-list
+            v-if="zoneType === 'fans'"
+            slot="content"
+            :type="zoneType"
+            :user-id="userId">
+        </zone-fans-list>
     </zone-layout>
 </template>
 
@@ -44,7 +47,6 @@ import ZoneCollectList from './ZoneCollectList';
 import ZoneTopicList from './ZoneTopicList';
 import ZoneFollowList from './ZoneFollowList';
 import ZoneFansList from './ZoneFansList';
-import Card from '@/components/common/card';
 import UserAvatar from '@/components/common/userAvatar';
 import api from '@/utils/api';
 export default {
@@ -56,8 +58,7 @@ export default {
         ZoneCollectList,
         ZoneFollowList,
         ZoneFansList,
-        UserAvatar,
-        Card
+        UserAvatar
     },
     data() {
         return {

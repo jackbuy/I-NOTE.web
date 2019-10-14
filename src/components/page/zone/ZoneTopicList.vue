@@ -1,25 +1,33 @@
 <template>
-    <infinite-scroll
-        :loading="loading"
-        :no-more="noMore"
-        :data="listData"
-        @loadData="getList">
-        <template slot-scope="scope">
-            <topic-item
-                :item="scope.row"
-                :item-id="scope.row._id"
-                :show-menu-edit="scope.row.userId._id === currentUserId"
-                :show-menu-delete="scope.row.userId._id === currentUserId"
-                @edit="handleRouterTopicEdit"
-                @delete="handleDelete">
-            </topic-item>
-        </template>
-    </infinite-scroll>
+    <card :padding="false">
+        <div slot="menu" class="menu">
+            <span
+                class="menu-btn round"
+                @click="handleAdd">创建专题</span>
+        </div>
+        <infinite-scroll
+            :loading="loading"
+            :no-more="noMore"
+            :data="listData"
+            @loadData="getList">
+            <template slot-scope="scope">
+                <topic-item
+                    :item="scope.row"
+                    :item-id="scope.row._id"
+                    :show-menu-edit="scope.row.userId._id === currentUserId"
+                    :show-menu-delete="scope.row.userId._id === currentUserId"
+                    @edit="handleRouterTopicEdit"
+                    @delete="handleDelete">
+                </topic-item>
+            </template>
+        </infinite-scroll>
+    </card>
 </template>
 
 <script>
 import InfiniteScroll from '@/components/common/infiniteScrollList';
 import TopicItem from '@/components/common/topicItem';
+import Card from '@/components/common/card';
 import message from '@/mixins/message';
 import api from '@/utils/api';
 
@@ -32,7 +40,8 @@ export default {
     mixins: [ message ],
     components: {
         InfiniteScroll,
-        TopicItem
+        TopicItem,
+        Card
     },
     data() {
         return {
@@ -90,6 +99,11 @@ export default {
         handleRouterTopicEdit(topicId) {
             this.$router.push({
                 path: `/topicWrite/${topicId}`
+            }).catch(() => {});
+        },
+        handleAdd() {
+            this.$router.push({
+                path: `/topicWrite`
             }).catch(() => {});
         },
         handleDelete(topicId) {

@@ -1,5 +1,5 @@
 <template>
-    <detail-layout :is-has="isHas">
+    <detail-layout :is-has="isHas" :pageLoading='pageLoading'>
         <div slot="menu" class="article-detail__menu">
             <div>
                 <button
@@ -110,12 +110,13 @@
 import { mapMutations } from 'vuex';
 import { SET_DOCUMENT_TITLE, OPEN_LOGIN_MODAL } from '@/store/mutation-types';
 import DetailLayout from './Layout';
-import Card from '@/components/common/card';
-import UserInfo from '@/components/common/userInfo';
-import ArticleRecommend from '@/components/common/articleRecommend';
-import ArticleComment from '@/components/common/articleComment';
-import api from '@/utils/api';
-import utils from '@/utils/utils';
+import Card from '_c/card';
+import UserInfo from '_c/userInfo';
+import ArticleRecommend from '_c/articleRecommend';
+import ArticleComment from '_c/articleComment';
+import api from '_u/api';
+import utils from '_u/utils';
+import To from '_u/to';
 export default {
     name: 'ArticleDetail',
     components: {
@@ -131,7 +132,8 @@ export default {
             detail: {},
             recommendData: [],
             topicList: [],
-            isHas: true
+            isHas: true,
+            pageLoading: false
         };
     },
     computed: {
@@ -215,17 +217,21 @@ export default {
             this.currentUserId ? this.handleRouterPath('/topicWrite') : this.openLoginModal();
         },
         // 获取文章详情
-        getDetail(articleId) {
+        async getDetail(articleId) {
+            this.pageLoading = true;
             const params = { articleId };
-            api.getDetail(params).then((res) => {
-                this.detail = res.data;
-                this.setDocumentTitle(this.detail.title);
-                this.recommend(this.detail.userId._id);
-                this.getIsTopicList(articleId);
-                this.isHas = true;
-            }).catch(() => {
+            let [ err, result ] = await To(api.getDetail(params));
+            if (err || !result || !result.data) {
                 this.isHas = false;
-            });
+                this.pageLoading = false;
+                return;
+            };
+            this.detail = result.data;
+            this.setDocumentTitle(result.data.title);
+            await this.recommend(result.data.userId._id);
+            await this.getIsTopicList(articleId);
+            this.isHas = true;
+            this.pageLoading = false;
         },
         // 获取专题列表
         getIsTopicList(articleId) {

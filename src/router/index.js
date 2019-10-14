@@ -28,10 +28,10 @@ export default new Router({
             children: [
                 {
                     path: '',
-                    redirect: '/find/newest'
+                    redirect: '/find'
                 },
                 {
-                    path: '/find/:sortType',
+                    path: '/find',
                     name: 'find',
                     component: Home,
                     meta: { title: '发现' }

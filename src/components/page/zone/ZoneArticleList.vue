@@ -1,25 +1,28 @@
 <template>
-    <infinite-scroll
-        :loading="loading"
-        :no-more="noMore"
-        :data="listData"
-        @loadData="getList">
-        <template slot-scope="scope">
-            <article-item
-                :item="scope.row"
-                :item-id="scope.row._id"
-                :show-menu-edit="scope.row.userId._id === currentUserId"
-                :show-menu-delete="scope.row.userId._id === currentUserId"
-                @edit="handleRouterEdit"
-                @delete="handleDelete">
-            </article-item>
-        </template>
-    </infinite-scroll>
+    <card :visible-header="true" :padding="false">
+        <infinite-scroll
+            :loading="loading"
+            :no-more="noMore"
+            :data="listData"
+            @loadData="getList">
+            <template slot-scope="scope">
+                <article-item
+                    :item="scope.row"
+                    :item-id="scope.row._id"
+                    :show-menu-edit="scope.row.userId._id === currentUserId"
+                    :show-menu-delete="scope.row.userId._id === currentUserId"
+                    @edit="handleRouterEdit"
+                    @delete="handleDelete">
+                </article-item>
+            </template>
+        </infinite-scroll>
+    </card>
 </template>
 
 <script>
 import InfiniteScroll from '@/components/common/infiniteScrollList';
 import ArticleItem from '@/components/common/articleItem';
+import Card from '@/components/common/card';
 import message from '@/mixins/message';
 import api from '@/utils/api';
 
@@ -32,7 +35,8 @@ export default {
     mixins: [ message ],
     components: {
         InfiniteScroll,
-        ArticleItem
+        ArticleItem,
+        Card
     },
     data() {
         return {

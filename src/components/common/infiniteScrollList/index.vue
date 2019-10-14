@@ -6,17 +6,23 @@
                 :row="item">
             </slot>
         </template>
-        <template v-if="data.length === 0 && noMore && !loading">
-            <div class="norecord">暂无数据！</div>
-        </template>
-        <div v-if='loading' class="loading-tip"><i class="el-icon-loading"></i> 加载中...</div>
-        <div v-if='data.length > 0 && noMore && !loading' class="no-more">~ 我是有底线的 ~</div>
+        <loading v-if='loading'></loading>
+        <empty-data v-if="data.length === 0 && noMore && !loading"></empty-data>
+        <no-more-data v-if='data.length > 0 && noMore && !loading'></no-more-data>
     </div>
 </template>
 
 <script>
+import Loading from './src/Loading';
+import NoMoreData from './src/NoMoreData';
+import EmptyData from './src/EmptyData';
 export default {
     name: 'infiniteScrollList',
+    components: {
+        Loading,
+        NoMoreData,
+        EmptyData
+    },
     props: {
         data: {
             type: Array,

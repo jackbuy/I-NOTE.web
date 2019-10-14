@@ -80,6 +80,7 @@ export default {
     },
     data() {
         return {
+            sortType: 'newest',
             listData: [],
             tagRecommendData: [], // Tag推荐
             authorRecommendData: [], // 作者推荐
@@ -92,31 +93,17 @@ export default {
             noMore: false // 没有更多数据
         };
     },
-    computed: {
-        sortType() {
-            return this.$route.params.sortType;
-        }
-    },
-    watch: {
-        sortType: {
-            handler(n, o) {
-                this.refresh(n);
-            },
-            immediate: true
-        }
-    },
     created() {
         this.getTagRecommend();
         this.getUserRecommend();
         this.getTopicRecommend();
+        this.getList(this.sortType);
+    },
+    activated() {
+        this.getUserRecommend();
+        this.getTopicRecommend();
     },
     methods: {
-        refresh(sortType) {
-            this.pageConfig.currentPage = 1;
-            this.listData = [];
-            this.noMore = false;
-            this.getList(sortType);
-        },
         getList(sortType) {
             const params = {
                 publish: true,
@@ -137,8 +124,10 @@ export default {
             });
         },
         handleSort(sortType) {
-            let path = `/find/${sortType}`;
-            this.handleRouterPush(path);
+            this.pageConfig.currentPage = 1;
+            this.listData = [];
+            this.noMore = false;
+            this.getList(sortType);
         },
         getTagRecommend() {
             api.tagRecommend().then((res) => {

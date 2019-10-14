@@ -45,7 +45,7 @@ Vue.use(new VueSocketio({
     }
 }));
 
-router.afterEach(transition => {
+router.afterEach(() => {
     window.scrollTo(0, 0);
     NProgress.done();
 });

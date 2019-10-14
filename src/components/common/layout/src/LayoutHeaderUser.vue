@@ -5,34 +5,38 @@
             <span @click="handleLog('register')">注册</span>
         </template>
         <template v-else>
-            <span class="search-btn" @click="handleRoutePush('/search')"><i class="icon icon-sousuo"></i></span>
-            <el-dropdown v-if="!isWrite" @command="handleCommand" trigger="click">
-                <span class="el-dropdown-link write">
-                    <i class="icon icon-jia"></i>
-                </span>
-                <el-dropdown-menu slot="dropdown">
-                    <el-dropdown-item command="write">写文章</el-dropdown-item>
-                    <el-dropdown-item command="topicWrite">创建专题</el-dropdown-item>
-                </el-dropdown-menu>
-            </el-dropdown>
-            <span class="theme" @click="handleTheme()">
+            <span
+                v-if="!isWrite"
+                class="search-btn"
+                @click="handleRoutePush('/search')">
+                <i class="icon icon-sousuo"></i>
+            </span>
+            <span
+                v-if="!isWrite"
+                class="write"
+                title="写文章"
+                @click="handleRoutePush('/write')">
+                <i class="icon icon-jia"></i>
+            </span>
+            <span
+                v-if="!isWrite"
+                class="theme"
+                @click="handleTheme()">
                 <i v-if="themeLight" class="icon icon-baitian"></i>
                 <i v-else class="icon icon-yejian"></i>
             </span>
-            <el-dropdown @command="handleCommand" trigger="click">
+            <el-dropdown
+                v-if="!isWrite"
+                trigger="click"
+                @command="handleCommand">
                 <span class="el-dropdown-link user-img">
                     <img v-if="isAvatar" :src="userImg" alt="">
                     <div v-else>{{ userImg }}</div>
                 </span>
-                <el-dropdown-menu slot="dropdown">
-                    <el-dropdown-item command="zone"><i class="icon icon-zuozhe"></i> {{ userName }}</el-dropdown-item>
-                    <el-dropdown-item divided command="zone"><i class="icon icon-wenzhang"></i> 文章</el-dropdown-item>
-                    <el-dropdown-item command="topic"><i class="icon icon-zhuanti"></i> 专题</el-dropdown-item>
-                    <el-dropdown-item command="collect"><i class="icon icon-like"></i> 收藏</el-dropdown-item>
-                    <el-dropdown-item divided command="follow"><i class="icon icon-guanzhu"></i> 关注</el-dropdown-item>
-                    <el-dropdown-item command="fans"><i class="icon icon-fensi"></i> 粉丝</el-dropdown-item>
-                    <el-dropdown-item divided command="settings"><i class="el-icon-s-tools"></i> 设置</el-dropdown-item>
-                    <el-dropdown-item divided command="loginOut"><i class="icon icon-tuichu"></i> 退出登录</el-dropdown-item>
+                <el-dropdown-menu>
+                    <el-dropdown-item command="zone"><i class="icon icon-yonghu"></i> 个人中心</el-dropdown-item>
+                    <el-dropdown-item command="settings"><i class="icon icon-settings-o"></i> 设置</el-dropdown-item>
+                    <el-dropdown-item divided command="loginOut"><i class="icon icon-tuichu"></i> 退出</el-dropdown-item>
                 </el-dropdown-menu>
             </el-dropdown>
         </template>
@@ -117,8 +121,6 @@ export default {
         },
         handleCommand(command) {
             if (command === 'loginOut') this.handleLogOut('/');
-            if (command === 'write') this.handleRoutePush(`/write`);
-            if (command === 'topicWrite') this.handleRoutePush(`/topicWrite`);
             if (command === 'zone') this.handleRoutePush(`/zone/${this.userId}/article`);
             if (command === 'collect') this.handleRoutePush(`/zone/${this.userId}/collect`);
             if (command === 'follow') this.handleRoutePush(`/zone/${this.userId}/follow`);

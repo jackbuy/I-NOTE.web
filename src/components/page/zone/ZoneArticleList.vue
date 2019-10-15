@@ -11,8 +11,8 @@
                     :item-id="scope.row._id"
                     :show-menu-edit="scope.row.userId._id === currentUserId"
                     :show-menu-delete="scope.row.userId._id === currentUserId"
-                    @edit="handleRouterEdit"
-                    @delete="handleDelete">
+                    @edit="handleRouterEdit(scope.row.articleId)"
+                    @delete="handleDelete(scope.row._id, scope.row.articleId)">
                 </article-item>
             </template>
         </infinite-scroll>
@@ -75,13 +75,12 @@ export default {
         },
         getList() {
             const params = {
-                publish: true,
                 userId: this.userId,
                 pageSize: this.pageConfig.pageSize,
                 currentPage: this.pageConfig.currentPage++
             };
             this.loading = true;
-            api.articleQuery(params).then((res) => {
+            api.articlePublishQuery(params).then((res) => {
                 this.loading = false;
                 if (res.data.length > 0) {
                     this.listData.push(...res.data);
@@ -92,12 +91,12 @@ export default {
                 this.loading = false;
             });
         },
-        handleDelete(itemId) {
+        handleDelete(articlePublishId, articleId) {
             this.confirmWarning({
                 title: '提示',
                 content: '确认删除吗？'
             }).then(() => {
-                api.articleDelete(itemId).then(() => {
+                api.articlePublishDelete(articlePublishId, articleId).then(() => {
                     this.refresh();
                     this.showSuccessMsg('删除成功！');
                 }).catch(() => {});

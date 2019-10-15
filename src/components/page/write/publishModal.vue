@@ -61,8 +61,7 @@ export default {
         },
         handlePublish() {
             const params = {
-                publish: true,
-                tagId: this.form.tagId[this.form.tagId.length - 1]
+                tagId: typeof this.form.tagId === 'object' ? this.form.tagId[this.form.tagId.length - 1] : this.form.tagId
             };
             this.$emit('handlePublish', params);
             this.handleClose();

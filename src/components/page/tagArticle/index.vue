@@ -87,13 +87,12 @@ export default {
         },
         getList(tagId) {
             const params = {
-                publish: true,
                 tagId,
                 pageSize: this.pageConfig.pageSize,
                 currentPage: this.pageConfig.currentPage++
             };
             this.loading = true;
-            api.articleQuery(params).then((res) => {
+            api.articlePublishQuery(params).then((res) => {
                 if (res.data.length > 0) {
                     this.listData.push(...res.data);
                 } else {

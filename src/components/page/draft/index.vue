@@ -10,6 +10,7 @@
                     :item="scope.row"
                     :item-id="scope.row._id"
                     item-type="draft"
+                    type="simple"
                     @edit="handleRouterEdit"
                     @delete="handleDelete">
                 </article-item>
@@ -37,7 +38,7 @@ export default {
         return {
             listData: [],
             pageConfig: {
-                pageSize: 15,
+                pageSize: 25,
                 currentPage: 1
             },
             loading: false, // 加载中
@@ -56,8 +57,6 @@ export default {
         },
         getList() {
             const params = {
-                publish: false,
-                userId: this.currentUserId,
                 pageSize: this.pageConfig.pageSize,
                 currentPage: this.pageConfig.currentPage++
             };
@@ -76,12 +75,13 @@ export default {
         handleRouterEdit(articleId) {
             this.$router.push(`/write/${articleId}`).catch(() => {});
         },
-        handleDelete(itemId) {
+        // 删除
+        handleDelete(articleId) {
             this.confirmWarning({
                 title: '提示',
                 content: '确认删除吗？'
             }).then(() => {
-                api.articleDelete(itemId).then(() => {
+                api.articleDelete(articleId).then(() => {
                     this.refresh();
                     this.showSuccessMsg('删除成功！');
                 });

@@ -61,7 +61,7 @@
                 <div
                     v-if="currentUserId === authorId"
                     class="menu-btn round"
-                    @click="handleRouterEdit(articleId)">
+                    @click="handleRouterEdit(aId)">
                     编辑
                 </div>
             </div>
@@ -195,6 +195,9 @@ export default {
         // 当前登录用户Id
         currentUserId() {
             return localStorage.getItem('userId');
+        },
+        aId() {
+            return this.detail.articleId;
         }
     },
     watch: {
@@ -220,7 +223,7 @@ export default {
         async getDetail(articleId) {
             this.pageLoading = true;
             const params = { articleId };
-            let [ err, result ] = await To(api.getDetail(params));
+            let [ err, result ] = await To(api.articlePublishDetail(params));
             if (err || !result || !result.data) {
                 this.isHas = false;
                 this.pageLoading = false;
@@ -313,13 +316,12 @@ export default {
         // 相关文章
         recommend(userId) {
             const params = {
-                publish: true,
                 pageSize: 5,
                 currentPage: 1,
                 sortType: 'popular',
                 userId
             };
-            api.articleQuery(params).then((res) => {
+            api.articlePublishQuery(params).then((res) => {
                 this.recommendData = res.data;
             }).catch(() => {});
         },

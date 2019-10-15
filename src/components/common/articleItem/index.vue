@@ -6,11 +6,9 @@
             <button v-if="showMenuEdit" @click="handleEdit(itemId)"><i class="el-icon-edit"></i></button>
             <button v-if="showMenuDelete" @click="handleDelete(itemId)"><i class="el-icon-delete"></i></button>
         </div>
-        <div v-if="item" class="article__item-header">
+        <div v-if="type === 'normal'" class="article__item-header">
             <div class="img" :style="{backgroundImage: 'url(' + userImg + ')'}"></div>
             <div class="name">{{ username }}</div>
-            <div class="time">{{ time }}</div>
-            <!-- <span v-if="isTop" class="article-top">置顶</span> -->
         </div>
         <div class="article__item-title">
             <span @click="handleDetail(articleId)">{{ title }}</span>
@@ -18,12 +16,13 @@
         <div class="article__item-description">
             {{ description }}
         </div>
-        <div v-if="itemType !== 'draft'" class="article__item-action">
-            <span class="tag">{{ tag }}</span>
-            <span v-if="viewCount > 0"><i class="icon icon-chakan"></i> {{ viewCount }}</span>
-            <span v-if="collectCount > 0"><i class="icon icon-like"></i> {{ collectCount }}</span>
-            <span v-if="commentCount > 0"><i class="icon icon-pinglun"></i> {{ commentCount }}</span>
-            <span v-if="likeCount > 0"><i class="icon icon-dianzan"></i> {{ likeCount }}</span>
+        <div class="article__item-action">
+            <span v-if="tag" class="tag">{{ tag }}</span>
+            <span class="time">{{ time }}</span>
+            <span v-if="itemType !== 'draft' && viewCount > 0"><i class="icon icon-chakan"></i> {{ viewCount }}</span>
+            <span v-if="itemType !== 'draft' && collectCount > 0"><i class="icon icon-like"></i> {{ collectCount }}</span>
+            <span v-if="itemType !== 'draft' && commentCount > 0"><i class="icon icon-pinglun"></i> {{ commentCount }}</span>
+            <span v-if="itemType !== 'draft' && likeCount > 0"><i class="icon icon-dianzan"></i> {{ likeCount }}</span>
         </div>
         <div class="article__item-img" v-if="img" v-html="img"></div>
     </div>
@@ -48,6 +47,10 @@ export default {
         showMenuDelete: {
             type: Boolean,
             default: true
+        },
+        type: {
+            type: String,
+            default: 'normal' // normal simple 两种模式
         }
     },
     computed: {

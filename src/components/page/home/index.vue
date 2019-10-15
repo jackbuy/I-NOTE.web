@@ -106,13 +106,12 @@ export default {
     methods: {
         getList(sortType) {
             const params = {
-                publish: true,
                 sortType,
                 pageSize: this.pageConfig.pageSize,
                 currentPage: this.pageConfig.currentPage++
             };
             this.loading = true;
-            api.articleQuery(params).then((res) => {
+            api.articlePublishQuery(params).then((res) => {
                 this.loading = false;
                 if (res.data.length > 0) {
                     this.listData.push(...res.data);

@@ -11,21 +11,33 @@
                 @click="handleRoutePush('/article/draft')">
                 我的草稿
             </el-button>
-            <el-button
+            <!-- <el-button
                 v-if="form.publish"
                 :disabled="isSaving"
                 size="mini"
                 round
                 @click="handleCancelPublish">
                 取消发布
+            </el-button> -->
+            <el-button
+                v-if="form.isPublish"
+                :disabled="isSaving"
+                size="mini"
+                type="primary"
+                round
+                @mouseover.native="handleSetBtnName('更新发布')"
+                @mouseout.native="handleSetBtnName('已发布')"
+                @click="handleOpenPublishModal">
+                {{ publishTitle }}
             </el-button>
             <el-button
+                v-else
                 :disabled="isSaving"
                 size="mini"
                 type="primary"
                 round
                 @click="handleOpenPublishModal">
-                {{ isPublish }}
+                发布
             </el-button>
         </div>
         <div class="write__title">
@@ -84,7 +96,8 @@ export default {
             publishTagId: '',
             isSaving: false,
             saved: false,
-            timer: null
+            timer: null,
+            publishTitle: '已发布'
         };
     },
     computed: {
@@ -97,9 +110,6 @@ export default {
             } else {
                 return this.saved ? '已保存' : '';
             }
-        },
-        isPublish() {
-            return this.form.publish ? '已发布' : '发布';
         }
     },
     watch: {
@@ -127,6 +137,10 @@ export default {
         window.removeEventListener('resize', this.setEditorHeight);
     },
     methods: {
+        handleSetBtnName(title) {
+            console.log(1);
+            this.publishTitle = title;
+        },
         // 设置编辑器高度
         setEditorHeight() {
             // quillEditor
@@ -145,19 +159,22 @@ export default {
             this.publishTagId = this.form.tagId ? this.form.tagId : '';
         },
         getDetail(articleId) {
-            api.getDetail({ articleId, isEdit: true }).then((res) => {
-                const { contentHtml, publish, tagId, title } = res.data;
+            api.articleDetail(articleId).then((res) => {
+                const { contentHtml, tagId, isPublish, title, articlePublishId } = res.data;
                 this.form = {
+                    title,
                     contentHtml,
-                    publish,
-                    title
+                    isPublish,
+                    articlePublishId
                 };
                 if (tagId && tagId._id) this.form.tagId = tagId._id;
             }).catch(() => {});
         },
-        handleSave(obj) {
-            let params = obj || {};
-            if (!obj) params = { ...this.form };
+        handleSave(obj = {}) {
+            let params = {
+                ...this.form,
+                ...obj
+            };
             this.isSaving = true;
             if (this.articleId) {
                 api.articleEdit(this.articleId, params).then((res) => {
@@ -180,16 +197,36 @@ export default {
         },
         // 取消发布
         handleCancelPublish() {
-            Object.assign(this.form, {
-                publish: false
-            });
+            // Object.assign(this.form, {
+            //     publish: false
+            // });
 
-            this.handleSave();
+            // this.handleSave();
         },
         // 发布
         handlePublish(obj) {
             Object.assign(this.form, obj);
-            this.handleSave();
+            if (this.form.isPublish && this.form.articlePublishId) {
+                api.articlePublishUpdate(this.form.articlePublishId, {
+                    ...this.form,
+                    articleId: this.articleId
+                }).then(() => {
+                    this.handleSave({
+                        isPublish: true
+                    });
+                });
+            } else {
+                api.articlePublish({
+                    ...this.form,
+                    articleId: this.articleId
+                }).then((res) => {
+                    const { articlePublishId } = res.data;
+                    this.handleSave({
+                        articlePublishId,
+                        isPublish: true
+                    });
+                });
+            }
         },
         handleRoutePush(path) {
             this.$router.push(path).catch(() => {});

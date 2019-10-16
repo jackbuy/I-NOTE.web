@@ -1,6 +1,6 @@
 <template>
     <div class="layout__header-logo" @click="handleRoutePush">
-        <img src="../../../../../static/logo/inote_logo_beta.png" alt="">
+        <img src="../../../../../static/img/logo.png" alt="">
     </div>
 </template>
 

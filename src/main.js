@@ -1,5 +1,4 @@
 import Vue from 'vue';
-import ElementUI from 'element-ui';
 import NProgress from 'nprogress';
 import VueQuillEditor from 'vue-quill-editor';
 import VueSocketio from 'vue-socket.io';
@@ -9,8 +8,40 @@ import App from './App';
 import Highlight from './directive/highlight';
 import { apiBaseUrl } from '@/constants/url-config';
 
+// import ElementUI from 'element-ui';
+// Vue.use(ElementUI, {size: 'small'});
+
+import {
+    Button,
+    Popover,
+    Form,
+    FormItem,
+    Input,
+    Dropdown,
+    DropdownMenu,
+    DropdownItem,
+    Dialog,
+    Backtop,
+    Avatar,
+    Icon,
+    Upload
+} from 'element-ui';
+Vue.prototype.$ELEMENT = { size: 'small', zIndex: 3000 };
+Vue.use(Button);
+Vue.use(Popover);
+Vue.use(Form);
+Vue.use(FormItem);
+Vue.use(Input);
+Vue.use(Dropdown);
+Vue.use(DropdownMenu);
+Vue.use(DropdownItem);
+Vue.use(Dialog);
+Vue.use(Backtop);
+Vue.use(Avatar);
+Vue.use(Icon);
+Vue.use(Upload);
+
 Vue.use(Highlight);
-Vue.use(ElementUI, {size: 'small'});
 Vue.use(VueQuillEditor, {/* { default global options } */});
 
 Vue.config.productionTip = false;

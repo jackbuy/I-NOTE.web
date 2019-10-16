@@ -19,7 +19,7 @@ const webpackConfig = merge(baseWebpackConfig, {
   // 排除不打包
   externals: {
     'vue': 'Vue',
-    'element-ui': 'ELEMENT',
+    // 'element-ui': 'ELEMENT',
     'vue-quill-editor': 'VueQuillEditor',
     'highlight.js': 'hljs'
   },

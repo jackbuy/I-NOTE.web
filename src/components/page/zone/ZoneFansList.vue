@@ -23,7 +23,8 @@ export default {
     name: 'ZoneFansList',
     props: {
         type: String,
-        userId: String
+        userId: String,
+        currentUserId: String
     },
     components: {
         InfiniteScroll,

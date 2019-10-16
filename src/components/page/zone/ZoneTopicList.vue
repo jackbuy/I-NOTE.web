@@ -4,6 +4,10 @@
             <span
                 class="menu-btn round"
                 @click="handleAdd">创建专题</span>
+            <span
+                v-if="currentUserId === userId"
+                class="menu-btn round"
+                @click="handleAction">{{ actionTitle}}</span>
         </div>
         <infinite-scroll
             :loading="loading"
@@ -14,8 +18,9 @@
                 <topic-item
                     :item="scope.row"
                     :item-id="scope.row._id"
-                    :show-menu-edit="scope.row.userId._id === currentUserId"
-                    :show-menu-delete="scope.row.userId._id === currentUserId"
+                    :show-menu-edit="isAction"
+                    :show-menu-delete="isAction"
+                    type="simple"
                     @edit="handleRouterTopicEdit"
                     @delete="handleDelete">
                 </topic-item>
@@ -35,7 +40,8 @@ export default {
     name: 'ZoneTopicList',
     props: {
         type: String,
-        userId: String
+        userId: String,
+        currentUserId: String
     },
     mixins: [ message ],
     components: {
@@ -45,6 +51,7 @@ export default {
     },
     data() {
         return {
+            isAction: false,
             listData: [],
             pageConfig: {
                 pageSize: 15,
@@ -55,12 +62,11 @@ export default {
         };
     },
     computed: {
-        // 当前登录用户Id
-        currentUserId() {
-            return localStorage.getItem('userId');
-        },
         zone() {
             return `${this.type}${this.userId}`;
+        },
+        actionTitle() {
+            return this.isAction ? '完成' : '编辑';
         }
     },
     watch: {
@@ -72,6 +78,9 @@ export default {
         }
     },
     methods: {
+        handleAction() {
+            this.isAction = !this.isAction;
+        },
         refresh() {
             this.pageConfig.currentPage = 1;
             this.listData = [];

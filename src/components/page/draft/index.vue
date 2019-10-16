@@ -1,5 +1,10 @@
 <template>
-    <card slot="content" :visible-header="false" :padding="false" title="我的草稿" icon="icon icon-wenzhang">
+    <card slot="content" :padding="false" title="我的草稿" icon="icon icon-wenzhang">
+        <div slot="menu" class="menu">
+            <span
+                class="menu-btn round"
+                @click="handleAction">{{ actionTitle}}</span>
+        </div>
         <infinite-scroll
             :loading="loading"
             :no-more="noMore"
@@ -8,11 +13,18 @@
             <template slot-scope="scope">
                 <article-item
                     :item="scope.row"
-                    :item-id="scope.row._id"
-                    item-type="draft"
-                    type="simple"
-                    @edit="handleRouterEdit"
-                    @delete="handleDelete">
+                    :is-action="isAction"
+                    type="simple">
+                    <template slot-scope="scope">
+                        <div class="menu">
+                            <button @click="handleRouterEdit(scope.row._id)">
+                                <i class="el-icon-edit"></i>
+                            </button>
+                            <button @click="handleDelete(scope.row._id)">
+                                <i class="el-icon-delete"></i>
+                            </button>
+                        </div>
+                    </template>
                 </article-item>
             </template>
         </infinite-scroll>
@@ -36,6 +48,7 @@ export default {
     },
     data() {
         return {
+            isAction: false,
             listData: [],
             pageConfig: {
                 pageSize: 25,
@@ -45,10 +58,18 @@ export default {
             noMore: false // 没有更多数据
         };
     },
+    computed: {
+        actionTitle() {
+            return this.isAction ? '完成' : '编辑';
+        }
+    },
     created() {
         this.getList();
     },
     methods: {
+        handleAction() {
+            this.isAction = !this.isAction;
+        },
         refresh() {
             this.pageConfig.currentPage = 1;
             this.listData = [];

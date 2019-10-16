@@ -20,7 +20,7 @@
     }
     
     .article-detail{
-        padding: 15px;
+        padding: 15px 15px 0 15px;
         margin-bottom: 15px;
         background: @boxBgColor;
         &__menu{
@@ -77,22 +77,16 @@
             border-bottom: 1px solid @borderColor;
         }
         &__info{
-            font-size: 12px;
             padding-top: 15px;
             border-top: 1px solid @borderColor;
+            font-size: 0;
             span{
-                margin-right: 10px;
-                i{
-                    font-size: 12px;
-                }
-            }
-            .edit{
                 font-size: 12px;
-                color: @fontActiveColor;
-                cursor: pointer;
-                &:hover{
-                    text-decoration: underline;
-                }
+                padding: 0 11px;
+                .point(@fontColor);
+            }
+            i{
+                font-size: 12px !important;
             }
         }
         &__content{

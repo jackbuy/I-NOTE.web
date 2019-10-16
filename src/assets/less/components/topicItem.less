@@ -2,116 +2,101 @@
 .topic-item(){
     .topic{
         &__item{
-            position: relative;
             padding: 15px;
             background: @boxBgColor;
             .borderTop(@borderColor);
-            &.has-img{
-                padding-right: 130px;
-                .topic__item-img{
-                    display: block;
-                }
-            }
-            &-menu{
-                position: absolute;
-                top: 5px;
-                right: 0;
-                font-size: 0;
-                button{
-                    display: inline-block;
-                    padding: 5px 10px;
-                    border: 1px solid @borderColor;
-                    font-size: 14px;
-                    margin-right: 10px;
-                    cursor: pointer;
-                    transition: all 0.3s;
-                    border-radius: 20px;
-                    background: transparent;
-                    color: @fontSubColor;
-                    &:hover,
-                    &.active{
-                        color: @fontActiveColor;
-                    }
-                    &[disabled]{
-                        cursor: not-allowed;
-                    }
-                }
-            }
-            &-header{
-                font-size: 12px;
-                padding-bottom: 10px;
-                display: flex;
-                align-items:center; /*垂直居中*/
-                .name{
-                    max-width: 160px;
-                    padding: 0 10px;
-                    color: @fontSubColor;
-                    font-size: 14px;
-                    .ovf-1();
-                }
-                .time{
-                    flex: 1;
-                }
-                .img{
-                    width: 20px;
-                    height: 20px;
-                    border-radius: 20px;
+            display: flex;
+            align-items:center; /*垂直居中*/
+            .user{
+                width: 80px;
+                padding-right: 15px;
+                &-img{
+                    width: 44px;
+                    height: 44px;
+                    border-radius: 44px;
                     background-color: @imgBgColor;
                     background-position: center;
                     background-repeat: no-repeat;
                     background-size: cover;
+                    margin: 0 auto;
                 }
-                .menu{
-                    cursor: pointer;
+                &-name{
                     color: @fontSubColor;
-                    &:hover{
-                        text-decoration: underline;
-                    }
-                }
-            }
-            &-title{
-                padding-left: 30px;
-                span{
-                    cursor: pointer;
-                    font-size: 16px;
-                    line-height: 1.5;
-                    color: @fontMainColor;
-                    transition: all 0.3s;
-                    &:hover{
-                        color: @fontHoverColor;
-                    }
-                }
-            }
-            &-description{
-                display: none;
-                padding-left: 30px;
-                font-size: 12px;
-                margin-top: 12px;
-                .ovf-1();
-            }
-            &-info{
-                padding-left: 30px;
-                padding-top: 10px;
-                font-size: 0;
-                span{
+                    margin-top: 10px;
+                    text-align: center;
                     font-size: 12px;
-                    padding: 0 11px;
-                    .point(@fontColor);
+                    .ovf-1();
                 }
             }
-            &-img{
-                display: none;
-                position: absolute;
-                top: 42px;
-                right: 15px;
-                width: 100px;
-                height: 50px;
-                overflow: hidden;
-                background-color: @imgBgColor;
-                background-position: center;
-                background-repeat: no-repeat;
-                background-size: cover;
-                border-radius: 50px;
+            .content{
+                flex: 1;
+                &-title{
+                    span{
+                        cursor: pointer;
+                        font-size: 16px;
+                        line-height: 1.5;
+                        color: @fontMainColor;
+                        transition: all 0.3s;
+                        &:hover{
+                            color: @fontHoverColor;
+                        }
+                    }
+                }
+                &-description{
+                    display: none;
+                    font-size: 12px;
+                    margin-top: 6px;
+                    line-height: 1.5;
+                    .ovf-num(1);
+                }
+                &-info{
+                    padding-top: 10px;
+                    font-size: 0;
+                    span{
+                        font-size: 12px;
+                        padding: 0 11px;
+                        .point(@fontColor);
+                    }
+                }
+            }
+            .img{
+                width: 115px;
+                padding-left: 15px;
+                &>div{
+                    width: 100px;
+                    height: 50px;
+                    overflow: hidden;
+                    background-color: @imgBgColor;
+                    background-position: center;
+                    background-repeat: no-repeat;
+                    background-size: cover;
+                    border-radius: 50px;
+                    display: flex;
+                    align-items:center;/*垂直居中*/
+                    justify-content: center;/*水平居中*/
+                    .menu{
+                        font-size: 0;
+                        button{
+                            display: inline-block;
+                            padding: 5px 10px;
+                            border: 1px solid @borderColor;
+                            font-size: 14px;
+                            margin: 0 5px;
+                            cursor: pointer;
+                            transition: all 0.3s;
+                            border-radius: 20px;
+                            background: @borderColor;
+                            color: @fontSubColor;
+                            &:hover,
+                            &.active{
+                                color: @fontActiveColor;
+                            }
+                            &[disabled]{
+                                cursor: not-allowed;
+                            }
+                        }
+                    }
+                }
             }
         }
     }
@@ -119,10 +104,10 @@
     @media (max-width: @mediaWidth) {
         .topic__item{
             &.has-img{
-                padding-right: 100px;
+                // padding-right: 100px;
             }
             &-img{
-                width: 80px;
+                // width: 80px;
     
             }
         }

@@ -20,18 +20,6 @@
                 取消发布
             </el-button> -->
             <el-button
-                v-if="form.isPublish"
-                :disabled="isSaving"
-                size="mini"
-                type="primary"
-                round
-                @mouseover.native="handleSetBtnName('更新发布')"
-                @mouseout.native="handleSetBtnName('已发布')"
-                @click="handleOpenPublishModal">
-                {{ publishTitle }}
-            </el-button>
-            <el-button
-                v-else
                 :disabled="isSaving"
                 size="mini"
                 type="primary"
@@ -96,8 +84,7 @@ export default {
             publishTagId: '',
             isSaving: false,
             saved: false,
-            timer: null,
-            publishTitle: '已发布'
+            timer: null
         };
     },
     computed: {
@@ -137,10 +124,6 @@ export default {
         window.removeEventListener('resize', this.setEditorHeight);
     },
     methods: {
-        handleSetBtnName(title) {
-            console.log(1);
-            this.publishTitle = title;
-        },
         // 设置编辑器高度
         setEditorHeight() {
             // quillEditor

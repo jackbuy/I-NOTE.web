@@ -44,7 +44,7 @@ export default {
     },
     data() {
         return {
-            title: '发布设置',
+            title: '发布',
             form: {
                 tagId: this.tagId
             },

@@ -3,7 +3,7 @@
         <div slot="menu" class="article-detail__menu">
             <div>
                 <button
-                    :disabled="loading || currentUserId === authorId"
+                    :disabled="loading"
                     :class="{'active': isLike}"
                     @click="handleLike(isLike)">
                     <i v-if="isLike" class="icon icon-dianzan"></i>
@@ -14,7 +14,7 @@
             </div>
             <div>
                 <button
-                    :disabled="loading || currentUserId === authorId"
+                    :disabled="loading"
                     :class="{'active': isCollect}"
                     @click="handleCollect(isCollect)">
                     <i v-if="isCollect" class="icon icon-like"></i>
@@ -75,11 +75,11 @@
                     class="article-detail__content">
                 </div>
                 <div class="article-detail__info">
+                    <span>{{ time }}</span>
                     <span>
                         <i class="icon icon-chakan"></i>
                         {{ viewCount }}
                     </span>
-                    <span :title="createTime">{{ editTime }}</span>
                 </div>
             </div>
         </card>
@@ -152,11 +152,13 @@ export default {
         authorId() {
             if (this.userInfo) return this.userInfo._id;
         },
-        createTime() {
-            return `创建于 ${utils.formatDate.time(this.detail.createTime)}`;
-        },
-        editTime() {
-            return `${utils.formatDate.time(this.detail.editTime)}`;
+        time() {
+            if (this.detail && this.detail.publishTime) {
+                let time = this.detail.publishTime;
+                let end = utils.formatDate.time(time);
+                let start = utils.formatDate.now();
+                return `${utils.diffDate(start, end)}`;
+            }
         },
         tag() {
             if (this.detail && this.detail.tagId && this.detail.tagId.parentId) {
@@ -278,7 +280,7 @@ export default {
             };
 
             this.loading = true;
-            api.articleCollect(params).then(() => {
+            api.articlePublishCollect(params).then(() => {
                 if (!type) {
                     this.detail.isCollect = true;
                     this.detail.collectCount++;
@@ -300,7 +302,7 @@ export default {
             };
 
             this.loading = true;
-            api.articleLike(params).then(() => {
+            api.articlePublishLike(params).then(() => {
                 if (!type) {
                     this.detail.isLike = true;
                     this.detail.likeCount++;

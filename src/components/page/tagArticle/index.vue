@@ -8,9 +8,7 @@
                 @loadData="getList(tagId)">
                 <template slot-scope="scope">
                     <article-item
-                        :item="scope.row"
-                        :show-menu-edit="false"
-                        :show-menu-delete="false">
+                        :item="scope.row">
                     </article-item>
                 </template>
             </infinite-scroll>

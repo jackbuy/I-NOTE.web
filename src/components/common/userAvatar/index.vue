@@ -1,13 +1,14 @@
 <template>
     <div class="user-avatar">
         <div class="side">
-            <el-avatar v-if="user.avatar" :size="80" :src="userImg"></el-avatar>
-            <el-avatar v-else :size="80"><i class="icon icon-yonghu"></i></el-avatar>
+            <el-avatar v-if="user.avatar" :size="100" :src="userImg"></el-avatar>
+            <el-avatar v-else :size="100"><i class="icon icon-yonghu"></i></el-avatar>
         </div>
         <div class="content">
             <div class="header">
                 <div class="name">{{ username }}</div>
                 <div class="brief">{{ brief }}</div>
+                <div class="time">{{ time }}</div>
             </div>
             <div class="menu">
                 <span
@@ -47,6 +48,7 @@
 
 <script>
 import { imgBaseUrl } from '@/constants/url-config';
+import utils from '@/utils/utils';
 export default {
     name: 'UserAvatar',
     props: {
@@ -71,6 +73,9 @@ export default {
         },
         brief() {
             return this.user.brief || '作者很懒，什么也没写！';
+        },
+        time() {
+            return `加入于 ${utils.formatDate.date(this.user.createTime)}`;
         },
         userImg() {
             return this.user.avatar ? `${imgBaseUrl}/${this.user.avatar}` : '';

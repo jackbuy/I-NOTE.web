@@ -18,9 +18,7 @@
                 <template slot-scope="scope">
                     <article-item
                         v-if="activeTabName === 'article'"
-                        :item="scope.row"
-                        :show-menu-edit="false"
-                        :show-menu-delete="false">
+                        :item="scope.row">
                     </article-item>
                     <topic-item
                         v-if="activeTabName === 'topic'"
@@ -103,7 +101,7 @@ export default {
                 currentPage: this.pageConfig.currentPage++
             };
             if (tabName === 'article') {
-                apiName = 'articleQuery';
+                apiName = 'articlePublishQuery';
                 params.publish = true;
             }
             if (tabName === 'topic') {

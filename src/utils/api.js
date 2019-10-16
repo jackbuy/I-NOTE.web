@@ -40,14 +40,14 @@ export default {
     articlePublish: (params) => http('post', `${apiBaseUrl}/article/publish`, params),
     // 更新发布
     articlePublishUpdate: (articlePublishId, params) => http('put', `${apiBaseUrl}/article/publish/update/${articlePublishId}`, params),
-    // 删除发布文章
+    // 删除发布
     articlePublishDelete: (articlePublishId, articleId) => http('delete', `${apiBaseUrl}/article/publish/delete/${articlePublishId}/${articleId}`),
     // 详情
     articlePublishDetail: (params) => http('post', `${apiBaseUrl}/article/publish/detail`, params),
-    // 已发布文章点赞
-    // articleLike: (params) => http('post', `${apiBaseUrl}/article/like`, params),
-    // 已发布文章收藏
-    // articleCollect: (params) => http('post', `${apiBaseUrl}/article/collect`, params),
+    // 点赞
+    articlePublishLike: (params) => http('post', `${apiBaseUrl}/article/publish/like`, params),
+    // 收藏
+    articlePublishCollect: (params) => http('post', `${apiBaseUrl}/article/publish/collect`, params),
 
     // 专题列表
     topicQuery: (params) => http('post', `${apiBaseUrl}/topic/query`, params),

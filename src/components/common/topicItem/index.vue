@@ -1,29 +1,30 @@
 <template>
-    <div
-        class="topic__item"
-        :class="{'has-img': img}">
-        <div class="topic__item-menu">
-            <button v-if="showMenuEdit" @click="handleEdit(itemId)"><i class="el-icon-edit"></i></button>
-            <button v-if="showMenuDelete" @click="handleDelete(itemId)"><i class="el-icon-delete"></i></button>
+    <div class="topic__item">
+        <div v-if="type === 'normal'" class="user">
+            <div class="user-img" :style="{backgroundImage: 'url(' + userImg + ')'}"></div>
+            <div class="user-name">{{ username }}</div>
         </div>
-        <div class="topic__item-header">
-            <div class="img" :style="{backgroundImage: 'url(' + userImg + ')'}"></div>
-            <div class="name">{{ username }}</div>
-            <div class="time">{{ createTime }}</div>
-            <!-- <span class="menu edit" v-if="showMenuEdit" @click="handleEdit(itemId)">编辑</span>
-            <span class="menu del" v-if="showMenuDelete" @click="handleDelete(itemId)">删除</span> -->
+        <div class="content">
+            <div class="content-title">
+                <span @click="handleRouterPush(topicId)">{{ title }}</span>
+            </div>
+            <div class="content-description">
+                {{ description }}
+            </div>
+            <div class="content-info">
+                <span>文章 {{ articleCount }}</span>
+                <span>关注 {{ followCount }}</span>
+                <span>{{ createTime }}</span>
+            </div>
         </div>
-        <div class="topic__item-title">
-            <span @click="handleRouterPush(topicId)">{{ title }}</span>
+        <div class="img">
+            <div :style="{backgroundImage: 'url(' + img + ')'}">
+                <div class="menu">
+                    <button v-if="showMenuEdit" @click="handleEdit(itemId)"><i class="el-icon-edit"></i></button>
+                    <button v-if="showMenuDelete" @click="handleDelete(itemId)"><i class="el-icon-delete"></i></button>
+                </div>
+            </div>
         </div>
-        <div class="topic__item-description">
-            {{ description }}
-        </div>
-        <div class="topic__item-info">
-            <span>文章 {{ articleCount }}</span>
-            <span>关注 {{ followCount }}</span>
-        </div>
-        <div class="topic__item-img" :style="{backgroundImage: 'url(' + img + ')'}"></div>
     </div>
 </template>
 
@@ -45,6 +46,11 @@ export default {
         showMenuDelete: {
             type: Boolean,
             default: true
+        },
+        // 列表模式
+        type: {
+            type: String,
+            default: 'normal' // normal simple 两种模式
         }
     },
     computed: {

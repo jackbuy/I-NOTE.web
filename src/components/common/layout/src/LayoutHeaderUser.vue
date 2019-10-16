@@ -34,8 +34,8 @@
                     <div v-else>{{ userImg }}</div>
                 </span>
                 <el-dropdown-menu>
-                    <el-dropdown-item command="zone"><i class="icon icon-yonghu"></i> 个人中心</el-dropdown-item>
-                    <el-dropdown-item command="settings"><i class="icon icon-settings-o"></i> 设置</el-dropdown-item>
+                    <el-dropdown-item command="zone"><i class="icon icon-yonghu"></i> 我的主页</el-dropdown-item>
+                    <el-dropdown-item divided command="settings"><i class="icon icon-settings-o"></i> 设置</el-dropdown-item>
                     <el-dropdown-item command="loginOut"><i class="icon icon-tuichu"></i> 退出</el-dropdown-item>
                 </el-dropdown-menu>
             </el-dropdown>

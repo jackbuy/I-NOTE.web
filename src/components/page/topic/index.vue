@@ -1,5 +1,5 @@
 <template>
-    <card :visible-header="true" :padding="false">
+    <card :padding="false" icon="icon icon-zhuanti" title="专题">
         <infinite-scroll
             :data="listData"
             :loading="loading"

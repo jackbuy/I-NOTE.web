@@ -1,30 +1,30 @@
 <template>
-    <div
-        class="article__item"
-        :class="{'has-img': img}">
-        <div class="article__item-menu">
-            <button v-if="showMenuEdit" @click="handleEdit(itemId)"><i class="el-icon-edit"></i></button>
-            <button v-if="showMenuDelete" @click="handleDelete(itemId)"><i class="el-icon-delete"></i></button>
+    <div class="article__item">
+        <div
+            v-if="type === 'normal'"
+            class="user">
+            <div class="user-img" :style="{backgroundImage: 'url(' + userImg + ')'}"></div>
         </div>
-        <div v-if="type === 'normal'" class="article__item-header">
-            <div class="img" :style="{backgroundImage: 'url(' + userImg + ')'}"></div>
-            <div class="name">{{ username }}</div>
+        <div class="content">
+            <div
+                v-if="type === 'normal'"
+                class="content-name">{{ username }}</div>
+            <div class="content-title">
+                <span @click="handleDetail(articleId)">{{ title }}</span>
+            </div>
+            <div class="content-description">{{ description }}</div>
+            <div class="content-info">
+                <span v-if="tag">{{ tag }}</span>
+                <span>{{ time }}</span>
+                <span v-if="viewCount > 0"><i class="icon icon-chakan"></i> {{ viewCount }}</span>
+                <span v-if="collectCount > 0"><i class="icon icon-like"></i> {{ collectCount }}</span>
+                <span v-if="commentCount > 0"><i class="icon icon-pinglun"></i> {{ commentCount }}</span>
+                <span v-if="likeCount > 0"><i class="icon icon-dianzan"></i> {{ likeCount }}</span>
+            </div>
         </div>
-        <div class="article__item-title">
-            <span @click="handleDetail(articleId)">{{ title }}</span>
+        <div v-if="isAction" class="action">
+            <slot :row="item" :item-id="itemId"></slot>
         </div>
-        <div class="article__item-description">
-            {{ description }}
-        </div>
-        <div class="article__item-action">
-            <span v-if="tag" class="tag">{{ tag }}</span>
-            <span class="time">{{ time }}</span>
-            <span v-if="itemType !== 'draft' && viewCount > 0"><i class="icon icon-chakan"></i> {{ viewCount }}</span>
-            <span v-if="itemType !== 'draft' && collectCount > 0"><i class="icon icon-like"></i> {{ collectCount }}</span>
-            <span v-if="itemType !== 'draft' && commentCount > 0"><i class="icon icon-pinglun"></i> {{ commentCount }}</span>
-            <span v-if="itemType !== 'draft' && likeCount > 0"><i class="icon icon-dianzan"></i> {{ likeCount }}</span>
-        </div>
-        <div class="article__item-img" v-if="img" v-html="img"></div>
     </div>
 </template>
 
@@ -38,27 +38,34 @@ export default {
             type: Object,
             default: () => ({})
         },
-        itemId: String,
-        itemType: String,
-        showMenuEdit: {
+        // 此字段为特殊自定义字段
+        itemId: {
+            type: String,
+            default: ''
+        },
+        isAction: {
             type: Boolean,
             default: true
         },
-        showMenuDelete: {
-            type: Boolean,
-            default: true
-        },
+        /*
+        * 列表模式
+        * normal simple 两种模式
+        */
         type: {
             type: String,
-            default: 'normal' // normal simple 两种模式
+            default: 'normal'
         }
     },
     computed: {
         username() {
-            if (this.item && this.item.userId) return this.item.userId.nickname ? this.item.userId.nickname : this.item.userId.username;
+            if (this.item && this.item.userId) {
+                return this.item.userId.nickname ? this.item.userId.nickname : this.item.userId.username;
+            }
         },
         userImg() {
-            if (this.item && this.item.userId) return this.item.userId && this.item.userId.avatar ? `${imgBaseUrl}/${this.item.userId.avatar}` : '';
+            if (this.item && this.item.userId) {
+                return this.item.userId && this.item.userId.avatar ? `${imgBaseUrl}/${this.item.userId.avatar}` : '';
+            }
         },
         title() {
             if (this.item && this.item.title) {
@@ -70,18 +77,15 @@ export default {
         description() {
             if (this.item && this.item.contentText) return this.item.contentText;
         },
-        isTop() {
-            if (this.item) return this.item.top;
-        },
-        publish() {
-            if (this.item) return this.item.publish;
+        isPublish() {
+            if (this.item) return this.item.publishTime;
         },
         articleId() {
-            if (this.item) return this.item._id || '';
+            if (this.item) return this.item._id;
         },
         time() {
             if (this.item && this.item.title) {
-                let time = this.item && this.item.editTime ? this.item.editTime : this.item.createTime;
+                let time = this.item && this.item.publishTime ? this.item.publishTime : this.item.editTime;
                 let end = utils.formatDate.time(time);
                 let start = utils.formatDate.now();
                 return `${utils.diffDate(start, end)}`;
@@ -103,20 +107,11 @@ export default {
         },
         commentCount() {
             if (this.item) return this.item.commentCount > 0 ? this.item.commentCount : '';
-        },
-        img() {
-            return '';
-            // if (this.item && this.item.contentHtml) {
-            //     // 匹配图片（g表示匹配所有结果i表示区分大小写）
-            //     var imgReg = /<img.*?(?:>|\/>)/gi;
-            //     var arr = this.item.contentHtml.match(imgReg);
-            //     if (arr && arr.length > 0) return arr[0];
-            // }
         }
     },
     methods: {
         handleDetail(articleId) {
-            let path = this.itemType === 'draft' ? `/write/${articleId}` : `/detail/${articleId}`;
+            let path = this.isPublish ? `/detail/${articleId}` : `/write/${articleId}`;
             this.$router.push(path).catch(() => {});
         },
         handleEdit(itemId) {

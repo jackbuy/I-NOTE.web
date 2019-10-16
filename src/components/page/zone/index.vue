@@ -8,34 +8,39 @@
         </user-avatar>
 
         <zone-article-list
-            v-if="zoneType === 'article'"
             slot="content"
+            v-if="zoneType === 'article'"
             :type="zoneType"
-            :user-id="userId">
+            :user-id="userId"
+            :current-user-id="currentUserId">
         </zone-article-list>
         <zone-topic-list
             v-if="zoneType === 'topic'"
             slot="content"
             :type="zoneType"
-            :user-id="userId">
+            :user-id="userId"
+            :current-user-id="currentUserId">
         </zone-topic-list>
         <zone-collect-list
             v-if="zoneType === 'collect'"
             slot="content"
             :type="zoneType"
-            :user-id="userId">
+            :user-id="userId"
+            :current-user-id="currentUserId">
         </zone-collect-list>
         <zone-follow-list
             v-if="zoneType === 'follow'"
             slot="content"
             :type="zoneType"
-            :user-id="userId">
+            :user-id="userId"
+            :current-user-id="currentUserId">
         </zone-follow-list>
         <zone-fans-list
             v-if="zoneType === 'fans'"
             slot="content"
             :type="zoneType"
-            :user-id="userId">
+            :user-id="userId"
+            :current-user-id="currentUserId">
         </zone-fans-list>
     </zone-layout>
 </template>

@@ -1,10 +1,10 @@
 <template>
     <home-layout>
         <card slot="content" :visible-header="true" :padding="false">
-            <tab :activeName="sortType" @tabClick="handleSort">
+            <!-- <tab :activeName="sortType" @tabClick="handleSort">
                 <tab-label name="newest" label="最新"></tab-label>
                 <tab-label name="popular" label="热门"></tab-label>
-            </tab>
+            </tab> -->
             <infinite-scroll
                 :loading="loading"
                 :no-more="noMore"
@@ -12,9 +12,7 @@
                 @loadData="getList(sortType)">
                 <template slot-scope="scope">
                     <article-item
-                        :item="scope.row"
-                        :show-menu-edit="false"
-                        :show-menu-delete="false">
+                        :item="scope.row">
                     </article-item>
                 </template>
             </infinite-scroll>
@@ -100,8 +98,10 @@ export default {
         this.getList(this.sortType);
     },
     activated() {
+        this.getTagRecommend();
         this.getUserRecommend();
         this.getTopicRecommend();
+        // this.handleSort(this.sortType);
     },
     methods: {
         getList(sortType) {

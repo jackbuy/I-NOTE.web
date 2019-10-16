@@ -1,5 +1,10 @@
 <template>
-    <card :visible-header="true" :padding="false">
+    <card :padding="false" :visible-header="currentUserId !== userId">
+        <div slot="menu" class="menu">
+            <span
+                class="menu-btn round"
+                @click="handleAction">{{ actionTitle}}</span>
+        </div>
         <infinite-scroll
             :loading="loading"
             :no-more="noMore"
@@ -9,9 +14,14 @@
                 <article-item
                     :item="scope.row.articleId"
                     :item-id="scope.row._id"
-                    :show-menu-edit="false"
-                    :show-menu-delete="scope.row.createUserId === currentUserId"
-                    @delete="handleDelete(scope.row._id, scope.row.articleId._id)">
+                    :is-action="isAction">
+                    <template slot-scope="scope">
+                        <div class="menu">
+                            <button @click="handleDelete(scope.itemId, scope.row._id)">
+                                <i class="el-icon-delete"></i>
+                            </button>
+                        </div>
+                    </template>
                 </article-item>
             </template>
         </infinite-scroll>
@@ -29,7 +39,8 @@ export default {
     name: 'ZoneCollectList',
     props: {
         type: String,
-        userId: String
+        userId: String,
+        currentUserId: String
     },
     mixins: [ message ],
     components: {
@@ -39,6 +50,7 @@ export default {
     },
     data() {
         return {
+            isAction: false,
             listData: [],
             pageConfig: {
                 pageSize: 15,
@@ -49,12 +61,11 @@ export default {
         };
     },
     computed: {
-        // 当前登录用户Id
-        currentUserId() {
-            return localStorage.getItem('userId');
-        },
         zone() {
             return `${this.type}${this.userId}`;
+        },
+        actionTitle() {
+            return this.isAction ? '完成' : '编辑';
         }
     },
     watch: {
@@ -66,6 +77,9 @@ export default {
         }
     },
     methods: {
+        handleAction() {
+            this.isAction = !this.isAction;
+        },
         refresh() {
             this.pageConfig.currentPage = 1;
             this.listData = [];
@@ -90,12 +104,12 @@ export default {
                 this.loading = false;
             });
         },
-        handleDelete(collectId, articleId) {
+        handleDelete(collectId, articlePublishId) {
             this.confirmWarning({
                 title: '提示',
                 content: '确认删除吗？'
             }).then(() => {
-                api.collectDelete(collectId, articleId).then(() => {
+                api.collectDelete(collectId, articlePublishId).then(() => {
                     this.showSuccessMsg('删除成功！');
                     this.refresh();
                 }).catch(() => {});

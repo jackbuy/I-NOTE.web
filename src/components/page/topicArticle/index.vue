@@ -9,9 +9,15 @@
                 <template slot-scope="scope">
                     <article-item
                         :item="scope.row.articleId"
-                        :show-menu-edit="false"
                         :item-id="scope.row._id"
-                        @delete="handleDelete">
+                        :is-action="userId === mine">
+                        <template slot-scope="scope">
+                            <div class="menu">
+                                <button @click="handleDelete(scope.itemId)">
+                                    <i class="el-icon-delete"></i>
+                                </button>
+                            </div>
+                        </template>
                     </article-item>
                 </template>
             </infinite-scroll>

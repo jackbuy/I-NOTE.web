@@ -1,5 +1,10 @@
 <template>
-    <card :visible-header="true" :padding="false">
+    <card :padding="false" :visible-header="currentUserId !== userId">
+        <div slot="menu" class="menu">
+            <span
+                class="menu-btn round"
+                @click="handleAction">{{ actionTitle}}</span>
+        </div>
         <infinite-scroll
             :loading="loading"
             :no-more="noMore"
@@ -8,11 +13,18 @@
             <template slot-scope="scope">
                 <article-item
                     :item="scope.row"
-                    :item-id="scope.row._id"
-                    :show-menu-edit="scope.row.userId._id === currentUserId"
-                    :show-menu-delete="scope.row.userId._id === currentUserId"
-                    @edit="handleRouterEdit(scope.row.articleId)"
-                    @delete="handleDelete(scope.row._id, scope.row.articleId)">
+                    :is-action="isAction"
+                    type="simple">
+                    <template slot-scope="scope">
+                        <div class="menu">
+                            <button @click="handleRouterEdit(scope.row.articleId)">
+                                <i class="el-icon-edit"></i>
+                            </button>
+                            <button @click="handleDelete(scope.row._id, scope.row.articleId)">
+                                <i class="el-icon-delete"></i>
+                            </button>
+                        </div>
+                    </template>
                 </article-item>
             </template>
         </infinite-scroll>
@@ -30,7 +42,8 @@ export default {
     name: 'ZoneArticleList',
     props: {
         type: String,
-        userId: String
+        userId: String,
+        currentUserId: String
     },
     mixins: [ message ],
     components: {
@@ -40,6 +53,7 @@ export default {
     },
     data() {
         return {
+            isAction: false,
             listData: [],
             pageConfig: {
                 pageSize: 15,
@@ -50,12 +64,11 @@ export default {
         };
     },
     computed: {
-        // 当前登录用户Id
-        currentUserId() {
-            return localStorage.getItem('userId');
-        },
         zone() {
             return `${this.type}${this.userId}`;
+        },
+        actionTitle() {
+            return this.isAction ? '完成' : '编辑';
         }
     },
     watch: {
@@ -67,6 +80,9 @@ export default {
         }
     },
     methods: {
+        handleAction() {
+            this.isAction = !this.isAction;
+        },
         refresh() {
             this.pageConfig.currentPage = 1;
             this.listData = [];

@@ -42,7 +42,8 @@ export default {
     name: 'ZoneFollowUserList',
     props: {
         type: String,
-        userId: String
+        userId: String,
+        currentUserId: String
     },
     components: {
         InfiniteScroll,

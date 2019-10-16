@@ -12,8 +12,8 @@ export default {
     getZoneUserInfo: (params) => http('post', `${apiBaseUrl}/user/zoneUserInfo`, params),
     // 编辑用户信息
     userInfoEdit: (params) => http('post', `${apiBaseUrl}/user/userInfoEdit`, params),
-    // 用户推荐
-    userRecommend: () => http('get', `${apiBaseUrl}/user/recommend`),
+    // 用户公开列表
+    userPublishQuery: (params) => http('post', `${apiBaseUrl}/user/publish/query`, params),
     // 用户列表
     userQuery: (params) => http('post', `${apiBaseUrl}/user/query`, params),
 

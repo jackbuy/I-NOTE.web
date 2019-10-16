@@ -1,9 +1,10 @@
 <template>
     <zone-layout>
         <user-avatar
+            slot="header"
             :user="userInfo"
             :type="zoneType"
-            slot="header"
+            :current-user-id="currentUserId"
             @doFollow="handleFollow">
         </user-avatar>
 

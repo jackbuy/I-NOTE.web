@@ -2,9 +2,9 @@
     <div class="topic__item">
         <div v-if="type === 'normal'" class="user">
             <div class="user-img" :style="{backgroundImage: 'url(' + userImg + ')'}"></div>
-            <div class="user-name">{{ username }}</div>
         </div>
         <div class="content">
+            <div v-if="type === 'normal'" class="content-name">{{ username }}</div>
             <div class="content-title">
                 <span @click="handleRouterPush(topicId)">{{ title }}</span>
             </div>

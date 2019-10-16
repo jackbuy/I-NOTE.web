@@ -20,7 +20,7 @@
         <card slot="tag" icon="icon icon-bq" title="标签">
             <template slot="menu">
                 <div class="menu">
-                    <span class="menu-btn" @click="handleRouterPush('/tag')">全部</span>
+                    <span class="menu-btn" @click="handleRouterPush('/tag')">更多</span>
                 </div>
             </template>
             <tag-recommend
@@ -32,7 +32,7 @@
         <card slot="topic" icon="icon icon-zhuanti" title="专题榜">
             <template slot="menu">
                 <div class="menu">
-                    <span class="menu-btn" @click="handleRouterPush('/topic')">全部</span>
+                    <span class="menu-btn" @click="handleRouterPush('/topic')">更多</span>
                 </div>
             </template>
             <topic-recommend
@@ -134,7 +134,11 @@ export default {
             }).catch(() => {});
         },
         getUserRecommend() {
-            api.userRecommend().then((res) => {
+            const params = {
+                currentPage: 1,
+                pageSize: 3
+            };
+            api.userPublishQuery(params).then((res) => {
                 this.authorRecommendData = res.data;
             }).catch(() => {});
         },

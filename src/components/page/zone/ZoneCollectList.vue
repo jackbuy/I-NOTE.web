@@ -1,5 +1,5 @@
 <template>
-    <card :padding="false" :visible-header="currentUserId !== userId">
+    <card :padding="false" :visible-header="currentUserId !== userId || listData.length === 0">
         <div slot="menu" class="menu">
             <span
                 class="menu-btn round"

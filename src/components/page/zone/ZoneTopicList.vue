@@ -1,5 +1,5 @@
 <template>
-    <card :padding="false">
+    <card :padding="false" :visible-header="!currentUserId">
         <div slot="menu" class="menu">
             <span
                 class="menu-btn round"

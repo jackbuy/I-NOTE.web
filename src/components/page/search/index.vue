@@ -108,7 +108,7 @@ export default {
                 apiName = 'topicQuery';
             };
             if (tabName === 'author') {
-                apiName = 'userQuery';
+                apiName = 'userPublishQuery';
             };
             this.loading = true;
             api[apiName]({ ...params }).then((res) => {

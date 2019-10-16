@@ -12,33 +12,33 @@
             </div>
             <div class="menu">
                 <span
-                    v-if="userId !== mine"
+                    v-if="userId !== currentUserId"
                     :class="{'active': isFollow}"
                     @click="handleFollow(userId)">
                     <i v-if="!isFollow">关注</i>
                     <i v-else>已关注</i>
                 </span>
                 <span
-                    v-if="userId === mine"
+                    v-if="userId === currentUserId"
                     class="default"
                     @click="handleSettings()">
                     <i class="icon icon-settings"></i>
                 </span>
             </div>
-            <div class="count">
-                <div :class="{'active': type === 'article'}" class="list">
+            <div class="nav">
+                <div :class="{'active': type === 'article'}">
                     <div @click="handleZone('article')">文章</div>
                 </div>
-                <div :class="{'active': type === 'topic'}" class="list">
+                <div :class="{'active': type === 'topic'}">
                     <div @click="handleZone('topic')">专题</div>
                 </div>
-                <div :class="{'active': type === 'collect'}" class="list">
+                <div :class="{'active': type === 'collect'}">
                     <div @click="handleZone('collect')">收藏</div>
                 </div>
-                <div :class="{'active': type === 'follow'}" class="list">
+                <div :class="{'active': type === 'follow'}">
                     <div @click="handleZone('follow')">关注</div>
                 </div>
-                <div :class="{'active': type === 'fans'}" class="list">
+                <div :class="{'active': type === 'fans'}">
                     <div @click="handleZone('fans')">粉丝</div>
                 </div>
             </div>
@@ -56,12 +56,10 @@ export default {
             type: Object,
             default: () => {}
         },
+        currentUserId: String,
         type: String
     },
     computed: {
-        mine() {
-            return localStorage.getItem('userId');
-        },
         userId() {
             return this.user._id;
         },

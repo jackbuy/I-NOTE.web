@@ -2,6 +2,7 @@
     <card slot="content" :padding="false" title="我的草稿" icon="icon icon-wenzhang">
         <div slot="menu" class="menu">
             <span
+                v-if="listData.length > 0"
                 class="menu-btn round"
                 @click="handleAction">{{ actionTitle}}</span>
         </div>

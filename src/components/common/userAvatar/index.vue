@@ -1,8 +1,8 @@
 <template>
     <div class="user-avatar">
         <div class="side">
-            <el-avatar v-if="user.avatar" :size="100" :src="userImg"></el-avatar>
-            <el-avatar v-else :size="100"><i class="icon icon-yonghu"></i></el-avatar>
+            <el-avatar v-if="user.avatar" :size="avatarSize" :src="userImg"></el-avatar>
+            <el-avatar v-else :size="avatarSize"><i class="icon icon-yonghu"></i></el-avatar>
         </div>
         <div class="content">
             <div class="header">
@@ -26,20 +26,13 @@
                 </span>
             </div>
             <div class="nav">
-                <div :class="{'active': type === 'article'}">
-                    <div @click="handleZone('article')">文章</div>
-                </div>
-                <div :class="{'active': type === 'topic'}">
-                    <div @click="handleZone('topic')">专题</div>
-                </div>
-                <div :class="{'active': type === 'collect'}">
-                    <div @click="handleZone('collect')">收藏</div>
-                </div>
-                <div :class="{'active': type === 'follow'}">
-                    <div @click="handleZone('follow')">关注</div>
-                </div>
-                <div :class="{'active': type === 'fans'}">
-                    <div @click="handleZone('fans')">粉丝</div>
+                <div
+                    v-for="item in data"
+                    :key="item.type"
+                    :class="{'active': type === item.type}">
+                    <div @click="handleZone(item.type)">
+                        {{ item.name }}
+                    </div>
                 </div>
             </div>
         </div>
@@ -56,8 +49,17 @@ export default {
             type: Object,
             default: () => {}
         },
+        data: {
+            type: Array,
+            default: () => []
+        },
         currentUserId: String,
         type: String
+    },
+    data() {
+        return {
+            avatarSize: 106
+        };
     },
     computed: {
         userId() {

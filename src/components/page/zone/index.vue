@@ -2,6 +2,7 @@
     <zone-layout>
         <user-avatar
             slot="header"
+            :data="navList"
             :user="userInfo"
             :type="zoneType"
             :current-user-id="currentUserId"
@@ -68,7 +69,33 @@ export default {
     },
     data() {
         return {
-            userInfo: {}
+            userInfo: {},
+            navList: [
+                // {
+                //     name: '动态',
+                //     type: 'active'
+                // },
+                {
+                    name: '文章',
+                    type: 'article'
+                },
+                {
+                    name: '专题',
+                    type: 'topic'
+                },
+                {
+                    name: '收藏',
+                    type: 'collect'
+                },
+                {
+                    name: '关注',
+                    type: 'follow'
+                },
+                {
+                    name: '粉丝',
+                    type: 'fans'
+                }
+            ]
         };
     },
     computed: {

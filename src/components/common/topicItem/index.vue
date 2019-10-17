@@ -15,13 +15,15 @@
                 <span>{{ createTime }}</span>
             </div>
         </div>
-        <div class="img">
-            <div :style="{backgroundImage: 'url(' + img + ')'}">
+        <div v-if="isAction" class="action">
+            <div class="menu">
+                <button @click="handleEdit(itemId)"><i class="el-icon-edit"></i></button>
+                <button @click="handleDelete(itemId)"><i class="el-icon-delete"></i></button>
             </div>
         </div>
-        <div class="menu">
-            <button v-if="showMenuEdit" @click="handleEdit(itemId)"><i class="el-icon-edit"></i></button>
-            <button v-if="showMenuDelete" @click="handleDelete(itemId)"><i class="el-icon-delete"></i></button>
+        <div v-else class="img">
+            <div :style="{backgroundImage: 'url(' + img + ')'}">
+            </div>
         </div>
     </div>
 </template>
@@ -37,13 +39,9 @@ export default {
             default: () => ({})
         },
         itemId: String,
-        showMenuEdit: {
+        isAction: {
             type: Boolean,
-            default: true
-        },
-        showMenuDelete: {
-            type: Boolean,
-            default: true
+            default: false
         },
         // 列表模式
         type: {

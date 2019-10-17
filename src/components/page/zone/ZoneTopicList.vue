@@ -18,8 +18,7 @@
                 <topic-item
                     :item="scope.row"
                     :item-id="scope.row._id"
-                    :show-menu-edit="isAction"
-                    :show-menu-delete="isAction"
+                    :is-action="isAction"
                     type="simple"
                     @edit="handleRouterTopicEdit"
                     @delete="handleDelete">

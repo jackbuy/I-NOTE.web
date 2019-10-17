@@ -78,7 +78,6 @@ export default {
                 localStorage.setItem('token', token);
                 localStorage.setItem('userId', userId);
                 window.location.reload();
-                this.loading = false;
             }).catch(() => {
                 this.loading = false;
             });

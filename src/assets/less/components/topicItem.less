@@ -57,26 +57,29 @@
                     display: flex;
                     align-items:center;/*垂直居中*/
                     justify-content: center;/*水平居中*/
-                    .menu{
-                        font-size: 0;
-                        button{
-                            display: inline-block;
-                            padding: 5px 10px;
-                            border: 1px solid @borderColor;
-                            font-size: 14px;
-                            margin: 0 5px;
-                            cursor: pointer;
-                            transition: all 0.3s;
-                            border-radius: 20px;
-                            background: @borderColor;
-                            color: @fontSubColor;
-                            &:hover,
-                            &.active{
-                                color: @fontActiveColor;
-                            }
-                            &[disabled]{
-                                cursor: not-allowed;
-                            }
+                }
+            }
+            .action{
+                padding-left: 5px;
+                .menu{
+                    font-size: 0;
+                    button{
+                        display: inline-block;
+                        padding: 5px 10px;
+                        border: 1px solid @borderColor;
+                        font-size: 14px;
+                        margin-left: 10px;
+                        cursor: pointer;
+                        transition: all 0.3s;
+                        border-radius: 20px;
+                        background: @borderColor;
+                        color: @fontSubColor;
+                        &:hover,
+                        &.active{
+                            color: @fontActiveColor;
+                        }
+                        &[disabled]{
+                            cursor: not-allowed;
                         }
                     }
                 }

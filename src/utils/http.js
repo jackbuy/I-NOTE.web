@@ -39,7 +39,7 @@ axios.interceptors.response.use(function(response) {
         Message.warning({message: '数据请求异常！'});
     }
 }, function(error) {
-    Message.warning({message: '网络异常！'});
+    Message.warning({message: '链接服务器异常！'});
     return Promise.reject(error);
 });
 

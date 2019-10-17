@@ -2,10 +2,8 @@
     <div class="set-input">
         <div class="view">
             <div class="label">
-                <div class="img">
-                    <img v-if="imgUrl" :src="imgUrl" alt="">
-                    <i v-else class="icon icon-yonghu"></i>
-                </div>
+                <el-avatar v-if="imgUrl" :size="50" :src="imgUrl"></el-avatar>
+                <el-avatar v-else :size="50"><i class="icon icon-yonghu"></i></el-avatar>
             </div>
             <div class="menu">
                 <el-upload

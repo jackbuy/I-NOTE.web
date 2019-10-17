@@ -29,10 +29,8 @@
                 v-if="!isWrite"
                 trigger="click"
                 @command="handleCommand">
-                <span class="el-dropdown-link user-img">
-                    <img v-if="isAvatar" :src="userImg" alt="">
-                    <div v-else>{{ userImg }}</div>
-                </span>
+                <el-avatar v-if="userImg" :size="30" fit="cover" :src="userImg"></el-avatar>
+                <el-avatar v-else :size="30"><i class="icon icon-yonghu"></i></el-avatar>
                 <el-dropdown-menu>
                     <el-dropdown-item command="zone"><i class="icon icon-yonghu"></i> 我的主页</el-dropdown-item>
                     <el-dropdown-item divided command="settings"><i class="icon icon-settings-o"></i> 设置</el-dropdown-item>
@@ -72,8 +70,6 @@ export default {
         userImg() {
             if (this.isAvatar) {
                 return `${imgBaseUrl}/${this.userInfo.avatar}`;
-            } else if (this.userName) {
-                return this.userName.split('')[0].toUpperCase();
             }
         },
         isAvatar() {

@@ -26,10 +26,10 @@
                         :show-menu-edit="false"
                         :show-menu-delete="false">
                     </topic-item>
-                    <author-item
+                    <user-item
                         v-if="activeTabName === 'author'"
                         :item="scope.row">
-                    </author-item>
+                    </user-item>
                 </template>
             </infinite-scroll>
         </card>
@@ -38,7 +38,7 @@
 
 <script>
 import InfiniteScroll from '@/components/common/infiniteScrollList';
-import AuthorItem from '@/components/common/authorItem';
+import UserItem from '@/components/common/userItem';
 import ArticleItem from '@/components/common/articleItem';
 import TopicItem from '@/components/common/topicItem';
 import Card from '@/components/common/card';
@@ -53,7 +53,7 @@ export default {
         InfiniteScroll,
         ArticleItem,
         TopicItem,
-        AuthorItem,
+        UserItem,
         Tab,
         TabLabel,
         Card,

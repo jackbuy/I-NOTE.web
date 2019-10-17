@@ -41,7 +41,7 @@
             </template>
         </card>
         <card slot="author" icon="icon icon-zuozhe" title="管理员">
-            <author-recommend :item="userInfo"></author-recommend>
+            <user-recommend :item="userInfo"></user-recommend>
         </card>
     </layout>
 </template>
@@ -51,7 +51,7 @@ import Layout from './Layout';
 import Card from '@/components/common/card';
 import InfiniteScroll from '@/components/common/infiniteScrollList';
 import ArticleItem from '@/components/common/articleItem';
-import AuthorRecommend from '@/components/common/authorRecommend';
+import UserRecommend from '@/components/common/userRecommend';
 import message from '@/mixins/message';
 import api from '@/utils/api';
 import utils from '@/utils/utils';
@@ -65,7 +65,7 @@ export default {
         Card,
         InfiniteScroll,
         ArticleItem,
-        AuthorRecommend
+        UserRecommend
     },
     data() {
         return {

@@ -1,15 +1,13 @@
 <template>
     <div class="topic__item">
         <div v-if="type === 'normal'" class="user">
-            <div class="user-img" :style="{backgroundImage: 'url(' + userImg + ')'}"></div>
+            <el-avatar v-if="userImg" :size="40" :src="userImg"></el-avatar>
+            <el-avatar v-else :size="40"><i class="icon icon-yonghu"></i></el-avatar>
         </div>
         <div class="content">
             <div v-if="type === 'normal'" class="content-name">{{ username }}</div>
             <div class="content-title">
                 <span @click="handleRouterPush(topicId)">{{ title }}</span>
-            </div>
-            <div class="content-description">
-                {{ description }}
             </div>
             <div class="content-info">
                 <span>文章 {{ articleCount }}</span>
@@ -79,9 +77,6 @@ export default {
         },
         img() {
             return this.item.img ? `${imgBaseUrl}/${this.item.img}` : '';
-        },
-        description() {
-            return this.item.description ? this.item.description : '';
         },
         followCount() {
             return this.item.followCount;

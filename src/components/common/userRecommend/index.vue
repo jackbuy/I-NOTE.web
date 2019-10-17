@@ -1,9 +1,11 @@
 <template>
     <div
-        class="author-item"
+        class="author"
         @click="handleZone(userId)">
-        <div v-if="imgUrl" class="img" :style="{backgroundImage: 'url(' + imgUrl + ')'}"></div>
-        <div v-else class="img"><i class="icon icon-yonghu"></i></div>
+        <el-avatar v-if="imgUrl" :size="40" fit="cover" :src="imgUrl"></el-avatar>
+        <el-avatar v-else :size="40" fit="cover" :src="imgUrl"><i class="icon icon-yonghu"></i></el-avatar>
+        <!-- <div v-if="imgUrl" class="img" :style="{backgroundImage: 'url(' + imgUrl + ')'}"></div>
+        <div v-else class="img"><i class="icon icon-yonghu"></i></div> -->
         <div class="content">
             <div class="title">{{ username }}</div>
             <div class="info">

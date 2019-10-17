@@ -42,11 +42,11 @@
             </topic-recommend>
         </card>
         <card slot="author" icon="icon icon-zuozhe" title="创作榜">
-            <author-recommend
+            <user-recommend
                 v-for="item in authorRecommendData"
                 :key="item._id"
                 :item="item">
-            </author-recommend>
+            </user-recommend>
         </card>
     </home-layout>
 </template>
@@ -57,7 +57,7 @@ import InfiniteScroll from '@/components/common/infiniteScrollList';
 import ArticleItem from '@/components/common/articleItem';
 import TagRecommend from '@/components/common/tagRecommend';
 import TopicRecommend from '@/components/common/topicRecommend';
-import AuthorRecommend from '@/components/common/authorRecommend';
+import UserRecommend from '@/components/common/userRecommend';
 import Card from '@/components/common/card';
 import Tab from '@/components/common/tab';
 import TabLabel from '@/components/common/tab/tabLabel';
@@ -71,7 +71,7 @@ export default {
         ArticleItem,
         TagRecommend,
         TopicRecommend,
-        AuthorRecommend,
+        UserRecommend,
         Card,
         Tab,
         TabLabel

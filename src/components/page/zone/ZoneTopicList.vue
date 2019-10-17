@@ -5,7 +5,7 @@
                 class="menu-btn round"
                 @click="handleAdd">创建专题</span>
             <span
-                v-if="currentUserId === userId"
+                v-if="currentUserId === userId && listData.length > 0"
                 class="menu-btn round"
                 @click="handleAction">{{ actionTitle}}</span>
         </div>

@@ -3,7 +3,8 @@
         <div
             v-if="type === 'normal'"
             class="user">
-            <div class="user-img" :style="{backgroundImage: 'url(' + userImg + ')'}"></div>
+            <el-avatar v-if="userImg" :size="40" fit="cover" :src="userImg"></el-avatar>
+            <el-avatar v-else :size="40"><i class="icon icon-yonghu"></i></el-avatar>
         </div>
         <div class="content">
             <div

@@ -8,9 +8,6 @@ import App from './App';
 import Highlight from './directive/highlight';
 import { apiBaseUrl } from '@/constants/url-config';
 
-// import ElementUI from 'element-ui';
-// Vue.use(ElementUI, {size: 'small'});
-
 import {
     Button,
     Popover,
@@ -24,9 +21,12 @@ import {
     Backtop,
     Avatar,
     Icon,
-    Upload
+    Upload,
+    Cascader,
+    MessageBox,
+    Message
 } from 'element-ui';
-Vue.prototype.$ELEMENT = { size: 'small', zIndex: 3000 };
+
 Vue.use(Button);
 Vue.use(Popover);
 Vue.use(Form);
@@ -40,6 +40,10 @@ Vue.use(Backtop);
 Vue.use(Avatar);
 Vue.use(Icon);
 Vue.use(Upload);
+Vue.use(Cascader);
+Vue.prototype.$confirm = MessageBox.confirm;
+Vue.prototype.$message = Message;
+Vue.prototype.$ELEMENT = { size: 'small', zIndex: 3000 };
 
 Vue.use(Highlight);
 Vue.use(VueQuillEditor, {/* { default global options } */});

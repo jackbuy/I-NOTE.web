@@ -16,7 +16,7 @@
                 class="write"
                 title="写文章"
                 @click="handleRoutePush('/write')">
-                <i class="icon icon-jia"></i>
+                <i class="icon icon-write"></i>
             </span>
             <span
                 v-if="!isWrite"

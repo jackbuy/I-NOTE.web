@@ -1,5 +1,5 @@
 <template>
-    <card slot="content" :padding="false" title="我的草稿" icon="icon icon-wenzhang">
+    <card slot="content" :padding="false" title="我的草稿" icon="icon icon-caogao">
         <div slot="menu" class="menu">
             <span
                 v-if="listData.length > 0"

@@ -8,22 +8,16 @@
                 :disabled="isSaving"
                 size="mini"
                 round
+                icon="icon icon-caogao"
                 @click="handleRoutePush('/article/draft')">
                 我的草稿
             </el-button>
-            <!-- <el-button
-                v-if="form.publish"
-                :disabled="isSaving"
-                size="mini"
-                round
-                @click="handleCancelPublish">
-                取消发布
-            </el-button> -->
             <el-button
                 :disabled="isSaving"
                 size="mini"
                 type="primary"
                 round
+                icon="icon icon-fabu"
                 @click="handleOpenPublishModal">
                 发布
             </el-button>

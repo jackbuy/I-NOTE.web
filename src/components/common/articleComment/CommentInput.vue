@@ -1,14 +1,27 @@
 <template>
     <div class="comment-input">
-        <textarea
-            v-model="form.content"
-            placeholder="写评论..."
-            rows="3">
-        </textarea>
-        <button
-            :disabled="!form.content"
-            class="save"
-            @click="handleSave">提交</button>
+        <el-form
+            ref="form"
+            :model="form">
+            <el-form-item>
+                <el-input
+                    v-model="form.content"
+                    type="textarea"
+                    placeholder="写评论..."
+                    class="textarea"
+                    maxlength="300"
+                    rows="4"
+                    show-word-limit>
+                </el-input>
+            </el-form-item>
+            <el-form-item>
+                <el-button
+                    :disabled="!form.content"
+                    type="primary"
+                    round
+                    @click="handleSave">提交</el-button>
+            </el-form-item>
+        </el-form>
     </div>
 </template>
 

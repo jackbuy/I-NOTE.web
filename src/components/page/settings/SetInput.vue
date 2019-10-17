@@ -10,7 +10,8 @@
             <div class="label">
                 <input
                     v-model="data"
-                    :placeholder="placeholder"/>
+                    :placeholder="placeholder"
+                    :maxlength="maxlength"/>
             </div>
             <div class="menu">
                 <span :class="{'disable': loading}" @click="handleSubmit()">提交</span>
@@ -27,6 +28,7 @@ export default {
         prop: String,
         label: String,
         placeholder: String,
+        maxlength: String,
         loading: Boolean
     },
     data() {

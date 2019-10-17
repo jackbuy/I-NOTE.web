@@ -27,6 +27,7 @@
                     placeholder="验证码">
                     <el-button
                         slot="append"
+                        :disabled="sending"
                         @click="handleSendEmail">{{ btntxt }}</el-button>
                 </el-input>
             </el-form-item>
@@ -40,6 +41,7 @@
             </el-form-item>
             <el-form-item>
                 <el-button
+                    :loading="loading"
                     class="submit"
                     type="primary"
                     native-type="submit"
@@ -68,24 +70,37 @@ export default {
                 callback();
             }
         };
+        // const passwordValue = (rule, value, callback) => {
+        //     const regPassword = /^[a-zA-Z]\w{5,17}$/;
+        //     if (value && (!(regPassword).test(value))) {
+        //         callback(new Error('以字母开头，长度在6~18之间，只能包含字母、数字和下划线'));
+        //     } else {
+        //         callback();
+        //     }
+        // };
         return {
+            loading: false,
             time: 0,
             btntxt: '获取验证码',
             sending: false,
             form: {},
             rules: {
                 nickname: [
-                    { required: true, message: '必填' }
+                    { required: true, message: '必填' },
+                    { min: 2, max: 20, message: '昵称长度在2~20之间' }
                 ],
                 email: [
                     { required: true, message: '必填' },
                     { validator: emailValue }
                 ],
                 captcha: [
-                    { required: true, message: '必填' }
+                    { required: true, message: '必填' },
+                    { max: 6, message: '验证码无效' }
                 ],
                 password: [
-                    { required: true, message: '必填' }
+                    { required: true, message: '必填' },
+                    { min: 6, max: 18, message: '密码长度在6~18之间' }
+                    // { validator: passwordValue }
                 ]
             }
         };
@@ -103,13 +118,16 @@ export default {
         handRegister() {
             this.$refs['form'].validate((valid) => {
                 if (valid) {
+                    this.loading = true;
                     api.userRegister({ ...this.form }).then(() => {
                         const { email, password } = this.form;
                         this.userLogin({
                             email,
                             password
                         });
-                    }).catch(() => {});
+                    }).catch(() => {
+                        this.loading = false;
+                    });
                 }
             });
         },
@@ -119,11 +137,15 @@ export default {
             if (!this.sending) {
                 if (email) {
                     if (regEmail.test(email)) {
+                        this.btntxt = '发送中...';
+                        this.sending = true;
                         api.sendEmail({ email }).then((res) => {
                             this.time = 60;
-                            this.sending = true;
                             this.timer();
-                        }).catch(() => {});
+                        }).catch(() => {
+                            this.sending = false;
+                            this.btntxt = '获取验证码';
+                        });
                     } else {
                         this.showWarningMsg('邮箱格式不正确！');
                     }
@@ -133,11 +155,14 @@ export default {
             }
         },
         userLogin(params) {
+            this.loading = true;
             api.userLogin(params).then((res) => {
                 const { token, userId } = res.data;
                 localStorage.setItem('token', token);
                 localStorage.setItem('userId', userId);
                 window.location.reload();
+            }).catch(() => {
+                this.loading = false;
             });
         },
         timer() {

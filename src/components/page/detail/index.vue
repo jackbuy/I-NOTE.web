@@ -76,7 +76,7 @@
                 </div>
                 <div class="article-detail__info">
                     <span>{{ time }}</span>
-                    <span><i class="icon icon-chakan"></i> {{ viewCount }}</span>
+                    <span>浏览 {{ viewCount }}</span>
                 </div>
             </div>
         </card>

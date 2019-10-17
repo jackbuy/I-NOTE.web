@@ -17,10 +17,10 @@
             <div class="content-info">
                 <span v-if="tag">{{ tag }}</span>
                 <span>{{ time }}</span>
-                <span v-if="viewCount > 0"><i class="icon icon-chakan"></i> {{ viewCount }}</span>
-                <span v-if="collectCount > 0"><i class="icon icon-like"></i> {{ collectCount }}</span>
-                <span v-if="commentCount > 0"><i class="icon icon-pinglun"></i> {{ commentCount }}</span>
-                <span v-if="likeCount > 0"><i class="icon icon-dianzan"></i> {{ likeCount }}</span>
+                <span v-if="viewCount > 0">浏览 {{ viewCount }}</span>
+                <!-- <span v-if="collectCount > 0"><i class="icon icon-like"></i> {{ collectCount }}</span> -->
+                <!-- <span v-if="commentCount > 0"><i class="icon icon-pinglun"></i> {{ commentCount }}</span> -->
+                <span v-if="likeCount > 0">点赞 {{ likeCount }}</span>
             </div>
         </div>
         <div v-if="isAction" class="action">

@@ -22,6 +22,7 @@
             </el-form-item>
             <el-form-item>
                 <el-button
+                    :loading="loading"
                     class="submit"
                     type="primary"
                     native-type="submit"
@@ -41,6 +42,7 @@ export default {
     name: '',
     data() {
         return {
+            loading: false,
             form: {},
             rules: {
                 email: [
@@ -70,12 +72,16 @@ export default {
             });
         },
         userLogin(params) {
+            this.loading = true;
             api.userLogin(params).then((res) => {
                 const { token, userId } = res.data;
                 localStorage.setItem('token', token);
                 localStorage.setItem('userId', userId);
                 window.location.reload();
-            }).catch(() => {});
+                this.loading = false;
+            }).catch(() => {
+                this.loading = false;
+            });
         }
     }
 };

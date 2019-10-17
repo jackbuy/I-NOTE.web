@@ -23,6 +23,7 @@
                         v-model.trim="keyword"
                         placeholder="搜 文章 · 专题 · 作者"
                         size="mini"
+                        maxlength="30"
                         clearable
                         @blur="openSearchHistory"
                         @focus="openSearchHistory"

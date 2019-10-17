@@ -12,8 +12,9 @@
             <set-input
                 :prop="userInfo.nickname"
                 :loading="loading"
-                placeholder="请输入昵称"
+                maxlength="20"
                 label="nickname"
+                placeholder="请输入昵称 <=20"
                 @submit="handleSave">
             </set-input>
         </card>
@@ -21,8 +22,9 @@
             <set-input
                 :prop="userInfo.brief"
                 :loading="loading"
-                placeholder="请输入简介"
+                maxlength="200"
                 label="brief"
+                placeholder="请输入简介 <=200"
                 @submit="handleSave">
             </set-input>
         </card>

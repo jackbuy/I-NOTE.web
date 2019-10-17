@@ -17,11 +17,11 @@
         </div>
         <div class="img">
             <div :style="{backgroundImage: 'url(' + img + ')'}">
-                <div class="menu">
-                    <button v-if="showMenuEdit" @click="handleEdit(itemId)"><i class="el-icon-edit"></i></button>
-                    <button v-if="showMenuDelete" @click="handleDelete(itemId)"><i class="el-icon-delete"></i></button>
-                </div>
             </div>
+        </div>
+        <div class="menu">
+            <button v-if="showMenuEdit" @click="handleEdit(itemId)"><i class="el-icon-edit"></i></button>
+            <button v-if="showMenuDelete" @click="handleDelete(itemId)"><i class="el-icon-delete"></i></button>
         </div>
     </div>
 </template>

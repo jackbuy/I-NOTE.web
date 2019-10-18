@@ -45,6 +45,14 @@ export default {
             }
         };
     },
+    activated() {
+        // 当滚动条滑动，触发事件，判断是否到达最底部
+        window.onscroll = () => {
+            if (this.getScrollHeight() === this.getWindowHeight() + this.getDocumentTop()) {
+                if (!this.noMore && !this.loading) this.$emit('loadData');
+            }
+        };
+    },
     methods: {
         // 文档高度
         getDocumentTop() {

@@ -1,5 +1,5 @@
 <template>
-    <div class="tag">
+    <page-loading :loading="loading" :data="listData" class="tag">
         <div
             v-for="item in listData"
             :key="item._id">
@@ -13,16 +13,18 @@
                 </tag-item>
             </div>
         </div>
-    </div>
+    </page-loading>
 </template>
 
 <script>
+import PageLoading from '_c/pageLoading';
 import TagItem from './TagItem';
 import api from '@/utils/api';
 export default {
     name: 'Tag',
     components: {
-        TagItem
+        TagItem,
+        PageLoading
     },
     data() {
         return {

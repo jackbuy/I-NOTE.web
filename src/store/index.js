@@ -19,6 +19,7 @@ const Store = {
         isHiddenBreadcrumb: false, // 是否隐藏面包屑
         documentTitle: '',
         socketMsg: {}, // socket消息体
+        socketPost: {}, // socket新动态
         socketOnlineUser: [] // socket在线用户
     },
     getters: {},

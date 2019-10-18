@@ -12,6 +12,12 @@ export default {
     [C.SOCKET_NEW_MSG](state, payload) {
         state.socketMsg = payload;
     },
+    [C.SOCKET_NEW_POST](state, payload) {
+        state.socketPost = payload;
+    },
+    [C.SOCKET_NEW_POST_RESET](state, payload) {
+        state.socketPost = {};
+    },
     // userInfo
     [C.GET_USER_INFO](state, payload) {
         state.userInfo = payload;

@@ -55,7 +55,7 @@ export default {
                 // [{'align': []}],
                 [
                     'link',
-                    'image',
+                    // 'image',
                     'video'
                     // 'formula'
                 ],
@@ -125,6 +125,9 @@ export default {
             return isJPG && isLt2M;
         },
         editorSuccess(response, file, fileList) {
+            console.log(response);
+            console.log(file);
+            console.log(fileList);
             if (response.code === 200) {
                 let value = `${imgBaseUrl}/${response.data}`;
                 this.addImgRange = this.$refs.quillEditor.quill.getSelection();

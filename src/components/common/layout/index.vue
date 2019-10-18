@@ -6,6 +6,7 @@
                 v-if="menuDate.length > 0 && !isHiddenBreadcrumb"
                 :data="menuDate"
                 :is-new-msg="isSocketNewMsg"
+                :is-new-post="isSocketNewPost"
                 @push="handleRouterPush">
             </layout-header-menu>
             <layout-header-search
@@ -15,9 +16,9 @@
             <layout-header-user :is-write="isHiddenBreadcrumb"></layout-header-user>
         </layout-header>
         <layout-content>
-            <!-- <keep-alive include="Home"> -->
-            <router-view></router-view>
-            <!-- </keep-alive> -->
+            <keep-alive include="Home">
+                <router-view></router-view>
+            </keep-alive>
         </layout-content>
         <login></login>
         <el-backtop></el-backtop>
@@ -69,7 +70,8 @@ export default {
                     url: '/msg'
                 }
             ],
-            isSocketNewMsg: false
+            isSocketNewMsg: false,
+            isSocketNewPost: false
         };
     },
     watch: {
@@ -89,12 +91,23 @@ export default {
                 this.pushMsg(n);
             },
             immediate: true
+        },
+        socketPost: {
+            handler(n, o) {
+                if (n && n.type === 'newPost') {
+                    this.isSocketNewPost = true;
+                } else {
+                    this.isSocketNewPost = false;
+                }
+            },
+            immediate: true
         }
     },
     computed: {
         ...mapState({
             isHiddenBreadcrumb: state => state.isHiddenBreadcrumb,
-            socketMsg: state => state.socketMsg
+            socketMsg: state => state.socketMsg,
+            socketPost: state => state.socketPost
         }),
         isLogin() {
             if (localStorage.getItem('userId') && localStorage.getItem('token')) return true;

@@ -49,7 +49,7 @@
         </wang-editor> -->
         <div v-if="preView" class="pre-view">
             <div class="pre-view__content">
-                <card :padding="false" title="草稿 · 预览">
+                <card :padding="false" title="预览">
                     <div slot="menu" class="menu">
                         <div
                             class="menu-btn round"
@@ -62,7 +62,6 @@
                             {{ form.title }}
                         </div>
                         <div
-                            v-highlightB
                             v-html="form.contentHtml"
                             class="article-detail__content">
                         </div>
@@ -70,8 +69,8 @@
                 </card>
             </div>
             <div class="pre-view__side">
-                <card icon="icon icon-wenzhang" title="Ta的热文" class="fixed">
-                </card>
+                <!-- <card icon="icon icon-wenzhang" title="Ta的热文" class="fixed">
+                </card> -->
             </div>
         </div>
         <publish-modal

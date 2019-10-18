@@ -1,15 +1,22 @@
 <template>
     <home-layout>
-        <card slot="content" :visible-header="true" :padding="false">
-            <!-- <tab :activeName="sortType" @tabClick="handleSort">
-                <tab-label name="newest" label="最新"></tab-label>
-                <tab-label name="popular" label="热门"></tab-label>
-            </tab> -->
+        <card slot="content" :visible-header="!isNewPost" :padding="false" title="~有新动态,可刷新~">
+            <div slot="menu" class="menu">
+                <el-button
+                    :loading="loading"
+                    type="primary"
+                    size="mini"
+                    round
+                    icon="el-icon-refresh"
+                    @click="reload">
+                    刷新
+                </el-button>
+            </div>
             <infinite-scroll
                 :loading="loading"
                 :no-more="noMore"
                 :data="listData"
-                @loadData="getList(sortType)">
+                @loadData="getList(sortType, 'more')">
                 <template slot-scope="scope">
                     <article-item
                         :item="scope.row">
@@ -52,6 +59,8 @@
 </template>
 
 <script>
+import { mapState, mapMutations } from 'vuex';
+import { SOCKET_NEW_POST_RESET } from '@/store/mutation-types';
 import HomeLayout from './Layout';
 import InfiniteScroll from '@/components/common/infiniteScrollList';
 import ArticleItem from '@/components/common/articleItem';
@@ -78,6 +87,7 @@ export default {
     },
     data() {
         return {
+            isNewPost: false,
             sortType: 'newest',
             listData: [],
             tagRecommendData: [], // Tag推荐
@@ -91,20 +101,44 @@ export default {
             noMore: false // 没有更多数据
         };
     },
+    computed: {
+        ...mapState({
+            socketPost: state => state.socketPost
+        })
+    },
+    watch: {
+        socketPost: {
+            handler(n, o) {
+                if (n && n.type === 'newPost') {
+                    this.isNewPost = true;
+                } else {
+                    this.isNewPost = false;
+                }
+            },
+            immediate: true
+        }
+    },
     created() {
         this.getTagRecommend();
         this.getUserRecommend();
         this.getTopicRecommend();
         this.getList(this.sortType);
     },
-    // activated() {
-    //     this.getTagRecommend();
-    //     this.getUserRecommend();
-    //     this.getTopicRecommend();
-    //     this.handleSort(this.sortType);
-    // },
+    activated() {
+        this.getTagRecommend();
+        this.getUserRecommend();
+        this.getTopicRecommend();
+    },
     methods: {
-        getList(sortType) {
+        ...mapMutations({
+            newPostReset: SOCKET_NEW_POST_RESET
+        }),
+        reload() {
+            this.pageConfig.currentPage = 1;
+            this.noMore = false;
+            this.getList(this.sortType, 'reload');
+        },
+        getList(sortType, type) {
             const params = {
                 sortType,
                 pageSize: this.pageConfig.pageSize,
@@ -114,7 +148,15 @@ export default {
             api.articlePublishQuery(params).then((res) => {
                 this.loading = false;
                 if (res.data.length > 0) {
-                    this.listData.push(...res.data);
+                    if (type === 'reload') {
+                        this.listData = res.data;
+                        this.newPostReset();
+                    } else {
+                        if (type !== 'more') {
+                            this.newPostReset();
+                        }
+                        this.listData.push(...res.data);
+                    }
                 } else {
                     this.noMore = true;
                 }

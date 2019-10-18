@@ -6,7 +6,7 @@
             :class="{'active': list.name === activePath}"
             @click="handleRoute(list.url)">
             {{ list.title }}
-            <span v-if="list.name === 'follow' && isNewMsg" class="new-msg"></span>
+            <span v-if="list.name === 'find' && isNewPost" class="new-msg"></span>
             <span v-if="list.name === 'msg' && isNewMsg" class="new-msg"></span>
         </div>
     </div>
@@ -20,13 +20,10 @@ export default {
             type: Array,
             default: () => ([])
         },
-        // msgCount: Number,
-        isNewMsg: Boolean
+        isNewMsg: Boolean,
+        isNewPost: Boolean
     },
     computed: {
-        // isNewMsg() {
-        //     return this.msgCount > 0;
-        // },
         activePath() {
             return this.$route.path.split('/')[1];
         }

@@ -1,9 +1,9 @@
 <template>
     <div>
         <loading v-if='loading'></loading>
-        <empty-data v-if='!loading && data.length === 0'></empty-data>
         <template v-else>
-            <slot></slot>
+            <empty-data v-if='data && data.length === 0'></empty-data>
+            <slot v-else></slot>
         </template>
     </div>
 </template>

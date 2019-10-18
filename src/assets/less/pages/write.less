@@ -4,6 +4,7 @@
         position: relative;
         &__header{
             position: absolute;
+            top: 0px;
             top: -69px;
             right: 0px;
             z-index: 100;
@@ -28,6 +29,23 @@
                 color: @fontMainColor;
                 background: @boxBgColor;
                 border-radius: 10px 10px 0 0;
+            }
+        }
+
+        .pre-view{
+            display: flex;
+            &__content{
+                width: 70%;
+                flex: 1;
+            }
+            &__side{
+                padding-left: 15px;
+                width: 30%;
+                .fixed{
+                    position: fixed;
+                    width: 285px;
+                    top: 69px;
+                }
             }
         }
     }

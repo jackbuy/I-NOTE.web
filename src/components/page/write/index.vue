@@ -1,6 +1,8 @@
 <template>
     <div class="write">
-        <div class="write__header">
+        <div
+            v-if="!preView"
+            class="write__header">
             <span>
                 <span class="label">{{ tips }}</span>
             </span>
@@ -15,6 +17,14 @@
             <el-button
                 :disabled="isSaving"
                 size="mini"
+                round
+                icon="icon icon-yulan"
+                @click="handlePreView()">
+                预览
+            </el-button>
+            <el-button
+                :disabled="isSaving"
+                size="mini"
                 type="primary"
                 round
                 icon="icon icon-fabu"
@@ -22,13 +32,14 @@
                 发布
             </el-button>
         </div>
-        <div class="write__title">
+        <div v-show="!preView" class="write__title">
             <input
                 v-model="form.title"
                 type="text"
                 placeholder="输入标题...">
         </div>
         <quill-editor
+            v-show="!preView"
             v-model="form.contentHtml"
             placeholder="输入正文...">
         </quill-editor>
@@ -36,6 +47,33 @@
             v-model="form.contentHtml"
             :menus="editorMenus">
         </wang-editor> -->
+        <div v-if="preView" class="pre-view">
+            <div class="pre-view__content">
+                <card :padding="false" title="草稿 · 预览">
+                    <div slot="menu" class="menu">
+                        <div
+                            class="menu-btn round"
+                            @click="handlePreView()">
+                            编辑
+                        </div>
+                    </div>
+                    <div class="article-detail">
+                        <div class="article-detail__title">
+                            {{ form.title }}
+                        </div>
+                        <div
+                            v-highlightB
+                            v-html="form.contentHtml"
+                            class="article-detail__content">
+                        </div>
+                    </div>
+                </card>
+            </div>
+            <div class="pre-view__side">
+                <card icon="icon icon-wenzhang" title="Ta的热文" class="fixed">
+                </card>
+            </div>
+        </div>
         <publish-modal
             v-if="showPublishModal"
             v-model="showPublishModal"
@@ -49,6 +87,7 @@
 <script>
 import WangEditor from '@/components/common/wangEditor';
 import QuillEditor from '@/components/common/quillEditor';
+import Card from '@/components/common/card';
 import PublishModal from './publishModal';
 import message from '@/mixins/message';
 import api from '@/utils/api';
@@ -57,12 +96,14 @@ export default {
     components: {
         QuillEditor,
         WangEditor,
-        PublishModal
+        PublishModal,
+        Card
     },
     mixins: [ message ],
     data() {
         return {
             showPublishModal: false,
+            preView: false,
             form: {},
             tagOptions: [],
             editorMenus: [
@@ -118,6 +159,13 @@ export default {
         window.removeEventListener('resize', this.setEditorHeight);
     },
     methods: {
+        // 预览
+        handlePreView() {
+            this.preView = !this.preView;
+            if (!this.preView) {
+                this.setEditorHeight();
+            }
+        },
         // 设置编辑器高度
         setEditorHeight() {
             // quillEditor

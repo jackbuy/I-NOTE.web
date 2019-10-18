@@ -97,12 +97,12 @@ export default {
         this.getTopicRecommend();
         this.getList(this.sortType);
     },
-    activated() {
-        this.getTagRecommend();
-        this.getUserRecommend();
-        this.getTopicRecommend();
-        // this.handleSort(this.sortType);
-    },
+    // activated() {
+    //     this.getTagRecommend();
+    //     this.getUserRecommend();
+    //     this.getTopicRecommend();
+    //     this.handleSort(this.sortType);
+    // },
     methods: {
         getList(sortType) {
             const params = {

@@ -15,9 +15,9 @@
             <layout-header-user :is-write="isHiddenBreadcrumb"></layout-header-user>
         </layout-header>
         <layout-content>
-            <keep-alive include="Home">
-                <router-view></router-view>
-            </keep-alive>
+            <!-- <keep-alive include="Home"> -->
+            <router-view></router-view>
+            <!-- </keep-alive> -->
         </layout-content>
         <login></login>
         <el-backtop></el-backtop>

@@ -12,8 +12,5 @@ export const HIDDEN_BREADCRUMB = 'HIDDEN_BREADCRUMB';
 export const SET_DOCUMENT_TITLE = 'SET_DOCUMENT_TITLE';
 
 // socket
-export const SOCKET_MESSAGE_COUNT = 'SOCKET_MESSAGE_COUNT';
 export const SOCKET_ONLINE_USER = 'SOCKET_ONLINE_USER';
 export const SOCKET_NEW_MSG = 'SOCKET_NEW_MSG';
-// 获取新消息
-export const GET_NEW_MSG = 'GET_NEW_MSG';

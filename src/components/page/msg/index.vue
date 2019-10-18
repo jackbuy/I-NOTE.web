@@ -27,6 +27,7 @@
 </template>
 
 <script>
+import { mapState } from 'vuex';
 import Tab from '@/components/common/tab';
 import TabLabel from '@/components/common/tab/tabLabel';
 import Card from '@/components/common/card';
@@ -58,8 +59,21 @@ export default {
             noMore: false // 没有更多数据
         };
     },
+    computed: {
+        ...mapState({
+            socketMsg: state => state.socketMsg
+        })
+    },
+    // watch: {
+    //     socketMsg: {
+    //         handler(n, o) {
+    //             if (n !== o) this.refresh();
+    //         },
+    //         immediate: true
+    //     }
+    // },
     created() {
-        this.getList();
+        this.refresh();
     },
     methods: {
         refresh() {

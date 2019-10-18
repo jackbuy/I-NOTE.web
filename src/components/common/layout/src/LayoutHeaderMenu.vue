@@ -20,12 +20,13 @@ export default {
             type: Array,
             default: () => ([])
         },
-        msgCount: Number
+        // msgCount: Number,
+        isNewMsg: Boolean
     },
     computed: {
-        isNewMsg() {
-            return this.msgCount > 0;
-        },
+        // isNewMsg() {
+        //     return this.msgCount > 0;
+        // },
         activePath() {
             return this.$route.path.split('/')[1];
         }

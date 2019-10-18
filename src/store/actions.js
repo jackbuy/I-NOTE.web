@@ -16,11 +16,5 @@ export default {
                 window.location.reload();
             }
         });
-    },
-    // 获取新消息
-    [C.GET_NEW_MSG]({commit}, params) {
-        api.newMessage(params).then((res) => {
-            console.log(res);
-        });
     }
 };

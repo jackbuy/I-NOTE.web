@@ -5,7 +5,7 @@
             <layout-header-menu
                 v-if="menuDate.length > 0 && !isHiddenBreadcrumb"
                 :data="menuDate"
-                :msg-count="socketMsgCount"
+                :is-new-msg="isSocketNewMsg"
                 @push="handleRouterPush">
             </layout-header-menu>
             <layout-header-search
@@ -35,7 +35,6 @@ import LayoutHeaderSearch from './src/LayoutHeaderSearch';
 import LayoutHeaderUser from './src/LayoutHeaderUser';
 import LayoutContent from './src/LayoutContent';
 import Login from '@/components/page/Login';
-import api from '@/utils/api';
 export default {
     name: 'LayoutContainer',
     components: {
@@ -70,7 +69,7 @@ export default {
                     url: '/msg'
                 }
             ],
-            socketMsgCount: 0
+            isSocketNewMsg: false
         };
     },
     watch: {
@@ -125,15 +124,17 @@ export default {
         handleRouterPush(path) {
             this.$router.push(path).catch(() => {});
         },
-        // 请求消息
+        // socket消息处理
         pushMsg(msg) {
             const { type, data } = msg;
             if (type === 'newMsg') {
-                const { toUserId } = data;
+                const { toUserId, msgCount } = data;
                 if (this.currentUserId === toUserId) {
-                    api.getNewMessage({ toUserId }).then((res) => {
-                        this.socketMsgCount = res.data;
-                    }).catch(() => {});
+                    if (msgCount > 0) {
+                        this.isSocketNewMsg = true;
+                    } else {
+                        this.isSocketNewMsg = false;
+                    }
                 }
             }
         }

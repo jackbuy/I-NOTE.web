@@ -18,9 +18,8 @@ const Store = {
         },
         isHiddenBreadcrumb: false, // 是否隐藏面包屑
         documentTitle: '',
-        socketMsg: {},
-        socketMsgCount: 0, // 未读消息数量
-        socketOnlineUser: [] // 在线用户
+        socketMsg: {}, // socket消息体
+        socketOnlineUser: [] // socket在线用户
     },
     getters: {},
     mutations: mutations,

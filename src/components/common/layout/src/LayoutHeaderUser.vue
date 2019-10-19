@@ -29,8 +29,8 @@
                 v-if="!isWrite"
                 trigger="click"
                 @command="handleCommand">
-                <el-avatar v-if="userImg" :size="30" fit="cover" :src="userImg"></el-avatar>
-                <el-avatar v-else :size="30"><i class="icon icon-yonghu"></i></el-avatar>
+                <el-avatar v-if="userImg" :size="32" fit="cover" :src="userImg" class="user"></el-avatar>
+                <el-avatar v-else :size="32" class="user"><i class="icon icon-yonghu"></i></el-avatar>
                 <el-dropdown-menu>
                     <el-dropdown-item command="zone"><i class="icon icon-yonghu"></i> 我的主页</el-dropdown-item>
                     <el-dropdown-item divided command="settings"><i class="icon icon-settings-o"></i> 设置</el-dropdown-item>

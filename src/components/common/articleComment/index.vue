@@ -7,6 +7,7 @@
                 v-model="isReply"
                 :key="item._id"
                 :item="item"
+                class="parent"
                 @reply="openReply"
                 @delete="commentDelete">
                 <template slot-scope="scope">

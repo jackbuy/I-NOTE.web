@@ -2,10 +2,8 @@
     <div class="comment-item">
         <div class="header">
             <div class="header-title">
-                <span
-                    class="img">
-                    <img :src="avatar" alt="">
-                </span>
+                <el-avatar v-if="userImg" :size="20" fit="cover" :src="userImg"></el-avatar>
+                <el-avatar v-else :size="20"><i class="icon icon-yonghu"></i></el-avatar>
                 <span class="name">{{ nickName }}</span>
                 <span v-if="replyUserNickName && !isMine">
                     <span>回复</span>
@@ -21,7 +19,7 @@
         <div class="content">
             {{ content }}
         </div>
-        <div class="children">
+        <div v-if="reply && reply.length > 0" class="children">
             <slot :reply="reply"></slot>
         </div>
     </div>
@@ -64,7 +62,7 @@ export default {
         replyUserNickName() {
             if (this.replyUser) return this.replyUser.nickname;
         },
-        avatar() {
+        userImg() {
             if (this.user) return `${imgBaseUrl}/${this.user.avatar}`;
         },
         content() {

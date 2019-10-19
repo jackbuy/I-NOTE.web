@@ -5,6 +5,7 @@
         &-input{
             padding-top: 5px;
             padding-bottom: 15px;
+            border-bottom: 1px solid @borderColor;
             .textarea.el-textarea .el-input__count{
                 bottom: -25px;
                 right: 0;
@@ -13,11 +14,9 @@
             }
         }
         &-item{
-            padding: 15px 0;
+            padding: 12px 0 10px 0;
             border-top: 1px solid @borderColor;
-            &:first-child{
-                border-top-width: 0;
-            }
+            border-bottom: 1px solid @borderColor;
             &-empty{
                 text-align: center;
                 font-size: 12px;
@@ -38,16 +37,6 @@
                         color: @fontSubColor;
                     }
                 }
-                .img{
-                    width: 20px;
-                    height: 20px;
-                    border-radius: 20px;
-                    overflow: hidden;
-                    background: @imgBgColor;
-                    img{
-                        width: 100%;
-                    }
-                }
                 &-menu{
                     text-align: right;
                     font-size: 0;
@@ -64,15 +53,20 @@
             }
             .content{
                 margin-left: 28px;
+                margin-top: 5px;
                 line-height: 1.5;
                 color: @fontMainColor;
             }
+            &.parent{
+                border-top-width: 0;
+                >.children{
+                    margin-top: 10px;
+                }
+            }
             .children{
-                padding-left: 50px;
+                margin-left: 26px;
                 .comment-item{
-                    &:first-child{
-                        border-top-width: 0;
-                    }
+                    border-bottom-width: 0;
                     &:last-child{
                         padding-bottom: 0;
                     }

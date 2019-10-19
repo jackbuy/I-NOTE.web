@@ -1,6 +1,6 @@
 <template>
     <home-layout>
-        <card slot="content" :visible-header="!isNewPost" :padding="false" title="~有新动态,可刷新~">
+        <card slot="content" :visible-header="!isNewPost" :padding="false" title="~有新动态啦~">
             <div slot="menu" class="menu">
                 <el-button
                     :loading="loading"
@@ -55,6 +55,13 @@
                 :item="item">
             </user-recommend>
         </card>
+        <card slot="author" title="运营状态">
+            <div class="online">
+                <div>在线会员：{{onlineMember}}</div>
+                <div>在线游客：{{onlineVisitor}}</div>
+                <div>链接：{{onlineConnect}}</div>
+            </div>
+        </card>
     </home-layout>
 </template>
 
@@ -88,6 +95,9 @@ export default {
     data() {
         return {
             isNewPost: false,
+            onlineMember: 0,
+            onlineVisitor: 0,
+            onlineConnect: 0,
             sortType: 'newest',
             listData: [],
             tagRecommendData: [], // Tag推荐
@@ -103,7 +113,8 @@ export default {
     },
     computed: {
         ...mapState({
-            socketPost: state => state.socketPost
+            socketPost: state => state.socketPost,
+            socketOnlineUser: state => state.socketOnlineUser
         })
     },
     watch: {
@@ -113,6 +124,17 @@ export default {
                     this.isNewPost = true;
                 } else {
                     this.isNewPost = false;
+                }
+            },
+            immediate: true
+        },
+        socketOnlineUser: {
+            handler(n, o) {
+                if (n === o) return;
+                if (n) {
+                    this.onlineMember = n.member;
+                    this.onlineVisitor = n.visitor;
+                    this.onlineConnect = n.connect;
                 }
             },
             immediate: true

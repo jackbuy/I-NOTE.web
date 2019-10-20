@@ -31,6 +31,7 @@
                 </el-button>
             </el-form-item>
         </el-form>
+        <div class="header"><span @click="handleForgetModal">忘记密码？</span></div>
     </div>
 </template>
 
@@ -39,7 +40,7 @@ import { mapMutations } from 'vuex';
 import { TOGGLE_LOGIN_MODAL } from '@/store/mutation-types';
 import api from '@/utils/api';
 export default {
-    name: '',
+    name: 'LoginModal',
     data() {
         return {
             loading: false,
@@ -62,6 +63,12 @@ export default {
             this.toggleLoginModal({
                 open: true,
                 type: 'register'
+            });
+        },
+        handleForgetModal() {
+            this.toggleLoginModal({
+                open: true,
+                type: 'forget'
             });
         },
         handleLogin() {

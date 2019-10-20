@@ -6,6 +6,8 @@ export default {
     userLogin: (params) => http('post', `${apiBaseUrl}/user/login`, params),
     // 用户注册
     userRegister: (params) => http('post', `${apiBaseUrl}/user/register`, params),
+    // 忘记密码
+    userForget: (params) => http('post', `${apiBaseUrl}/user/forget`, params),
     // 已登录用户信息
     getUserInfo: (params) => http('post', `${apiBaseUrl}/user/userInfo`, params),
     // 空间用户信息
@@ -105,8 +107,11 @@ export default {
     followUser: (params) => http('post', `${apiBaseUrl}/follow/user`, params),
     followTopic: (params) => http('post', `${apiBaseUrl}/follow/topic`, params),
     followTag: (params) => http('post', `${apiBaseUrl}/follow/tag`, params),
-    // 发送邮件
-    sendEmail: (params) => http('post', `${apiBaseUrl}/sendEmail`, params),
+
+    // 发送新用户注册邮件
+    sendRegisterEmail: (params) => http('post', `${apiBaseUrl}/sendRegisterEmail`, params),
+    // 发送重置密码邮件
+    sendForgetEmail: (params) => http('post', `${apiBaseUrl}/sendForgetEmail`, params),
 
     // 删除对应文件
     deleteFile: (params) => http('post', `${apiBaseUrl}/deleteFile`, params),

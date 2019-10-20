@@ -4,10 +4,9 @@
         :visible="modalVisible"
         @submit.native.prevent
         @handleClose="handleCloseModal">
-        <login-modal
-            v-if="modalType === 'login'">
-        </login-modal>
+        <login-modal v-if="modalType === 'login'"></login-modal>
         <register-modal v-if="modalType === 'register'"></register-modal>
+        <forget-modal v-if="modalType === 'forget'"></forget-modal>
     </modal>
 </template>
 
@@ -16,6 +15,7 @@ import { mapState, mapMutations } from 'vuex';
 import { TOGGLE_LOGIN_MODAL } from '@/store/mutation-types';
 import Modal from '@/components/common/modal';
 import LoginModal from './LoginModal';
+import ForgetModal from './ForgetModal';
 import RegisterModal from './RegisterModal';
 import api from '@/utils/api';
 export default {
@@ -23,7 +23,8 @@ export default {
     components: {
         Modal,
         LoginModal,
-        RegisterModal
+        RegisterModal,
+        ForgetModal
     },
     computed: {
         ...mapState({
@@ -38,6 +39,7 @@ export default {
         modalTitle() {
             if (this.modalType === 'login') return '登录';
             if (this.modalType === 'register') return '新用户注册';
+            if (this.modalType === 'forget') return '忘记密码';
         }
     },
     data() {

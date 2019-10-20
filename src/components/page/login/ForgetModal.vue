@@ -6,13 +6,6 @@
             :model="form"
             :rules="rules">
             <el-form-item
-                prop="nickname">
-                <el-input
-                    v-model="form.nickname"
-                    prefix-icon="el-icon-user"
-                    placeholder="昵称"></el-input>
-            </el-form-item>
-            <el-form-item
                 prop="email">
                 <el-input
                     v-model="form.email"
@@ -37,7 +30,15 @@
                     v-model="form.password"
                     prefix-icon="el-icon-lock"
                     type="password"
-                    placeholder="密码"></el-input>
+                    placeholder="新密码"></el-input>
+            </el-form-item>
+            <el-form-item
+                prop="passwordRepeat">
+                <el-input
+                    v-model="form.passwordRepeat"
+                    prefix-icon="el-icon-lock"
+                    type="password"
+                    placeholder="重复新密码"></el-input>
             </el-form-item>
             <el-form-item>
                 <el-button
@@ -45,8 +46,8 @@
                     class="submit"
                     type="primary"
                     native-type="submit"
-                    @click="handRegister">
-                    注册
+                    @click="handForget">
+                    提交
                 </el-button>
             </el-form-item>
         </el-form>
@@ -59,7 +60,7 @@ import { TOGGLE_LOGIN_MODAL } from '@/store/mutation-types';
 import api from '@/utils/api';
 import message from '@/mixins/message';
 export default {
-    name: 'RegisterModal',
+    name: 'ForgetModal',
     mixins: [ message ],
     data() {
         const emailValue = (rule, value, callback) => {
@@ -70,14 +71,25 @@ export default {
                 callback();
             }
         };
-        // const passwordValue = (rule, value, callback) => {
-        //     const regPassword = /^[a-zA-Z]\w{5,17}$/;
-        //     if (value && (!(regPassword).test(value))) {
-        //         callback(new Error('以字母开头，长度在6~18之间，只能包含字母、数字和下划线'));
-        //     } else {
-        //         callback();
-        //     }
-        // };
+        const validatePass = (rule, value, callback) => {
+            if (value === '') {
+                callback(new Error('请输入密码'));
+            } else {
+                if (this.form.passwordRepeat !== '') {
+                    this.$refs.form.validateField('passwordRepeat');
+                }
+                callback();
+            }
+        };
+        const validatePass2 = (rule, value, callback) => {
+            if (value === '') {
+                callback(new Error('请再次输入密码'));
+            } else if (value !== this.form.password) {
+                callback(new Error('两次输入密码不一致!'));
+            } else {
+                callback();
+            }
+        };
         return {
             loading: false,
             time: 0,
@@ -85,10 +97,6 @@ export default {
             sending: false,
             form: {},
             rules: {
-                nickname: [
-                    { required: true, message: '必填' },
-                    { min: 2, max: 20, message: '昵称长度在2~20之间' }
-                ],
                 email: [
                     { required: true, message: '必填' },
                     { validator: emailValue }
@@ -99,8 +107,13 @@ export default {
                 ],
                 password: [
                     { required: true, message: '必填' },
-                    { min: 6, max: 18, message: '密码长度在6~18之间' }
-                    // { validator: passwordValue }
+                    { min: 6, max: 18, message: '密码长度在6~18之间' },
+                    { validator: validatePass }
+                ],
+                passwordRepeat: [
+                    { required: true, message: '必填' },
+                    { min: 6, max: 18, message: '密码长度在6~18之间' },
+                    { validator: validatePass2 }
                 ]
             }
         };
@@ -115,11 +128,17 @@ export default {
                 type: 'login'
             });
         },
-        handRegister() {
+        handForget() {
             this.$refs['form'].validate((valid) => {
                 if (valid) {
                     this.loading = true;
-                    api.userRegister({ ...this.form }).then(() => {
+                    const { password, email, captcha } = this.form;
+                    const params = {
+                        password,
+                        email,
+                        captcha
+                    };
+                    api.userForget(params).then(() => {
                         const { email, password } = this.form;
                         this.userLogin({
                             email,
@@ -139,7 +158,7 @@ export default {
                     if (regEmail.test(email)) {
                         this.btntxt = '发送中...';
                         this.sending = true;
-                        api.sendRegisterEmail({ email }).then((res) => {
+                        api.sendForgetEmail({ email }).then((res) => {
                             this.time = 60;
                             this.timer();
                         }).catch(() => {

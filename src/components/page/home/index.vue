@@ -55,10 +55,13 @@
                 :item="item">
             </user-recommend>
         </card>
-        <card slot="author" title="运营状态">
+        <card slot="author" icon="icon icon-yunying" title="运营状态">
             <div class="online">
-                <div>在线会员：{{onlineMember}}</div>
-                <div>在线游客：{{onlineVisitor}}</div>
+                <div>注册会员：{{ operationsCountData.userCount }}</div>
+                <div>在线会员：{{ onlineMember }}</div>
+                <div>发布文章：{{ operationsCountData.articlePublishCount }}</div>
+                <div>在线游客：{{ onlineVisitor }}</div>
+                <div>共享专题：{{ operationsCountData.topicCount }}</div>
                 <div>链接：{{onlineConnect}}</div>
             </div>
         </card>
@@ -103,6 +106,7 @@ export default {
             tagRecommendData: [], // Tag推荐
             authorRecommendData: [], // 作者推荐
             topicRecommendData: [], // 专题推荐
+            operationsCountData: {}, // 数量统计
             pageConfig: {
                 pageSize: 15,
                 currentPage: 1
@@ -144,12 +148,14 @@ export default {
         this.getTagRecommend();
         this.getUserRecommend();
         this.getTopicRecommend();
+        this.getOperationsCount();
         this.getList(this.sortType);
     },
     activated() {
         this.getTagRecommend();
         this.getUserRecommend();
         this.getTopicRecommend();
+        this.getOperationsCount();
     },
     methods: {
         ...mapMutations({
@@ -209,6 +215,11 @@ export default {
         getTopicRecommend() {
             api.topicRecommend().then((res) => {
                 this.topicRecommendData = res.data;
+            }).catch(() => {});
+        },
+        getOperationsCount() {
+            api.operationsCount().then((res) => {
+                this.operationsCountData = res.data;
             }).catch(() => {});
         },
         handleRouterPush(path) {

@@ -10,9 +10,26 @@
             padding-left: 15px;
             .online{
                 div{
+                    float: left;
+                    width: 50%;
                     line-height: 2;
                     font-size: 12px;
+                    color: @fontMainColor;
+                    padding-left: 15px;
+                    position: relative;
+                    &::before{
+                        position: absolute;
+                        content: "";
+                        left: 5px;
+                        top: 50%;
+                        width: 3px;
+                        height: 3px;
+                        background: @fontColor;
+                        margin-left: -1px;
+                        margin-top: -1px;
+                    }
                 }
+                .clearfix();
             }
         }
     }

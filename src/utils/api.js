@@ -18,6 +18,8 @@ export default {
     userPublishQuery: (params) => http('post', `${apiBaseUrl}/user/publish/query`, params),
     // 用户列表
     userQuery: (params) => http('post', `${apiBaseUrl}/user/query`, params),
+    // 数量统计
+    operationsCount: () => http('post', `${apiBaseUrl}/operations/count`),
 
     /**
      * 未发布文章

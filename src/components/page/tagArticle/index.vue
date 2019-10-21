@@ -28,7 +28,7 @@
 </template>
 
 <script>
-import Layout from './layout';
+import Layout from './Layout';
 import Card from '@/components/common/card';
 import InfiniteScroll from '@/components/common/infiniteScrollList';
 import ArticleItem from '@/components/common/articleItem';

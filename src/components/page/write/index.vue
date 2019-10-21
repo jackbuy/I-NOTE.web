@@ -87,7 +87,7 @@
 import WangEditor from '@/components/common/wangEditor';
 import QuillEditor from '@/components/common/quillEditor';
 import Card from '@/components/common/card';
-import PublishModal from './publishModal';
+import PublishModal from './PublishModal';
 import message from '@/mixins/message';
 import api from '@/utils/api';
 export default {

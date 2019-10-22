@@ -24,13 +24,13 @@
                 </template>
             </infinite-scroll>
         </card>
-        <card slot="recommend" icon="el-icon-notebook-2" title="热门文章">
+        <!-- <card slot="recommend" icon="el-icon-notebook-2" title="热门文章">
             <article-recommend
                 v-for="item in recommendData"
                 :key="item._id"
                 :item="item">
             </article-recommend>
-        </card>
+        </card> -->
         <card slot="tag" icon="el-icon-collection-tag" title="标签">
             <template slot="menu">
                 <div class="menu">

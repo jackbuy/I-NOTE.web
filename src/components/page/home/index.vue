@@ -31,7 +31,7 @@
                 :item="item">
             </article-recommend>
         </card> -->
-        <card slot="tag" icon="el-icon-collection-tag" title="标签">
+        <card slot="tag" icon="icon icon-bq" title="标签">
             <template slot="menu">
                 <div class="menu">
                     <span class="menu-btn" @click="handleRouterPush('/tag')">更多</span>

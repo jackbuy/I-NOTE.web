@@ -5,9 +5,11 @@
             <slot name="content"></slot>
         </div>
         <div class="home-side">
+            <slot name="recommend"></slot>
             <slot name="tag"></slot>
             <slot name="topic"></slot>
             <slot name="author"></slot>
+            <slot name="operation"></slot>
         </div>
     </div>
 </template>

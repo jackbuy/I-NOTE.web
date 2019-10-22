@@ -96,8 +96,7 @@
             <article-recommend
                 v-for="item in recommendFilterData"
                 :key="item._id"
-                :item="item"
-                @doDetail="handleRecommend">
+                :item="item">
             </article-recommend>
         </card>
     </detail-layout>
@@ -323,11 +322,6 @@ export default {
             api.articlePublishQuery(params).then((res) => {
                 this.recommendData = res.data;
             }).catch(() => {});
-        },
-        // 详情
-        handleRecommend(articleId) {
-            let path = `/detail/${articleId}`;
-            this.handleRouterPath(path);
         },
         // 编辑
         handleRouterEdit(articleId) {

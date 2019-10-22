@@ -32,7 +32,8 @@ export default {
     },
     methods: {
         doDetail(articleId) {
-            this.$emit('doDetail', articleId);
+            let path = `/detail/${articleId}`;
+            this.$router.push(path);
         }
     }
 };

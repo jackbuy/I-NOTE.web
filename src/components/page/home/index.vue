@@ -24,7 +24,14 @@
                 </template>
             </infinite-scroll>
         </card>
-        <card slot="tag" icon="icon icon-bq" title="标签">
+        <card slot="recommend" icon="el-icon-notebook-2" title="热门文章">
+            <article-recommend
+                v-for="item in recommendData"
+                :key="item._id"
+                :item="item">
+            </article-recommend>
+        </card>
+        <card slot="tag" icon="el-icon-collection-tag" title="标签">
             <template slot="menu">
                 <div class="menu">
                     <span class="menu-btn" @click="handleRouterPush('/tag')">更多</span>
@@ -55,15 +62,10 @@
                 :item="item">
             </user-recommend>
         </card>
-        <card slot="author" icon="icon icon-yunying" title="运营状态">
-            <div class="online">
-                <div>注册会员：{{ operationsCountData.userCount }}</div>
-                <div>在线会员：{{ onlineMember }}</div>
-                <div>发布文章：{{ operationsCountData.articlePublishCount }}</div>
-                <div>在线游客：{{ onlineVisitor }}</div>
-                <div>共享专题：{{ operationsCountData.topicCount }}</div>
-                <div>链接：{{onlineConnect}}</div>
-            </div>
+        <card slot="operation" icon="icon icon-yunying" title="运营状态">
+            <operations
+                :data="operationsData">
+            </operations>
         </card>
     </home-layout>
 </template>
@@ -75,8 +77,10 @@ import HomeLayout from './Layout';
 import InfiniteScroll from '@/components/common/infiniteScrollList';
 import ArticleItem from '@/components/common/articleItem';
 import TagRecommend from '@/components/common/tagRecommend';
+import ArticleRecommend from '@/components/common/articleRecommend';
 import TopicRecommend from '@/components/common/topicRecommend';
 import UserRecommend from '@/components/common/userRecommend';
+import Operations from '@/components/common/operations';
 import Card from '@/components/common/card';
 import Tab from '@/components/common/tab';
 import TabLabel from '@/components/common/tab/tabLabel';
@@ -91,6 +95,8 @@ export default {
         TagRecommend,
         TopicRecommend,
         UserRecommend,
+        ArticleRecommend,
+        Operations,
         Card,
         Tab,
         TabLabel
@@ -98,15 +104,13 @@ export default {
     data() {
         return {
             isNewPost: false,
-            onlineMember: 0,
-            onlineVisitor: 0,
-            onlineConnect: 0,
             sortType: 'newest',
             listData: [],
             tagRecommendData: [], // Tag推荐
             authorRecommendData: [], // 作者推荐
             topicRecommendData: [], // 专题推荐
-            operationsCountData: {}, // 数量统计
+            recommendData: [], // 文章推荐
+            operationsData: {}, // 数量统计
             pageConfig: {
                 pageSize: 15,
                 currentPage: 1
@@ -117,8 +121,7 @@ export default {
     },
     computed: {
         ...mapState({
-            socketPost: state => state.socketPost,
-            socketOnlineUser: state => state.socketOnlineUser
+            socketPost: state => state.socketPost
         })
     },
     watch: {
@@ -131,17 +134,6 @@ export default {
                 }
             },
             immediate: true
-        },
-        socketOnlineUser: {
-            handler(n, o) {
-                if (n === o) return;
-                if (n) {
-                    this.onlineMember = n.member;
-                    this.onlineVisitor = n.visitor;
-                    this.onlineConnect = n.connect;
-                }
-            },
-            immediate: true
         }
     },
     created() {
@@ -149,12 +141,14 @@ export default {
         this.getUserRecommend();
         this.getTopicRecommend();
         this.getOperationsCount();
+        this.getArticleRecommend();
         this.getList(this.sortType);
     },
     activated() {
         this.getTagRecommend();
         this.getUserRecommend();
         this.getTopicRecommend();
+        this.getArticleRecommend();
         this.getOperationsCount();
     },
     methods: {
@@ -219,7 +213,16 @@ export default {
         },
         getOperationsCount() {
             api.operationsCount().then((res) => {
-                this.operationsCountData = res.data;
+                this.operationsData = res.data;
+            }).catch(() => {});
+        },
+        getArticleRecommend() {
+            const params = {
+                pageSize: 4,
+                sortType: 'popular'
+            };
+            api.articlePublishQuery(params).then((res) => {
+                this.recommendData = res.data;
             }).catch(() => {});
         },
         handleRouterPush(path) {

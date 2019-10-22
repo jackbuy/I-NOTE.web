@@ -35,5 +35,5 @@ export default {
     @import './assets/less/global.less';
 
     /* 本地资源 */
-    /* @import './assets/fonts/iconfont.css'; */
+    @import './assets/fonts/iconfont.css';
 </style>

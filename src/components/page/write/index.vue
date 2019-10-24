@@ -7,7 +7,7 @@
                         <span
                             v-if="articleId"
                             class="menu-btn round"
-                            @click="handleRouterPush('/write')">
+                            @click="handleAdd()">
                             <i class="icon icon-jia"></i>
                             新建
                         </span>
@@ -190,6 +190,11 @@ export default {
         window.removeEventListener('resize', this.setEditorHeight);
     },
     methods: {
+        // 新建
+        handleAdd() {
+            this.preView = false;
+            this.handleRouterPush('/write');
+        },
         // 预览
         handlePreView() {
             this.preView = !this.preView;

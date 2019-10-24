@@ -9,7 +9,7 @@
                             class="menu-btn round"
                             @click="handleRouterPush('/write')">
                             <i class="icon icon-jia"></i>
-                            新建文章
+                            新建
                         </span>
                     </div>
                 </template>
@@ -151,8 +151,11 @@ export default {
                 return this.saved ? '已保存' : '';
             }
         },
+        articleTotal() {
+            return this.pageConfig.total || 0;
+        },
         articleTitle() {
-            return `我的文章 ( ${this.pageConfig.total} )`;
+            return `我的文章 ( ${this.articleTotal} )`;
         }
     },
     watch: {
@@ -254,6 +257,8 @@ export default {
                     };
                     this.addArr(this.listData, item);
 
+                    this.pageConfig.total++;
+
                     const path = `/write/${articleId}`;
                     this.handleRouterPush(path);
 
@@ -326,11 +331,6 @@ export default {
             api.articleQuery(params).then((res) => {
                 this.pageConfig.total = res.total;
                 this.listData = res.data;
-                // if (res.data.length > 0) {
-                //     this.listData.push(...res.data);
-                // } else {
-                //     this.noMore = true;
-                // }
                 this.listLoading = false;
             }).catch(() => {
                 this.listLoading = false;
@@ -345,6 +345,7 @@ export default {
                 api.articleDelete(articleId).then(() => {
                     const path = '/write';
                     this.preView = false;
+                    this.pageConfig.total--;
                     this.delArr(this.listData, this.getIndex(this.listData, articleId));
                     this.showSuccessMsg('删除成功！');
                     this.handleRouterPush(path);

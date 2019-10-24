@@ -40,7 +40,7 @@ export default {
             default: () => [
                 [
                     'bold',
-                    'italic',
+                    // 'italic',
                     // 'underline',
                     'strike'
                 ],
@@ -52,10 +52,10 @@ export default {
                 // [{'header': [1, 2, 3, 4, 5, 6, false]}],
                 // [{'color': []}, {'background': []}],
                 // [{'font': []}],
-                // [{'align': []}],
+                [{'align': []}],
                 [
                     'link',
-                    // 'image',
+                    'image',
                     'video'
                     // 'formula'
                 ],

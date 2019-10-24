@@ -1,20 +1,18 @@
 <template>
     <layout>
         <div slot="side">
-            <card :padding="false" :title="articleTitle" class="mb0 fixed">
+            <card :padding="false" title="文章" class="mb0">
                 <template slot="menu">
                     <div class="menu">
                         <span
-                            v-if="articleId"
                             class="menu-btn round"
                             @click="handleRouterPush('/write')">
                             <i class="icon icon-jia"></i>
-                            新建文章
+                            添加
                         </span>
                     </div>
                 </template>
                 <article-list
-                    :loading="listLoading"
                     :data="listData"
                     :article-id="articleId"
                     @search="handleSearchList"
@@ -23,71 +21,78 @@
             </card>
         </div>
         <div slot="content">
-            <div v-show="!preView">
-                <div
-                    v-if="articleId"
-                    class="write__header">
-                    <span>
-                        <span class="label">{{ tips }}</span>
-                    </span>
-                    <el-button
-                        :disabled="isSaving"
-                        size="mini"
-                        round
-                        icon="icon icon-yulan"
-                        @click="handlePreView">
-                        预览
-                    </el-button>
-                    <el-button
-                        v-if="form.isPublish"
-                        :disabled="isSaving"
-                        size="mini"
-                        round
-                        @click="handleCancelPublish(form.articlePublishId, articleId)">
-                        取消发布
-                    </el-button>
-                    <el-button
-                        :disabled="isSaving"
-                        :loading="tagLoading"
-                        size="mini"
-                        type="primary"
-                        round
-                        icon="icon icon-fabu"
-                        @click="handleOpenPublishModal">
-                        发布
-                    </el-button>
-                </div>
-                <div class="write__title">
-                    <input
-                        v-model="form.title"
-                        type="text"
-                        placeholder="输入标题...">
-                </div>
-                <quill-editor
-                    v-model="form.contentHtml"
-                    placeholder="输入正文...">
-                </quill-editor>
+            <div
+                v-if="!preView"
+                class="write__header">
+                <span>
+                    <span class="label">{{ tips }}</span>
+                </span>
+                <!-- <el-button
+                    :disabled="isSaving"
+                    size="mini"
+                    round
+                    icon="icon icon-caogao"
+                    @click="handleRoutePush('/article/draft')">
+                    我的草稿
+                </el-button> -->
+                <!-- <el-button
+                    :disabled="isSaving"
+                    size="mini"
+                    round
+                    icon="icon icon-yulan"
+                    @click="handlePreView()">
+                    预览
+                </el-button> -->
+                <el-button
+                    :disabled="isSaving"
+                    size="mini"
+                    type="primary"
+                    round
+                    icon="icon icon-fabu"
+                    @click="handleOpenPublishModal">
+                    发布
+                </el-button>
             </div>
-            <div v-show="preView" class="pre-view">
-                <card :padding="false" title="预览">
-                    <div slot="menu" class="menu">
-                        <div
-                            class="menu-btn round"
-                            @click="handlePreView()">
-                            编辑
+            <div v-show="!preView" class="write__title">
+                <input
+                    v-model="form.title"
+                    type="text"
+                    placeholder="输入标题...">
+            </div>
+            <quill-editor
+                v-show="!preView"
+                v-model="form.contentHtml"
+                placeholder="输入正文...">
+            </quill-editor>
+            <!-- <wang-editor
+                v-model="form.contentHtml"
+                :menus="editorMenus">
+            </wang-editor> -->
+            <div v-if="preView" class="pre-view">
+                <div class="pre-view__content">
+                    <card :padding="false" title="预览">
+                        <div slot="menu" class="menu">
+                            <div
+                                class="menu-btn round"
+                                @click="handlePreView()">
+                                编辑
+                            </div>
                         </div>
-                    </div>
-                    <div class="article-detail">
-                        <div class="article-detail__title">
-                            {{ form.title }}
+                        <div class="article-detail">
+                            <div class="article-detail__title">
+                                {{ form.title }}
+                            </div>
+                            <div
+                                v-html="form.contentHtml"
+                                class="article-detail__content">
+                            </div>
                         </div>
-                        <div
-                            v-highlightB
-                            v-html="form.contentHtml"
-                            class="article-detail__content">
-                        </div>
-                    </div>
-                </card>
+                    </card>
+                </div>
+                <div class="pre-view__side">
+                    <!-- <card icon="icon icon-wenzhang" title="Ta的热文" class="fixed">
+                    </card> -->
+                </div>
             </div>
             <publish-modal
                 v-if="showPublishModal"
@@ -125,18 +130,25 @@ export default {
             showPublishModal: false,
             preView: false,
             form: {},
-            tagOptions: [], // 标签列表
-            tagLoading: false,
+            tagOptions: [],
+            editorMenus: [
+                'bold',
+                'italic',
+                'strikeThrough',
+                'link',
+                'image',
+                'video',
+                'quote',
+                'code'
+            ],
             publishTagId: '',
             isSaving: false,
             saved: false,
             timer: null,
             listData: [], // 文章列表
-            listLoading: true,
             pageConfig: {
                 pageSize: 100,
-                currentPage: 1,
-                total: 0
+                currentPage: 1
             }
         };
     },
@@ -150,15 +162,12 @@ export default {
             } else {
                 return this.saved ? '已保存' : '';
             }
-        },
-        articleTitle() {
-            return `我的文章 ( ${this.pageConfig.total} )`;
         }
     },
     watch: {
         form: {
             handler(n, o) {
-                if (n && n.title && o && !this.isSaving) {
+                if (o && !this.isSaving) {
                     clearTimeout(this.timer);
                     this.timer = setTimeout(() => {
                         this.handleSave();
@@ -177,6 +186,7 @@ export default {
         }
     },
     created() {
+        this.getArticleTag();
         this.getList();
     },
     mounted() {
@@ -196,21 +206,23 @@ export default {
         },
         // 设置编辑器高度
         setEditorHeight() {
+            // quillEditor
             const edit = document.getElementsByClassName('ql-container ql-snow')[0];
             const list = document.getElementsByClassName('write-list')[0];
             edit.style.height = window.innerHeight - 157 + 'px';
             list.style.height = window.innerHeight - 114 - 39 + 'px';
+
+            // wangEditor
+            // let edit = document.getElementsByClassName('text')[0];
+            // edit.style.height = window.innerHeight - 155 - 12 + 'px';
+            // edit.style.height = window.innerHeight - 192 - 12 + 'px';
         },
-        // 发布验证
         handleOpenPublishModal() {
             if (!this.form.title || this.form.title.length === 0) return this.showWarningMsg('标题不能为空！');
             if (!this.form.contentHtml || this.form.contentHtml.length === 0) return this.showWarningMsg('正文不能为空！');
-            this.getArticleTag().then(() => {
-                this.showPublishModal = true;
-                this.publishTagId = this.form.tagId ? this.form.tagId : '';
-            });
+            this.showPublishModal = true;
+            this.publishTagId = this.form.tagId ? this.form.tagId : '';
         },
-        // 获取详情
         getDetail(articleId) {
             api.articleDetail(articleId).then((res) => {
                 const { contentHtml, tagId, isPublish, title, articlePublishId } = res.data;
@@ -232,13 +244,6 @@ export default {
             this.isSaving = true;
             if (this.articleId) {
                 api.articleEdit(this.articleId, params).then((res) => {
-                    const item = {
-                        _id: this.articleId,
-                        title: this.form.title,
-                        isPublish: this.form.isPublish
-                    };
-                    this.editArr(this.listData, this.getIndex(this.listData, this.articleId), item);
-
                     this.saved = true;
                     this.isSaving = false;
                 }).catch(() => {
@@ -246,19 +251,11 @@ export default {
                 });
             } else {
                 api.articleAdd(params).then((res) => {
-                    const { articleId } = res.data;
-
-                    const item = {
-                        _id: articleId,
-                        title: this.form.title
-                    };
-                    this.addArr(this.listData, item);
-
-                    const path = `/write/${articleId}`;
-                    this.handleRouterPush(path);
-
                     this.saved = true;
                     this.isSaving = false;
+                    const { articleId } = res.data;
+                    let path = `/write/${articleId}`;
+                    this.handleRoutePush(path);
                 }).catch(() => {
                     this.isSaving = false;
                 });
@@ -289,24 +286,10 @@ export default {
                 });
             }
         },
-        // 取消发布（已发布的文章）
-        handleCancelPublish(articlePublishId, articleId) {
-            api.articlePublishDelete(articlePublishId, articleId).then(() => {
-                this.form.isPublish = false;
-            });
-        },
         // 标签列表
         getArticleTag() {
-            return new Promise((resolve, reject) => {
-                this.tagLoading = true;
-                api.tagQuery().then((res) => {
-                    this.tagOptions = res.data;
-                    this.tagLoading = false;
-                    resolve();
-                }).catch(() => {
-                    this.tagLoading = false;
-                    reject(new Error('标签加载失败'));
-                });
+            api.tagQuery().then((res) => {
+                this.tagOptions = res.data;
             });
         },
         // 文章搜索
@@ -322,18 +305,16 @@ export default {
                 currentPage: this.pageConfig.currentPage++
             };
             if (keyword) params.keyword = keyword;
-            this.listLoading = true;
+            this.loading = true;
             api.articleQuery(params).then((res) => {
-                this.pageConfig.total = res.total;
-                this.listData = res.data;
-                // if (res.data.length > 0) {
-                //     this.listData.push(...res.data);
-                // } else {
-                //     this.noMore = true;
-                // }
-                this.listLoading = false;
+                this.loading = false;
+                if (res.data.length > 0) {
+                    this.listData.push(...res.data);
+                } else {
+                    this.noMore = true;
+                }
             }).catch(() => {
-                this.listLoading = false;
+                this.loading = false;
             });
         },
         // 文章删除
@@ -344,41 +325,12 @@ export default {
             }).then(() => {
                 api.articleDelete(articleId).then(() => {
                     const path = '/write';
-                    this.preView = false;
-                    this.delArr(this.listData, this.getIndex(this.listData, articleId));
+                    this.handleRoutePush(path);
                     this.showSuccessMsg('删除成功！');
-                    this.handleRouterPush(path);
                 });
             }).catch(() => {});
         },
-        getIndex(arr, id) {
-            let _index = -1;
-            arr.map((item, index) => {
-                if (item._id === id) {
-                    _index = index;
-                }
-            });
-            return _index;
-        },
-        getItem(arr, id) {
-            let obj = {};
-            arr.map((item) => {
-                if (item._id === id) {
-                    obj = item;
-                }
-            });
-            return obj;
-        },
-        delArr(arr, index) {
-            if (index > -1) return arr.splice(index, 1);
-        },
-        editArr(arr, index, item) {
-            if (index > -1) return arr.splice(index, 1, item);
-        },
-        addArr(arr, item) {
-            return arr.unshift(item);
-        },
-        handleRouterPush(path) {
+        handleRoutePush(path) {
             this.$router.push(path).catch(() => {});
         }
     }

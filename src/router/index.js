@@ -88,13 +88,13 @@ export default new Router({
                     path: '/write',
                     name: 'articleAdd',
                     component: Write,
-                    meta: { title: '文章-新增', requireAuth: true }
+                    meta: { title: '写文章', requireAuth: true }
                 },
                 {
                     path: '/write/:articleId',
                     name: 'articleEdit',
                     component: Write,
-                    meta: { title: '文章-编辑', requireAuth: true }
+                    meta: { title: '写文章', requireAuth: true }
                 },
                 {
                     path: '/article/draft',

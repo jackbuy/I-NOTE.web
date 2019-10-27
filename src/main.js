@@ -24,7 +24,8 @@ import {
     Upload,
     Cascader,
     MessageBox,
-    Message
+    Message,
+    Loading
 } from 'element-ui';
 
 Vue.use(Button);
@@ -41,6 +42,7 @@ Vue.use(Avatar);
 Vue.use(Icon);
 Vue.use(Upload);
 Vue.use(Cascader);
+Vue.use(Loading.directive);
 Vue.prototype.$confirm = MessageBox.confirm;
 Vue.prototype.$message = Message;
 Vue.prototype.$ELEMENT = { size: 'small', zIndex: 3000 };

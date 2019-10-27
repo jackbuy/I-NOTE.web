@@ -13,8 +13,6 @@
     .clearfix();
 }
 
-.scrollbar-style();
-
 // 加载提示
 .loading-tip,
 // 没有数据
@@ -27,6 +25,15 @@
     line-height: 50px;
     font-size: 12px;
     text-align: center;
+}
+
+.write-dropdown-menu{
+    li{
+        font-size: 12px !important;
+        i{
+            font-size: 12px;
+        }
+    }
 }
 
 .el-avatar{
@@ -63,7 +70,11 @@
 
         @preBg: #2d2d2d,
         @imgBgColor: #eee,
-        @shadow: 0 0 6px rgba(0, 0, 0, 0.05)
+        @shadow: 0 0 6px rgba(0, 0, 0, 0.05),
+
+        @thumb: #666,
+        @thumbHover: #333,
+        @track: #bbb
     );
 }
 
@@ -95,6 +106,10 @@
 
         @preBg: #2d2d2d,
         @imgBgColor: #555,
-        @shadow: 0 0 6px rgba(0, 0, 0, 0.5)
+        @shadow: 0 0 6px rgba(0, 0, 0, 0.5),
+
+        @thumb: #555,
+        @thumbHover: #111,
+        @track: #222
     );
 }

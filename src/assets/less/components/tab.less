@@ -27,5 +27,20 @@
                 color: @fontActiveColor;
             }
         }
+        &.mini{
+            padding: 0 10px;
+            span{
+                padding: 12px 0;
+                margin-right: 20px;
+                font-size: 12px;
+                &.active::after{
+                    height: 1px;
+                    bottom: -1px;
+                    left: 0;
+                    width: 100%;
+                    margin-left: 0;
+                }
+            }
+        }
     }
 }

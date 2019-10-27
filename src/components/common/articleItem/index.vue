@@ -2,14 +2,18 @@
     <div class="article__item">
         <div
             v-if="type === 'normal'"
-            class="user">
+            class="user"
+            @click="handleUser(userId)">
             <el-avatar v-if="userImg" :size="40" fit="cover" :src="userImg"></el-avatar>
             <el-avatar v-else :size="40"><i class="icon icon-yonghu"></i></el-avatar>
         </div>
         <div class="content">
             <div
                 v-if="type === 'normal'"
-                class="content-name">{{ username }}</div>
+                class="content-name"
+                @click="handleUser(userId)">
+                <span>{{ username }}</span>
+            </div>
             <div class="content-title">
                 <span @click="handleDetail(articleId)">{{ title }}</span>
             </div>
@@ -63,6 +67,11 @@ export default {
                 return this.item.userId.nickname ? this.item.userId.nickname : this.item.userId.username;
             }
         },
+        userId() {
+            if (this.item && this.item.userId) {
+                return this.item.userId._id;
+            }
+        },
         userImg() {
             if (this.item && this.item.userId) {
                 return this.item.userId && this.item.userId.avatar ? `${imgBaseUrl}/${this.item.userId.avatar}` : '';
@@ -113,13 +122,20 @@ export default {
     methods: {
         handleDetail(articleId) {
             let path = this.isPublish ? `/detail/${articleId}` : `/write/${articleId}`;
-            this.$router.push(path).catch(() => {});
+            this.handleRouterPush(path);
+        },
+        handleUser(userId) {
+            const path = `/zone/${userId}/article`;
+            this.handleRouterPush(path);
         },
         handleEdit(itemId) {
             this.$emit('edit', itemId);
         },
         handleDelete(itemId) {
             this.$emit('delete', itemId);
+        },
+        handleRouterPush(path) {
+            this.$router.push(path).catch(() => {});
         }
     }
 };

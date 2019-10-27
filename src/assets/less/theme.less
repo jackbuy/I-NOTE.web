@@ -65,7 +65,11 @@
 
     @preBg,
     @imgBgColor,
-    @shadow
+    @shadow,
+
+    @thumb,
+    @thumbHover,
+    @track
 ) {
 
     // html
@@ -76,6 +80,8 @@
     .no-more{
         border-top: 1px solid @borderColor;
     }
+
+    .scrollbar-style(2px, 2px, @thumb, @thumbHover, @track);
 
     .search-box();
 

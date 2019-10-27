@@ -9,15 +9,22 @@
             align-items:center; /*垂直居中*/
             .user{
                 margin-right: 15px;
+                cursor: pointer;
             }
             .content{
                 flex: 1;
                 &-name{
                     min-width: 160px;
-                    color: @fontSubColor;
                     margin-bottom: 5px;
                     font-size: 12px;
+                    cursor: pointer;
                     .ovf-1();
+                    span{
+                        color: @fontSubColor;
+                        &:hover{
+                            text-decoration: underline;
+                        }
+                    }
                 }
                 &-title{
                     span{

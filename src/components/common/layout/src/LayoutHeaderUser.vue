@@ -19,14 +19,12 @@
                 <i class="icon icon-write"></i>
             </span>
             <span
-                v-if="!isWrite"
                 class="theme"
                 @click="handleTheme()">
                 <i v-if="themeLight" class="icon icon-baitian"></i>
                 <i v-else class="icon icon-yejian"></i>
             </span>
             <el-dropdown
-                v-if="!isWrite"
                 trigger="click"
                 @command="handleCommand">
                 <el-avatar v-if="userImg" :size="32" fit="cover" :src="userImg" class="user"></el-avatar>

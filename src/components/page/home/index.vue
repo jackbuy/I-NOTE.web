@@ -31,7 +31,7 @@
                 :item="item">
             </article-recommend>
         </card> -->
-        <card slot="tag" icon="icon icon-bq" title="标签">
+        <card slot="tag" icon="icon icon-huati" title="热门话题">
             <template slot="menu">
                 <div class="menu">
                     <span class="menu-btn" @click="handleRouterPush('/tag')">更多</span>
@@ -43,7 +43,7 @@
                 :item="item">
             </tag-recommend>
         </card>
-        <card slot="topic" icon="icon icon-zhuanti" title="专题榜">
+        <card slot="topic" icon="icon icon-zhuanti" title="热门专题">
             <template slot="menu">
                 <div class="menu">
                     <span class="menu-btn" @click="handleRouterPush('/topic')">更多</span>

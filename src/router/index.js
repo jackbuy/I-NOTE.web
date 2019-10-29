@@ -97,10 +97,10 @@ export default new Router({
                     meta: { title: '写文章', requireAuth: true }
                 },
                 {
-                    path: '/article/draft',
-                    name: 'draft',
+                    path: '/follow',
+                    name: 'follow',
                     component: Draft,
-                    meta: { title: '草稿', requireAuth: true }
+                    meta: { title: '关注', requireAuth: true }
                 },
                 {
                     path: '/msg',

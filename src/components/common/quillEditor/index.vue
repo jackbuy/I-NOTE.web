@@ -70,7 +70,8 @@ export default {
         placeholder: {
             type: String,
             default: '请输入内容...'
-        }
+        },
+        articleId: String
     },
     data() {
         return {
@@ -78,7 +79,8 @@ export default {
                 token: localStorage.getItem('token')
             },
             dataOptions: {
-                type: 0
+                type: 0,
+                articleId: this.articleId
             },
             editorOption: {
                 // some quill options 一些参数，为空时，加载全部参数

@@ -13,7 +13,7 @@
                 </template>
             </infinite-scroll>
         </card>
-        <card slot="detail" icon="icon icon-bq" :title="tagDetail.title">
+        <card slot="detail" icon="icon icon-huati" :title="tagDetail.title">
             <template v-if="tagDetailId" slot="menu">
                 <div class="menu">
                     <div @click="handleFollow(tagDetailId)" class="menu-btn round">

@@ -1,9 +1,15 @@
 <template>
     <card :padding="false" :visible-header="!currentUserId">
         <div slot="menu" class="menu">
-            <span
-                class="menu-btn round"
-                @click="handleAdd">创建专题</span>
+            <el-button
+                :loading="creating"
+                :disabled="loading"
+                type="primary"
+                size="mini"
+                round
+                @click="handleAdd">
+                创建专题
+            </el-button>
             <span
                 v-if="currentUserId === userId && listData.length > 0"
                 class="menu-btn round"
@@ -56,6 +62,7 @@ export default {
                 pageSize: 15,
                 currentPage: 1
             },
+            creating: false,
             loading: false, // 加载中
             noMore: false // 没有更多数据
         };
@@ -110,9 +117,15 @@ export default {
             }).catch(() => {});
         },
         handleAdd() {
-            this.$router.push({
-                path: `/topicWrite`
-            }).catch(() => {});
+            this.creating = true;
+            api.topicAdd({ title: '未命名专题' }).then((res) => {
+                const { topicId } = res.data;
+                this.$router.push({
+                    path: `/topicWrite/${topicId}`
+                }).catch(() => {});
+            }).catch(() => {
+                this.creating = false;
+            });
         },
         handleDelete(topicId) {
             this.confirmWarning({

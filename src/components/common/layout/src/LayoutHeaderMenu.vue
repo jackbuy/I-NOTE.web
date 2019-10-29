@@ -3,11 +3,10 @@
         <div
             v-for="list in data"
             :key="list.id"
-            :class="{'active': list.name === activePath}"
+            :class="{'active': list.name === isActive}"
             @click="handleRoute(list.url)">
             {{ list.title }}
             <span v-if="list.name === 'find' && isNewPost" class="new-msg"></span>
-            <span v-if="list.name === 'msg' && isNewMsg" class="new-msg"></span>
         </div>
     </div>
 </template>
@@ -20,13 +19,8 @@ export default {
             type: Array,
             default: () => ([])
         },
-        isNewMsg: Boolean,
-        isNewPost: Boolean
-    },
-    computed: {
-        activePath() {
-            return this.$route.path.split('/')[1];
-        }
+        isNewPost: Boolean,
+        isActive: String
     },
     methods: {
         handleRoute(url) {

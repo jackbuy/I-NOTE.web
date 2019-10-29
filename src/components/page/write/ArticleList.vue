@@ -14,7 +14,7 @@
         <tab :activeName="activeTabName" @tabClick="handleTabClick" class="mini">
             <tab-label name="all" label="全部"></tab-label>
             <tab-label name="publish" label="已发布"></tab-label>
-            <tab-label name="draft" label="草稿"></tab-label>
+            <tab-label name="draft" label="私密"></tab-label>
         </tab>
         <page-loading :loading="loading" :data="data" class="write-list">
             <ul>
@@ -45,22 +45,29 @@
                                         v-if="!item.isPublish"
                                         :command="composeValue('publish', item._id)"
                                         divided
-                                        icon="icon icon-fabu">发布文章</el-dropdown-item>
+                                        icon="icon icon-fabu">发布</el-dropdown-item>
                                     <el-dropdown-item
                                         v-else
                                         :command="composeValue('cancelPublish', item._id)"
                                         divided
                                         icon="icon icon-quxiaofabu">取消发布</el-dropdown-item>
                                     <!-- <el-dropdown-item
-                                        command="preview"
-                                        icon="icon icon-quxiaofabu">分享给</el-dropdown-item>
+                                        :command="composeValue('copySend', item._id)"
+                                        divided
+                                        icon="icon icon-forward">转发</el-dropdown-item>
                                     <el-dropdown-item
                                         :disabled="!item.isPublish"
-                                        command="preview"
+                                        :command="composeValue('shareLink', item._id)"
+                                        icon="icon icon-lianjie">分享链接</el-dropdown-item>
+                                    <el-dropdown-item
+                                        :disabled="!item.isPublish"
+                                        :command="composeValue('addTopic', item._id)"
+                                        divided
                                         icon="icon icon-jia">加入专题</el-dropdown-item> -->
                                     <el-dropdown-item
                                         :disabled="item.isPublish"
                                         :command="composeValue('del', item._id)"
+                                        divided
                                         icon="el-icon-delete">删除</el-dropdown-item>
                                 </el-dropdown-menu>
                             </el-dropdown>

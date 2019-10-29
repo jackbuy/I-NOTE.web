@@ -1,7 +1,7 @@
 
 .user-avatar() {
     .user-avatar{
-        margin-top: 119px !important;
+        margin-top: 110px !important;
         background: @boxBgColor url('../../../../static/img/zone_banner.png') no-repeat bottom;
         padding: 10px;
         position: relative;
@@ -98,17 +98,22 @@
                             color: @fontActiveColor;
                         }
                     }
+                    &:before{
+                        content: "";
+                        position: absolute;
+                        transition: all 0.3s;
+                        left: 50%;
+                        bottom: -6px;
+                        width: 0;
+                        height: 0;
+                        background: @fontActiveColor;
+                    }
                     &.active{
                         color: @fontActiveColor;
                         &:before{
-                            position: absolute;
-                            content: "";
-                            left: 50%;
-                            bottom: -11px;
-                            width: 16px;
+                            width: 12px;
+                            margin-left: -6px;
                             height: 3px;
-                            margin-left: -8px;
-                            background: @fontActiveColor;
                         }
                     }
                 }

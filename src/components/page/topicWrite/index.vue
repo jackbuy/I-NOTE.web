@@ -138,21 +138,12 @@ export default {
             this.$refs['form'].validate((valid) => {
                 if (valid) {
                     this.loading = true;
-                    if (this.topicId) {
-                        api.topicEdit(this.topicId, { ...this.form }).then(() => {
-                            this.loading = false;
-                        }).catch(() => {
-                            this.loading = false;
-                        });
-                    } else {
-                        api.topicAdd({ ...this.form }).then((res) => {
-                            const { topicId } = res.data;
-                            this.$router.push(`/topic/${topicId}`).catch(() => {});
-                            this.loading = false;
-                        }).catch(() => {
-                            this.loading = false;
-                        });
-                    }
+                    api.topicEdit(this.topicId, { ...this.form }).then(() => {
+                        this.$router.push(`/topic/${this.topicId}`).catch(() => {});
+                        this.loading = false;
+                    }).catch(() => {
+                        this.loading = false;
+                    });
                 }
             });
         },

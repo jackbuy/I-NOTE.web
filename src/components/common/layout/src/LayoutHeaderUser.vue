@@ -6,29 +6,41 @@
         </template>
         <template v-else>
             <span
-                v-if="!isWrite"
+                :class="{'active': isActive === 'search'}"
                 class="search-btn"
                 @click="handleRoutePush('/search')">
                 <i class="icon icon-sousuo"></i>
             </span>
             <span
                 v-if="!isWrite"
-                class="write"
+                :class="{'active': isActive === 'write'}"
                 title="写文章"
                 @click="handleRoutePush('/write')">
-                <i class="icon icon-write"></i>
+                <i class="icon icon-xie1"></i>
+            </span>
+            <!-- <span
+                class="theme"
+                title="私信"
+                @click="handleTheme()">
+                <i class="icon icon-sixin"></i>
+            </span> -->
+            <span
+                :class="{'new-msg': isNewMsg, 'active': isActive === 'msg'}"
+                title="消息"
+                @click="handleRoutePush('/msg')">
+                <i class="icon icon-xiaoxi"></i>
             </span>
             <span
-                class="theme"
+                :class="{'active': !themeLight}"
+                title="夜间模式"
                 @click="handleTheme()">
-                <i v-if="themeLight" class="icon icon-baitian"></i>
-                <i v-else class="icon icon-yejian"></i>
+                <i class="icon icon-light"></i>
             </span>
             <el-dropdown
                 trigger="click"
                 @command="handleCommand">
-                <el-avatar v-if="userImg" :size="32" fit="cover" :src="userImg" class="user"></el-avatar>
-                <el-avatar v-else :size="32" class="user"><i class="icon icon-yonghu"></i></el-avatar>
+                <el-avatar v-if="userImg" :class="{'active': isActive === 'zone' || isActive === 'settings'}" :size="32" fit="cover" :src="userImg" class="user"></el-avatar>
+                <el-avatar v-else :class="{'active': isActive === 'zone' || isActive === 'settings'}" :size="32" class="user"><i class="icon icon-yonghu"></i></el-avatar>
                 <el-dropdown-menu>
                     <el-dropdown-item command="zone"><i class="icon icon-yonghu"></i> 我的主页</el-dropdown-item>
                     <el-dropdown-item divided command="settings"><i class="icon icon-settings-o"></i> 设置</el-dropdown-item>
@@ -50,7 +62,9 @@ import api from '@/utils/api';
 export default {
     name: 'LayoutHeaderUser',
     props: {
-        isWrite: Boolean
+        isActive: String,
+        isWrite: Boolean,
+        isNewMsg: Boolean
     },
     computed: {
         ...mapState({

@@ -5,7 +5,7 @@
             <layout-header-menu
                 v-if="menuDate.length > 0 && !isHiddenBreadcrumb"
                 :data="menuDate"
-                :is-new-msg="isSocketNewMsg"
+                :is-active="activePath"
                 :is-new-post="isSocketNewPost"
                 @push="handleRouterPush">
             </layout-header-menu>
@@ -13,7 +13,11 @@
                 v-if="!isHiddenBreadcrumb"
                 @search="handleSearch">
             </layout-header-search>
-            <layout-header-user :is-write="isHiddenBreadcrumb"></layout-header-user>
+            <layout-header-user
+                :is-write="isHiddenBreadcrumb"
+                :is-active="activePath"
+                :is-new-msg="isSocketNewMsg">
+        </layout-header-user>
         </layout-header>
         <layout-content>
             <keep-alive include="Home">
@@ -57,18 +61,24 @@ export default {
                     title: '发现',
                     url: '/'
                 },
+                {
+                    id: 4,
+                    name: 'tag',
+                    title: '话题',
+                    url: '/tag'
+                },
+                {
+                    id: 2,
+                    name: 'topic',
+                    title: '专题',
+                    url: '/topic'
+                }
                 // {
                 //     id: 3,
                 //     name: 'follow',
                 //     title: '关注',
-                //     url: '/'
-                // },
-                {
-                    id: 2,
-                    name: 'msg',
-                    title: '消息',
-                    url: '/msg'
-                }
+                //     url: '/follow'
+                // }
             ],
             isSocketNewMsg: false,
             isSocketNewPost: false
@@ -117,6 +127,9 @@ export default {
         },
         currentUserId() {
             return localStorage.getItem('userId');
+        },
+        activePath() {
+            return this.$route.path.split('/')[1];
         }
     },
     methods: {

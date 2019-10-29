@@ -26,7 +26,10 @@
                     @preview="handlePreView"
                     @change="handleChange"
                     @publish="handleOpenPublishModal"
-                    @cancelPublish="handleCancelPublish">
+                    @cancelPublish="handleCancelPublish"
+                    @copySend="handleSend"
+                    @shareLink="handleShareLink"
+                    @addTopic="handleAddTopic">
                 </article-list>
             </card>
         </div>
@@ -51,23 +54,6 @@
                         <span>
                             <span class="label">{{ tips }}</span>
                         </span>
-                        <!-- <el-button
-                            :disabled="isSaving"
-                            size="mini"
-                            round
-                            icon="icon icon-chakan"
-                            title="预览"
-                            @click="handlePreView">
-                        </el-button> -->
-                        <!-- <el-button
-                            v-if="form.isPublish"
-                            :disabled="isSaving || tagLoading"
-                            size="mini"
-                            round
-                            icon="icon icon-quxiaofabu"
-                            title="取消发布"
-                            @click="handleCancelPublish(form.articlePublishId, articleId)">
-                        </el-button> -->
                         <el-button
                             :disabled="isSaving"
                             :loading="tagLoading"
@@ -82,6 +68,7 @@
                 </div>
                 <quill-editor
                     v-model="form.contentHtml"
+                    :article-id="articleId"
                     placeholder="输入正文...">
                 </quill-editor>
                 <publish-modal
@@ -238,6 +225,15 @@ export default {
         window.removeEventListener('resize', this.setEditorHeight);
     },
     methods: {
+        handleSend() {
+            alert('功能开发中');
+        },
+        handleShareLink() {
+            alert('功能开发中');
+        },
+        handleAddTopic() {
+            alert('功能开发中');
+        },
         handleTab(tabName) {
             this.activeTabName = tabName;
             this.getList();
@@ -292,7 +288,7 @@ export default {
         // 新建
         handleAdd() {
             const params = {
-                title: '未命名'
+                title: '未命名文章'
             };
             this.isSaving = true;
             this.createLoading = true;
@@ -447,9 +443,9 @@ export default {
             const edit = document.getElementsByClassName('ql-container ql-snow')[0];
             const empty = document.getElementsByClassName('article-empty')[0];
             const list = document.getElementsByClassName('write-list')[0];
-            edit.style.height = window.innerHeight - 157 - 15 + 'px';
-            empty.style.height = window.innerHeight - 69 - 15 + 'px';
-            list.style.height = window.innerHeight - 114 - 39 - 15 - 37 + 'px';
+            edit.style.height = window.innerHeight - 151 - 15 + 'px';
+            empty.style.height = window.innerHeight - 63 - 15 + 'px';
+            list.style.height = window.innerHeight - 108 - 39 - 15 - 37 + 'px';
         },
         getIndex(arr, id) {
             let _index = -1;

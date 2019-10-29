@@ -5,6 +5,7 @@
                 <button
                     :disabled="loading"
                     :class="{'active': isLike}"
+                    title="点赞"
                     @click="handleLike(isLike)">
                     <i v-if="isLike" class="icon icon-dianzan"></i>
                     <i v-else class="icon icon-dianzan-o"></i>
@@ -16,6 +17,7 @@
                 <button
                     :disabled="loading"
                     :class="{'active': isCollect}"
+                    title="收藏"
                     @click="handleCollect(isCollect)">
                     <i v-if="isCollect" class="icon icon-like"></i>
                     <i v-else class="icon icon-like-o"></i>
@@ -47,7 +49,8 @@
                     <div slot="reference">
                         <button
                             :class="{'active': isTopic}"
-                            :disabled="loading">
+                            :disabled="loading"
+                            title="加入专题">
                             <i v-if="isTopic" class="icon icon-shoucang"></i>
                             <i v-else class="icon icon-shoucang-o"></i>
                         </button>

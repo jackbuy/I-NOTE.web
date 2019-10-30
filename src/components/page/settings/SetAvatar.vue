@@ -23,7 +23,7 @@
 
 <script>
 import { imgBaseUrl, apiBaseUrl } from '@/constants/url-config';
-import api from '@/utils/api';
+// import api from '@/utils/api';
 export default {
     name: '',
     props: {
@@ -36,27 +36,29 @@ export default {
             return this.prop ? `${imgBaseUrl}/${this.prop}` : '';
         },
         actionUrl() {
-            return `${apiBaseUrl}/uploadfile`;
+            return `${apiBaseUrl}/file/single/upload`;
+        },
+        dataOptions() {
+            return {
+                type: 2
+            };
         }
     },
     data() {
         return {
             headers: {
                 token: localStorage.getItem('token')
-            },
-            dataOptions: {
-                type: 1
             }
         };
     },
     methods: {
-        handleAvatarSuccess(res, file) {
-            const { filename } = res.data[0];
-            api.deleteFile({ filename: this.prop }).then(() => {
+        handleAvatarSuccess(response, file, fileList) {
+            const { code, data } = response;
+            if (code === 200) {
                 this.$emit('submit', {
-                    [this.label]: filename
+                    [this.label]: data
                 });
-            });
+            }
         },
         beforeAvatarUpload(file) {
             const isImg = file.type === 'image/jpeg' || file.type === 'image/png';

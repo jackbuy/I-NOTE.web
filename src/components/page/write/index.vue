@@ -276,6 +276,7 @@ export default {
                     isPublish,
                     articlePublishId
                 };
+
                 if (tagId && tagId._id) this.form.tagId = tagId._id;
                 this.isHas = true;
                 this.saved = false;

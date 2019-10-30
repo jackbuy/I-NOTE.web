@@ -115,13 +115,13 @@ export default {
     // 发送重置密码邮件
     sendForgetEmail: (params) => http('post', `${apiBaseUrl}/sendForgetEmail`, params),
 
-    // 删除对应文件
-    deleteFile: (params) => http('post', `${apiBaseUrl}/deleteFile`, params),
-
     // 评论
     commentQuery: (params) => http('post', `${apiBaseUrl}/comment/query`, params),
     commentSave: (params) => http('post', `${apiBaseUrl}/comment/save`, params),
     commentReply: (params) => http('post', `${apiBaseUrl}/comment/reply`, params),
-    commentDelete: (commentId, params) => http('post', `${apiBaseUrl}/comment/delete/${commentId}`, params)
+    commentDelete: (commentId, params) => http('post', `${apiBaseUrl}/comment/delete/${commentId}`, params),
+
+    // 单文件上传
+    fileSingleUpload: (params) => http('post', `${apiBaseUrl}/file/single/upload`, params)
 
 };

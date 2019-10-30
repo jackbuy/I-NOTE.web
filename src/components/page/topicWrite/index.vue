@@ -69,9 +69,6 @@ export default {
             headers: {
                 token: localStorage.getItem('token')
             },
-            dataOptions: {
-                type: 2
-            },
             rules: {
                 title: [
                     // { required: true, message: '必填' },
@@ -92,10 +89,16 @@ export default {
             return this.form.img ? `${imgBaseUrl}/${this.form.img}` : '';
         },
         actionUrl() {
-            return `${apiBaseUrl}/uploadfile`;
+            return `${apiBaseUrl}/file/single/upload`;
         },
         cardTitle() {
             return this.topicId ? '编辑专题' : '创建专题';
+        },
+        dataOptions() {
+            return {
+                type: 1,
+                targetId: this.topicId
+            };
         }
     },
     watch: {
@@ -115,12 +118,12 @@ export default {
         }
     },
     methods: {
-        handleAvatarSuccess(res, file) {
-            const { filename } = res.data[0];
-            api.deleteFile({ filename: this.form.img }).then(() => {
-                this.form.img = filename;
+        handleAvatarSuccess(response, file, fileList) {
+            const { code, data } = response;
+            if (code === 200) {
+                this.form.img = data;
                 this.handleSave();
-            });
+            }
         },
         beforeAvatarUpload(file) {
             const isImg = file.type === 'image/jpeg' || file.type === 'image/png';
@@ -139,7 +142,6 @@ export default {
                 if (valid) {
                     this.loading = true;
                     api.topicEdit(this.topicId, { ...this.form }).then(() => {
-                        this.$router.push(`/topic/${this.topicId}`).catch(() => {});
                         this.loading = false;
                     }).catch(() => {
                         this.loading = false;

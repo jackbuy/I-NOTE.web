@@ -22,7 +22,7 @@
 </template>
 
 <script>
-import { imgBaseUrl } from '@/constants/url-config';
+import { apiBaseUrl, imgBaseUrl } from '@/constants/url-config';
 import hljs from 'highlight.js';
 export default {
     name: 'Editor',
@@ -92,11 +92,11 @@ export default {
         dataOptions() {
             return {
                 type: 0,
-                articleId: this.articleId
+                targetId: this.articleId
             };
         },
         uploadUrl() {
-            return `${imgBaseUrl}/single/uploadfile`;
+            return `${apiBaseUrl}/file/single/upload`;
         }
     },
     created() {
@@ -132,11 +132,9 @@ export default {
             return isJPG && isLt2M;
         },
         editorSuccess(response, file, fileList) {
-            console.log(response);
-            console.log(file);
-            console.log(fileList);
-            if (response.code === 200) {
-                let value = `${imgBaseUrl}/${response.data}`;
+            const { code, data } = response;
+            if (code === 200) {
+                let value = `${imgBaseUrl}/${data}`;
                 this.addImgRange = this.$refs.quillEditor.quill.getSelection();
                 let index = this.addImgRange != null ? this.addImgRange.index : 0;
                 this.$refs.quillEditor.quill.insertEmbed(index, 'image', value);

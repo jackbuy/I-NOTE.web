@@ -1,0 +1,28 @@
+.topic-article-add(){
+    .topic-article-add{
+        .el-form-item--mini.el-form-item, .el-form-item--small.el-form-item{
+            margin-bottom: 0;
+        }
+        ul{
+            li{
+                padding: 10px;
+                font-size: 14px;
+                cursor: pointer;
+                transition: all 0.3s;
+                i{
+                    font-size: 14px;
+                    color: @fontColor;
+                    margin-right: 6px;
+                }
+                &.active{
+                    i{
+                        color: @fontHoverColor;
+                    }
+                }
+                &:hover{
+                    background: @formBgColor;
+                }
+            }
+        }
+    }
+}

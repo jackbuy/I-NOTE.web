@@ -4,6 +4,24 @@
         display: flex;
         &__content{
             flex: 1;
+            &-empty{
+                padding: 100px;
+                text-align: center;
+                i{
+                    font-size: 50px;
+                }
+                div{
+                    margin-bottom: 20px;
+                }
+                span{
+                    cursor: pointer;
+                    color: @fontHoverColor;
+                    padding: 0 5px;
+                    &:hover{
+                        text-decoration: underline;
+                    }
+                }
+            }
         }
         &__side{
             width: 30%;
@@ -11,7 +29,7 @@
             .fixed{
                 position: fixed;
                 width: 285px;
-                top: 69px;
+                top: 65px;
             }
             .topic{
                 &-img{

@@ -41,7 +41,7 @@
                     <el-button
                         :loading="loading"
                         type="primary"
-                        @click="handleSave">{{ loading ? '稍候...' : '保存'}}</el-button>
+                        @click="handleSave('save')">{{ loading ? '稍候...' : '保存'}}</el-button>
                 </el-form-item>
             </el-form>
         </div>
@@ -137,12 +137,15 @@ export default {
             }
             return isImg && isLt2M;
         },
-        handleSave() {
+        handleSave(type) {
             this.$refs['form'].validate((valid) => {
                 if (valid) {
                     this.loading = true;
                     api.topicEdit(this.topicId, { ...this.form }).then(() => {
                         this.loading = false;
+                        if (type === 'save') {
+                            this.$router.push(`/topic/${this.topicId}`);
+                        }
                     }).catch(() => {
                         this.loading = false;
                     });

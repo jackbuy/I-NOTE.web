@@ -5,7 +5,7 @@
         @handleClose="handleClose">
         <el-cascader
             v-model="form.tagId"
-            placeholder="选择一个标签( 可搜索 )"
+            placeholder="选择一个话题( 可搜索 )"
             :options="tagOptions"
             :props="props"
             class="width100"

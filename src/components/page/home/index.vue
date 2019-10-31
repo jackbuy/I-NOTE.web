@@ -1,15 +1,16 @@
 <template>
     <home-layout>
-        <card slot="content" :visible-header="!isNewPost" :padding="false" title="~有新动态啦~">
+        <card slot="content" :padding="false" icon="icon icon-dongtai" title="动态">
             <div slot="menu" class="menu">
                 <el-button
+                    v-if="isNewPost"
                     :loading="loading"
                     type="primary"
                     size="mini"
                     round
                     icon="el-icon-refresh"
                     @click="reload">
-                    刷新
+                    新动态来袭~
                 </el-button>
             </div>
             <infinite-scroll
@@ -24,31 +25,34 @@
                 </template>
             </infinite-scroll>
         </card>
-        <!-- <card slot="recommend" icon="el-icon-notebook-2" title="热门文章">
+        <card slot="recommend" icon="el-icon-notebook-2" title="热门文章">
             <article-recommend
                 v-for="item in recommendData"
                 :key="item._id"
                 :item="item">
             </article-recommend>
-        </card> -->
-        <card slot="tag" icon="icon icon-huati" title="热门话题">
-            <template slot="menu">
+        </card>
+        <card slot="header" icon="icon icon-huati" title="热门话题">
+            <!-- <template slot="menu">
                 <div class="menu">
                     <span class="menu-btn" @click="handleRouterPush('/tag')">更多</span>
                 </div>
-            </template>
+            </template> -->
             <tag-recommend
                 v-for="item in tagRecommendData"
                 :key="item._id"
                 :item="item">
             </tag-recommend>
         </card>
+        <card slot="tag" :visible-header="true">
+            <introduce></introduce>
+        </card>
         <card slot="topic" icon="icon icon-zhuanti" title="热门专题">
-            <template slot="menu">
+            <!-- <template slot="menu">
                 <div class="menu">
                     <span class="menu-btn" @click="handleRouterPush('/topic')">更多</span>
                 </div>
-            </template>
+            </template> -->
             <topic-recommend
                 v-for="item in topicRecommendData"
                 :key="item._id"
@@ -76,6 +80,7 @@ import { SOCKET_NEW_POST_RESET } from '@/store/mutation-types';
 import HomeLayout from './Layout';
 import InfiniteScroll from '@/components/common/infiniteScrollList';
 import ArticleItem from '@/components/common/articleItem';
+import Introduce from '@/components/common/introduce';
 import TagRecommend from '@/components/common/tagRecommend';
 import ArticleRecommend from '@/components/common/articleRecommend';
 import TopicRecommend from '@/components/common/topicRecommend';
@@ -99,7 +104,8 @@ export default {
         Operations,
         Card,
         Tab,
-        TabLabel
+        TabLabel,
+        Introduce
     },
     data() {
         return {

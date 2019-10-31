@@ -3,14 +3,13 @@
         <layout-header>
             <layout-header-logo></layout-header-logo>
             <layout-header-menu
-                v-if="menuDate.length > 0 && !isHiddenBreadcrumb"
+                v-if="menuDate.length > 0"
                 :data="menuDate"
                 :is-active="activePath"
                 :is-new-post="isSocketNewPost"
                 @push="handleRouterPush">
             </layout-header-menu>
             <layout-header-search
-                v-if="!isHiddenBreadcrumb"
                 @search="handleSearch">
             </layout-header-search>
             <layout-header-user
@@ -123,7 +122,8 @@ export default {
             if (localStorage.getItem('userId') && localStorage.getItem('token')) return true;
         },
         menuDate() {
-            return this.isLogin ? this.baseMenuDate : [];
+            // return this.isLogin ? this.baseMenuDate : [];
+            return this.baseMenuDate;
         },
         currentUserId() {
             return localStorage.getItem('userId');

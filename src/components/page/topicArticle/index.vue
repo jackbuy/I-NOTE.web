@@ -2,6 +2,7 @@
     <layout :is-has="isHas" :loading="pageLoading">
         <card slot="content" :visible-header="true" :padding="false">
             <infinite-scroll
+                v-if="listData && listData.length > 0"
                 :loading="loading"
                 :no-more="noMore"
                 :data="listData"
@@ -9,11 +10,10 @@
                 <template slot-scope="scope">
                     <article-item
                         :item="scope.row.articleId"
-                        :item-id="scope.row._id"
                         :is-action="userId === mine">
                         <template slot-scope="scope">
                             <div class="menu">
-                                <button @click="handleDelete(scope.itemId)">
+                                <button @click="handleDelete(scope.row._id)">
                                     <i class="el-icon-delete"></i>
                                 </button>
                             </div>
@@ -21,6 +21,7 @@
                     </article-item>
                 </template>
             </infinite-scroll>
+            <topic-empty v-else></topic-empty>
         </card>
         <card slot="topicDetail" icon="icon icon-zhuanti" :title="topicTitle">
             <template slot="menu">
@@ -48,6 +49,7 @@
 
 <script>
 import Layout from './Layout';
+import TopicEmpty from './TopicEmpty';
 import Card from '@/components/common/card';
 import InfiniteScroll from '@/components/common/infiniteScrollList';
 import ArticleItem from '@/components/common/articleItem';
@@ -65,7 +67,8 @@ export default {
         Card,
         InfiniteScroll,
         ArticleItem,
-        UserRecommend
+        UserRecommend,
+        TopicEmpty
     },
     data() {
         return {
@@ -136,6 +139,7 @@ export default {
             };
             this.loading = true;
             api.topicArticleQuery(params).then((res) => {
+                console.log(this.listData);
                 this.loading = false;
                 if (res.data.length > 0) {
                     this.listData.push(...res.data);
@@ -169,14 +173,14 @@ export default {
             }).catch(() => {});
         },
         // 删除专题文章
-        handleDelete(itemId) {
+        handleDelete(articleId) {
             this.confirmWarning({
                 title: '提示',
                 content: '确认删除吗？'
             }).then(() => {
-                api.topicArticleDelete(this.topicId, itemId).then(() => {
-                    let _ids = this.listData.map((item) => item._id);
-                    let index = _ids.indexOf(itemId);
+                api.topicArticleDelete(this.topicId, articleId).then(() => {
+                    let _ids = this.listData.map((item) => item.articleId._id);
+                    let index = _ids.indexOf(articleId);
                     this.listData.splice(index, 1);
                     this.showSuccessMsg('删除成功');
                 });

@@ -31,6 +31,12 @@
                     @shareLink="handleShareLink"
                     @addTopic="handleAddTopic">
                 </article-list>
+                <topic-article-add
+                    v-model="topicArticleAddModalVisible"
+                    :data="topicList"
+                    @createTopic="handleCreateTopic"
+                    @addToTopic="handleAddToTopic">
+                </topic-article-add>
             </card>
         </div>
         <div slot="content">
@@ -131,19 +137,22 @@ import Layout from './Layout';
 import PublishModal from './PublishModal';
 import ArticleList from './ArticleList';
 import QuillEditor from '@/components/common/quillEditor';
+import TopicArticleAdd from '@/components/common/topicArticleAdd';
 import Card from '@/components/common/card';
 import message from '@/mixins/message';
+import topicArticleAdd from '@/mixins/topicArticleAdd';
 import api from '@/utils/api';
 export default {
     name: 'ArticleAdd',
     components: {
         Layout,
+        TopicArticleAdd,
         QuillEditor,
         PublishModal,
         ArticleList,
         Card
     },
-    mixins: [ message ],
+    mixins: [ message, topicArticleAdd ],
     data() {
         return {
             activeTabName: 'all',
@@ -229,9 +238,6 @@ export default {
             alert('功能开发中');
         },
         handleShareLink() {
-            alert('功能开发中');
-        },
-        handleAddTopic() {
             alert('功能开发中');
         },
         handleTab(tabName) {

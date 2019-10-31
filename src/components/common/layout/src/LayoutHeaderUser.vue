@@ -12,10 +12,9 @@
                 <i class="icon icon-sousuo"></i>
             </span>
             <span
-                v-if="!isWrite"
                 :class="{'active': isActive === 'write'}"
                 title="写文章"
-                @click="handleRoutePush('/write')">
+                @click="handleRoutePush('/write', isActive === 'write')">
                 <i class="icon icon-xie1"></i>
             </span>
             <!-- <span
@@ -143,7 +142,8 @@ export default {
                 window.location.reload();
             });
         },
-        handleRoutePush(path) {
+        handleRoutePush(path, type) {
+            if (type && type === true) return;
             this.$router.push(path).catch(() => {});
         }
     }

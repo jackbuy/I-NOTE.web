@@ -74,7 +74,7 @@ export default {
     // 专题文章添加
     topicArticleAdd: (params) => http('post', `${apiBaseUrl}/topic/article/add`, params),
     // 专题文章删除
-    topicArticleDelete: (topicId, topicArticleId) => http('delete', `${apiBaseUrl}/topic/${topicId}/article/delete/${topicArticleId}`),
+    topicArticleDelete: (topicId, articleId) => http('delete', `${apiBaseUrl}/topic/${topicId}/article/delete/${articleId}`),
 
     // Tag列表
     tagQuery: () => http('post', `${apiBaseUrl}/tag/query`),

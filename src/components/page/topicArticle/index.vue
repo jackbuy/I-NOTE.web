@@ -139,7 +139,6 @@ export default {
             };
             this.loading = true;
             api.topicArticleQuery(params).then((res) => {
-                console.log(this.listData);
                 this.loading = false;
                 if (res.data.length > 0) {
                     this.listData.push(...res.data);

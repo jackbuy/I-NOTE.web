@@ -108,27 +108,22 @@
         </div>
         <!-- 预览 -->
         <card
-        slot="preView"
-        :padding="false"
-        title="预览">
-        <div slot="menu" class="menu">
-            <div
-                class="menu-btn round"
-                @click="handlePreView()">
-                编辑
+            slot="preView"
+            :padding="false"
+            title="预览">
+            <div slot="menu" class="menu">
+                <div
+                    class="menu-btn round"
+                    @click="handlePreView()">
+                    编辑
+                </div>
             </div>
-        </div>
-        <div class="article-detail">
-            <div class="article-detail__title">
-                {{ form.title }}
-            </div>
-            <div
-                v-highlightB
-                v-html="form.contentHtml"
-                class="article-detail__content">
-            </div>
-        </div>
-    </card>
+            <article-content
+                :title="form.title"
+                :content="form.contentHtml"
+                :show-info="false">
+            </article-content>
+        </card>
     </layout>
 </template>
 
@@ -139,6 +134,7 @@ import ArticleList from './ArticleList';
 import QuillEditor from '@/components/common/quillEditor';
 import TopicArticleAdd from '@/components/common/topicArticleAdd';
 import Card from '@/components/common/card';
+import articleContent from '@/components/common/articleContent';
 import message from '@/mixins/message';
 import topicArticleAdd from '@/mixins/topicArticleAdd';
 import api from '@/utils/api';
@@ -150,6 +146,7 @@ export default {
         QuillEditor,
         PublishModal,
         ArticleList,
+        articleContent,
         Card
     },
     mixins: [ message, topicArticleAdd ],

@@ -25,9 +25,7 @@ import {
     Cascader,
     MessageBox,
     Message,
-    Loading,
-    Carousel,
-    CarouselItem
+    Loading
 } from 'element-ui';
 
 Vue.use(Button);
@@ -44,8 +42,6 @@ Vue.use(Avatar);
 Vue.use(Icon);
 Vue.use(Upload);
 Vue.use(Cascader);
-Vue.use(Carousel);
-Vue.use(CarouselItem);
 Vue.use(Loading.directive);
 Vue.prototype.$confirm = MessageBox.confirm;
 Vue.prototype.$message = Message;

@@ -1,6 +1,6 @@
 <template>
     <detail-layout :is-has="isHas" :pageLoading='pageLoading'>
-        <div slot="menu" class="article-detail__menu">
+        <div slot="menu" class="detail__menu">
             <div>
                 <button
                     :disabled="loading"
@@ -11,7 +11,7 @@
                     <i v-else class="icon icon-dianzan-o"></i>
                     <span v-if="likeCount > 0">{{ likeCount }}</span>
                 </button>
-                <div class="title">赞</div>
+                <div class="title">点赞</div>
             </div>
             <div>
                 <button
@@ -19,44 +19,11 @@
                     :class="{'active': isCollect}"
                     title="收藏"
                     @click="handleCollect(isCollect)">
-                    <i v-if="isCollect" class="icon icon-like"></i>
-                    <i v-else class="icon icon-like-o"></i>
+                    <i v-if="isCollect" class="icon icon-shoucang"></i>
+                    <i v-else class="icon icon-shoucang-o"></i>
                     <span v-if="collectCount > 0">{{ collectCount }}</span>
                 </button>
                 <div class="title">收藏</div>
-            </div>
-            <div>
-                <el-popover
-                    popper-class="topic-list-box"
-                    placement="right"
-                    width="210">
-                    <div class="list">
-                        <template v-if="topicList.length > 0">
-                            <div
-                                v-for="item in topicList"
-                                :key="item._id"
-                                :class="{'active': item.isTopic}"
-                                @click="handleAddTopicList(item)">
-                                <i class="el-icon-circle-check"></i>
-                                {{ item.title }}
-                            </div>
-                        </template>
-                    </div>
-                    <div class="add" @click="handleCreateTopic">
-                        <i class="el-icon-circle-plus"></i>
-                        <span>创建专题</span>
-                    </div>
-                    <div slot="reference">
-                        <button
-                            :class="{'active': isTopic}"
-                            :disabled="loading"
-                            title="加入专题">
-                            <i v-if="isTopic" class="icon icon-shoucang"></i>
-                            <i v-else class="icon icon-shoucang-o"></i>
-                        </button>
-                        <div class="title">加入专题</div>
-                    </div>
-                </el-popover>
             </div>
         </div>
         <card slot="content" :padding="false" :title="tag">
@@ -68,34 +35,26 @@
                     编辑
                 </div>
             </div>
-            <div class="article-detail">
-                <div class="article-detail__title">
-                    {{ title }}
-                </div>
-                <div
-                    v-highlightB
-                    v-html="content"
-                    class="article-detail__content">
-                </div>
-                <div class="article-detail__info">
-                    <span>{{ time }}</span>
-                    <span>浏览 {{ viewCount }}</span>
-                </div>
-            </div>
+            <article-content
+                :title="title"
+                :content="content"
+                :viewCount="viewCount"
+                :time="time">
+            </article-content>
         </card>
         <card slot="comment" icon="icon icon-pinglun" title="评论">
             <article-comment
                 :articleId="articleId"
-                :authorId="authorId"></article-comment>
+                :authorId="authorId">
+            </article-comment>
         </card>
         <card slot="userinfo" :visible-header="true" icon="icon icon-zuozhe" title="关于作者">
             <user-info
-                v-if="userInfo"
                 :user="userInfo"
                 @doFollow="handleFollow">
             </user-info>
         </card>
-        <card slot="userinfo" icon="icon icon-wenzhang" title="Ta的热文">
+        <card slot="recommend" icon="icon icon-wenzhang" title="Ta的热文">
             <article-recommend
                 v-for="item in recommendFilterData"
                 :key="item._id"
@@ -107,12 +66,13 @@
 
 <script>
 import { mapMutations } from 'vuex';
-import { SET_DOCUMENT_TITLE, OPEN_LOGIN_MODAL } from '@/store/mutation-types';
+import { SET_DOCUMENT_TITLE } from '@/store/mutation-types';
 import DetailLayout from './Layout';
 import Card from '_c/card';
 import UserInfo from '_c/userInfo';
 import ArticleRecommend from '_c/articleRecommend';
 import ArticleComment from '_c/articleComment';
+import ArticleContent from '_c/articleContent';
 import api from '_u/api';
 import utils from '_u/utils';
 import To from '_u/to';
@@ -123,7 +83,8 @@ export default {
         Card,
         UserInfo,
         ArticleRecommend,
-        ArticleComment
+        ArticleComment,
+        ArticleContent
     },
     data() {
         return {
@@ -214,12 +175,8 @@ export default {
     },
     methods: {
         ...mapMutations({
-            setDocumentTitle: SET_DOCUMENT_TITLE,
-            openLoginModal: OPEN_LOGIN_MODAL
+            setDocumentTitle: SET_DOCUMENT_TITLE
         }),
-        handleCreateTopic() {
-            this.currentUserId ? this.handleRouterPath('/topicWrite') : this.openLoginModal();
-        },
         // 获取文章详情
         async getDetail(articleId) {
             this.pageLoading = true;
@@ -233,36 +190,8 @@ export default {
             this.detail = result.data;
             this.setDocumentTitle(result.data.title);
             await this.recommend(result.data.userId._id);
-            await this.getIsTopicList(articleId);
             this.isHas = true;
             this.pageLoading = false;
-        },
-        // 获取专题列表
-        getIsTopicList(articleId) {
-            if (this.currentUserId) { // 登录用户才发请求
-                const params = {
-                    articleId,
-                    pageSize: 10000,
-                    currentPage: 1
-                };
-                api.getTopicList(params).then((res) => {
-                    this.topicList = res.data;
-                }).catch(() => {});
-            }
-        },
-        // 加入专题
-        handleAddTopicList(row) {
-            const { _id, isTopic } = row;
-            if (!isTopic) {
-                const params = {
-                    topicId: _id,
-                    articleId: this.articleId,
-                    articleTitle: this.detail.title
-                };
-                api.topicArticleAdd(params).then(() => {
-                    this.getIsTopicList(this.articleId);
-                }).catch(() => {});
-            }
         },
         // 关注
         handleFollow(followUserId) {

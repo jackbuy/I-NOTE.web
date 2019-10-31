@@ -1,5 +1,17 @@
 <template>
     <home-layout>
+        <card slot="tag" icon="icon icon-huati" title="热门话题">
+            <!-- <template slot="menu">
+                <div class="menu">
+                    <span class="menu-btn" @click="handleRouterPush('/tag')">更多</span>
+                </div>
+            </template> -->
+            <tag-recommend
+                v-for="item in tagRecommendData"
+                :key="item._id"
+                :item="item">
+            </tag-recommend>
+        </card>
         <card slot="content" :padding="false" icon="icon icon-dongtai" title="动态">
             <div slot="menu" class="menu">
                 <el-button
@@ -25,26 +37,7 @@
                 </template>
             </infinite-scroll>
         </card>
-        <card slot="recommend" icon="el-icon-notebook-2" title="热门文章">
-            <article-recommend
-                v-for="item in recommendData"
-                :key="item._id"
-                :item="item">
-            </article-recommend>
-        </card>
-        <card slot="header" icon="icon icon-huati" title="热门话题">
-            <!-- <template slot="menu">
-                <div class="menu">
-                    <span class="menu-btn" @click="handleRouterPush('/tag')">更多</span>
-                </div>
-            </template> -->
-            <tag-recommend
-                v-for="item in tagRecommendData"
-                :key="item._id"
-                :item="item">
-            </tag-recommend>
-        </card>
-        <card slot="tag" :visible-header="true">
+        <card slot="introduce" :visible-header="true">
             <introduce></introduce>
         </card>
         <card slot="topic" icon="icon icon-zhuanti" title="热门专题">
@@ -59,7 +52,7 @@
                 :item="item">
             </topic-recommend>
         </card>
-        <card slot="author" icon="icon icon-zuozhe" title="创作榜">
+        <card slot="author" icon="icon icon-zuozhe" title="推荐作者">
             <user-recommend
                 v-for="item in authorRecommendData"
                 :key="item._id"
@@ -147,14 +140,12 @@ export default {
         this.getUserRecommend();
         this.getTopicRecommend();
         this.getOperationsCount();
-        this.getArticleRecommend();
         this.getList(this.sortType);
     },
     activated() {
         this.getTagRecommend();
         this.getUserRecommend();
         this.getTopicRecommend();
-        this.getArticleRecommend();
         this.getOperationsCount();
     },
     methods: {
@@ -166,6 +157,7 @@ export default {
             this.noMore = false;
             this.getList(this.sortType, 'reload');
         },
+        // 动态
         getList(sortType, type) {
             const params = {
                 sortType,
@@ -198,11 +190,13 @@ export default {
             this.noMore = false;
             this.getList(sortType);
         },
+        // 热门话题
         getTagRecommend() {
             api.tagRecommend().then((res) => {
                 this.tagRecommendData = res.data;
             }).catch(() => {});
         },
+        // 推荐作者
         getUserRecommend() {
             const params = {
                 currentPage: 1,
@@ -212,23 +206,16 @@ export default {
                 this.authorRecommendData = res.data;
             }).catch(() => {});
         },
+        // 推荐专题
         getTopicRecommend() {
             api.topicRecommend().then((res) => {
                 this.topicRecommendData = res.data;
             }).catch(() => {});
         },
+        // 运营状态
         getOperationsCount() {
             api.operationsCount().then((res) => {
                 this.operationsData = res.data;
-            }).catch(() => {});
-        },
-        getArticleRecommend() {
-            const params = {
-                pageSize: 4,
-                sortType: 'popular'
-            };
-            api.articlePublishQuery(params).then((res) => {
-                this.recommendData = res.data;
             }).catch(() => {});
         },
         handleRouterPush(path) {

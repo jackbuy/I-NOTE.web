@@ -1,0 +1,38 @@
+.article-content() {
+    .article-content{
+        padding: 15px 15px 0 15px;
+        margin-bottom: 15px;
+        background: @boxBgColor;
+        &__title{
+            line-height: 1.4;
+            padding: 0px 0 15px 0;
+            margin-bottom: 15px;
+            font-size: 26px;
+            color: @fontMainColor;
+            border-bottom: 1px solid @borderColor;
+        }
+        &__info{
+            padding-top: 15px;
+            border-top: 1px solid @borderColor;
+            font-size: 0;
+            span{
+                font-size: 12px;
+                padding: 0 11px;
+                .point(@fontColor);
+            }
+            i{
+                font-size: 12px !important;
+            }
+        }
+        &__content{
+            overflow: auto;
+            .detail(
+                @fontMainColor,
+                @borderColor,
+                @formBgColor,
+                @fontActiveColor,
+                @preBg
+            );
+        }
+    }
+}

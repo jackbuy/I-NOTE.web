@@ -11,28 +11,23 @@
         &-side{
             width: 30%;
             padding-left: 15px;
-            // .fixed{
-            //     position: fixed;
-            //     width: 285px;
-            //     top: 65px;
-            // }
+            .fixed{
+                position: fixed;
+                width: 285px;
+                top: 65px;
+            }
         }
-    }
-    
-    .article-detail{
-        padding: 15px 15px 0 15px;
-        margin-bottom: 15px;
-        background: @boxBgColor;
         &__menu{
             position: fixed;
             left: 50%;
             top: 50%;
-            width: 50px;
+            width: 40px;
             margin-left: -570px;
             margin-top: -100px;
             .title{
                 font-size: 12px;
-                display: none;
+                text-align: center;
+                padding-top: 7px;
             }
             button{
                 display: block;
@@ -43,7 +38,7 @@
                 background: @formBgColor;
                 border-radius: 50%;
                 border-width: 0;
-                margin-top: 20px;
+                margin-top: 30px;
                 cursor: pointer;
                 position: relative;
                 color: @fontSubColor;
@@ -56,91 +51,21 @@
                 }
                 span{
                     position: absolute;
-                    right: -10px;
-                    top: -5px;
+                    right: -12px;
+                    top: -7px;
                     line-height: 1;
                     font-size: 12px;
-                    padding: 1px 5px;
+                    padding: 2px 5px;
                     border-radius: 10px;
+                    background: @formBgColor;
                 }
                 i{
                     font-size: 16px !important;
                 }
             }
         }
-        &__title{
-            line-height: 1.4;
-            padding: 0px 0 15px 0;
-            margin-bottom: 15px;
-            font-size: 26px;
-            color: @fontMainColor;
-            border-bottom: 1px solid @borderColor;
-        }
-        &__info{
-            padding-top: 15px;
-            border-top: 1px solid @borderColor;
-            font-size: 0;
-            span{
-                font-size: 12px;
-                padding: 0 11px;
-                .point(@fontColor);
-            }
-            i{
-                font-size: 12px !important;
-            }
-        }
-        &__content{
-            overflow: auto;
-            .detail(
-                @fontMainColor,
-                @borderColor,
-                @formBgColor,
-                @fontActiveColor,
-                @preBg
-            );
-        }
     }
-    .topic-list-box{
-        padding: 0 !important;
-        .list{
-            padding: 12px;
-            height: 200px;
-            overflow: auto;
-            div{
-                cursor: pointer;
-                line-height: 1.8;
-                font-size: 12px;
-                color: @fontSubColor;
-                transition: all 0.3s;
-                .ovf-1();
-                i{
-                    color: @fontColor;
-                    padding-right: 4px;
-                }
-                &:hover{
-                    color: @fontMainColor;
-                }
-                &.active{
-                    color: @fontActiveColor;
-                    i{
-                        color: @fontActiveColor;
-                    }
-                }
-            }
-        }
-        .add{
-            line-height: 32px;
-            border-top: 1px solid @borderColor;
-            text-align: center;
-            font-size: 12px;
-            cursor: pointer;
-            transition: all 0.3s;
-            &:hover{
-                color: @fontMainColor;
-            }
-        }
-    }
-    
+
     @media (max-width: @mediaWidth) {
         .detail{
             &-content{
@@ -149,10 +74,6 @@
             &-side{
                 display: none;
             }
-        }
-    
-        .article-detail{
-            margin-bottom: 5px;
             &__menu{
                 left: 0px;
                 top: auto;

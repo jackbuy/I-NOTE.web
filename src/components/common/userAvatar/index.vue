@@ -22,7 +22,7 @@
                     v-if="userId === currentUserId"
                     class="default"
                     @click="handleSettings()">
-                    <i class="icon icon-settings"></i>
+                    <i class="icon icon-settings-o"></i>
                 </span>
             </div>
             <div class="nav">

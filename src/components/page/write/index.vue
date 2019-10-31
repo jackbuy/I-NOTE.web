@@ -373,7 +373,14 @@ export default {
             return new Promise((resolve, reject) => {
                 this.tagLoading = true;
                 api.tagQuery().then((res) => {
-                    this.tagOptions = res.data;
+                    if (res.data && res.data.length > 0) {
+                        res.data.map((item) => {
+                            item.children.map((_item) => {
+                                delete _item.children;
+                            });
+                        });
+                        this.tagOptions = res.data;
+                    }
                     this.tagLoading = false;
                     resolve();
                 }).catch(() => {

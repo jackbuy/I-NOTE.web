@@ -49,7 +49,7 @@ export default {
                 tagId: this.tagId
             },
             props: {
-                checkStrictly: true,
+                // checkStrictly: true,
                 label: 'title',
                 value: '_id'
             }

@@ -22,13 +22,16 @@
                 <span v-if="tag">{{ tag }}</span>
                 <span>{{ time }}</span>
                 <span v-if="viewCount > 0">浏览 {{ viewCount }}</span>
-                <!-- <span v-if="collectCount > 0"><i class="icon icon-like"></i> {{ collectCount }}</span> -->
+                <!-- <span v-if="collectCount > 0">收藏 {{ collectCount }}</span> -->
                 <!-- <span v-if="commentCount > 0"><i class="icon icon-pinglun"></i> {{ commentCount }}</span> -->
                 <span v-if="likeCount > 0">点赞 {{ likeCount }}</span>
             </div>
         </div>
         <div v-if="isAction" class="action">
             <slot :row="item" :item-id="itemId"></slot>
+        </div>
+        <div v-if="img && !isAction" class="img">
+            <div :style="{backgroundImage: 'url(' + img + ')'}"></div>
         </div>
     </div>
 </template>
@@ -50,7 +53,7 @@ export default {
         },
         isAction: {
             type: Boolean,
-            default: true
+            default: false
         },
         /*
         * 列表模式
@@ -105,6 +108,18 @@ export default {
             if (this.item && this.item.tagId && this.item.tagId.parentId) {
                 return `${this.item.tagId.parentId.title} · ${this.item.tagId.title}`;
             };
+        },
+        img() {
+            if (this.item && this.item.contentHtml) {
+                const imgReg = /<img.*?(?:>|\/>)/gi;
+                /* eslint-disable */
+                var srcReg = /src=[\'\"]?([^\'\"]*)[\'\"]?/i;
+                /* eslint-disable */
+                const arr = this.item.contentHtml.match(imgReg);
+                if (arr && arr.length > 0) {
+                    return arr[0].match(srcReg)[1];
+                }
+            }
         },
         viewCount() {
             if (this.item) return this.item.viewCount > 0 ? this.item.viewCount : '';

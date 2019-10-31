@@ -22,8 +22,7 @@
             </div>
         </div>
         <div v-else class="img">
-            <div :style="{backgroundImage: 'url(' + img + ')'}">
-            </div>
+            <div :style="{backgroundImage: 'url(' + img + ')'}"></div>
         </div>
     </div>
 </template>

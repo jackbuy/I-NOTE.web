@@ -1,5 +1,5 @@
 
-// highlight.js  代码高亮指令
+// highlight.js 代码高亮指令
 import Hljs from 'highlight.js';
 
 let Highlight = {};

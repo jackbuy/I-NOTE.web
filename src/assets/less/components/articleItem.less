@@ -50,6 +50,23 @@
                     }
                 }
             }
+            .img{
+                width: 115px;
+                padding-left: 15px;
+                &>div{
+                    width: 100px;
+                    height: 50px;
+                    overflow: hidden;
+                    background-color: @imgBgColor;
+                    background-position: center;
+                    background-repeat: no-repeat;
+                    background-size: cover;
+                    border-radius: 50px;
+                    display: flex;
+                    align-items:center;/*垂直居中*/
+                    justify-content: center;/*水平居中*/
+                }
+            }
             .action{
                 padding-left: 5px;
                 .menu{
@@ -75,6 +92,12 @@
                     }
                 }
             }
+        }
+    }
+
+    @media (max-width: @mediaWidth) {
+        .article__item .img{
+            display: none !important;
         }
     }
 }

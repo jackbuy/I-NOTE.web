@@ -37,8 +37,10 @@
                 </template>
             </infinite-scroll>
         </card>
-        <card slot="introduce" :visible-header="true">
-            <introduce></introduce>
+        <card slot="introduce" :visible-header="true" :padding="false" title="介绍">
+            <introduce
+                v-model="showIntroduce">
+            </introduce>
         </card>
         <card slot="topic" icon="icon icon-zhuanti" title="热门专题">
             <!-- <template slot="menu">
@@ -102,6 +104,7 @@ export default {
     },
     data() {
         return {
+            showIntroduce: true,
             isNewPost: false,
             sortType: 'newest',
             listData: [],
@@ -143,10 +146,14 @@ export default {
         this.getList(this.sortType);
     },
     activated() {
+        this.showIntroduce = true;
         this.getTagRecommend();
         this.getUserRecommend();
         this.getTopicRecommend();
         this.getOperationsCount();
+    },
+    deactivated() {
+        this.showIntroduce = false;
     },
     methods: {
         ...mapMutations({

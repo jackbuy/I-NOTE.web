@@ -4,7 +4,7 @@
             {{ title }}
         </div>
         <div
-            v-highlightB
+            v-highlightA
             v-html="content"
             class="article-content__content">
         </div>

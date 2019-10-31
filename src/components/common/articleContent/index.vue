@@ -22,7 +22,7 @@ export default {
         title: String,
         content: String,
         time: String,
-        viewCount: String,
+        viewCount: Number,
         showInfo: {
             type: Boolean,
             default: true

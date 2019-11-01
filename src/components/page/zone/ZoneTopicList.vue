@@ -1,5 +1,5 @@
 <template>
-    <card :padding="false" :visible-header="!currentUserId">
+    <card :padding="false" :visible-header="currentUserId !== userId">
         <div slot="menu" class="menu">
             <el-button
                 :loading="creating"

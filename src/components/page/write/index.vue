@@ -254,9 +254,9 @@ export default {
                 if (!this.keyword && this.activeTabName === 'all') this.pageConfig.total = res.total;
                 this.listData = res.data;
                 if (this.articleId) {
-                    this.handleRouterPush(`/write/${this.articleId}`);
+                    this.handleRouterReplace(`/write/${this.articleId}`);
                 } else if (res.data && res.data.length > 0) {
-                    this.handleRouterPush(`/write/${res.data[0]._id}`);
+                    this.handleRouterReplace(`/write/${res.data[0]._id}`);
                 }
                 this.listLoading = false;
             }).catch(() => {
@@ -348,9 +348,9 @@ export default {
                     const index = this.getIndex(this.listData, articleId);
                     this.delArr(this.listData, index);
                     if (this.listData && this.listData.length > 0) {
-                        this.handleRouterPush(`/write/${this.listData[index > 0 ? index - 1 : 0]._id}`);
+                        this.handleRouterReplace(`/write/${this.listData[index > 0 ? index - 1 : 0]._id}`);
                     } else {
-                        this.handleRouterPush('/write');
+                        this.handleRouterReplace('/write');
                     }
                     this.showSuccessMsg('删除成功！');
                     this.isSaving = false;
@@ -484,6 +484,9 @@ export default {
         },
         addArr(arr, item) {
             return arr.unshift(item);
+        },
+        handleRouterReplace(path) {
+            this.$router.replace(path).catch(() => {});
         },
         handleRouterPush(path) {
             this.$router.push(path).catch(() => {});

@@ -9,6 +9,7 @@
             <div class="content-title">
                 <span @click="handleRouterPush(topicId)">{{ title }}</span>
             </div>
+            <div v-if="description" class="content-des">{{ description }}</div>
             <div class="content-info">
                 <span>文章 {{ articleCount }}</span>
                 <span>关注 {{ followCount }}</span>
@@ -74,6 +75,9 @@ export default {
         },
         img() {
             return this.item.img ? `${imgBaseUrl}/${this.item.img}` : '';
+        },
+        description() {
+            return this.item.description;
         },
         followCount() {
             return this.item.followCount;

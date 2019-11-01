@@ -1,0 +1,26 @@
+
+.topic() {
+    .topic{
+        display: flex;
+        &__content{
+            flex: 1;
+        }
+        &__side{
+            width: 30%;
+            padding-left: 15px;
+            .fixed{
+                position: fixed;
+                width: 285px;
+                top: 65px;
+            }
+        }
+    }
+    
+    @media (max-width: @mediaWidth) {
+        .topic{
+            &__side{
+                display: none;
+            }
+        }
+    }
+}

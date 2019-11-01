@@ -1,6 +1,11 @@
 <template>
     <layout :is-has="isHas" :loading="pageLoading">
-        <card slot="content" :visible-header="true" :padding="false">
+        <card slot="content" :visible-header="userId !== mine" :padding="false">
+            <div slot="menu" class="menu">
+                <span
+                    class="menu-btn round"
+                    @click="handleAction">{{ actionTitle}}</span>
+            </div>
             <infinite-scroll
                 v-if="listData && listData.length > 0"
                 :loading="loading"
@@ -10,7 +15,7 @@
                 <template slot-scope="scope">
                     <article-item
                         :item="scope.row.articleId"
-                        :is-action="userId === mine">
+                        :is-action="isAction">
                         <template slot-scope="scope">
                             <div class="menu">
                                 <button @click="handleDelete(scope.row._id)">
@@ -21,7 +26,10 @@
                     </article-item>
                 </template>
             </infinite-scroll>
-            <topic-empty v-else></topic-empty>
+            <topic-empty
+                v-else
+                :is-mine="userId === mine">
+            </topic-empty>
         </card>
         <card slot="topicDetail" icon="icon icon-zhuanti" :title="topicTitle">
             <template slot="menu">
@@ -72,6 +80,7 @@ export default {
     },
     data() {
         return {
+            isAction: false,
             isHas: true,
             listData: [],
             topicDetail: {},
@@ -114,6 +123,9 @@ export default {
         },
         userId() {
             return this.topicDetail.userId ? this.topicDetail.userId._id : '';
+        },
+        actionTitle() {
+            return this.isAction ? '完成' : '编辑';
         }
     },
     watch: {
@@ -125,6 +137,9 @@ export default {
         }
     },
     methods: {
+        handleAction() {
+            this.isAction = !this.isAction;
+        },
         refresh(topicId) {
             this.pageConfig.currentPage = 1;
             this.listData = [];

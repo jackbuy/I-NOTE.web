@@ -1,30 +1,44 @@
 <template>
-    <page-loading :loading="loading" :data="listData" class="tag">
-        <div
-            v-for="item in listData"
-            :key="item._id">
-            <div class="tag-header">{{ item.title }}</div>
-            <div class="tag-list">
-                <tag-item
-                    v-for="child in item.children"
-                    :key="child._id"
-                    :item="child"
-                    @doFollow="handleFollow">
-                </tag-item>
+    <page-loading :loading="loading" :data="listData">
+        <layout>
+            <!-- <card slot="content" :visible-header="true" :padding="false" title="话题">
+            </card> -->
+            <div
+                slot="content"
+                v-for="item in listData"
+                :key="item._id">
+                <div class="tag-header">{{ item.title }}</div>
+                <div class="tag-list">
+                    <tag-item
+                        v-for="child in item.children"
+                        :key="child._id"
+                        :item="child"
+                        @doFollow="handleFollow">
+                    </tag-item>
+                </div>
             </div>
-        </div>
+            <card slot="introduce" :visible-header="true" :padding="false" title="介绍">
+                <introduce></introduce>
+            </card>
+        </layout>
     </page-loading>
 </template>
 
 <script>
-import PageLoading from '_c/pageLoading';
+import Layout from './Layout';
 import TagItem from './TagItem';
+import PageLoading from '_c/pageLoading';
+import Introduce from '_c/introduce';
+import Card from '_c/card';
 import api from '@/utils/api';
 export default {
     name: 'Tag',
     components: {
+        Layout,
         TagItem,
-        PageLoading
+        PageLoading,
+        Introduce,
+        Card
     },
     data() {
         return {

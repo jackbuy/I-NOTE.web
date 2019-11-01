@@ -2,6 +2,19 @@
 .tag() {
 
     .tag{
+        display: flex;
+        &__content{
+            flex: 1;
+        }
+        &__side{
+            width: 30%;
+            padding-left: 15px;
+            .fixed{
+                position: fixed;
+                width: 285px;
+                top: 65px;
+            }
+        }
         &-header{
             width: 24%;
             padding: 10px 20px 10px 5px;
@@ -13,7 +26,7 @@
             flex-wrap: wrap;
             justify-content: left;
             &-item{
-                flex: 0 0 23%;
+                flex: 0 0 31.33333333%;
                 margin: 0 1% 2% 1%;
                 padding: 30px 10px;
                 text-align: center;

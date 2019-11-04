@@ -23,6 +23,13 @@
             :user-id="userId"
             :current-user-id="currentUserId">
         </zone-topic-list>
+        <zone-comment-list
+            v-if="zoneType === 'comment'"
+            slot="content"
+            :type="zoneType"
+            :user-id="userId"
+            :current-user-id="currentUserId">
+        </zone-comment-list>
         <zone-collect-list
             v-if="zoneType === 'collect'"
             slot="content"
@@ -50,6 +57,7 @@
 <script>
 import ZoneLayout from './Layout';
 import ZoneArticleList from './ZoneArticleList';
+import ZoneCommentList from './ZoneCommentList';
 import ZoneCollectList from './ZoneCollectList';
 import ZoneTopicList from './ZoneTopicList';
 import ZoneFollowList from './ZoneFollowList';
@@ -61,6 +69,7 @@ export default {
     components: {
         ZoneLayout,
         ZoneArticleList,
+        ZoneCommentList,
         ZoneTopicList,
         ZoneCollectList,
         ZoneFollowList,
@@ -82,6 +91,10 @@ export default {
                 {
                     name: '专题',
                     type: 'topic'
+                },
+                {
+                    name: '评论',
+                    type: 'comment'
                 },
                 {
                     name: '收藏',

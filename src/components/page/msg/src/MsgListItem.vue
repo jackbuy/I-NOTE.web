@@ -71,6 +71,8 @@ export default {
             if (this.data.type === 1) return '收藏了你的文章';
             if (this.data.type === 2) return '关注了你';
             if (this.data.type === 3) return '关注了你的专题';
+            if (this.data.type === 4) return '评论了你的文章';
+            if (this.data.type === 5) return '回复了你的评论';
         },
         msgTime() {
             if (this.data.createTime) {

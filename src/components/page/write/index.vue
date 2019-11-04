@@ -15,6 +15,7 @@
                     </el-button>
                 </div>
                 <article-list
+                    ref="list"
                     v-loading="isSaving"
                     :loading="listLoading"
                     :data="listData"
@@ -27,8 +28,6 @@
                     @change="handleChange"
                     @publish="handleOpenPublishModal"
                     @cancelPublish="handleCancelPublish"
-                    @copySend="handleSend"
-                    @shareLink="handleShareLink"
                     @addTopic="handleAddTopic">
                 </article-list>
                 <topic-article-add
@@ -70,6 +69,31 @@
                             title="发布/更新发布"
                             @click="handleOpenPublishModal">
                         </el-button>
+                        <el-dropdown
+                            trigger="click"
+                            @command="handleCommand">
+                            <div class="more" title="更多"><i class="icon icon-more"></i></div>
+                            <el-dropdown-menu class="write-dropdown-menu">
+                                <el-dropdown-item
+                                    command="preview"
+                                    icon="icon icon-chakan">预览</el-dropdown-item>
+                                <el-dropdown-item
+                                    v-if="form.isPublish"
+                                    command="cancelPublish"
+                                    divided
+                                    icon="icon icon-quxiaofabu">取消发布</el-dropdown-item>
+                                <el-dropdown-item
+                                    :disabled="!form.isPublish"
+                                    command="addTopic"
+                                    divided
+                                    icon="icon icon-jia">加入专题</el-dropdown-item>
+                                <el-dropdown-item
+                                    :disabled="form.isPublish"
+                                    command="del"
+                                    divided
+                                    icon="el-icon-delete">删除</el-dropdown-item>
+                            </el-dropdown-menu>
+                        </el-dropdown>
                     </div>
                 </div>
                 <quill-editor
@@ -231,11 +255,19 @@ export default {
         window.removeEventListener('resize', this.setEditorHeight);
     },
     methods: {
-        handleSend() {
-            alert('功能开发中');
-        },
-        handleShareLink() {
-            alert('功能开发中');
+        handleCommand(command) {
+            if (command === 'preview') {
+                this.handlePreView();
+            }
+            if (command === 'cancelPublish') {
+                this.handleCancelPublish(this.articleId);
+            }
+            if (command === 'addTopic') {
+                this.handleAddTopic(this.form.articlePublishId);
+            }
+            if (command === 'del') {
+                this.handleDelete(this.articleId);
+            }
         },
         handleTab(tabName) {
             this.activeTabName = tabName;
@@ -304,6 +336,7 @@ export default {
                 };
                 this.changeCount = 0;
                 this.pageConfig.total++;
+                this.$refs.list.$refs.tab.tabClick('all'); // 重置tab
                 this.addArr(this.listData, item);
                 this.handleRouterPush(`/write/${articleId}`);
                 this.isSaving = false;

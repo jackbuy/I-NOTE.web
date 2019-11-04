@@ -41,7 +41,7 @@
                 <el-avatar v-if="userImg" :class="{'active': isActive === 'zone' || isActive === 'settings'}" :size="32" fit="cover" :src="userImg" class="user"></el-avatar>
                 <el-avatar v-else :class="{'active': isActive === 'zone' || isActive === 'settings'}" :size="32" class="user"><i class="icon icon-yonghu"></i></el-avatar>
                 <el-dropdown-menu>
-                    <el-dropdown-item command="zone"><i class="icon icon-yonghu"></i> 我的主页</el-dropdown-item>
+                    <el-dropdown-item command="zone"><i class="icon icon-yonghu"></i> 我的</el-dropdown-item>
                     <el-dropdown-item divided command="settings"><i class="icon icon-settings-o"></i> 设置</el-dropdown-item>
                     <el-dropdown-item command="loginOut"><i class="icon icon-tuichu"></i> 退出</el-dropdown-item>
                 </el-dropdown-menu>

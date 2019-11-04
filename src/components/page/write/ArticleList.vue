@@ -11,10 +11,10 @@
                 <i slot="prefix" class="el-input__icon el-icon-search"></i>
             </el-input>
         </div>
-        <tab :activeName="activeTabName" @tabClick="handleTabClick" class="mini">
+        <tab ref="tab" :activeName="activeTabName" @tabClick="handleTabClick" class="mini">
             <tab-label name="all" label="全部"></tab-label>
             <tab-label name="publish" label="已发布"></tab-label>
-            <tab-label name="draft" label="私密"></tab-label>
+            <tab-label name="draft" label="草稿"></tab-label>
         </tab>
         <page-loading :loading="loading" :data="data" class="write-list">
             <ul>
@@ -34,7 +34,6 @@
                         </div>
                         <div v-if="articleId === item._id" class="menu">
                             <el-dropdown
-                                trigger="click"
                                 @command="handleCommand">
                                 <i class="icon icon-gengduo"></i>
                                 <el-dropdown-menu class="write-dropdown-menu">
@@ -51,14 +50,6 @@
                                         :command="composeValue('cancelPublish', item._id)"
                                         divided
                                         icon="icon icon-quxiaofabu">取消发布</el-dropdown-item>
-                                    <!-- <el-dropdown-item
-                                        :command="composeValue('copySend', item._id)"
-                                        divided
-                                        icon="icon icon-forward">转发</el-dropdown-item>
-                                    <el-dropdown-item
-                                        :disabled="!item.isPublish"
-                                        :command="composeValue('shareLink', item._id)"
-                                        icon="icon icon-lianjie">分享链接</el-dropdown-item> -->
                                     <el-dropdown-item
                                         :disabled="!item.isPublish"
                                         :command="composeValue('addTopic', item.articlePublishId)"

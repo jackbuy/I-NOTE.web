@@ -1,7 +1,11 @@
 <template>
     <div class="card">
         <div v-if="!visibleHeader" class="card__title">
-            <div class="tit"><i v-if="icon" :class="icon"></i>{{ title }}</div>
+            <div class="tit">
+                <slot name="title">
+                    <i v-if="icon" :class="icon"></i>{{ title }}
+                </slot>
+            </div>
             <slot name="menu"></slot>
         </div>
         <div

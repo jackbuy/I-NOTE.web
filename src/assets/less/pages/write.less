@@ -125,19 +125,34 @@
                 }
             }
             &-menu{
+                display: flex;
+                align-items:center; /*垂直居中*/
                 text-align: right;
                 font-size: 0;
                 .label{
-                    margin-right: 10px;
+                    margin-right: 8px;
                     font-size: 12px;
                 }
                 .el-button{
                     margin: 0;
-                    margin-right: 15px;
+                    margin-right: 10px;
                     font-size: 12px;
                 }
                 i{
                     font-size: 13px;
+                }
+                .more{
+                    margin-right: 10px;
+                    padding: 7px 2px;
+                    border-radius: 5px;
+                    cursor: pointer;
+                    transition: all 0.3s;
+                    &:hover{
+                        background: @formBgColor;
+                    }
+                    i{
+                        font-size: 16px;
+                    }
                 }
             }
         }

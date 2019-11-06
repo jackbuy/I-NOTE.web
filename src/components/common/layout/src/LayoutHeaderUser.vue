@@ -61,9 +61,13 @@ import api from '@/utils/api';
 export default {
     name: 'LayoutHeaderUser',
     props: {
+        newMsg: {
+            type: Object,
+            default: () => {}
+        },
         isActive: String,
         isWrite: Boolean,
-        isNewMsg: Boolean
+        currentUserId: String
     },
     computed: {
         ...mapState({
@@ -72,6 +76,19 @@ export default {
         ...mapGetters({
             isLogin: 'isLogin'
         }),
+        isNewMsg() {
+            const { type, data } = this.newMsg;
+            if (type && data) {
+                const { toUserId, msgCount } = data;
+                if (this.currentUserId === toUserId) {
+                    if (msgCount > 0) {
+                        return true;
+                    } else {
+                        return false;
+                    }
+                }
+            }
+        },
         userName() {
             return this.userInfo.nickname ? this.userInfo.nickname : this.userInfo.username;
         },

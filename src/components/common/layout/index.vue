@@ -6,7 +6,7 @@
                 v-if="menuDate.length > 0"
                 :data="menuDate"
                 :is-active="activePath"
-                :is-new-post="isSocketNewPost"
+                :socket-post="socketPost"
                 @push="handleRouterPush">
             </layout-header-menu>
             <layout-header-search
@@ -15,7 +15,8 @@
             <layout-header-user
                 :is-write="isHiddenBreadcrumb"
                 :is-active="activePath"
-                :is-new-msg="isSocketNewMsg">
+                :current-user-id="currentUserId"
+                :newMsg="socketMsg">
         </layout-header-user>
         </layout-header>
         <layout-content>
@@ -78,9 +79,7 @@ export default {
                 //     title: '关注',
                 //     url: '/follow'
                 // }
-            ],
-            isSocketNewMsg: false,
-            isSocketNewPost: false
+            ]
         };
     },
     watch: {
@@ -91,22 +90,6 @@ export default {
                     this.hiddenBreadcrumb(true);
                 } else {
                     this.hiddenBreadcrumb(false);
-                }
-            },
-            immediate: true
-        },
-        socketMsg: {
-            handler(n, o) {
-                this.pushMsg(n);
-            },
-            immediate: true
-        },
-        socketPost: {
-            handler(n, o) {
-                if (n && n.type === 'newPost') {
-                    this.isSocketNewPost = true;
-                } else {
-                    this.isSocketNewPost = false;
                 }
             },
             immediate: true
@@ -147,21 +130,6 @@ export default {
         },
         handleRouterPush(path) {
             this.$router.push(path).catch(() => {});
-        },
-        // socket消息处理
-        pushMsg(msg) {
-            const { type, data } = msg;
-            if (!type) return;
-            if (type === 'newMsg') {
-                const { toUserId, msgCount } = data;
-                if (this.currentUserId === toUserId) {
-                    if (msgCount > 0) {
-                        this.isSocketNewMsg = true;
-                    } else {
-                        this.isSocketNewMsg = false;
-                    }
-                }
-            }
         }
     }
 };

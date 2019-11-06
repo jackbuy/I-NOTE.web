@@ -6,7 +6,7 @@
             :class="{'active': list.name === isActive}"
             @click="handleRoute(list.url)">
             {{ list.title }}
-            <span v-if="list.name === 'find' && isNewPost" class="new-msg"></span>
+            <span v-if="list.name === 'find' && socketPost.type === 'newPost'" class="new-msg"></span>
         </div>
     </div>
 </template>
@@ -19,7 +19,10 @@ export default {
             type: Array,
             default: () => ([])
         },
-        isNewPost: Boolean,
+        socketPost: {
+            type: Object,
+            default: () => {}
+        },
         isActive: String
     },
     methods: {

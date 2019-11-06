@@ -54,7 +54,7 @@
                 @doFollow="handleFollow">
             </user-info>
         </card>
-        <card slot="recommend" icon="icon icon-wenzhang" title="Ta的热文" class="fixed">
+        <card slot="recommend" icon="icon icon-wenzhang" title="Ta的热文">
             <article-recommend
                 v-for="item in recommendFilterData"
                 :key="item._id"

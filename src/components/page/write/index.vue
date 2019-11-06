@@ -492,9 +492,9 @@ export default {
             const edit = document.getElementsByClassName('ql-container ql-snow')[0];
             const empty = document.getElementsByClassName('article-empty')[0];
             const list = document.getElementsByClassName('write-list')[0];
-            edit.style.height = window.innerHeight - 151 - 15 + 'px';
-            empty.style.height = window.innerHeight - 63 - 15 + 'px';
-            list.style.height = window.innerHeight - 108 - 39 - 15 - 37 + 'px';
+            edit.style.height = window.innerHeight - 153 - 15 + 'px';
+            empty.style.height = window.innerHeight - 65 - 15 + 'px';
+            list.style.height = window.innerHeight - 109 - 39 - 38 - 15 + 'px';
         },
         getIndex(arr, id) {
             let _index = -1;

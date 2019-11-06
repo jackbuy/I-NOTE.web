@@ -82,7 +82,6 @@ Vue.use(new VueSocketio({
     options: { // Optional options
         query: {
             token: store.state.token
-            // token: localStorage.getItem('token')
         }
     }
 }));

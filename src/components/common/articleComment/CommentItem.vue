@@ -26,7 +26,7 @@
 </template>
 
 <script>
-import { mapMutations } from 'vuex';
+import { mapMutations, mapGetters } from 'vuex';
 import { OPEN_LOGIN_MODAL } from '@/store/mutation-types';
 import utils from '@/utils/utils';
 import CommentInput from './CommentInput';
@@ -44,6 +44,9 @@ export default {
         value: Boolean
     },
     computed: {
+        ...mapGetters({
+            currentUserId: 'currentUserId'
+        }),
         user() {
             if (this.item) return this.item.commentUserId;
         },
@@ -86,10 +89,6 @@ export default {
                 let start = utils.formatDate.now();
                 return `${utils.diffDate(start, end)}`;
             }
-        },
-        // 当前登录用户Id
-        currentUserId() {
-            return localStorage.getItem('userId');
         }
     },
     methods: {

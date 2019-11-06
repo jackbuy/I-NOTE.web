@@ -51,7 +51,7 @@
 </template>
 
 <script>
-import { mapMutations, mapState, mapActions } from 'vuex';
+import { mapMutations, mapState, mapActions, mapGetters } from 'vuex';
 import {
     TOGGLE_LOGIN_MODAL,
     GET_USER_INFO
@@ -69,14 +69,14 @@ export default {
         ...mapState({
             userInfo: state => state.userInfo
         }),
+        ...mapGetters({
+            isLogin: 'isLogin'
+        }),
         userName() {
             return this.userInfo.nickname ? this.userInfo.nickname : this.userInfo.username;
         },
         userId() {
             return this.userInfo._id;
-        },
-        isLogin() {
-            if (localStorage.getItem('userId') && localStorage.getItem('token')) return true;
         },
         userImg() {
             if (this.isAvatar) {

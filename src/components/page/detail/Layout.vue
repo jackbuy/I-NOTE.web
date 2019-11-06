@@ -8,10 +8,9 @@
                 <slot name="comment"></slot>
             </div>
             <div class="detail-side">
-                <div class="fixed">
-                    <slot name="userinfo"></slot>
-                    <slot name="recommend"></slot>
-                </div>
+                <slot name="userinfo"></slot>
+                <slot name="recommend"></slot>
+                <slot name="directory"></slot>
             </div>
         </div>
         <div v-else class="no-has">文章不存在</div>

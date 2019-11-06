@@ -60,11 +60,11 @@ router.beforeEach((to, from, next) => {
     NProgress.start();
     // 判断该路由是否需要登录权限
     if (to.meta.requireAuth) {
-        let token = localStorage.getItem('token');
-        if (token) {
+        if (store.getters.isLogin) {
             next();
         } else {
-            next({ path: '/403' });
+            window.location.href = '/';
+            // next({ path: '/403' });
         }
     } else {
         next();
@@ -81,12 +81,13 @@ Vue.use(new VueSocketio({
     },
     options: { // Optional options
         query: {
-            token: localStorage.getItem('token')
+            token: store.state.token
+            // token: localStorage.getItem('token')
         }
     }
 }));
 
-router.afterEach(() => {
+router.afterEach((to, from) => {
     window.scrollTo(0, 0);
     NProgress.done();
 });

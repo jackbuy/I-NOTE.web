@@ -55,6 +55,7 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
 import ZoneLayout from './Layout';
 import ZoneArticleList from './ZoneArticleList';
 import ZoneCommentList from './ZoneCommentList';
@@ -112,15 +113,14 @@ export default {
         };
     },
     computed: {
+        ...mapGetters({
+            currentUserId: 'currentUserId'
+        }),
         zoneType() {
             return this.$route.params.zoneType;
         },
         userId() {
             return this.$route.params.userId;
-        },
-        // 当前登录用户Id
-        currentUserId() {
-            return localStorage.getItem('userId') || '';
         },
         zone() {
             return `${this.type}${this.userId}`;

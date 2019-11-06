@@ -12,7 +12,7 @@
         </div>
         <div class="menu">
             <span
-                v-if="userId !== mine"
+                v-if="userId !== currentUserId"
                 :class="{'active': isFollow}"
                 @click="handleFollow(userId)">
                 <i v-if="!isFollow">关注</i>
@@ -42,6 +42,7 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
 import { imgBaseUrl } from '@/constants/url-config';
 export default {
     name: 'UserAvatar',
@@ -52,9 +53,9 @@ export default {
         }
     },
     computed: {
-        mine() {
-            return localStorage.getItem('userId');
-        },
+        ...mapGetters({
+            currentUserId: 'currentUserId'
+        }),
         userId() {
             return this.user._id;
         },

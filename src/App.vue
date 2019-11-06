@@ -11,8 +11,8 @@ export default {
             documentTitle: state => state.documentTitle
         }),
         title() {
-            const title = this.$route.meta.title ? ` - ${this.$route.meta.title}` : '';
-            return this.documentTitle ? ` - ${this.documentTitle}` : title;
+            const title = this.$route.meta.title ? `${this.$route.meta.title} - ` : '';
+            return this.documentTitle ? `${this.documentTitle} - ` : title;
         }
     },
     watch: {
@@ -25,7 +25,7 @@ export default {
     },
     methods: {
         setDocumentTitle() {
-            document.title = `I'NOTE${this.title}`;
+            document.title = `${this.title}I'NOTE`;
         }
     }
 };

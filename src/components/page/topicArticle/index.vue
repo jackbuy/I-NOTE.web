@@ -1,6 +1,6 @@
 <template>
     <layout :is-has="isHas" :loading="pageLoading">
-        <card slot="content" :visible-header="userId !== mine" :padding="false">
+        <card slot="content" :visible-header="userId !== currentUserId" :padding="false">
             <div slot="menu" class="menu">
                 <span
                     class="menu-btn round"
@@ -28,13 +28,13 @@
             </infinite-scroll>
             <topic-empty
                 v-else
-                :is-mine="userId === mine">
+                :is-mine="userId === currentUserId">
             </topic-empty>
         </card>
         <card slot="topicDetail" icon="icon icon-zhuanti" :title="topicTitle">
             <template slot="menu">
                 <div class="menu">
-                    <div v-if="userId !== mine" @click="handleFollow(topicDetail._id, topicDetail.userId._id)" class="menu-btn round">
+                    <div v-if="userId !== currentUserId" @click="handleFollow(topicDetail._id, topicDetail.userId._id)" class="menu-btn round">
                         <span v-if="!topicDetail.isFollow">关注</span>
                         <span v-else>已关注</span>
                     </div>
@@ -56,6 +56,7 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
 import Layout from './Layout';
 import TopicEmpty from './TopicEmpty';
 import Card from '@/components/common/card';
@@ -94,6 +95,9 @@ export default {
         };
     },
     computed: {
+        ...mapGetters({
+            currentUserId: 'currentUserId'
+        }),
         img() {
             return this.topicDetail.img ? `${imgBaseUrl}/${this.topicDetail.img}` : '';
         },
@@ -117,9 +121,6 @@ export default {
         },
         userInfo() {
             return this.topicDetail.userId;
-        },
-        mine() {
-            return localStorage.getItem('userId');
         },
         userId() {
             return this.topicDetail.userId ? this.topicDetail.userId._id : '';

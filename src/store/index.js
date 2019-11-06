@@ -11,6 +11,7 @@ Vue.use(Vuex);
 
 const Store = {
     state: {
+        token: localStorage.getItem('token'),
         userInfo: {}, // 已登录用户信息
         loginModal: {
             open: false,
@@ -22,7 +23,10 @@ const Store = {
         socketPost: {}, // socket新动态
         socketOnlineUser: [] // socket在线用户
     },
-    getters: {},
+    getters: {
+        isLogin: state => !!state.token, // 是否已登录
+        currentUserId: state => state.userInfo._id || '' // 当前登录用户Id
+    },
     mutations: mutations,
     actions: actions
 };

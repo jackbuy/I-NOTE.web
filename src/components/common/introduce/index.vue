@@ -33,7 +33,7 @@
 </template>
 
 <script>
-import { mapMutations } from 'vuex';
+import { mapMutations, mapGetters } from 'vuex';
 import {
     TOGGLE_LOGIN_MODAL
 } from '@/store/mutation-types';
@@ -46,9 +46,9 @@ export default {
         }
     },
     computed: {
-        isLogin() {
-            if (localStorage.getItem('userId') && localStorage.getItem('token')) return true;
-        }
+        ...mapGetters({
+            isLogin: 'isLogin'
+        })
     },
     methods: {
         ...mapMutations({

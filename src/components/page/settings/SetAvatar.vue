@@ -22,6 +22,7 @@
 </template>
 
 <script>
+import { mapState } from 'vuex';
 import { imgBaseUrl, apiBaseUrl } from '@/constants/url-config';
 // import api from '@/utils/api';
 export default {
@@ -32,6 +33,9 @@ export default {
         loading: Boolean
     },
     computed: {
+        ...mapState({
+            token: state => state.token
+        }),
         imgUrl() {
             return this.prop ? `${imgBaseUrl}/${this.prop}` : '';
         },
@@ -42,14 +46,12 @@ export default {
             return {
                 type: 2
             };
+        },
+        headers() {
+            return {
+                token: this.token
+            };
         }
-    },
-    data() {
-        return {
-            headers: {
-                token: localStorage.getItem('token')
-            }
-        };
     },
     methods: {
         handleAvatarSuccess(response, file, fileList) {

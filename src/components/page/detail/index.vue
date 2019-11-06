@@ -54,7 +54,7 @@
                 @doFollow="handleFollow">
             </user-info>
         </card>
-        <card slot="recommend" icon="icon icon-wenzhang" title="Ta的热文">
+        <card slot="recommend" icon="icon icon-wenzhang" title="Ta的热文" class="fixed">
             <article-recommend
                 v-for="item in recommendFilterData"
                 :key="item._id"
@@ -65,7 +65,7 @@
 </template>
 
 <script>
-import { mapMutations } from 'vuex';
+import { mapMutations, mapGetters } from 'vuex';
 import { SET_DOCUMENT_TITLE } from '@/store/mutation-types';
 import DetailLayout from './Layout';
 import Card from '_c/card';
@@ -97,6 +97,9 @@ export default {
         };
     },
     computed: {
+        ...mapGetters({
+            currentUserId: 'currentUserId'
+        }),
         articleId() {
             return this.$route.params.articleId;
         },
@@ -153,10 +156,6 @@ export default {
                 if (item._id !== this.articleId) arr.push(item);
             });
             return arr;
-        },
-        // 当前登录用户Id
-        currentUserId() {
-            return localStorage.getItem('userId');
         },
         aId() {
             return this.detail.articleId;

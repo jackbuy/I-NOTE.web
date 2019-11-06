@@ -3,7 +3,9 @@ import { Message } from 'element-ui';
 import qs from 'qs';
 const store = require('@/store');
 
-axios.defaults.headers.common['token'] = localStorage.getItem('token') || '';
+let token = localStorage.getItem('token') || '';
+
+axios.defaults.headers.common['token'] = token;
 axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
 
 // 请求拦截器
@@ -27,7 +29,7 @@ axios.interceptors.response.use(function(response) {
             }
             if (response.data.code === 401) {
                 localStorage.clear();
-                if (localStorage.getItem('token') && localStorage.getItem('userId')) {
+                if (token) {
                     window.location.reload();
                 } else {
                     store.default.commit('OPEN_LOGIN_MODAL');

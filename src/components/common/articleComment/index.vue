@@ -34,6 +34,7 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
 import api from '@/utils/api';
 import CommentInput from './CommentInput';
 import CommentItem from './CommentItem';
@@ -66,10 +67,9 @@ export default {
         };
     },
     computed: {
-        // 当前登录用户Id
-        currentUserId() {
-            return localStorage.getItem('userId');
-        }
+        ...mapGetters({
+            currentUserId: 'currentUserId'
+        })
     },
     watch: {
         articleId: {

@@ -52,13 +52,13 @@ export default new Router({
                     path: '/tag',
                     name: 'tag',
                     component: Tag,
-                    meta: { title: '标签' }
+                    meta: { title: '话题' }
                 },
                 {
                     path: '/tag/:tagId',
                     name: 'tagArticle',
                     component: TagArticle,
-                    meta: { title: '标签-文章' }
+                    meta: { title: '话题' }
                 },
                 {
                     path: '/topic',
@@ -70,7 +70,7 @@ export default new Router({
                     path: '/topic/:topicId',
                     name: 'topicArticle',
                     component: TopicArticle,
-                    meta: { title: '专题-文章' }
+                    meta: { title: '专题' }
                 },
                 {
                     path: '/topicWrite',

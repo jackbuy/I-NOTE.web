@@ -38,6 +38,7 @@ export default {
         toolbar: {
             type: Array,
             default: () => [
+                // [{'header': 1}, {'header': 2}],
                 [
                     'bold',
                     'italic',
@@ -63,7 +64,6 @@ export default {
                     // 'formula'
                 ],
                 ['clean']
-                // [{'header': 1}, {'header': 2}]
                 // [{'size': ['small', false, 'large', 'huge']}]
             ]
         },
@@ -71,13 +71,11 @@ export default {
             type: String,
             default: '请输入内容...'
         },
-        articleId: String
+        articleId: String,
+        token: String
     },
     data() {
         return {
-            headers: {
-                token: localStorage.getItem('token')
-            },
             editorOption: {
                 // some quill options 一些参数，为空时，加载全部参数
                 // theme: 'bubble', // 气泡模式
@@ -97,6 +95,11 @@ export default {
         },
         uploadUrl() {
             return `${apiBaseUrl}/file/single/upload`;
+        },
+        headers() {
+            return {
+                token: this.token
+            };
         }
     },
     created() {

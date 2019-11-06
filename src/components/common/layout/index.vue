@@ -29,7 +29,7 @@
 </template>
 
 <script>
-import { mapState, mapMutations } from 'vuex';
+import { mapState, mapMutations, mapGetters } from 'vuex';
 import { HIDDEN_BREADCRUMB } from '@/store/mutation-types';
 import Layout from './src/LayoutMain';
 import LayoutHeader from './src/LayoutHeader';
@@ -118,15 +118,13 @@ export default {
             socketMsg: state => state.socketMsg,
             socketPost: state => state.socketPost
         }),
-        isLogin() {
-            if (localStorage.getItem('userId') && localStorage.getItem('token')) return true;
-        },
+        ...mapGetters({
+            isLogin: 'isLogin',
+            currentUserId: 'currentUserId'
+        }),
         menuDate() {
             // return this.isLogin ? this.baseMenuDate : [];
             return this.baseMenuDate;
-        },
-        currentUserId() {
-            return localStorage.getItem('userId');
         },
         activePath() {
             return this.$route.path.split('/')[1];
@@ -153,6 +151,7 @@ export default {
         // socket消息处理
         pushMsg(msg) {
             const { type, data } = msg;
+            if (!type) return;
             if (type === 'newMsg') {
                 const { toUserId, msgCount } = data;
                 if (this.currentUserId === toUserId) {

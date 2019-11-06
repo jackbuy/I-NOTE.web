@@ -82,15 +82,14 @@ export default {
         },
         userLogin(params) {
             api.userLogin(params).then((res) => {
-                const { token, userId } = res.data;
+                const { token } = res.data;
                 localStorage.setItem('token', token);
-                localStorage.setItem('userId', userId);
                 window.location.reload();
             });
         },
         handleSendEmail() {
             api.sendEmail().then((res) => {
-                console.log(res);
+                // console.log(res);
             });
         }
     }

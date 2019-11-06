@@ -157,9 +157,8 @@ export default {
         userLogin(params) {
             this.loading = true;
             api.userLogin(params).then((res) => {
-                const { token, userId } = res.data;
+                const { token } = res.data;
                 localStorage.setItem('token', token);
-                localStorage.setItem('userId', userId);
                 window.location.reload();
             }).catch(() => {
                 this.loading = false;

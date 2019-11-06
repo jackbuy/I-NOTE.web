@@ -231,3 +231,10 @@ export default {
     }
 };
 </script>
+
+<style>
+.fixed{
+        position: sticky;
+        top: 65px;
+    }
+</style>

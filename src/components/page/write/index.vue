@@ -98,6 +98,7 @@
                 </div>
                 <quill-editor
                     v-model="form.contentHtml"
+                    :token="token"
                     :article-id="articleId"
                     placeholder="输入正文...">
                 </quill-editor>
@@ -152,6 +153,7 @@
 </template>
 
 <script>
+import { mapState } from 'vuex';
 import Layout from './Layout';
 import PublishModal from './PublishModal';
 import ArticleList from './ArticleList';
@@ -201,6 +203,9 @@ export default {
         };
     },
     computed: {
+        ...mapState({
+            token: state => state.token
+        }),
         articleId() {
             return this.$route.params.articleId;
         },

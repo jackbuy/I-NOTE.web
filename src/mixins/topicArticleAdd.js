@@ -2,6 +2,7 @@
  * 加入专题
  */
 
+import { mapGetters } from 'vuex';
 import api from '@/utils/api';
 export default {
     data() {
@@ -12,10 +13,9 @@ export default {
         };
     },
     computed: {
-        // 当前登录用户Id
-        currentUserId() {
-            return localStorage.getItem('userId');
-        }
+        ...mapGetters({
+            currentUserId: 'currentUserId'
+        })
     },
     methods: {
         handleAddTopic(articlePublishId) {

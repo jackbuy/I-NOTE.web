@@ -49,6 +49,7 @@
 </template>
 
 <script>
+import { mapState } from 'vuex';
 import Card from '@/components/common/card';
 import { imgBaseUrl, apiBaseUrl } from '@/constants/url-config';
 import api from '@/utils/api';
@@ -66,9 +67,6 @@ export default {
             },
             loading: false,
             labelWidth: '90px',
-            headers: {
-                token: localStorage.getItem('token')
-            },
             rules: {
                 title: [
                     // { required: true, message: '必填' },
@@ -82,6 +80,9 @@ export default {
         };
     },
     computed: {
+        ...mapState({
+            token: state => state.token
+        }),
         topicId() {
             return this.$route.params.topicId;
         },
@@ -98,6 +99,11 @@ export default {
             return {
                 type: 1,
                 targetId: this.topicId
+            };
+        },
+        headers() {
+            return {
+                token: this.token
             };
         }
     },

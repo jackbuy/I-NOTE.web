@@ -1,6 +1,6 @@
 <template>
     <layout :is-has="isHas" :loading="pageLoading">
-        <card slot="content" :visible-header="userId !== currentUserId" :padding="false">
+        <card slot="content" :visible-header="userId !== currentUserId || listData.length === 0" :padding="false">
             <div slot="menu" class="menu">
                 <span
                     class="menu-btn round"

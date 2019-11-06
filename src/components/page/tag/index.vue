@@ -1,7 +1,7 @@
 <template>
     <page-loading :loading="loading" :data="listData">
         <layout>
-            <!-- <div
+            <div
                 slot="content"
                 v-for="item in listData"
                 :key="item._id">
@@ -14,15 +14,15 @@
                         @doFollow="handleFollow">
                     </tag-item>
                 </div>
-            </div> -->
-            <div slot="content" class="tag-list">
+            </div>
+            <!-- <div slot="content" class="tag-list">
                 <tag-item
                     v-for="item in listData"
                     :key="item._id"
                     :item="item"
                     @doFollow="handleFollow">
                 </tag-item>
-            </div>
+            </div> -->
             <card slot="introduce" :visible-header="true" :padding="false" title="介绍">
                 <introduce></introduce>
             </card>
@@ -58,8 +58,8 @@ export default {
     methods: {
         getList() {
             this.loading = true;
-            // api.tagQuery().then((res) => {
-            api.tagChildQuery().then((res) => {
+            api.tagQuery().then((res) => {
+            // api.tagChildQuery().then((res) => {
                 this.loading = false;
                 this.listData = res.data;
             }).catch(() => {

@@ -91,7 +91,6 @@ export default {
             loading: false,
             detail: {},
             recommendData: [],
-            topicList: [],
             isHas: true,
             pageLoading: false
         };
@@ -138,17 +137,10 @@ export default {
             return this.detail.viewCount || 0;
         },
         isLike() {
-            return this.detail.isLike;
+            return this.detail.isLike || false;
         },
         isCollect() {
-            return this.detail.isCollect;
-        },
-        isTopic() {
-            let isTopic = false;
-            this.topicList.map((item) => {
-                if (item.isTopic) isTopic = true;
-            });
-            return isTopic;
+            return this.detail.isCollect || false;
         },
         recommendFilterData() {
             let arr = [];

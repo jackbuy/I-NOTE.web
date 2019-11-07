@@ -1,6 +1,6 @@
 <template>
     <modal
-        :title="title"
+        :title="modalTitle"
         :visible="isVisible"
         @handleClose="handleClose">
         <div class="topic-article-add">
@@ -14,7 +14,7 @@
                 </el-form-item>
             </el-form>
             <ul v-else>
-                <li @click="handleToggle">
+                <li class="add" @click="handleToggle">
                     <i class="el-icon-circle-plus"></i>
                     创建新专题
                 </li>
@@ -48,11 +48,13 @@ export default {
     computed: {
         isVisible() {
             return this.value;
+        },
+        modalTitle() {
+            return this.createTopic ? '创建专题' : '加入专题';
         }
     },
     data() {
         return {
-            title: '加入专题',
             createTopic: false,
             form: {}
         };

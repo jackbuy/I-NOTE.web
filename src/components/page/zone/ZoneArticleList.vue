@@ -1,5 +1,10 @@
 <template>
-    <card :padding="false" :visible-header="true">
+    <card :padding="false" :visible-header="currentUserId !== userId || listData.length === 0">
+        <div slot="menu" class="menu">
+            <span
+                class="menu-btn round"
+                @click="handleAction">{{ actionTitle}}</span>
+        </div>
         <infinite-scroll
             :loading="loading"
             :no-more="noMore"
@@ -8,7 +13,18 @@
             <template slot-scope="scope">
                 <article-item
                     :item="scope.row"
-                    type="simple">
+                    type="simple"
+                    :is-action="isAction">
+                    <template slot-scope="scope">
+                        <div class="menu">
+                            <button @click="handleRouterPush(scope.row.articleId)">
+                                <i class="el-icon-edit"></i>
+                            </button>
+                            <button @click="handleDelete(scope.row._id, scope.row.articleId)">
+                                <i class="el-icon-delete"></i>
+                            </button>
+                        </div>
+                    </template>
                 </article-item>
             </template>
         </infinite-scroll>
@@ -37,6 +53,7 @@ export default {
     },
     data() {
         return {
+            isAction: false,
             listData: [],
             pageConfig: {
                 pageSize: 15,
@@ -49,6 +66,9 @@ export default {
     computed: {
         zone() {
             return `${this.type}${this.userId}`;
+        },
+        actionTitle() {
+            return this.isAction ? '完成' : '编辑';
         }
     },
     watch: {
@@ -60,6 +80,9 @@ export default {
         }
     },
     methods: {
+        handleAction() {
+            this.isAction = !this.isAction;
+        },
         refresh() {
             this.pageConfig.currentPage = 1;
             this.listData = [];
@@ -83,6 +106,20 @@ export default {
             }).catch(() => {
                 this.loading = false;
             });
+        },
+        handleRouterPush(articleId) {
+            this.$router.push(`/write/${articleId}`);
+        },
+        handleDelete(articlePublishId, articleId) {
+            this.confirmWarning({
+                title: '提示',
+                content: '确认删除吗？'
+            }).then(() => {
+                api.articlePublishDelete(articlePublishId, articleId).then(() => {
+                    this.showSuccessMsg('删除成功！');
+                    this.refresh();
+                }).catch(() => {});
+            }).catch(() => {});
         }
     }
 };

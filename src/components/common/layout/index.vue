@@ -62,16 +62,16 @@ export default {
                     url: '/'
                 },
                 {
-                    id: 4,
-                    name: 'tag',
-                    title: '话题',
-                    url: '/tag'
-                },
-                {
                     id: 2,
                     name: 'topic',
                     title: '专题',
                     url: '/topic'
+                },
+                {
+                    id: 4,
+                    name: 'tag',
+                    title: '话题',
+                    url: '/tag'
                 }
                 // {
                 //     id: 3,

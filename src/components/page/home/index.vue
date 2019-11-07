@@ -1,11 +1,11 @@
 <template>
     <home-layout>
         <card slot="tag" icon="icon icon-huati" title="热门话题">
-            <!-- <template slot="menu">
+            <template slot="menu">
                 <div class="menu">
                     <span class="menu-btn" @click="handleRouterPush('/tag')">更多</span>
                 </div>
-            </template> -->
+            </template>
             <tag-recommend
                 v-for="item in tagRecommendData"
                 :key="item._id"
@@ -43,11 +43,11 @@
             </introduce>
         </card>
         <card slot="topic" icon="icon icon-zhuanti" title="热门专题">
-            <!-- <template slot="menu">
+            <template slot="menu">
                 <div class="menu">
                     <span class="menu-btn" @click="handleRouterPush('/topic')">更多</span>
                 </div>
-            </template> -->
+            </template>
             <topic-recommend
                 v-for="item in topicRecommendData"
                 :key="item._id"
@@ -70,7 +70,7 @@
 </template>
 
 <script>
-import { mapState, mapMutations } from 'vuex';
+import { mapState, mapMutations, mapGetters } from 'vuex';
 import { SOCKET_NEW_POST_RESET } from '@/store/mutation-types';
 import HomeLayout from './Layout';
 import InfiniteScroll from '@/components/common/infiniteScrollList';
@@ -124,6 +124,9 @@ export default {
     computed: {
         ...mapState({
             socketPost: state => state.socketPost
+        }),
+        ...mapGetters({
+            currentUserId: 'currentUserId'
         })
     },
     watch: {

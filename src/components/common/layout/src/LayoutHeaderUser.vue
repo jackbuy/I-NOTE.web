@@ -154,10 +154,7 @@ export default {
         },
         handleLogOut(path) {
             localStorage.clear();
-            this.handleRoutePush(path);
-            setTimeout(() => {
-                window.location.reload();
-            });
+            window.location.href = '/';
         },
         handleRoutePush(path, type) {
             if (type && type === true) return;

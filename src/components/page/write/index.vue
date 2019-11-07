@@ -56,7 +56,7 @@
                             placeholder="输入标题...">
                     </div>
                     <div class="write__header-menu">
-                        <span>
+                        <span v-if="tips">
                             <span class="label">{{ tips }}</span>
                         </span>
                         <el-button

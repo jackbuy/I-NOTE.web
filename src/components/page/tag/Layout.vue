@@ -3,11 +3,11 @@
         <div class="tag__content">
             <slot name="content"></slot>
         </div>
-        <div class="tag__side">
+        <!-- <div class="tag__side">
             <div class="fixed">
                 <slot name="introduce"></slot>
             </div>
-        </div>
+        </div> -->
     </div>
 </template>
 

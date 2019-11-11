@@ -2,6 +2,7 @@
     <el-carousel
         v-if="value"
         :interval="4000"
+        arrow="never"
         height="149px"
         class="introduce">
         <el-carousel-item>

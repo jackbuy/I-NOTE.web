@@ -30,6 +30,8 @@ import {
     CarouselItem
 } from 'element-ui';
 
+Vue.config.productionTip = false;
+
 Vue.use(Button);
 Vue.use(Popover);
 Vue.use(Form);
@@ -52,24 +54,8 @@ Vue.prototype.$message = Message;
 Vue.prototype.$ELEMENT = { size: 'small', zIndex: 3000 };
 
 Vue.use(Highlight);
+
 Vue.use(VueQuillEditor, {/* { default global options } */});
-
-Vue.config.productionTip = false;
-
-router.beforeEach((to, from, next) => {
-    NProgress.start();
-    // 判断该路由是否需要登录权限
-    if (to.meta.requireAuth) {
-        if (store.getters.isLogin) {
-            next();
-        } else {
-            window.location.href = '/';
-            // next({ path: '/403' });
-        }
-    } else {
-        next();
-    }
-});
 
 Vue.use(new VueSocketio({
     debug: false,
@@ -85,6 +71,21 @@ Vue.use(new VueSocketio({
         }
     }
 }));
+
+router.beforeEach((to, from, next) => {
+    NProgress.start();
+    // 判断该路由是否需要登录权限
+    if (to.meta.requireAuth) {
+        if (store.getters.isLogin) {
+            next();
+        } else {
+            window.location.href = '/';
+            // next({ path: '/403' });
+        }
+    } else {
+        next();
+    }
+});
 
 router.afterEach((to, from) => {
     window.scrollTo(0, 0);

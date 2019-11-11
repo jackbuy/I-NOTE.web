@@ -35,9 +35,11 @@ export default {
     articleEdit: (articleId, params) => http('put', `${apiBaseUrl}/article/edit/${articleId}`, params),
     // 文章删除
     articleDelete: (articleId) => http('delete', `${apiBaseUrl}/article/delete/${articleId}`),
+
     /**
      * 已发布文章
      */
+
     // 列表
     articlePublishQuery: (params) => http('post', `${apiBaseUrl}/article/publish/query`, params),
     // 发布
@@ -52,6 +54,19 @@ export default {
     articlePublishLike: (params) => http('post', `${apiBaseUrl}/article/publish/like`, params),
     // 收藏
     articlePublishCollect: (params) => http('post', `${apiBaseUrl}/article/publish/collect`, params),
+
+    /**
+     * 文章分类（文件夹）
+     */
+
+    // 列表
+    articleCateQuery: (params) => http('post', `${apiBaseUrl}/article/cate/query`, params),
+    // 新增
+    articleCateAdd: (params) => http('post', `${apiBaseUrl}/article/cate/add`, params),
+    // 编辑
+    articleCateEdit: (params, cateId) => http('put', `${apiBaseUrl}/article/cate/edit/${cateId}`, params),
+    // 删除
+    articleCateDelete: (cateId) => http('delete', `${apiBaseUrl}/article/cate/delete/${cateId}`),
 
     // 专题列表
     topicQuery: (params) => http('post', `${apiBaseUrl}/topic/query`, params),

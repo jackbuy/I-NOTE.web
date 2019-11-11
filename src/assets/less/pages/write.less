@@ -13,73 +13,155 @@
         &__side{
             width: 30%;
             padding-right: 15px;
-            // .fixed{
-            //     position: sticky;
-            //     top: 65px;
-            // }
-            .write-list{
+            .fixed{
+                position: sticky;
+                top: 65px;
+            }
+            .write-list,
+            .cate-list{
                 overflow-y: auto;
                 overflow-x: hidden;
             }
-            ul{
-                li{
-                    padding: 15px 0 15px 10px;
-                    border-bottom: 1px solid @borderColor;
-                    cursor: pointer;
-                    color: @fontMainColor;
-                    position: relative;
-                    &::before{
-                        content: "";
-                        position: absolute;
-                        left: 0;
-                        top: 0;
-                        height: 100%;
-                        width: 0px;
-                        z-index: -1;
-                        background: @formBgColor;
-                        transition: all 0.3s;
-                    }
-                    &.active{
-                        .tit{
-                            color: @fontHoverColor;
-                        }
+            .write-list{
+                ul{
+                    margin-bottom: 10px;
+                    li{
+                        padding: 15px 0 15px 10px;
+                        border-bottom: 1px solid @borderColor;
+                        cursor: pointer;
+                        color: @fontMainColor;
+                        position: relative;
                         &::before{
-                            width: 100%;
-                        }
-                    }
-                    .li{
-                        display: flex;
-                        align-items:center; /*垂直居中*/
-                        .tit{
-                            flex: 1;
-                            min-height: 14px;
-                            line-height: 1.5;
-                            vertical-align: middle;
+                            content: "";
+                            position: absolute;
+                            left: 0;
+                            top: 0;
+                            width: 0px;
+                            height: 100%;
+                            background: @formBgColor;
                             transition: all 0.3s;
-                            .ovf-1();
-                            i{
-                                color: @fontColor;
-                                font-size: 12px;
-                                opacity: 0.7;
-                                &.publish{
-                                    color: @fontMainColor;
-                                    opacity: 1;
-                                }
+                        }
+                        &.active{
+                            .tit{
+                                color: @fontHoverColor;
+                            }
+                            &::before{
+                                width: 100%;
                             }
                         }
-                        .menu{
-                            i{
+                        .li{
+                            display: flex;
+                            align-items:center; /*垂直居中*/
+                            position: relative;
+                            z-index: 2;
+                            .tit{
+                                flex: 1;
+                                min-height: 14px;
+                                line-height: 1.5;
+                                vertical-align: middle;
                                 transition: all 0.3s;
-                                color: @fontMainColor;
-                                padding: 10px;
-                                &:hover{
-                                    color: @fontHoverColor;
+                                .ovf-1();
+                                i{
+                                    color: @fontColor;
+                                    font-size: 12px;
+                                    opacity: 0.7;
+                                    &.publish{
+                                        color: @fontMainColor;
+                                        opacity: 1;
+                                    }
+                                }
+                            }
+                            .menu{
+                                i{
+                                    transition: all 0.3s;
+                                    color: @fontMainColor;
+                                    padding: 10px;
+                                    &:hover{
+                                        color: @fontHoverColor;
+                                    }
                                 }
                             }
                         }
                     }
                 }
             }
+            .cate-list{
+                &__title{
+                    padding: 8px 15px;
+                    font-size: 12px;
+                    background: @formBgColor;
+                    :first-child{
+                        border-top-width: 0;
+                    }
+                }
+                &__content{
+                    padding-left: 25px;
+                    margin-bottom: 10px;
+                    li{
+                        padding: 15px 0 15px 0px;
+                        border-bottom: 1px solid @borderColor;
+                        cursor: pointer;
+                        color: @fontMainColor;
+                        position: relative;
+                        &::before{
+                            content: "";
+                            position: absolute;
+                            left: 0;
+                            top: 50%;
+                            height: 0px;
+                            width: 0px;
+                            border-radius: 6px;
+                            background: @fontHoverColor;
+                            transition: all 0.3s;
+                        }
+                        &.active{
+                            .tit{
+                                color: @fontHoverColor !important;
+                            }
+                            i{
+                                &.cate{
+                                    color: @fontHoverColor !important;
+                                }
+                            }
+                            &::before{
+                                left: -10px;
+                                width: 4px;
+                                height: 4px;
+                                margin-top: -2px;
+                            }
+                        }
+                        .li{
+                            display: flex;
+                            align-items:center; /*垂直居中*/
+                            position: relative;
+                            z-index: 2;
+                            .tit{
+                                flex: 1;
+                                min-height: 14px;
+                                line-height: 1.5;
+                                vertical-align: middle;
+                                transition: all 0.3s;
+                                .ovf-1();
+                                i{
+                                    color: @fontMainColor;
+                                    font-size: 14px;
+                                }
+                            }
+                            .menu{
+                                i{
+                                    transition: all 0.3s;
+                                    color: @fontMainColor;
+                                    padding: 10px;
+                                    &:hover{
+                                        color: @fontHoverColor;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            
         }
         &__content{
             flex: 1;
@@ -190,6 +272,38 @@
     .publish-title{
         font-size: 12px;
         vertical-align: middle;
+    }
+
+    .change-article-cate{
+        // ul{
+        //     border: 1px solid @borderColor;
+        //     padding: 15px;
+        // }
+        li{
+            border: 1px solid @borderColor;
+            position: relative;
+            padding: 8px 10px;
+            margin-top: 10px;
+            cursor: pointer;
+            &:first-child{
+                margin-top: 0;
+            }
+            i{
+                position: absolute;
+                top: -1px;
+                right: -1px;
+                opacity: 0;
+                z-index: 1;
+                line-height: 1;
+            }
+            &.active{
+                border-color: @fontHoverColor;
+                color: @fontHoverColor;
+                i{
+                    opacity: 1;
+                }
+            }
+        }
     }
     
     @media (max-width: @mediaWidth) {

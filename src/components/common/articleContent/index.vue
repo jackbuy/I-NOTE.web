@@ -1,6 +1,6 @@
 <template>
     <div class="article-content">
-        <div class="article-content__title">
+        <div v-if="showTitle" class="article-content__title">
             {{ title }}
         </div>
         <div
@@ -24,6 +24,10 @@ export default {
         time: String,
         viewCount: Number,
         showInfo: {
+            type: Boolean,
+            default: true
+        },
+        showTitle: {
             type: Boolean,
             default: true
         }

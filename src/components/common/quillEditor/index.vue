@@ -38,11 +38,14 @@ export default {
         toolbar: {
             type: Array,
             default: () => [
-                // [{'header': 1}, {'header': 2}],
+                [
+                    {'header': 1}
+                    // {'header': 2}
+                ],
                 [
                     'bold',
                     'italic',
-                    // 'underline',
+                    'underline',
                     'strike'
                 ],
                 // [{'script': 'sub'}, {'script': 'super'}],

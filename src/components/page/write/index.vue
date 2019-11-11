@@ -1,22 +1,48 @@
 <template>
     <layout :pre-view="preView" :is-has="isHas">
-        <div slot="side">
-            <card :padding="false" :title="articleTitle" class="fixed">
+        <div slot="side" class="fixed">
+            <card :padding="false" v-loading="isSaving">
+                <div slot="title" class="tit-menu">
+                    <span v-if="cateTitle" @click="handleCate">
+                        {{ `${cateTitle} (${articleTotal})` }}
+                        <i class="icon" :class="{'icon-jiantou-down': !showCateList, 'icon-jiantou-up': showCateList}"></i>
+                    </span>
+                </div>
                 <div slot="menu" class="menu">
                     <el-button
+                        v-if="showCateList"
                         :loading="createLoading"
                         :disabled="isSaving"
                         type="primary"
                         size="mini"
                         round
-                        icon="icon icon-jia"
+                        icon="icon icon-wenjianjia-add"
+                        title="新建分组"
+                        @click="handleCateModalOpenAdd">
+                    </el-button>
+                    <el-button
+                        v-else
+                        :loading="createLoading"
+                        :disabled="isSaving"
+                        type="primary"
+                        size="mini"
+                        round
+                        icon="icon icon-wenzhang-add"
                         title="添加文章"
                         @click="handleAdd">
                     </el-button>
                 </div>
+                <cate-list
+                    v-show="showCateList"
+                    :cate-id="cateActive._id"
+                    :data="cateList"
+                    @change="handleCateChange"
+                    @edit="handleCateModalOpenEdit"
+                    @del="handleCateDel">
+                </cate-list>
                 <article-list
-                    ref="list"
-                    v-loading="isSaving"
+                    ref="articleList"
+                    v-show="!showCateList"
                     :loading="listLoading"
                     :data="listData"
                     :article-id="articleId"
@@ -36,6 +62,18 @@
                     @createTopic="handleCreateTopic"
                     @addToTopic="handleAddToTopic">
                 </topic-article-add>
+                <cate-modal
+                    v-if="showCateModal"
+                    v-model="showCateModal"
+                    :modal-type="cateModalType"
+                    :title="cateModalTitle"
+                    @save="handleCateSave"></cate-modal>
+                <cate-change-modal
+                    v-if="showCateChangeModal"
+                    v-model="showCateChangeModal"
+                    :data="cateList"
+                    :cateId="cateChangeModalCateId"
+                    @change="handleChangeCate"></cate-change-modal>
             </card>
         </div>
         <div slot="content">
@@ -82,6 +120,10 @@
                                     command="cancelPublish"
                                     divided
                                     icon="icon icon-quxiaofabu">取消发布</el-dropdown-item>
+                                <el-dropdown-item
+                                    command="changeCateOpen"
+                                    divided
+                                    icon="icon icon-genggai">更改分组</el-dropdown-item>
                                 <el-dropdown-item
                                     :disabled="!form.isPublish"
                                     command="addTopic"
@@ -135,17 +177,25 @@
         <card
             slot="preView"
             :padding="false"
-            title="预览">
+            :title="`预览 - ${form.title}`">
             <div slot="menu" class="menu">
                 <div
                     class="menu-btn round"
+                    @click="handleFullScreen()">
+                    <i class="icon" :class="{'icon-quanping-on': !fullscreen, 'icon-quanping-off': fullscreen}"></i>
+                    全屏
+                </div>
+                <div
+                    class="menu-btn round"
                     @click="handlePreView()">
+                    <i class="icon icon-back"></i>
                     编辑
                 </div>
             </div>
             <article-content
                 :title="form.title"
                 :content="form.contentHtml"
+                :show-title="false"
                 :show-info="false">
             </article-content>
         </card>
@@ -157,11 +207,15 @@ import { mapState } from 'vuex';
 import Layout from './Layout';
 import PublishModal from './PublishModal';
 import ArticleList from './ArticleList';
+import CateList from './CateList';
+import CateModal from './CateModal';
+import CateChangeModal from './CateChangeModal';
 import QuillEditor from '@/components/common/quillEditor';
 import TopicArticleAdd from '@/components/common/topicArticleAdd';
 import Card from '@/components/common/card';
 import articleContent from '@/components/common/articleContent';
 import message from '@/mixins/message';
+import fullScreen from '@/mixins/fullScreen';
 import topicArticleAdd from '@/mixins/topicArticleAdd';
 import api from '@/utils/api';
 export default {
@@ -172,13 +226,36 @@ export default {
         QuillEditor,
         PublishModal,
         ArticleList,
+        CateList,
+        CateModal,
+        CateChangeModal,
         articleContent,
         Card
     },
-    mixins: [ message, topicArticleAdd ],
+    mixins: [ message, topicArticleAdd, fullScreen ],
     data() {
         return {
             activeTabName: 'all',
+            showCateList: false,
+            showCateModal: false,
+            showCateChangeModal: false,
+            cateChangeModalCateId: '',
+            cateList: [],
+            cateListDefault: [
+                {
+                    _id: 'all',
+                    type: 'default',
+                    title: '全部'
+                },
+                {
+                    _id: 'no-cate',
+                    type: 'default',
+                    title: '未分组'
+                }
+            ], // 分组列表
+            cateActive: {},
+            cateModalType: '',
+            cateModalTitle: '',
             keyword: '',
             showPublishModal: false,
             preView: false,
@@ -219,8 +296,8 @@ export default {
         articleTotal() {
             return this.pageConfig.total || 0;
         },
-        articleTitle() {
-            return `我的文章 ( ${this.articleTotal} )`;
+        cateTitle() {
+            return this.cateActive.title;
         }
     },
     watch: {
@@ -250,16 +327,87 @@ export default {
         }
     },
     created() {
-        this.getList();
+        this.getCateList();
     },
     mounted() {
-        window.addEventListener('resize', this.setEditorHeight);
         this.setEditorHeight();
+        window.addEventListener('resize', this.setEditorHeight);
     },
     destroyed() {
         window.removeEventListener('resize', this.setEditorHeight);
     },
     methods: {
+        handleToggleScreen() {
+            this.fullScreen = !this.fullScreen;
+        },
+        // 分组列表
+        getCateList() {
+            api.articleCateQuery().then((res) => {
+                let arr = [];
+                arr.push(
+                    ...this.cateListDefault,
+                    ...res.data
+                );
+                this.cateList = arr;
+                this.cateActive = this.cateList[0];
+                this.getList();
+            });
+        },
+        handleCateModalOpenAdd() {
+            this.cateModalType = 'add';
+            this.showCateModal = true;
+            this.cateModalTitle = '';
+        },
+        handleCateModalOpenEdit(obj) {
+            const { title } = obj;
+            this.cateModalType = 'edit';
+            this.showCateModal = true;
+            this.cateModalTitle = title;
+        },
+        // 分组保存（新增编辑）
+        handleCateSave(obj) {
+            const { title, type } = obj;
+            const params = { title };
+            if (type === 'add') {
+                api.articleCateAdd(params).then((res) => {
+                    this.getCateList();
+                });
+            }
+            if (type === 'edit') {
+                const { _id } = this.cateActive;
+                api.articleCateEdit(params, _id).then((res) => {
+                    this.getCateList();
+                });
+            }
+        },
+        // 分组删除
+        handleCateDel() {},
+        // 分组切换
+        handleCateChange(cate) {
+            this.handleCate();
+            this.cateActive = cate;
+            this.resetTab();
+            this.getList();
+        },
+        // 分组展开/收起
+        handleCate() {
+            this.showCateList = !this.showCateList;
+        },
+        handleChangeCateOpen() {
+            this.showCateChangeModal = true;
+            this.cateChangeModalCateId = this.form.articleCateId;
+        },
+        // 分组更改
+        handleChangeCate(cateId) {
+            const params = {
+                articleCateId: cateId
+            };
+            api.articleEdit(this.articleId, params).then(() => {
+                this.form.articleCateId = cateId;
+                this.getList();
+                this.showSuccessMsg('更改分组成功！');
+            });
+        },
         handleCommand(command) {
             if (command === 'preview') {
                 this.handlePreView();
@@ -269,6 +417,9 @@ export default {
             }
             if (command === 'addTopic') {
                 this.handleAddTopic(this.form.articlePublishId);
+            }
+            if (command === 'changeCateOpen') {
+                this.handleChangeCateOpen();
             }
             if (command === 'del') {
                 this.handleDelete(this.articleId);
@@ -280,7 +431,9 @@ export default {
         },
         // 文章列表
         getList() {
+            const { _id } = this.cateActive;
             const params = {
+                articleCateId: _id,
                 type: this.activeTabName,
                 pageSize: this.pageConfig.pageSize,
                 currentPage: this.pageConfig.currentPage++
@@ -309,12 +462,13 @@ export default {
             this.isSaving = true;
             this.changeCount = 0;
             api.articleDetail(articleId).then((res) => {
-                const { contentHtml, tagId, isPublish, title, articlePublishId } = res.data;
+                const { contentHtml, tagId, isPublish, title, articlePublishId, articleCateId } = res.data;
                 this.form = {
                     title,
                     contentHtml,
                     isPublish,
-                    articlePublishId
+                    articlePublishId,
+                    articleCateId
                 };
 
                 if (tagId && tagId._id) this.form.tagId = tagId._id;
@@ -326,11 +480,17 @@ export default {
                 this.isSaving = false;
             });
         },
+        // 重置tab
+        resetTab() {
+            this.$refs.articleList.$refs.tab.tabClick('all');
+        },
         // 新建
         handleAdd() {
+            const { _id, type } = this.cateActive;
             const params = {
                 title: '未命名文章'
             };
+            if (type !== 'default') params.articleCateId = _id;
             this.isSaving = true;
             this.createLoading = true;
             api.articleAdd(params).then((res) => {
@@ -341,7 +501,7 @@ export default {
                 };
                 this.changeCount = 0;
                 this.pageConfig.total++;
-                this.$refs.list.$refs.tab.tabClick('all'); // 重置tab
+                this.resetTab();
                 this.addArr(this.listData, item);
                 this.handleRouterPush(`/write/${articleId}`);
                 this.isSaving = false;
@@ -485,16 +645,19 @@ export default {
             this.preView = !this.preView;
             if (!this.preView) {
                 this.setEditorHeight();
+                this.handleFullScreen();
             }
         },
         // 设置编辑器高度
         setEditorHeight() {
             const edit = document.getElementsByClassName('ql-container ql-snow')[0];
             const empty = document.getElementsByClassName('article-empty')[0];
-            const list = document.getElementsByClassName('write-list')[0];
+            const article = document.getElementsByClassName('write-list')[0];
+            const cate = document.getElementsByClassName('cate-list')[0];
             edit.style.height = window.innerHeight - 153 - 15 + 'px';
             empty.style.height = window.innerHeight - 65 - 15 + 'px';
-            list.style.height = window.innerHeight - 109 - 39 - 38 - 15 + 'px';
+            article.style.height = window.innerHeight - 109 - 39 - 38 - 15 + 'px';
+            cate.style.height = window.innerHeight - 110 - 15 + 'px';
         },
         getIndex(arr, id) {
             let _index = -1;

@@ -17,7 +17,7 @@ const Store = {
             open: false,
             type: ''
         },
-        isHiddenBreadcrumb: false, // 是否隐藏面包屑
+        isHiddenHeader: false, // 是否隐藏头部
         documentTitle: '',
         socketMsg: {}, // socket消息体
         socketPost: {}, // socket新动态

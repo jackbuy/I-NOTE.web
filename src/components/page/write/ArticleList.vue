@@ -32,7 +32,7 @@
                             <i v-else class="icon icon-wenzhang"></i>
                             {{ item.title }}
                         </div>
-                        <div v-if="articleId === item._id" class="menu">
+                        <!-- <div v-if="articleId === item._id" class="menu">
                             <el-dropdown
                                 @command="handleCommand">
                                 <i class="icon icon-gengduo"></i>
@@ -62,7 +62,7 @@
                                         icon="el-icon-delete">删除</el-dropdown-item>
                                 </el-dropdown-menu>
                             </el-dropdown>
-                        </div>
+                        </div> -->
                     </div>
                 </li>
             </ul>

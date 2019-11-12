@@ -1,6 +1,6 @@
 <template>
     <layout>
-        <layout-header>
+        <layout-header v-if="!isHiddenHeader">
             <layout-header-logo></layout-header-logo>
             <layout-header-menu
                 v-if="menuDate.length > 0"
@@ -13,13 +13,12 @@
                 @search="handleSearch">
             </layout-header-search>
             <layout-header-user
-                :is-write="isHiddenBreadcrumb"
                 :is-active="activePath"
                 :current-user-id="currentUserId"
                 :newMsg="socketMsg">
         </layout-header-user>
         </layout-header>
-        <layout-content>
+        <layout-content :class="{'header-hidden': isHiddenHeader, 'header-fixed': !isHiddenHeader}">
             <keep-alive include="Home">
                 <router-view></router-view>
             </keep-alive>
@@ -30,8 +29,7 @@
 </template>
 
 <script>
-import { mapState, mapMutations, mapGetters } from 'vuex';
-import { HIDDEN_BREADCRUMB } from '@/store/mutation-types';
+import { mapState, mapGetters } from 'vuex';
 import Layout from './src/LayoutMain';
 import LayoutHeader from './src/LayoutHeader';
 import LayoutHeaderLogo from './src/LayoutHeaderLogo';
@@ -82,22 +80,9 @@ export default {
             ]
         };
     },
-    watch: {
-        $route: {
-            handler(to, from) {
-                // 创建文章、专题时，隐藏面包屑
-                if (to.path.split('/')[1] === 'write') {
-                    this.hiddenBreadcrumb(true);
-                } else {
-                    this.hiddenBreadcrumb(false);
-                }
-            },
-            immediate: true
-        }
-    },
     computed: {
         ...mapState({
-            isHiddenBreadcrumb: state => state.isHiddenBreadcrumb,
+            isHiddenHeader: state => state.isHiddenHeader,
             socketMsg: state => state.socketMsg,
             socketPost: state => state.socketPost
         }),
@@ -114,9 +99,6 @@ export default {
         }
     },
     methods: {
-        ...mapMutations({
-            hiddenBreadcrumb: HIDDEN_BREADCRUMB
-        }),
         handleSearch(keyword) {
             if (keyword.length > 0) {
                 const path = {

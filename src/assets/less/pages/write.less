@@ -41,12 +41,25 @@
                             background: @formBgColor;
                             transition: all 0.3s;
                         }
+                        &::after{
+                            content: "";
+                            position: absolute;
+                            left: 0;
+                            top: 0;
+                            width: 0;
+                            height: 100%;
+                            background: @fontHoverColor;
+                            transition: all 0.4s;
+                        }
                         &.active{
                             .tit{
                                 color: @fontHoverColor;
                             }
                             &::before{
                                 width: 100%;
+                            }
+                            &::after{
+                                width: 3px;
                             }
                         }
                         .li{
@@ -290,8 +303,8 @@
             }
             i{
                 position: absolute;
-                top: -1px;
-                right: -1px;
+                top: 0;
+                right: 0;
                 opacity: 0;
                 z-index: 1;
                 line-height: 1;

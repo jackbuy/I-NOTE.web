@@ -1,5 +1,5 @@
 <template>
-    <div class="layout__content header-fixed">
+    <div class="layout__content">
         <slot></slot>
     </div>
 </template>

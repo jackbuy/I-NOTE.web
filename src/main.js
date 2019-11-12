@@ -6,6 +6,7 @@ import router from './router';
 import store from './store';
 import App from './App';
 import Highlight from './directive/highlight';
+import VueClipboard from 'vue-clipboard2';
 import { apiBaseUrl } from '@/constants/url-config';
 
 import {
@@ -52,6 +53,8 @@ Vue.use(Loading.directive);
 Vue.prototype.$confirm = MessageBox.confirm;
 Vue.prototype.$message = Message;
 Vue.prototype.$ELEMENT = { size: 'small', zIndex: 3000 };
+
+Vue.use(VueClipboard);
 
 Vue.use(Highlight);
 

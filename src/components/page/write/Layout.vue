@@ -1,13 +1,13 @@
 <template>
     <page-loading :loading="pageLoading">
         <div v-if="isHas">
-            <div v-show="!preView" class="write">
+            <div v-show="!presentation" class="write">
                 <div v-show="!toggle" class="write__side">
                     <slot name="side"></slot>
                 </div>
                 <div
                     class="write__content"
-                    :class="{'auto': preView}">
+                    :class="{'auto': presentation}">
                     <slot name="content"></slot>
                     <div
                         :class="{'active': toggle}"
@@ -19,8 +19,8 @@
                     </div>
                 </div>
             </div>
-            <div v-show="preView" class="pre-view">
-                <slot name="preView"></slot>
+            <div v-if="presentation" class="pre-view">
+                <slot name="presentation"></slot>
             </div>
         </div>
         <div v-else class="no-has">文章不存在</div>
@@ -32,7 +32,7 @@ import PageLoading from '_c/pageLoading';
 export default {
     name: 'Layout',
     props: {
-        preView: Boolean,
+        presentation: Boolean,
         isHas: Boolean,
         pageLoading: Boolean
     },

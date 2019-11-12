@@ -15,7 +15,7 @@
                 :class="{'active': isActive === 'write'}"
                 title="写文章"
                 @click="handleRoutePush('/write', isActive === 'write')">
-                <i class="icon icon-xie1"></i>
+                <i class="icon icon-write"></i>
             </span>
             <!-- <span
                 class="theme"
@@ -66,7 +66,6 @@ export default {
             default: () => {}
         },
         isActive: String,
-        isWrite: Boolean,
         currentUserId: String
     },
     computed: {

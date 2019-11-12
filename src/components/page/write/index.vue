@@ -1,89 +1,87 @@
 <template>
-    <layout :pre-view="preView" :is-has="isHas">
-        <div slot="side" class="fixed">
-            <card :padding="false" v-loading="isSaving">
-                <div slot="title" class="tit-menu">
-                    <span v-if="cateTitle" @click="handleCate">
-                        {{ `${cateTitle} (${articleTotal})` }}
-                        <i class="icon" :class="{'icon-jiantou-down': !showCateList, 'icon-jiantou-up': showCateList}"></i>
-                    </span>
-                </div>
-                <div slot="menu" class="menu">
-                    <el-button
-                        v-if="showCateList"
-                        :loading="createLoading"
-                        :disabled="isSaving"
-                        type="primary"
-                        size="mini"
-                        round
-                        icon="icon icon-wenjianjia-add"
-                        title="新建分组"
-                        @click="handleCateModalOpenAdd">
-                    </el-button>
-                    <el-button
-                        v-else
-                        :loading="createLoading"
-                        :disabled="isSaving"
-                        type="primary"
-                        size="mini"
-                        round
-                        icon="icon icon-wenzhang-add"
-                        title="添加文章"
-                        @click="handleAdd">
-                    </el-button>
-                </div>
-                <cate-list
-                    v-show="showCateList"
-                    :cate-id="cateActive._id"
-                    :data="cateList"
-                    @change="handleCateChange"
-                    @edit="handleCateModalOpenEdit"
-                    @del="handleCateDel">
-                </cate-list>
-                <article-list
-                    ref="articleList"
-                    v-show="!showCateList"
-                    :loading="listLoading"
-                    :data="listData"
-                    :article-id="articleId"
-                    :active-tab-name="activeTabName"
-                    @tab="handleTab"
-                    @search="handleSearchList"
-                    @del="handleDelete"
-                    @preview="handlePreView"
-                    @change="handleChange"
-                    @publish="handleOpenPublishModal"
-                    @cancelPublish="handleCancelPublish"
-                    @addTopic="handleAddTopic">
-                </article-list>
-                <topic-article-add
-                    v-model="topicArticleAddModalVisible"
-                    :data="topicList"
-                    @createTopic="handleCreateTopic"
-                    @addToTopic="handleAddToTopic">
-                </topic-article-add>
-                <cate-modal
-                    v-if="showCateModal"
-                    v-model="showCateModal"
-                    :modal-type="cateModalType"
-                    :title="cateModalTitle"
-                    @save="handleCateSave"></cate-modal>
-                <cate-change-modal
-                    v-if="showCateChangeModal"
-                    v-model="showCateChangeModal"
-                    :data="cateList"
-                    :cateId="cateChangeModalCateId"
-                    @change="handleChangeCate"></cate-change-modal>
-            </card>
-        </div>
-        <div slot="content">
-            <!-- 编辑 -->
-            <card
-                v-show="articleTotal > 0"
-                v-loading="isSaving"
-                :padding="false"
-                :visible-header="true"
-                class="mb0">
+    <layout :presentation="presentation" :is-has="isHas">
+        <!-- side -->
+        <card
+            v-loading="isSaving"
+            slot="side"
+            :padding="false">
+
+            <div slot="title" class="tit-menu">
+                <span v-if="cateTitle" @click="handleCate">
+                    {{ `${cateTitle} (${articleTotal})` }}
+                    <i class="icon" :class="{'icon-jiantou-down': !showCateList, 'icon-jiantou-up': showCateList}"></i>
+                </span>
+            </div>
+
+            <div slot="menu" class="menu">
+                <el-button
+                    :loading="createLoading"
+                    :disabled="isSaving"
+                    type="primary"
+                    size="mini"
+                    round
+                    :icon="showCateList ? 'icon icon-wenjianjia-add' : 'icon icon-wenzhang-add'"
+                    :title="showCateList ? '新建分组' : '添加文章'"
+                    @click="showCateList ? handleCateModalOpenAdd() : handleAdd()">
+                </el-button>
+            </div>
+
+            <cate-list
+                v-show="showCateList"
+                :cate-id="cateActive._id"
+                :data="cateList"
+                @change="handleCateChange"
+                @edit="handleCateModalOpenEdit"
+                @del="handleCateDel">
+            </cate-list>
+
+            <article-list
+                ref="articleList"
+                v-show="!showCateList"
+                :loading="listLoading"
+                :data="listData"
+                :article-id="articleId"
+                :active-tab-name="activeTabName"
+                @tab="handleTab"
+                @search="handleSearchList"
+                @del="handleDelete"
+                @change="handleChange"
+                @publish="handleOpenPublishModal"
+                @cancelPublish="handleCancelPublish"
+                @addTopic="handleAddTopic">
+            </article-list>
+
+            <topic-article-add-modal
+                v-model="topicArticleAddModalVisible"
+                :data="topicList"
+                @createTopic="handleCreateTopic"
+                @addToTopic="handleAddToTopic">
+            </topic-article-add-modal>
+
+            <cate-add-edit-modal
+                v-if="showCateModal"
+                v-model="showCateModal"
+                :modal-type="cateModalType"
+                :title="cateModalTitle"
+                @save="handleCateSave">
+            </cate-add-edit-modal>
+
+            <cate-change-modal
+                v-if="showCateChangeModal"
+                v-model="showCateChangeModal"
+                :data="cateList"
+                :cateId="cateChangeModalCateId"
+                @change="handleChangeCate">
+            </cate-change-modal>
+        </card>
+        <!-- content -->
+        <card
+            slot="content"
+            v-loading="isSaving"
+            :padding="false"
+            :visible-header="true">
+
+            <div v-show="articleTotal > 0">
                 <div
                     v-if="articleId"
                     class="write__header">
@@ -113,13 +111,8 @@
                             <div class="more" title="更多"><i class="icon icon-more"></i></div>
                             <el-dropdown-menu class="write-dropdown-menu">
                                 <el-dropdown-item
-                                    command="preview"
-                                    icon="icon icon-chakan">预览</el-dropdown-item>
-                                <el-dropdown-item
-                                    v-if="form.isPublish"
-                                    command="cancelPublish"
-                                    divided
-                                    icon="icon icon-quxiaofabu">取消发布</el-dropdown-item>
+                                    command="presentation"
+                                    icon="icon icon-document-presentation">文档演示</el-dropdown-item>
                                 <el-dropdown-item
                                     command="changeCateOpen"
                                     divided
@@ -130,6 +123,16 @@
                                     divided
                                     icon="icon icon-jia">加入专题</el-dropdown-item>
                                 <el-dropdown-item
+                                    v-if="form.isPublish"
+                                    command="cancelPublish"
+                                    divided
+                                    icon="icon icon-quxiaofabu">取消发布</el-dropdown-item>
+                                <el-dropdown-item
+                                    v-if="form.isPublish"
+                                    divided
+                                    command="copyLink"
+                                    icon="icon icon-lianjie">复制链接</el-dropdown-item>
+                                <el-dropdown-item
                                     :disabled="form.isPublish"
                                     command="del"
                                     divided
@@ -138,12 +141,14 @@
                         </el-dropdown>
                     </div>
                 </div>
+
                 <quill-editor
                     v-model="form.contentHtml"
                     :token="token"
                     :article-id="articleId"
                     placeholder="输入正文...">
                 </quill-editor>
+
                 <publish-modal
                     v-if="showPublishModal"
                     v-model="showPublishModal"
@@ -151,45 +156,27 @@
                     :tag-options="tagOptions"
                     @handlePublish="handlePublish">
                 </publish-modal>
-            </card>
-            <card
+            </div>
+
+            <article-empty
                 v-show="articleTotal === 0"
-                :padding="false"
-                :visible-header="true"
-                class="mb0 article-empty">
-                <div>
-                    <div class="i"><i class="icon icon-wenzhang"></i></div>
-                    <div class="tit">我的文章，空空如也~</div>
-                    <div>
-                        <el-button
-                            :loading="createLoading"
-                            :disabled="isSaving"
-                            size="mini"
-                            icon="icon icon-jia"
-                            @click="handleAdd">
-                            添加
-                        </el-button>
-                    </div>
-                </div>
-            </card>
-        </div>
-        <!-- 预览 -->
+                :create-loading="createLoading"
+                :is-saving="isSaving"
+                @add="handleAdd">
+            </article-empty>
+
+        </card>
+        <!-- 演示 -->
         <card
-            slot="preView"
+            slot="presentation"
             :padding="false"
-            :title="`预览 - ${form.title}`">
+            :title="`演示 - ${form.title}`">
             <div slot="menu" class="menu">
                 <div
                     class="menu-btn round"
-                    @click="handleFullScreen()">
-                    <i class="icon" :class="{'icon-quanping-on': !fullscreen, 'icon-quanping-off': fullscreen}"></i>
-                    全屏
-                </div>
-                <div
-                    class="menu-btn round"
-                    @click="handlePreView()">
+                    @click="handlePresentation()">
                     <i class="icon icon-back"></i>
-                    编辑
+                    返回
                 </div>
             </div>
             <article-content
@@ -203,15 +190,17 @@
 </template>
 
 <script>
-import { mapState } from 'vuex';
+import { mapState, mapMutations } from 'vuex';
+import { IS_HIDDEN_HEADER } from '@/store/mutation-types';
 import Layout from './Layout';
 import PublishModal from './PublishModal';
 import ArticleList from './ArticleList';
+import ArticleEmpty from './ArticleEmpty';
 import CateList from './CateList';
-import CateModal from './CateModal';
+import CateAddEditModal from './CateAddEditModal';
 import CateChangeModal from './CateChangeModal';
 import QuillEditor from '@/components/common/quillEditor';
-import TopicArticleAdd from '@/components/common/topicArticleAdd';
+import TopicArticleAddModal from '@/components/common/topicArticleAddModal';
 import Card from '@/components/common/card';
 import articleContent from '@/components/common/articleContent';
 import message from '@/mixins/message';
@@ -222,12 +211,13 @@ export default {
     name: 'ArticleAdd',
     components: {
         Layout,
-        TopicArticleAdd,
+        TopicArticleAddModal,
         QuillEditor,
         PublishModal,
         ArticleList,
         CateList,
-        CateModal,
+        ArticleEmpty,
+        CateAddEditModal,
         CateChangeModal,
         articleContent,
         Card
@@ -258,7 +248,7 @@ export default {
             cateModalTitle: '',
             keyword: '',
             showPublishModal: false,
-            preView: false,
+            presentation: false, // 文档演示
             form: {},
             tagOptions: [], // 标签列表
             tagLoading: false,
@@ -337,9 +327,9 @@ export default {
         window.removeEventListener('resize', this.setEditorHeight);
     },
     methods: {
-        handleToggleScreen() {
-            this.fullScreen = !this.fullScreen;
-        },
+        ...mapMutations({
+            isHiddenHeader: IS_HIDDEN_HEADER
+        }),
         // 分组列表
         getCateList() {
             api.articleCateQuery().then((res) => {
@@ -384,8 +374,8 @@ export default {
         handleCateDel() {},
         // 分组切换
         handleCateChange(cate) {
-            this.handleCate();
             this.cateActive = cate;
+            this.handleCate();
             this.resetTab();
             this.getList();
         },
@@ -409,8 +399,11 @@ export default {
             });
         },
         handleCommand(command) {
-            if (command === 'preview') {
-                this.handlePreView();
+            if (command === 'presentation') {
+                this.handlePresentation();
+            }
+            if (command === 'copyLink') {
+                this.handleCopyLink();
             }
             if (command === 'cancelPublish') {
                 this.handleCancelPublish(this.articleId);
@@ -541,7 +534,6 @@ export default {
                 this.isSaving = true;
                 api.articleDelete(articleId).then(() => {
                     this.changeCount = 0;
-                    this.preView = false;
                     this.pageConfig.total--;
                     const index = this.getIndex(this.listData, articleId);
                     this.delArr(this.listData, index);
@@ -640,12 +632,22 @@ export default {
             this.listData = [];
             this.getList();
         },
-        // 预览
-        handlePreView() {
-            this.preView = !this.preView;
-            if (!this.preView) {
-                this.setEditorHeight();
-                this.handleFullScreen();
+        // 复制链接
+        handleCopyLink() {
+            const url = `${window.location.origin}/detail/${this.form.articlePublishId}`;
+            this.$copyText(url).then(() => {
+                this.showSuccessMsg('复制链接成功！');
+            });
+        },
+        // 文档演示
+        handlePresentation() {
+            this.presentation = !this.presentation;
+            this.handleFullScreen();
+            // 预览时隐藏头部
+            if (this.fullscreen === true) {
+                this.isHiddenHeader(true);
+            } else {
+                this.isHiddenHeader(false);
             }
         },
         // 设置编辑器高度

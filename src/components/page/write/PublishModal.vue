@@ -1,6 +1,6 @@
 <template>
     <modal
-        :title="title"
+        :title="modalTitle"
         :visible="isVisible"
         @handleClose="handleClose">
         <el-cascader
@@ -9,7 +9,6 @@
             :options="tagOptions"
             :props="props"
             class="width100"
-            clearable
             filterable>
         </el-cascader>
         <el-button
@@ -31,6 +30,7 @@ export default {
     },
     props: {
         value: Boolean,
+        isUpdatePublish: Boolean,
         tagId: String,
         tagOptions: {
             type: Array,
@@ -40,11 +40,13 @@ export default {
     computed: {
         isVisible() {
             return this.value;
+        },
+        modalTitle() {
+            return this.isUpdatePublish ? '更新发布' : '发布';
         }
     },
     data() {
         return {
-            title: '发布',
             form: {
                 tagId: this.tagId
             },

@@ -11,7 +11,8 @@
                     <div
                         class="tit"
                         @click="handleCate(item)">
-                        <i class="cate icon icon-wenjianjia"></i>
+                        <i v-if="item._id === 'recent'" class="cate el-icon-time"></i>
+                        <i v-else class="cate icon icon-wenjianjia"></i>
                         {{ item.title }}
                     </div>
                 </div>
@@ -22,12 +23,10 @@
             <li
                 v-for="item in myCate"
                 :key="item._id"
-                :class="{'active': cateId === item._id}">
-                <div
-                    class="li">
-                    <div
-                        class="tit"
-                        @click="handleCate(item)">
+                :class="{'active': cateId === item._id}"
+                @click="handleCate(item)">
+                <div class="li">
+                    <div class="tit">
                         <i class="cate icon icon-wenjianjia"></i>
                         {{ item.title }}
                     </div>
@@ -38,11 +37,11 @@
                             <el-dropdown-menu class="write-dropdown-menu">
                                 <el-dropdown-item
                                     :command="composeValue('edit', item)"
-                                    icon="el-icon-delete">编辑</el-dropdown-item>
-                                <!-- <el-dropdown-item
+                                    icon="el-icon-edit">编辑</el-dropdown-item>
+                                <el-dropdown-item
                                     :command="composeValue('del', item._id)"
                                     divided
-                                    icon="el-icon-delete">删除</el-dropdown-item> -->
+                                    icon="el-icon-delete">删除</el-dropdown-item>
                             </el-dropdown-menu>
                         </el-dropdown>
                     </div>
@@ -84,6 +83,7 @@ export default {
     },
     methods: {
         handleCate(cate) {
+            if (this.cateId === cate._id) return;
             this.$emit('change', cate);
         },
         // action

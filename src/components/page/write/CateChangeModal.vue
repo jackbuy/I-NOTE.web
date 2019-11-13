@@ -8,7 +8,7 @@
                 <li
                     v-for="item in dataList"
                     :key="item._id"
-                    :class="{'active': cateId === item._id}"
+                    :class="{'active': formatActiveCate(item._id)}"
                     @click="handleChange(item._id)">
                     <i class="icon icon-xuanze"></i>
                     {{ item.title }}
@@ -57,7 +57,7 @@ export default {
         dataList() {
             let arr = [];
             this.data.map((item) => {
-                if (!item.type) {
+                if (item._id !== 'all') {
                     arr.push(item);
                 }
             });
@@ -71,6 +71,13 @@ export default {
         handleChange(cateId) {
             this.$emit('change', cateId);
             this.handleClose();
+        },
+        formatActiveCate(cateId) {
+            if (this.cateId) {
+                if (this.cateId === cateId) return true;
+            } else {
+                if (cateId === 'no-cate') return true;
+            }
         }
     }
 };

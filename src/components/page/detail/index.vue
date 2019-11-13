@@ -36,20 +36,19 @@
                 <div class="title">加专题</div>
             </div> -->
         </div>
-        <card slot="content" :padding="false" :title="tag">
-            <div slot="menu" class="menu">
+        <card slot="content" :visible-header="true">
+            <article-content
+                :title="title"
+                :content="content"
+                :viewCount="viewCount"
+                :time="time"
+                :tag="tag">
                 <div
                     v-if="currentUserId === authorId"
                     class="menu-btn round"
                     @click="handleRouterEdit(aId)">
                     编辑
                 </div>
-            </div>
-            <article-content
-                :title="title"
-                :content="content"
-                :viewCount="viewCount"
-                :time="time">
             </article-content>
         </card>
         <card slot="comment" icon="icon icon-pinglun" title="评论">

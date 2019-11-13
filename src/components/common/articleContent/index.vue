@@ -9,8 +9,14 @@
             class="article-content__content">
         </div>
         <div v-if="showInfo" class="article-content__info">
-            <span>{{ time }}</span>
-            <span>浏览 {{ viewCount }}</span>
+            <div class="info">
+                <span>{{ tag }}</span>
+                <span>{{ time }}</span>
+                <span>浏览 {{ viewCount }}</span>
+            </div>
+            <div class="menu">
+                <slot></slot>
+            </div>
         </div>
     </div>
 </template>
@@ -22,6 +28,7 @@ export default {
         title: String,
         content: String,
         time: String,
+        tag: String,
         viewCount: Number,
         showInfo: {
             type: Boolean,

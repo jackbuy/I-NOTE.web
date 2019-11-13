@@ -99,10 +99,14 @@
                 }
             }
             .cate-list{
+                position: relative;
                 &__title{
                     padding: 8px 15px;
                     font-size: 12px;
                     background: @formBgColor;
+                    position: sticky;
+                    top: 0;
+                    z-index: 200;
                     :first-child{
                         border-top-width: 0;
                     }
@@ -136,12 +140,12 @@
                                     color: @fontHoverColor !important;
                                 }
                             }
-                            &::before{
-                                left: -10px;
-                                width: 4px;
-                                height: 4px;
-                                margin-top: -2px;
-                            }
+                            // &::before{
+                            //     left: -10px;
+                            //     width: 4px;
+                            //     height: 4px;
+                            //     margin-top: -2px;
+                            // }
                         }
                         .li{
                             display: flex;
@@ -287,17 +291,15 @@
         vertical-align: middle;
     }
 
+    // 更改分组
     .change-article-cate{
-        // ul{
-        //     border: 1px solid @borderColor;
-        //     padding: 15px;
-        // }
         li{
             border: 1px solid @borderColor;
             position: relative;
             padding: 8px 10px;
             margin-top: 10px;
             cursor: pointer;
+            transition: all 0.3s;
             &:first-child{
                 margin-top: 0;
             }
@@ -308,6 +310,9 @@
                 opacity: 0;
                 z-index: 1;
                 line-height: 1;
+            }
+            &:hover{
+                border-color: @fontColor;
             }
             &.active{
                 border-color: @fontHoverColor;

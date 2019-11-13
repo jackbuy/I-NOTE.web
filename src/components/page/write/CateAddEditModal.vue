@@ -18,15 +18,21 @@
 
 <script>
 import Modal from '@/components/common/modal';
+import message from '@/mixins/message';
 export default {
     name: 'CateModal',
     components: {
         Modal
     },
+    mixins: [message],
     props: {
         value: Boolean,
         title: String,
-        modalType: String
+        modalType: String,
+        data: {
+            type: Array,
+            default: () => []
+        }
     },
     data() {
         return {
@@ -47,10 +53,22 @@ export default {
         handleClose() {
             this.$emit('input', false);
         },
+        // 验证分组名是否重复
+        isHasCateTitle(title) {
+            let result = false;
+            this.data.map((item) => {
+                if (item.title === title) result = true;
+            });
+            return result;
+        },
         handleSave() {
             const params = {
                 type: this.modalType,
                 ...this.form
+            };
+            if (this.isHasCateTitle(this.form.title)) {
+                this.showWarningMsg('分组名重复, 请修改！');
+                return;
             };
             this.$emit('save', params);
             this.handleClose();

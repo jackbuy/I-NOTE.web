@@ -63,6 +63,7 @@
                 v-model="showCateModal"
                 :modal-type="cateModalType"
                 :title="cateModalTitle"
+                :data="cateList"
                 @save="handleCateSave">
             </cate-add-edit-modal>
 
@@ -96,13 +97,25 @@
                             <span class="label">{{ tips }}</span>
                         </span>
                         <el-button
+                            v-if="isUpdatePublish"
                             :disabled="isSaving"
                             :loading="tagLoading"
                             size="mini"
                             type="primary"
                             round
                             icon="icon icon-fabu"
-                            title="发布/更新发布"
+                            title="更新发布"
+                            @click="handleOpenPublishModal">
+                        </el-button>
+                        <el-button
+                            v-else
+                            :disabled="isSaving"
+                            :loading="tagLoading"
+                            size="mini"
+                            type="primary"
+                            round
+                            icon="icon icon-fabu"
+                            title="发布"
                             @click="handleOpenPublishModal">
                         </el-button>
                         <el-dropdown
@@ -154,6 +167,7 @@
                     v-model="showPublishModal"
                     :tag-id="publishTagId"
                     :tag-options="tagOptions"
+                    :is-update-publish="isUpdatePublish"
                     @handlePublish="handlePublish">
                 </publish-modal>
             </div>
@@ -170,7 +184,7 @@
         <card
             slot="presentation"
             :padding="false"
-            :title="`演示 - ${form.title}`">
+            :title="`${form.title}`">
             <div slot="menu" class="menu">
                 <div
                     class="menu-btn round"
@@ -231,7 +245,7 @@ export default {
             showCateChangeModal: false,
             cateChangeModalCateId: '',
             cateList: [],
-            cateListDefault: [
+            cateListDefault: [ // 分组列表
                 {
                     _id: 'all',
                     type: 'default',
@@ -242,7 +256,12 @@ export default {
                     type: 'default',
                     title: '未分组'
                 }
-            ], // 分组列表
+                // {
+                //     _id: 'recent',
+                //     type: 'default',
+                //     title: '最近浏览'
+                // }
+            ],
             cateActive: {},
             cateModalType: '',
             cateModalTitle: '',
@@ -288,6 +307,13 @@ export default {
         },
         cateTitle() {
             return this.cateActive.title;
+        },
+        isUpdatePublish() {
+            if (this.form.isPublish && this.form.articlePublishId) {
+                return true;
+            } else {
+                return false;
+            }
         }
     },
     watch: {
@@ -371,13 +397,25 @@ export default {
             }
         },
         // 分组删除
-        handleCateDel() {},
+        handleCateDel(cateId) {
+            this.confirmWarning({
+                title: '确认删除吗？',
+                content: '删除后，原分组相关的文章将被关联到“未分组”中。'
+            }).then(() => {
+                this.isSaving = true;
+                api.articleCateDelete(cateId).then(() => {
+                    this.isSaving = false;
+                    this.getCateList();
+                }).catch(() => {
+                    this.isSaving = false;
+                });
+            }).catch(() => {});
+        },
         // 分组切换
         handleCateChange(cate) {
             this.cateActive = cate;
             this.handleCate();
             this.resetTab();
-            this.getList();
         },
         // 分组展开/收起
         handleCate() {
@@ -528,8 +566,8 @@ export default {
         // 文章删除
         handleDelete(articleId) {
             this.confirmWarning({
-                title: '提示',
-                content: '确认删除吗？'
+                title: '确认删除吗？',
+                content: '删除后数据不可恢复，请谨慎操作！'
             }).then(() => {
                 this.isSaving = true;
                 api.articleDelete(articleId).then(() => {

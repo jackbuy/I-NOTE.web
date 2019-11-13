@@ -30,7 +30,7 @@
                         <i class="cate icon icon-wenjianjia"></i>
                         {{ item.title }}
                     </div>
-                    <div v-if="cateId === item._id && item.type !== 'default'" class="menu">
+                    <div v-if="item.type !== 'default'" class="menu">
                         <el-dropdown
                             @command="handleCommand">
                             <i class="icon icon-gengduo"></i>

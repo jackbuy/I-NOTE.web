@@ -18,9 +18,17 @@
                 top: 65px;
             }
             .write-list,
-            .cate-list{
+            .cate-list,
+            .article-list{
                 overflow-y: auto;
                 overflow-x: hidden;
+                position: relative;
+                .fixed{
+                    position: sticky;
+                    top: 0;
+                    z-index: 200;
+                    background: @boxBgColor;
+                }
             }
             .write-list{
                 ul{
@@ -79,7 +87,7 @@
                                     font-size: 12px;
                                     opacity: 0.7;
                                     &.publish{
-                                        color: @fontMainColor;
+                                        color: @fontHoverColor;
                                         opacity: 1;
                                     }
                                 }
@@ -99,7 +107,6 @@
                 }
             }
             .cate-list{
-                position: relative;
                 &__title{
                     padding: 8px 15px;
                     font-size: 12px;
@@ -120,6 +127,13 @@
                         cursor: pointer;
                         color: @fontMainColor;
                         position: relative;
+                        &:hover{
+                            .li{
+                                .menu{
+                                    // opacity: 1;
+                                }
+                            }
+                        }
                         &::before{
                             content: "";
                             position: absolute;
@@ -165,6 +179,8 @@
                                 }
                             }
                             .menu{
+                                // opacity: 0;
+                                // transition: all 0.3s;
                                 i{
                                     transition: all 0.3s;
                                     color: @fontMainColor;
@@ -269,7 +285,7 @@
             }
             i{
                 font-size: 12px;
-                color: @fontSubColor;
+                color: @fontColor;
             }
             .tit{
                 font-size: 12px;

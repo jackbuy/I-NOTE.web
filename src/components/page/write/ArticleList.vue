@@ -1,21 +1,23 @@
 <template>
-    <div>
-        <div class="write-search">
-            <el-input
-                v-model="keyword"
-                size="mini"
-                clearable
-                placeholder="搜文章 (按 回车键 提交哟~)"
-                @clear="handleSearch"
-                @keyup.enter.native="handleSearch">
-                <i slot="prefix" class="el-input__icon el-icon-search"></i>
-            </el-input>
+    <div class="article-list">
+        <div class="fixed">
+            <div class="write-search">
+                <el-input
+                    v-model="keyword"
+                    size="mini"
+                    clearable
+                    placeholder="搜文章 (按 回车键 提交哟~)"
+                    @clear="handleSearch"
+                    @keyup.enter.native="handleSearch">
+                    <i slot="prefix" class="el-input__icon el-icon-search"></i>
+                </el-input>
+            </div>
+            <tab ref="tab" :activeName="activeTabName" @tabClick="handleTabClick" class="mini">
+                <tab-label name="all" label="全部"></tab-label>
+                <tab-label name="publish" label="已发布"></tab-label>
+                <tab-label name="draft" label="草稿"></tab-label>
+            </tab>
         </div>
-        <tab ref="tab" :activeName="activeTabName" @tabClick="handleTabClick" class="mini">
-            <tab-label name="all" label="全部"></tab-label>
-            <tab-label name="publish" label="已发布"></tab-label>
-            <tab-label name="draft" label="草稿"></tab-label>
-        </tab>
         <page-loading :loading="loading" :data="data" class="write-list">
             <ul>
                 <li

@@ -2,13 +2,13 @@
     <layout :presentation="presentation" :is-has="isHas">
         <!-- side -->
         <card
-            v-loading="isSaving"
             slot="side"
-            :padding="false">
+            :padding="false"
+            class="card-content">
 
             <div slot="title" class="tit-menu">
                 <span v-if="cateTitle" @click="handleCate">
-                    {{ `${cateTitle} (${articleTotal})` }}
+                    {{ showCateList ? '分组管理' : `${cateTitle} (${articleTotal})` }}
                     <i class="icon" :class="{'icon-jiantou-down': !showCateList, 'icon-jiantou-up': showCateList}"></i>
                 </span>
             </div>
@@ -80,11 +80,11 @@
             slot="content"
             v-loading="isSaving"
             :padding="false"
-            :visible-header="true">
+            :visible-header="true"
+            class="card-side">
 
-            <div v-show="articleTotal > 0">
+            <div v-if="!isLoadingDetail && articleId">
                 <div
-                    v-if="articleId"
                     class="write__header">
                     <div class="write__header-input">
                         <input
@@ -97,25 +97,13 @@
                             <span class="label">{{ tips }}</span>
                         </span>
                         <el-button
-                            v-if="isUpdatePublish"
                             :disabled="isSaving"
                             :loading="tagLoading"
                             size="mini"
                             type="primary"
                             round
                             icon="icon icon-fabu"
-                            title="更新发布"
-                            @click="handleOpenPublishModal">
-                        </el-button>
-                        <el-button
-                            v-else
-                            :disabled="isSaving"
-                            :loading="tagLoading"
-                            size="mini"
-                            type="primary"
-                            round
-                            icon="icon icon-fabu"
-                            title="发布"
+                            :title="isUpdatePublish ? '更新发布' : '发布'"
                             @click="handleOpenPublishModal">
                         </el-button>
                         <el-dropdown
@@ -173,7 +161,7 @@
             </div>
 
             <article-empty
-                v-show="articleTotal === 0"
+                v-show="!articleId"
                 :create-loading="createLoading"
                 :is-saving="isSaving"
                 @add="handleAdd">
@@ -183,7 +171,6 @@
         <!-- 演示 -->
         <card
             slot="presentation"
-            :padding="false"
             :title="`${form.title}`">
             <div slot="menu" class="menu">
                 <div
@@ -275,6 +262,7 @@ export default {
             publishLoading: false,
             publishTagId: '',
             isSaving: false,
+            isLoadingDetail: false,
             isHas: true,
             saved: false,
             timer: null,
@@ -414,6 +402,8 @@ export default {
         // 分组切换
         handleCateChange(cate) {
             this.cateActive = cate;
+            this.keyword = '';
+            this.$refs.articleList.keyword = '';
             this.handleCate();
             this.resetTab();
         },
@@ -491,6 +481,7 @@ export default {
         // 获取详情
         getDetail(articleId) {
             this.isSaving = true;
+            this.isLoadingDetail = true;
             this.changeCount = 0;
             api.articleDetail(articleId).then((res) => {
                 const { contentHtml, tagId, isPublish, title, articlePublishId, articleCateId } = res.data;
@@ -506,9 +497,12 @@ export default {
                 this.isHas = true;
                 this.saved = false;
                 this.isSaving = false;
+                this.isLoadingDetail = false;
+                this.$nextTick(this.setH);
             }).catch(() => {
                 this.isHas = false;
                 this.isSaving = false;
+                this.isLoadingDetail = false;
             });
         },
         // 重置tab
@@ -688,16 +682,28 @@ export default {
                 this.isHiddenHeader(false);
             }
         },
+        setH() {
+            const editor = document.querySelector('.ql-container');
+            if (editor) editor.style.height = window.innerHeight - 153 - 15 + 'px';
+
+            const cate = document.querySelector('.cate-list');
+            if (cate) cate.style.height = window.innerHeight - 118 - 15 + 'px';
+
+            const article = document.querySelector('.article-list');
+            if (article) article.style.height = window.innerHeight - 118 - 15 + 'px';
+        },
         // 设置编辑器高度
         setEditorHeight() {
-            const edit = document.getElementsByClassName('ql-container ql-snow')[0];
-            const empty = document.getElementsByClassName('article-empty')[0];
-            const article = document.getElementsByClassName('write-list')[0];
-            const cate = document.getElementsByClassName('cate-list')[0];
-            edit.style.height = window.innerHeight - 153 - 15 + 'px';
-            empty.style.height = window.innerHeight - 65 - 15 + 'px';
-            article.style.height = window.innerHeight - 109 - 39 - 38 - 15 + 'px';
-            cate.style.height = window.innerHeight - 110 - 15 + 'px';
+            const side = document.querySelector('.card-side');
+            side.style.height = window.innerHeight - 80 + 'px';
+
+            const content = document.querySelector('.card-content');
+            content.style.height = window.innerHeight - 80 + 'px';
+
+            const empty = document.querySelector('.article-empty');
+            empty.style.height = window.innerHeight - 80 + 'px';
+
+            this.setH();
         },
         getIndex(arr, id) {
             let _index = -1;

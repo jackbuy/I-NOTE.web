@@ -19,18 +19,15 @@ export default {
         //     }
         // };
         window.addEventListener('resize', () => {
-            console.log(this.checkFull());
             // 全屏下监听是否按下了ESC键
             if (!this.checkFull()) {
                 // 要执行的动作
                 this.fullscreen = false;
-                console.log(2);
             }
         });
     },
     methods: {
         checkFull() {
-            console.log('按下了esc键');
             var isFull = document.fullscreenEnabled || window.fullScreen || document.webkitIsFullScreen || document.msFullscreenEnabled;
             if (isFull === undefined) isFull = false;
             return isFull;

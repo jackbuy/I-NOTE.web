@@ -68,16 +68,6 @@
         fill: @fontSubColor;
     }
 
-    .ql-snow .ql-editor h1{
-        font-size: 20px;
-        padding-bottom: 15px;
-        border-bottom: 1px solid @borderColor;
-    }
-
-    .ql-editor{
-        .ql-indent();
-    }
-
     .ql-editor{
         .detail(
             @fontMainColor,
@@ -89,28 +79,7 @@
     }
 }
 
-.ql-indent() {
-    .ql-indent{
-        &-1:not(.ql-direction-rtl){
-            padding-left: 2em;
-        }
-        &-2:not(.ql-direction-rtl){
-            padding-left: 4rem;
-        }
-        &-3:not(.ql-direction-rtl),
-        &-4:not(.ql-direction-rtl),
-        &-5:not(.ql-direction-rtl),
-        &-6:not(.ql-direction-rtl),
-        &-7:not(.ql-direction-rtl),
-        &-8:not(.ql-direction-rtl),
-        &-9:not(.ql-direction-rtl),
-        &-10:not(.ql-direction-rtl){
-            padding-left: 6rem;
-        }
-    }
-}
-
-
+// 样式自定义，保持编辑器可页面浏览一致
 .detail(
     @fontMainColor,
     @borderColor,
@@ -121,6 +90,8 @@
     font-size: 16px;
     color: @fontMainColor;
     line-height: 1.5 !important;
+
+    // 对齐
     .ql-align{
         &-justify{
             text-align: justify;
@@ -132,7 +103,35 @@
             text-align: center;
         }
     }
-    .ql-indent();
+
+    // 缩进
+    .ql-indent{
+        &-1:not(.ql-direction-rtl){
+            padding-left: 2em;
+        }
+        &-2:not(.ql-direction-rtl){
+            padding-left: 4rem;
+        }
+        &-3:not(.ql-direction-rtl){
+            padding-left: 6rem;
+        }
+        &-4:not(.ql-direction-rtl){
+            padding-left: 8rem;
+        }
+        &-5:not(.ql-direction-rtl){
+            padding-left: 10rem;
+        }
+        &-6:not(.ql-direction-rtl){
+            padding-left: 12rem;
+        }
+        &-7:not(.ql-direction-rtl){
+            padding-left: 14rem;
+        }
+        &-8:not(.ql-direction-rtl){
+            padding-left: 16rem;
+        }
+    }
+
     h1,
     h2,
     h3,
@@ -148,24 +147,29 @@
     pre{
         margin-bottom: 15px !important;
     }
+
     img{
         max-width: 100% !important;
     }
+
     // iframe{
     //     width: 100% !important;
     //     height: 360px !important;
     //     margin: 0 auto !important;
     // }
+
     h1{
-        font-size: 20px;
+        font-size: 18px;
         padding-bottom: 15px;
         border-bottom: 1px solid @borderColor;
     }
+
     blockquote{
-        border-left: 5px solid @formFocusBgColor !important;
+        border-left: 4px solid @formFocusBgColor !important;
         padding: 15px !important;
         background: @formBgColor !important;
     }
+
     pre{
         color: #eee;
         background: @preBg !important;
@@ -173,32 +177,115 @@
         border-radius: 4px !important;
         padding: 15px !important;
     }
+
     ul,
     ol{
         padding-left: 1.5em;
         li{
             padding-left: 0;
+            &::before {
+                margin-left: -1.5em;
+                margin-right: .3em;
+                text-align: right;
+                display: inline-block;
+                white-space: nowrap;
+                width: 2em;
+            }
         }
     }
-    li:not(.ql-direction-rtl)::before {
-        margin-left: -1.5em;
-        margin-right: .3em;
-        text-align: right;
-    }
+
+    // ul
     ul>li::before {
         content: '\2022';
     }
-    li::before {
-        display: inline-block;
-        white-space: nowrap;
-        width: 1.2em;
+
+    // ol
+    ol li {
+        counter-reset: list-1 list-2 list-3 list-4 list-5 list-6 list-7 list-8 list-9;
+        counter-increment: list-0;
+        &:before {
+            content: counter(list-0,decimal) '. ';
+        }
+        &.ql-indent-1 {
+            counter-increment: list-1;
+        }
+        &.ql-indent-1:before {
+            content: counter(list-1,lower-alpha) '. ';
+        }
+        &.ql-indent-1 {
+            counter-reset: list-2 list-3 list-4 list-5 list-6 list-7 list-8 list-9;
+        }
+        &.ql-indent-2 {
+            counter-increment: list-2;
+        }
+        &.ql-indent-2:before {
+            content: counter(list-2,lower-roman) '. ';
+        }
+        &.ql-indent-2 {
+            counter-reset: list-3 list-4 list-5 list-6 list-7 list-8 list-9;
+        }
+        &.ql-indent-3 {
+            counter-increment: list-3;
+        }
+        &.ql-indent-3:before {
+            content: counter(list-3,decimal) '. ';
+        }
+        &.ql-indent-3 {
+            counter-reset: list-4 list-5 list-6 list-7 list-8 list-9;
+        }
+        &.ql-indent-4 {
+            counter-increment: list-4;
+        }
+        &.ql-indent-4:before {
+            content: counter(list-4,lower-alpha) '. '
+        }
+        &.ql-indent-4 {
+            counter-reset: list-5 list-6 list-7 list-8 list-9
+        }
+        &.ql-indent-5 {
+            counter-increment: list-5
+        }
+        &.ql-indent-5:before {
+            content: counter(list-5,lower-roman) '. '
+        }
+        &.ql-indent-5 {
+            counter-reset: list-6 list-7 list-8 list-9
+        }
+        &.ql-indent-6 {
+            counter-increment: list-6
+        }
+        &.ql-indent-6:before {
+            content: counter(list-6,decimal) '. '
+        }
+        &.ql-indent-6 {
+            counter-reset: list-7 list-8 list-9
+        }
+        &.ql-indent-7 {
+            counter-increment: list-7
+        }
+        &.ql-indent-7:before {
+            content: counter(list-7,lower-alpha) '. '
+        }
+        &.ql-indent-7 {
+            counter-reset: list-8 list-9
+        }
+        &.ql-indent-8 {
+            counter-increment: list-8
+        }
+        &.ql-indent-8:before {
+            content: counter(list-8,lower-roman) '. '
+        }
+        &.ql-indent-8 {
+            counter-reset: list-9
+        }
+        &.ql-indent-9 {
+            counter-increment: list-9
+        }
+        &.ql-indent-9:before {
+            content: counter(list-9,decimal) '. '
+        }
     }
-    // ul{
-    //     list-style: disc !important;
-    // }
-    ol{
-        list-style: decimal !important;
-    }
+
     a{
         color: @fontActiveColor !important;
         &:hover{

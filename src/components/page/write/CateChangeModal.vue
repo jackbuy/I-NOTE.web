@@ -8,7 +8,7 @@
                 <li
                     v-for="item in dataList"
                     :key="item._id"
-                    :class="{'active': formatActiveCate(item._id)}"
+                    :class="{'active': formatActiveCate(item._id), 'default': item._id === 'no-cate'}"
                     @click="handleChange(item._id)">
                     <i class="icon icon-xuanze"></i>
                     {{ item.title }}

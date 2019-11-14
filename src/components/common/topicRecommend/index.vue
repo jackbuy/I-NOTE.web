@@ -2,7 +2,9 @@
     <div
         class="special-topic"
         @click="handleRouterPush(id)">
-        <div class="img" :style="{backgroundImage: 'url(' + img + ')'}"></div>
+        <div class="img-box">
+            <div class="img" :style="{backgroundImage: 'url(' + img + ')'}"></div>
+        </div>
         <div class="content">
             <div class="title">{{ title }}</div>
             <div class="info">

@@ -249,7 +249,8 @@ export default {
                 //     title: '最近浏览'
                 // }
             ],
-            cateActive: {},
+            cateEditId: '', // 编辑的分组id
+            cateActive: {}, // 当前选中的分组
             cateModalType: '',
             cateModalTitle: '',
             keyword: '',
@@ -331,7 +332,7 @@ export default {
         }
     },
     created() {
-        this.getCateList();
+        this.getCateList('loadArticleList');
     },
     mounted() {
         this.setEditorHeight();
@@ -345,7 +346,7 @@ export default {
             isHiddenHeader: IS_HIDDEN_HEADER
         }),
         // 分组列表
-        getCateList() {
+        getCateList(type) {
             api.articleCateQuery().then((res) => {
                 let arr = [];
                 arr.push(
@@ -354,7 +355,9 @@ export default {
                 );
                 this.cateList = arr;
                 this.cateActive = this.cateList[0];
-                this.getList();
+
+                // 是否加载分组下的文章列表
+                if (type === 'loadArticleList') this.getList();
             });
         },
         handleCateModalOpenAdd() {
@@ -363,7 +366,8 @@ export default {
             this.cateModalTitle = '';
         },
         handleCateModalOpenEdit(obj) {
-            const { title } = obj;
+            const { _id, title } = obj;
+            this.cateEditId = _id;
             this.cateModalType = 'edit';
             this.showCateModal = true;
             this.cateModalTitle = title;
@@ -378,8 +382,7 @@ export default {
                 });
             }
             if (type === 'edit') {
-                const { _id } = this.cateActive;
-                api.articleCateEdit(params, _id).then((res) => {
+                api.articleCateEdit(params, this.cateEditId).then((res) => {
                     this.getCateList();
                 });
             }

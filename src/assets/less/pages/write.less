@@ -46,7 +46,8 @@
                             top: 0;
                             width: 0px;
                             height: 100%;
-                            background: @formBgColor;
+                            background-color: @formBgColor; /* 浏览器不支持时显示 */
+                            background-image: linear-gradient(to right, @formBgColor, @boxBgColor);
                             transition: all 0.3s;
                         }
                         &::after{

@@ -1,19 +1,19 @@
 <template>
     <div class="topic__item">
-        <div v-if="type === 'normal'" class="user">
-            <el-avatar v-if="userImg" :size="40" :src="userImg"></el-avatar>
-            <el-avatar v-else :size="40"><i class="icon icon-yonghu"></i></el-avatar>
+        <div class="img-box" @click="handleRouterPush(topicId)">
+            <div class="count">{{ articleCount }} 篇</div>
+            <div class="img" :style="{backgroundImage: 'url(' + img + ')'}"></div>
         </div>
         <div class="content">
-            <div v-if="type === 'normal'" class="content-name">{{ username }}</div>
             <div class="content-title">
                 <span @click="handleRouterPush(topicId)">{{ title }}</span>
             </div>
             <div v-if="description" class="content-des">{{ description }}</div>
             <div class="content-info">
-                <span>文章 {{ articleCount }}</span>
-                <span>关注 {{ followCount }}</span>
+                <span v-if="type === 'normal'">{{ username }}</span>
+                <!-- <span>文章 {{ articleCount }}</span> -->
                 <span>{{ createTime }}</span>
+                <span>关注 {{ followCount }}</span>
             </div>
         </div>
         <div v-if="isAction" class="action">
@@ -21,9 +21,6 @@
                 <button @click="handleEdit(itemId)"><i class="el-icon-edit"></i></button>
                 <button @click="handleDelete(itemId)"><i class="el-icon-delete"></i></button>
             </div>
-        </div>
-        <div v-else class="img">
-            <div :style="{backgroundImage: 'url(' + img + ')'}"></div>
         </div>
     </div>
 </template>

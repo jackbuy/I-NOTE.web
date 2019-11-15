@@ -43,12 +43,17 @@
                 :viewCount="viewCount"
                 :time="time"
                 :tag="tag">
-                <div
-                    v-if="currentUserId === authorId"
-                    class="menu-btn round"
-                    @click="handleRouterEdit(aId)">
-                    编辑
-                </div>
+                <span v-if="currentUserId === authorId">
+                    <el-dropdown
+                        @command="handleCommand">
+                        <i class="icon icon-more-horizontal"></i>
+                        <el-dropdown-menu class="write-dropdown-menu">
+                            <el-dropdown-item
+                                command="edit"
+                                icon="el-icon-delete">编辑</el-dropdown-item>
+                        </el-dropdown-menu>
+                    </el-dropdown>
+                </span>
             </article-content>
         </card>
         <card slot="comment" icon="icon icon-pinglun" title="评论">
@@ -179,6 +184,9 @@ export default {
         ...mapMutations({
             setDocumentTitle: SET_DOCUMENT_TITLE
         }),
+        handleCommand(command) {
+            if (command === 'edit') this.handleRouterEdit(this.aId);
+        },
         // 获取文章详情
         async getDetail(articleId) {
             this.pageLoading = true;

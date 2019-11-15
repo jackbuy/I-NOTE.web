@@ -19,16 +19,23 @@
             }
             .menu{
                 font-size: 0;
-                div{
+                span{
                     display: inline-block;
                     cursor: pointer;
                     font-size: 12px;
-                    color: @fontActiveColor;
-                    padding: 2px 6px;
-                    border: 1px solid @fontActiveColor;
-                    border-radius: 10px;
+                    padding: 2px 5px;
+                    &::before{
+                        display: none;
+                    }
                     &:hover{
-                        text-decoration: underline;
+                        color: @fontActiveColor;
+                        i{
+                            color: @fontActiveColor;
+                        }
+                    }
+                    i{
+                        color: @fontColor;
+                        font-size: 16px !important;
                     }
                 }
             }

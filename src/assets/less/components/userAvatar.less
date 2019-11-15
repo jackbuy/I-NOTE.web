@@ -1,13 +1,30 @@
 
 .user-avatar() {
     .user-avatar{
-        margin-top: 110px !important;
-        // background: @boxBgColor url('../../../../static/img/zone_banner.png') no-repeat bottom;
-        // background-size: cover;
+        margin-top: 110px ;
+        background: @boxBgColor url('../../../../static/img/zone_banner.png') no-repeat bottom;
+        background-size: cover;
         background-color: @boxBgColor;
         padding: 10px;
         position: relative;
         border-radius: 10px;
+        &.simple{
+            .content{
+                padding-top: 10px;
+                padding: 0;
+            }
+        }
+        &.fixed{
+            position: fixed;
+            top: 50px;
+            width: @containerWidth;
+            border-top: 1px solid @borderColor;
+            border-bottom: 1px solid @borderColor;
+            background: @boxBgColor;
+            border-radius: 0;
+            margin-top: 0;
+            z-index: 200;
+        }
         .el-avatar{
             position: absolute;
             left: 50%;

@@ -9,6 +9,7 @@
             :loading="loading"
             :no-more="noMore"
             :data="listData"
+            @scroll="handleScroll"
             @loadData="getList">
             <template slot-scope="scope">
                 <follow-user-item
@@ -80,6 +81,9 @@ export default {
         }
     },
     methods: {
+        handleScroll(val) {
+            this.$emit('scroll', val);
+        },
         refresh() {
             this.pageConfig.currentPage = 1;
             this.listData = [];

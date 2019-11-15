@@ -58,24 +58,29 @@ export default {
             if (this.getScrollHeight() === this.getWindowHeight() + this.getDocumentTop()) {
                 if (!this.noMore && !this.loading) this.$emit('loadData');
             }
+            // emit滚动事件
+            this.$emit('scroll', scrollTop);
         };
     },
     activated() {
-        // 判断页面滚动方向
-        var scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop;
-        var scroll = scrollTop - this.i;
-        this.i = scrollTop;
-        if (scroll < 0) {
-            this.$emit('up');
-        } else {
-            this.$emit('down');
-        }
-
-        // 当滚动条滑动，触发事件，判断是否到达最底部
         window.onscroll = () => {
+            // 判断页面滚动方向
+            var scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop;
+            var scroll = scrollTop - this.i;
+            this.i = scrollTop;
+            if (scroll < 0) {
+                this.$emit('up');
+            } else {
+                this.$emit('down');
+            }
+
+            // 当滚动条滑动，触发事件，判断是否到达最底部
             if (this.getScrollHeight() === this.getWindowHeight() + this.getDocumentTop()) {
                 if (!this.noMore && !this.loading) this.$emit('loadData');
             }
+
+            // emit滚动事件
+            this.$emit('scroll', scrollTop);
         };
     },
     methods: {

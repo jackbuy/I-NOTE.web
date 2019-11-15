@@ -1,16 +1,16 @@
 <template>
-    <div class="user-avatar">
-        <div class="side">
+    <div class="user-avatar" :class="{'simple': isSimple, 'fixed': isFixed}">
+        <div v-if="!isSimple" class="side">
             <el-avatar v-if="user.avatar" :size="avatarSize" :src="userImg"></el-avatar>
             <el-avatar v-else :size="avatarSize"><i class="icon icon-yonghu"></i></el-avatar>
         </div>
         <div class="content">
-            <div class="header">
+            <div v-if="!isSimple" class="header">
                 <div class="name">{{ username }}</div>
                 <div class="brief">{{ brief }}</div>
                 <div class="time">{{ time }}</div>
             </div>
-            <div class="menu">
+            <div v-if="!isSimple" class="menu">
                 <span
                     v-if="userId !== currentUserId"
                     :class="{'active': isFollow}"
@@ -54,7 +54,9 @@ export default {
             default: () => []
         },
         currentUserId: String,
-        type: String
+        type: String,
+        isSimple: Boolean,
+        isFixed: Boolean
     },
     data() {
         return {

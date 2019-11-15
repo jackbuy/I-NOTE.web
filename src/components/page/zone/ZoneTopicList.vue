@@ -19,6 +19,7 @@
             :loading="loading"
             :no-more="noMore"
             :data="listData"
+            @scroll="handleScroll"
             @loadData="getList">
             <template slot-scope="scope">
                 <topic-item
@@ -84,6 +85,9 @@ export default {
         }
     },
     methods: {
+        handleScroll(val) {
+            this.$emit('scroll', val);
+        },
         handleAction() {
             this.isAction = !this.isAction;
         },

@@ -8,48 +8,63 @@
             :current-user-id="currentUserId"
             @doFollow="handleFollow">
         </user-avatar>
+        <user-avatar
+            v-if="isFixed"
+            slot="header"
+            :data="navList"
+            :user="userInfo"
+            :type="zoneType"
+            :is-simple="true"
+            :is-fixed="isFixed">
+        </user-avatar>
 
         <zone-article-list
             slot="content"
             v-if="zoneType === 'article'"
             :type="zoneType"
             :user-id="userId"
-            :current-user-id="currentUserId">
+            :current-user-id="currentUserId"
+            @scroll="handleScroll">
         </zone-article-list>
         <zone-topic-list
             v-if="zoneType === 'topic'"
             slot="content"
             :type="zoneType"
             :user-id="userId"
-            :current-user-id="currentUserId">
+            :current-user-id="currentUserId"
+            @scroll="handleScroll">
         </zone-topic-list>
         <zone-comment-list
             v-if="zoneType === 'comment'"
             slot="content"
             :type="zoneType"
             :user-id="userId"
-            :current-user-id="currentUserId">
+            :current-user-id="currentUserId"
+            @scroll="handleScroll">
         </zone-comment-list>
         <zone-collect-list
             v-if="zoneType === 'collect'"
             slot="content"
             :type="zoneType"
             :user-id="userId"
-            :current-user-id="currentUserId">
+            :current-user-id="currentUserId"
+            @scroll="handleScroll">
         </zone-collect-list>
         <zone-follow-list
             v-if="zoneType === 'follow'"
             slot="content"
             :type="zoneType"
             :user-id="userId"
-            :current-user-id="currentUserId">
+            :current-user-id="currentUserId"
+            @scroll="handleScroll">
         </zone-follow-list>
         <zone-fans-list
             v-if="zoneType === 'fans'"
             slot="content"
             :type="zoneType"
             :user-id="userId"
-            :current-user-id="currentUserId">
+            :current-user-id="currentUserId"
+            @scroll="handleScroll">
         </zone-fans-list>
     </zone-layout>
 </template>
@@ -80,6 +95,7 @@ export default {
     data() {
         return {
             userInfo: {},
+            isFixed: false,
             navList: [
                 // {
                 //     name: '动态',
@@ -123,7 +139,7 @@ export default {
             return this.$route.params.userId;
         },
         zone() {
-            return `${this.type}${this.userId}`;
+            return `${this.zoneType}${this.userId}`;
         }
     },
     watch: {
@@ -135,6 +151,13 @@ export default {
         }
     },
     methods: {
+        handleScroll(val) {
+            if (val > 267) {
+                this.isFixed = true;
+            } else {
+                this.isFixed = false;
+            }
+        },
         // 用户信息
         getZoneUserInfo(followUserId) {
             const params = {

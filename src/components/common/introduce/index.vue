@@ -20,7 +20,7 @@
         <el-carousel-item>
             <div class="title"><span>I`NOTE</span>知识分享与交流社区</div>
             <div class="des">知识点 <i>太多</i>？</div>
-            <div class="des">把文章加入 <i>专题</i>！</div>
+            <div class="des">把文章收入 <i>专题</i>！</div>
             <div class="btn" @click="handleGoPath(`/zone/${currentUserId}/topic`)">创建专题 <em class="icon icon-jiantou-right"></em></div>
         </el-carousel-item>
         <el-carousel-item>

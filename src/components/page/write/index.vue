@@ -122,7 +122,7 @@
                                     :disabled="!form.isPublish"
                                     command="addTopic"
                                     divided
-                                    icon="icon icon-jia">加入专题</el-dropdown-item>
+                                    icon="icon icon-jia">收入专题</el-dropdown-item>
                                 <el-dropdown-item
                                     v-if="form.isPublish"
                                     command="cancelPublish"

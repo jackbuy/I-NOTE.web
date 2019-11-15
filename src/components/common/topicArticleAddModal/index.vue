@@ -50,7 +50,7 @@ export default {
             return this.value;
         },
         modalTitle() {
-            return this.createTopic ? '创建专题' : '加入专题';
+            return this.createTopic ? '创建专题' : '收入专题';
         }
     },
     data() {

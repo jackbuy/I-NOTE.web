@@ -1,5 +1,5 @@
 /**
- * 加入专题
+ * 收入专题
  */
 
 import { mapGetters } from 'vuex';
@@ -42,7 +42,7 @@ export default {
                 }).catch(() => {});
             }
         },
-        // (取消)加入专题
+        // (取消)收入专题
         handleAddToTopic(row) {
             const { _id, isTopic } = row;
             if (!isTopic) {

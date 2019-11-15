@@ -25,16 +25,6 @@
                 </button>
                 <div class="title">收藏</div>
             </div>
-            <!-- <div>
-                <button
-                    :disabled="loading"
-                    :class="{'active': isCollect}"
-                    title="加入专题"
-                    @click="handleCollect(isCollect)">
-                    <i class="icon icon-jia"></i>
-                </button>
-                <div class="title">加专题</div>
-            </div> -->
         </div>
         <card slot="content" :visible-header="true">
             <article-content

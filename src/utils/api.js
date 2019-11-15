@@ -72,7 +72,7 @@ export default {
     topicQuery: (params) => http('post', `${apiBaseUrl}/topic/query`, params),
     // 我的专题
     topicUserQuery: (params) => http('post', `${apiBaseUrl}/topic/user/query`, params),
-    // 我的专题 - 返回文章是否加入专题
+    // 我的专题 - 返回文章是否收入专题
     getTopicList: (params) => http('post', `${apiBaseUrl}/topic/user/list`, params),
     // 专题推荐
     topicRecommend: () => http('get', `${apiBaseUrl}/topic/recommend`),

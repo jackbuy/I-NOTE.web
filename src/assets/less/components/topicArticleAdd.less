@@ -12,11 +12,20 @@
                 color: @fontMainColor;
                 &.add{
                     color: @fontColor;
+                    background: @formBgColor;
+                    margin-bottom: 5px;
+                    &:hover{
+                        color: @fontMainColor;
+                        i{
+                            color: @fontMainColor;
+                        }
+                    }
                 }
                 i{
                     font-size: 14px;
                     color: @fontColor;
                     margin-right: 6px;
+                    transition: all 0.3s;
                 }
                 &.active{
                     i{

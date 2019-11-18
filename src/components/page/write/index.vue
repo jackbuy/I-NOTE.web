@@ -88,9 +88,11 @@
                     class="write__header">
                     <div class="write__header-input">
                         <input
+                            ref="title"
                             v-model="form.title"
                             type="text"
-                            placeholder="输入标题...">
+                            placeholder="输入标题..."
+                            @focus="focus($event)">
                     </div>
                     <div class="write__header-menu">
                         <span v-if="tips">
@@ -267,6 +269,7 @@ export default {
             isHas: true,
             saved: false,
             timer: null,
+            defaultTitle: '未命名文章',
             listData: [], // 文章列表
             listLoading: false,
             changeCount: 0, // 监听文章改变的数量，解决页面刷新，读取详情数据，会多发一次请求的问题
@@ -345,6 +348,10 @@ export default {
         ...mapMutations({
             isHiddenHeader: IS_HIDDEN_HEADER
         }),
+        // 获得焦点调用focus事件，然后把event传进去，调用select()选中文本
+        focus(event) {
+            event.currentTarget.select();
+        },
         // 分组列表
         getCateList(type) {
             api.articleCateQuery().then((res) => {
@@ -502,6 +509,11 @@ export default {
                 this.isSaving = false;
                 this.isLoadingDetail = false;
                 this.$nextTick(this.setH);
+                this.$nextTick(() => {
+                    if (title === this.defaultTitle) {
+                        this.$refs.title.focus();
+                    }
+                });
             }).catch(() => {
                 this.isHas = false;
                 this.isSaving = false;
@@ -516,7 +528,7 @@ export default {
         handleAdd() {
             const { _id, type } = this.cateActive;
             const params = {
-                title: '未命名文章'
+                title: this.defaultTitle
             };
             if (type !== 'default') params.articleCateId = _id;
             this.isSaving = true;

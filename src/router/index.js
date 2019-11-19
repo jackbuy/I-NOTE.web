@@ -13,6 +13,7 @@ const TagArticle = () => import('@/components/page/tagArticle');
 const Topic = () => import('@/components/page/topic');
 const TopicArticle = () => import('@/components/page/topicArticle');
 const TopicWrite = () => import('@/components/page/topicWrite');
+const TopicArticleDetail = () => import('@/components/page/topicArticleDetail');
 const Draft = () => import('@/components/page/draft');
 const Zone = () => import('@/components/page/zone');
 const Settings = () => import('@/components/page/settings');
@@ -121,6 +122,12 @@ export default new Router({
                     meta: { title: '设置', requireAuth: true }
                 }
             ]
+        },
+        {
+            path: '/topic/:topicId/detail/:articleId',
+            name: 'topicArticleDetail',
+            component: TopicArticleDetail,
+            meta: { title: '专题阅读' }
         },
         // 路由重定向404
         {

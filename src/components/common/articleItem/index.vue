@@ -15,7 +15,9 @@
                 <span>{{ username }}</span>
             </div>
             <div class="content-title">
-                <span @click="handleDetail(articleId)">{{ title }}</span>
+                <slot name="title" :row="item">
+                    <span @click="handleDetail(articleId)">{{ title }}</span>
+                </slot>
             </div>
             <div class="content-description">{{ description }}</div>
             <div class="content-info">

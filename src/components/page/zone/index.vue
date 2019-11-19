@@ -18,54 +18,15 @@
             :is-fixed="isFixed">
         </user-avatar>
 
-        <zone-article-list
+        <component
             slot="content"
-            v-if="zoneType === 'article'"
+            :is="currentComponent"
             :type="zoneType"
             :user-id="userId"
             :current-user-id="currentUserId"
             @scroll="handleScroll">
-        </zone-article-list>
-        <zone-topic-list
-            v-if="zoneType === 'topic'"
-            slot="content"
-            :type="zoneType"
-            :user-id="userId"
-            :current-user-id="currentUserId"
-            @scroll="handleScroll">
-        </zone-topic-list>
-        <zone-comment-list
-            v-if="zoneType === 'comment'"
-            slot="content"
-            :type="zoneType"
-            :user-id="userId"
-            :current-user-id="currentUserId"
-            @scroll="handleScroll">
-        </zone-comment-list>
-        <zone-collect-list
-            v-if="zoneType === 'collect'"
-            slot="content"
-            :type="zoneType"
-            :user-id="userId"
-            :current-user-id="currentUserId"
-            @scroll="handleScroll">
-        </zone-collect-list>
-        <zone-follow-list
-            v-if="zoneType === 'follow'"
-            slot="content"
-            :type="zoneType"
-            :user-id="userId"
-            :current-user-id="currentUserId"
-            @scroll="handleScroll">
-        </zone-follow-list>
-        <zone-fans-list
-            v-if="zoneType === 'fans'"
-            slot="content"
-            :type="zoneType"
-            :user-id="userId"
-            :current-user-id="currentUserId"
-            @scroll="handleScroll">
-        </zone-fans-list>
+        </component>
+
     </zone-layout>
 </template>
 
@@ -96,6 +57,7 @@ export default {
         return {
             userInfo: {},
             isFixed: false,
+            currentComponent: 'ZoneArticleList',
             navList: [
                 // {
                 //     name: '动态',
@@ -146,6 +108,18 @@ export default {
         userId: {
             handler(n, o) {
                 this.getZoneUserInfo(n);
+            },
+            immediate: true
+        },
+        zoneType: {
+            handler(n, o) {
+                if (n === o) return;
+                if (n === 'article') this.currentComponent = 'ZoneArticleList';
+                if (n === 'comment') this.currentComponent = 'ZoneCommentList';
+                if (n === 'topic') this.currentComponent = 'ZoneTopicList';
+                if (n === 'follow') this.currentComponent = 'ZoneFollowList';
+                if (n === 'collect') this.currentComponent = 'ZoneCollectList';
+                if (n === 'fans') this.currentComponent = 'ZoneFansList';
             },
             immediate: true
         }

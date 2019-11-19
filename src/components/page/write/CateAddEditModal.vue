@@ -5,7 +5,8 @@
         @handleClose="handleClose">
         <el-input
             v-model.trim="form.title"
-            placeholder="请输入分组名称"></el-input>
+            placeholder="请输入分组名称"
+            @keyup.enter.native="handleSave"></el-input>
         <el-button
             :disabled="!form.title"
             class="mt15"

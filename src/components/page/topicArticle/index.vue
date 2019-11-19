@@ -16,6 +16,9 @@
                     <article-item
                         :item="scope.row.articleId"
                         :is-action="isAction">
+                        <template slot="title" slot-scope="scope">
+                            <span @click="handleDetail(scope.row._id)">{{ scope.row.title }}</span>
+                        </template>
                         <template slot-scope="scope">
                             <div class="menu">
                                 <button @click="handleDelete(scope.row._id)">
@@ -138,6 +141,10 @@ export default {
         }
     },
     methods: {
+        handleDetail(articleId) {
+            const path = `/topic/${this.topicId}/detail/${articleId}`;
+            this.$router.push(path);
+        },
         handleAction() {
             this.isAction = !this.isAction;
         },

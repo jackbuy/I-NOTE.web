@@ -16,9 +16,9 @@
                     <article-item
                         :item="scope.row.articleId"
                         :is-action="isAction">
-                        <template slot="title" slot-scope="scope">
+                        <!-- <template slot="title" slot-scope="scope">
                             <span @click="handleDetail(scope.row._id)">{{ scope.row.title }}</span>
-                        </template>
+                        </template> -->
                         <template slot-scope="scope">
                             <div class="menu">
                                 <button @click="handleDelete(scope.row._id)">
@@ -45,7 +45,10 @@
                 </div>
             </template>
             <template>
-                <div v-if="img" class="topic-img" :style="{backgroundImage: 'url(' + img + ')'}"></div>
+                <div v-if="img" class="topic-img" @click="handleRead">
+                    <div class="icon-box"><i class="icon icon-yuedu1"></i>专题阅读</div>
+                    <div class="img" :style="{backgroundImage: 'url(' + img + ')'}"></div>
+                </div>
                 <div v-if="description" class="topic-description">{{ description }}</div>
                 <div v-if="articleCount > 0" class="topic-count">文章 {{ articleCount }} 篇</div>
                 <div v-if="followCount > 0" class="topic-count">关注 {{ followCount }} 人</div>
@@ -141,7 +144,9 @@ export default {
         }
     },
     methods: {
-        handleDetail(articleId) {
+        handleRead() {
+            if (this.listData && this.listData.length === 0) return;
+            const articleId = this.listData[0].articleId._id;
             const path = `/topic/${this.topicId}/detail/${articleId}`;
             this.$router.push(path);
         },

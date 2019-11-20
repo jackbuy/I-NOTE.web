@@ -18,9 +18,9 @@
                 <i class="icon icon-write"></i>
             </span>
             <!-- <span
-                class="theme"
+                :class="{'active': isActive === 'letter'}"
                 title="私信"
-                @click="handleTheme()">
+                @click="handleRoutePush('/letter')">
                 <i class="icon icon-sixin"></i>
             </span> -->
             <span

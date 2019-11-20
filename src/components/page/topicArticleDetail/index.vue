@@ -1,5 +1,5 @@
 <template>
-    <layout :is-has="isHas" :loading="loading">
+    <layout>
         <card slot="list" :padding="false" class="fixed mb0">
             <template slot="menu">
                 <div class="menu">
@@ -21,8 +21,9 @@
                 </ul>
             </div>
         </card>
-        <card slot="content" :visible-header="true" class="mb0">
+        <card slot="content" :visible-header="true" class="mb0 content">
             <article-content
+                v-loading="loading"
                 :title="title"
                 :content="content"
                 :viewCount="viewCount"
@@ -48,8 +49,7 @@ export default {
     },
     data() {
         return {
-            isHas: true,
-            loading: false,
+            loading: true,
             detail: {},
             listData: [],
             pageConfig: {
@@ -102,6 +102,10 @@ export default {
             immediate: true
         }
     },
+    mounted() {
+        this.setEditorHeight();
+        window.addEventListener('resize', this.setEditorHeight);
+    },
     methods: {
         handleTopicArticle() {
             const path = `/topic/${this.topicId}`;
@@ -120,29 +124,32 @@ export default {
                 pageSize: this.pageConfig.pageSize,
                 currentPage: this.pageConfig.currentPage++
             };
-            this.loading = true;
             api.topicArticleQuery(params).then((res) => {
-                this.loading = false;
                 if (res.data.length > 0) {
                     this.listData.push(...res.data);
                 } else {
                     this.noMore = true;
                 }
             }).catch(() => {
-                this.loading = false;
             });
         },
         getTopicArticleDetail(articleId) {
-            this.pageLoading = true;
             const params = { articleId };
-            this.isHas = false;
             this.loading = true;
             api.articlePublishDetail(params).then((res) => {
                 this.detail = res.data;
-                // this.setDocumentTitle(res.data.title);
-                this.isHas = true;
+                this.loading = false;
+            }).catch(() => {
                 this.loading = false;
             });
+        },
+        // 设置编辑器高度
+        setEditorHeight() {
+            const list = document.querySelector('.list');
+            list.style.height = window.innerHeight - 45 - 16 + 'px';
+
+            const content = document.querySelector('.content');
+            content.style.minHeight = window.innerHeight - 16 + 'px';
         }
     }
 };

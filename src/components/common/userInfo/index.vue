@@ -18,6 +18,11 @@
                 <i v-if="!isFollow">关注</i>
                 <i v-else>已关注</i>
             </span>
+            <span
+                v-if="userId !== currentUserId"
+                @click="handleLetter(userId)">
+                <i>私信</i>
+            </span>
         </div>
         <div class="count">
             <div class="list" @click="handleZone('article')">
@@ -87,6 +92,9 @@ export default {
     methods: {
         handleFollow(followUserId) {
             this.$emit('doFollow', followUserId);
+        },
+        handleLetter(userId) {
+            this.$router.push(`/letter/${userId}`).catch(() => {});
         },
         handleZone(type) {
             this.$router.push(`/zone/${this.userId}/${type}`).catch(() => {});

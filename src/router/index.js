@@ -14,6 +14,7 @@ const Topic = () => import('@/components/page/topic');
 const TopicArticle = () => import('@/components/page/topicArticle');
 const TopicWrite = () => import('@/components/page/topicWrite');
 const TopicArticleDetail = () => import('@/components/page/topicArticleDetail');
+const Letter = () => import('@/components/page/letter');
 const Draft = () => import('@/components/page/draft');
 const Zone = () => import('@/components/page/zone');
 const Settings = () => import('@/components/page/settings');
@@ -102,6 +103,18 @@ export default new Router({
                     name: 'follow',
                     component: Draft,
                     meta: { title: '关注', requireAuth: true }
+                },
+                {
+                    path: '/letter',
+                    name: 'letter',
+                    component: Letter,
+                    meta: { title: '私信', requireAuth: true }
+                },
+                {
+                    path: '/letter/:userId',
+                    name: 'letterAdd',
+                    component: Letter,
+                    meta: { title: '私信', requireAuth: true }
                 },
                 {
                     path: '/msg',

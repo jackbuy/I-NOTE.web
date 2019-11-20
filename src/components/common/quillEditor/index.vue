@@ -144,7 +144,7 @@ export default {
                 this.addImgRange = this.$refs.quillEditor.quill.getSelection();
                 let index = this.addImgRange != null ? this.addImgRange.index : 0;
                 this.$refs.quillEditor.quill.insertEmbed(index, 'image', value);
-                this.$refs.quillEditor.quill.setSelection(length + 1); // 光标位置加1
+                this.$refs.quillEditor.quill.setSelection(index + 1); // 光标位置加1
             }
         }
     }

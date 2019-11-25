@@ -138,6 +138,16 @@ export default {
     commentDelete: (commentId, params) => http('post', `${apiBaseUrl}/comment/delete/${commentId}`, params),
 
     // 单文件上传
-    fileSingleUpload: (params) => http('post', `${apiBaseUrl}/file/single/upload`, params)
+    fileSingleUpload: (params) => http('post', `${apiBaseUrl}/file/single/upload`, params),
+
+    // 私信
+    // 新增编辑
+    letterUserAdd: (toUserId) => http('post', `${apiBaseUrl}/letterUser/add/${toUserId}`),
+    // 列表
+    letterUserQuery: (params) => http('post', `${apiBaseUrl}/letterUser/query`, params),
+    // 列表
+    letterQuery: (params) => http('post', `${apiBaseUrl}/letter/query`, params),
+    // 新增
+    letterAdd: (params) => http('post', `${apiBaseUrl}/letter/add`, params)
 
 };

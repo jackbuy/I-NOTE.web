@@ -17,12 +17,12 @@
                 @click="handleRoutePush('/write', isActive === 'write')">
                 <i class="icon icon-write"></i>
             </span>
-            <!-- <span
-                :class="{'active': isActive === 'letter'}"
+            <span
+                :class="{'new-msg': isLetter, 'active': isActive === 'letter'}"
                 title="私信"
                 @click="handleRoutePush('/letter')">
                 <i class="icon icon-sixin"></i>
-            </span> -->
+            </span>
             <span
                 :class="{'new-msg': isNewMsg, 'active': isActive === 'msg'}"
                 title="消息"
@@ -41,7 +41,7 @@
                 <el-avatar v-if="userImg" :class="{'active': isActive === 'zone' || isActive === 'settings'}" :size="32" fit="cover" :src="userImg" class="user"></el-avatar>
                 <el-avatar v-else :class="{'active': isActive === 'zone' || isActive === 'settings'}" :size="32" class="user"><i class="icon icon-yonghu"></i></el-avatar>
                 <el-dropdown-menu>
-                    <el-dropdown-item command="zone"><i class="icon icon-yonghu"></i> 我的</el-dropdown-item>
+                    <el-dropdown-item command="zone"><i class="icon icon-yonghu"></i> 空间</el-dropdown-item>
                     <el-dropdown-item divided command="settings"><i class="icon icon-settings-o"></i> 设置</el-dropdown-item>
                     <el-dropdown-item command="loginOut"><i class="icon icon-tuichu"></i> 退出</el-dropdown-item>
                 </el-dropdown-menu>
@@ -62,6 +62,10 @@ export default {
     name: 'LayoutHeaderUser',
     props: {
         newMsg: {
+            type: Object,
+            default: () => {}
+        },
+        socketLetter: {
             type: Object,
             default: () => {}
         },
@@ -87,6 +91,22 @@ export default {
                     }
                 }
             }
+        },
+        isLetter() {
+            // const { type, data } = this.socketLetter;
+            // console.log(type);
+            // console.log(data);
+            return '';
+            // if (type && data) {
+            //     const { toUserId, msgCount } = data;
+            //     if (this.currentUserId === toUserId) {
+            //         if (msgCount > 0) {
+            //             return true;
+            //         } else {
+            //             return false;
+            //         }
+            //     }
+            // }
         },
         userName() {
             return this.userInfo.nickname ? this.userInfo.nickname : this.userInfo.username;

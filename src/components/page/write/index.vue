@@ -225,7 +225,7 @@ export default {
         articleContent,
         Card
     },
-    mixins: [ message, topicArticleAdd, fullScreen ],
+    mixins: [ message, fullScreen, topicArticleAdd ],
     data() {
         return {
             activeTabName: 'all',

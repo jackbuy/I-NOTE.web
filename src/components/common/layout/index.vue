@@ -15,7 +15,8 @@
             <layout-header-user
                 :is-active="activePath"
                 :current-user-id="currentUserId"
-                :newMsg="socketMsg">
+                :new-msg="socketMsg"
+                :socket-letter="socketLetter">
         </layout-header-user>
         </layout-header>
         <layout-content :class="{'header-hidden': isHiddenHeader, 'header-fixed': !isHiddenHeader}">
@@ -84,6 +85,7 @@ export default {
         ...mapState({
             isHiddenHeader: state => state.isHiddenHeader,
             socketMsg: state => state.socketMsg,
+            socketLetter: state => state.socketLetter,
             socketPost: state => state.socketPost
         }),
         ...mapGetters({

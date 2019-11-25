@@ -106,6 +106,9 @@ export default {
         this.setEditorHeight();
         window.addEventListener('resize', this.setEditorHeight);
     },
+    destroyed() {
+        window.removeEventListener('resize', this.setEditorHeight);
+    },
     methods: {
         handleTopicArticle() {
             const path = `/topic/${this.topicId}`;

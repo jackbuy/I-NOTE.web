@@ -18,6 +18,9 @@ export default {
     [C.SOCKET_NEW_POST_RESET](state, payload) {
         state.socketPost = {};
     },
+    [C.SOCKET_NEW_LETTER](state, payload) {
+        state.socketLetter = payload;
+    },
     // userInfo
     [C.GET_USER_INFO](state, payload) {
         state.userInfo = payload;

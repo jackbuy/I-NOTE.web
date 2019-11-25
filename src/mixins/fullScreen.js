@@ -1,5 +1,5 @@
 /**
- * 全屏
+ * 全屏切换
  */
 
 export default {
@@ -9,24 +9,19 @@ export default {
         };
     },
     mounted() {
-        // let _this = this;
-        // window.onresize = () => {
-        //     // 全屏下监听是否按下了ESC键
-        //     if (!_this.checkFull()) {
-        //         // 要执行的动作
-        //         _this.fullscreen = false;
-        //         console.log(2);
-        //     }
-        // };
-        window.addEventListener('resize', () => {
+        window.addEventListener('resize', this.func);
+    },
+    destroyed() {
+        window.removeEventListener('resize', this.func);
+    },
+    methods: {
+        func() {
             // 全屏下监听是否按下了ESC键
             if (!this.checkFull()) {
                 // 要执行的动作
                 this.fullscreen = false;
             }
-        });
-    },
-    methods: {
+        },
         checkFull() {
             var isFull = document.fullscreenEnabled || window.fullScreen || document.webkitIsFullScreen || document.msFullscreenEnabled;
             if (isFull === undefined) isFull = false;

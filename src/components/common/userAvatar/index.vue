@@ -13,6 +13,12 @@
             <div v-if="!isSimple" class="menu">
                 <span
                     v-if="userId !== currentUserId"
+                    class="default"
+                    @click="handleLetter(userId)">
+                    <i>私信</i>
+                </span>
+                <span
+                    v-if="userId !== currentUserId"
                     :class="{'active': isFollow}"
                     @click="handleFollow(userId)">
                     <i v-if="!isFollow">关注</i>
@@ -84,6 +90,9 @@ export default {
         }
     },
     methods: {
+        handleLetter(userId) {
+            this.$router.push(`/letter/${userId}`).catch(() => {});
+        },
         handleFollow(followUserId) {
             this.$emit('doFollow', followUserId);
         },

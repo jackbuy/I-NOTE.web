@@ -32,7 +32,7 @@ export default {
     },
     methods: {
         doDetail(articleId) {
-            let path = `/detail/${articleId}`;
+            let path = `/p/${articleId}`;
             this.$router.push(path);
         }
     }

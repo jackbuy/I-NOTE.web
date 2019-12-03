@@ -354,13 +354,13 @@
     
     @media (max-width: @mediaWidth) {
         .write{
-            width: 98%;
-            margin: 0 auto;
-            &__header{
-                position: fixed;
-                top: 0px;
-                .label{
-                    font-size: 12px;
+            &__side{
+                display: none;
+            }
+            &__content{
+                width: 100%;
+                .toggle-btn{
+                    display: none;
                 }
             }
         }

@@ -27,7 +27,7 @@ export default {
     },
     methods: {
         handleDetail(articleId) {
-            this.$router.push(`/detail/${articleId}`);
+            this.$router.push(`/p/${articleId}`);
         }
     }
 };

@@ -47,7 +47,7 @@
                 padding: 0 20px;
                 .name{
                     font-size: 16px;
-                    font-weight: 400;
+                    font-weight: 600;
                     color: @fontMainColor;
                     .ovf-1();
                 }
@@ -143,9 +143,12 @@
     
     @media (max-width: @mediaWidth) {
         .user-avatar{
-            width: 98%;
-            margin: 0 auto;
-            margin-top: 100px !important;
+            &.fixed{
+                top: 50px;
+                width: 100%;
+                left: 0;
+                right: 0;
+            }
             .el-avatar{
                 top: -30px !important;
             }
@@ -156,6 +159,10 @@
                 padding-top: 80px;
                 .nav{
                     width: 100%;
+                    > div > div{
+                        padding: 6px 10px;
+                        font-size: 12px;
+                    }
                 }
             }
         }

@@ -138,7 +138,7 @@ export default {
     },
     methods: {
         handleDetail(articleId) {
-            let path = this.isPublish ? `/detail/${articleId}` : `/write/${articleId}`;
+            let path = this.isPublish ? `/p/${articleId}` : `/write/${articleId}`;
             this.handleRouterPush(path);
         },
         handleUser(userId) {

@@ -39,8 +39,8 @@ export default new Router({
                     meta: { title: '发现' }
                 },
                 {
-                    path: '/detail/:articleId',
-                    name: 'detail',
+                    path: '/p/:articleId',
+                    name: 'publish',
                     component: Detail,
                     meta: { title: '详情' }
                 },

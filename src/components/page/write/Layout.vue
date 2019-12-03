@@ -1,6 +1,6 @@
 <template>
     <page-loading :loading="pageLoading">
-        <div v-if="isHas">
+        <template v-if="isHas">
             <div v-show="!presentation" class="write">
                 <div v-show="!toggle" class="write__side">
                     <slot name="side"></slot>
@@ -22,7 +22,7 @@
             <div v-if="presentation" class="pre-view">
                 <slot name="presentation"></slot>
             </div>
-        </div>
+        </template>
         <div v-else class="no-has">文章不存在</div>
     </page-loading>
 </template>

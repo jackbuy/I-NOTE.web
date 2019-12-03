@@ -9,7 +9,7 @@
             <div class="title"><span>I`NOTE</span>知识分享与交流社区</div>
             <div class="des">觉得有 <i>疑惑</i>？</div>
             <div class="des">发个话题和大家一起 <i>讨论</i>！</div>
-            <div class="btn" @click="handleGoPath('/write')">发话题 <em class="icon icon-jiantou-right"></em></div>
+            <div class="btn" @click="handleGoPath('/write')">发帖子 <em class="icon icon-jiantou-right"></em></div>
         </el-carousel-item>
         <el-carousel-item>
             <div class="title"><span>I`NOTE</span>知识分享与交流社区</div>
@@ -23,12 +23,12 @@
             <div class="des">把文章收入 <i>专题</i>！</div>
             <div class="btn" @click="handleGoPath(`/zone/${currentUserId}/topic`)">创建专题 <em class="icon icon-jiantou-right"></em></div>
         </el-carousel-item>
-        <el-carousel-item>
+        <!-- <el-carousel-item>
             <div class="title"><span>I`NOTE</span>知识分享与交流社区</div>
             <div class="des">对系统交互有 <i>意见</i>？</div>
             <div class="des"><i>提</i>出来！</div>
             <div class="btn" @click="handleGoPath('/write')">意见反馈 <em class="icon icon-jiantou-right"></em></div>
-        </el-carousel-item>
+        </el-carousel-item> -->
     </el-carousel>
 </template>
 

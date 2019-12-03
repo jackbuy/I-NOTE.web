@@ -1,5 +1,5 @@
 <template>
-    <layout :loading="loading">
+    <layout :loading="loading" :user-list="userList">
         <card slot="list" :padding="false" class="fixed mb0" title="联系人">
             <div class="letter__side-user-list">
                 <ul>
@@ -7,14 +7,14 @@
                         v-for="item in userList"
                         :key="item._id"
                         :class="{'active': item.toUserId._id === userId || item.fromUserId._id === userId}"
-                        @click="handleLetter(item.toUserId._id === currentUserId ? item.fromUserId._id : item.toUserId._id)">
+                        @click="handleLetter(item)">
                         <div class="title">{{ item.toUserId._id === currentUserId ? item.fromUserId.nickname : item.toUserId.nickname }}</div>
                         <div class="new-letter" v-if="item._id === emitLetterUserId"><span>new</span></div>
                     </li>
                 </ul>
             </div>
         </card>
-        <card v-if="userId" slot="content" :padding="false" class="mb0" title="对话">
+        <card v-if="userId" slot="content" :padding="false" class="mb0" :title="`与 ${toUser.nickname} 对话`">
             <div class="letter__content-letter-list">
                 <ul>
                     <li
@@ -29,14 +29,11 @@
             <div class="letter__content-letter-input">
                 <el-input
                     v-model="form.content"
+                    :rows="5"
                     type="textarea"
-                    placeholder="对话内容">
+                    placeholder="输入内容( 回车发送 )"
+                    @keyup.enter.native="handleSend">
                 </el-input>
-                <el-button
-                    type="primary"
-                    @click="handleSend">
-                    发送
-                </el-button>
             </div>
         </card>
     </layout>
@@ -58,9 +55,9 @@ export default {
         return {
             loading: false,
             form: {},
-            userList: [],
-            letterList: [],
-            // toUser: {},
+            userList: [], // 用户列表
+            letterList: [], // 对话列表
+            toUser: {}, // 与谁对话
             letterUserId: '', // 用户对话ID
             emitLetterUserId: '' // 新消息触发用户对话ID
         };
@@ -87,8 +84,12 @@ export default {
     watch: {
         userId: {
             handler(n, o) {
-                if (n === o) return;
-                this.letterUserAdd(n);
+                if (!n) {
+                    this.getLetterUser();
+                } else {
+                    if (n === o) return;
+                    this.letterUserAdd(n);
+                }
             },
             immediate: true
         },
@@ -106,16 +107,22 @@ export default {
             immediate: true
         }
     },
-    mounted() {
-        if (!this.userId) {
-            this.getLetterUser();
-        }
-    },
     methods: {
         // 获取聊天人员
         getLetterUser() {
             api.letterUserQuery().then((res) => {
                 this.userList = res.data;
+                if (!this.letterUserId && this.userList.length > 0) {
+                    this.getLetterList(this.userList[0]._id);
+                    this.handleLetter(this.userList[0], 'replace');
+                }
+                if (this.letterUserId) {
+                    let letterUser = {};
+                    this.userList.map((item) => {
+                        if (item._id === this.letterUserId) letterUser = item;
+                    });
+                    this.toUser = letterUser.toUserId._id === this.currentUserId ? letterUser.fromUserId : letterUser.toUserId;
+                }
             }).catch(() => {
             });
         },
@@ -130,14 +137,17 @@ export default {
             });
         },
         // 开启对话
-        handleLetter(toUserId) {
-            // const { toUserId, fromUserId } = item;
-            // this.fromUser = fromUserId;
-            // this.toUser = toUserId;
-            // const { _id } = toUserId;
+        handleLetter(item, type) {
+            const toUserId = item.toUserId._id === this.currentUserId ? item.fromUserId._id : item.toUserId._id;
+
+            this.toUser = item.toUserId._id === this.currentUserId ? item.fromUserId : item.toUserId;
 
             let path = `/letter/${toUserId}`;
-            this.$router.push(path).catch(() => {});
+            if (type && type === 'replace') {
+                this.$router.replace(path).catch(() => {});
+            } else {
+                this.$router.push(path).catch(() => {});
+            }
         },
         // 获取对话内容
         getLetterList(letterUserId) {

@@ -13,14 +13,16 @@
             </span>
             <span
                 :class="{'active': isActive === 'write'}"
+                class="write"
                 title="写文章"
                 @click="handleRoutePush('/write', isActive === 'write')">
                 <i class="icon icon-write"></i>
             </span>
             <span
                 :class="{'new-msg': isLetter, 'active': isActive === 'letter'}"
+                class="letter"
                 title="私信"
-                @click="handleRoutePush('/letter')">
+                @click="handleRoutePush('/letter', isActive === 'letter')">
                 <i class="icon icon-sixin"></i>
             </span>
             <span

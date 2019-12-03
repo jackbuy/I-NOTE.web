@@ -1,11 +1,14 @@
 <template>
     <page-loading :loading="loading" class="letter">
-        <div class="letter__side">
-            <slot name="list"></slot>
-        </div>
-        <div class="letter__content">
-            <slot name="content"></slot>
-        </div>
+        <template v-if="userList && userList.length > 0">
+            <div class="letter__side">
+                <slot name="list"></slot>
+            </div>
+            <div class="letter__content">
+                <slot name="content"></slot>
+            </div>
+        </template>
+        <div v-else class="no-has">暂无私信！</div>
     </page-loading>
 </template>
 
@@ -16,7 +19,8 @@ export default {
         PageLoading
     },
     props: {
-        loading: Boolean
+        loading: Boolean,
+        userList: Array
     }
 };
 </script>

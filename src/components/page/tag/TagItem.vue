@@ -1,16 +1,18 @@
 <template>
     <div class="tag-list-item">
-        <div
-            class="title"
-            @click="handleArticle(tagId)">
-            {{ title }}
-        </div>
-        <div class="count">{{ count }}</div>
-        <div
-            class="follow"
-            @click="handleFollow(tagId)">
-            <span v-if="isFollow" :class="{'active': isFollow}">已关注</span>
-            <span v-else>关注</span>
+        <div class="inner">
+            <div
+                class="title"
+                @click="handleArticle(tagId)">
+                {{ title }}
+            </div>
+            <div class="count">{{ count }}</div>
+            <div
+                class="follow"
+                @click="handleFollow(tagId)">
+                <span v-if="isFollow" :class="{'active': isFollow}">已关注</span>
+                <span v-else>关注</span>
+            </div>
         </div>
     </div>
 </template>

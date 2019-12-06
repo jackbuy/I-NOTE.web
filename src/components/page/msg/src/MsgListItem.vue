@@ -5,31 +5,31 @@
             <i v-else class="icon icon-yidu"></i>
             <template v-if="data.type === 0">
                 <span class="user" @click="handleRouter(`/zone/${createUserId}/article`)">{{ createUser }}</span>
-                <span>{{ msgTime }}</span>
-                <span>{{ msgType }}</span>
+                <span :class="{'not-read': !isRead}">{{ msgTime }}</span>
+                <span :class="{'not-read': !isRead}">{{ msgType }}</span>
                 <span class="article" @click="handleRouter(`/detail/${likeArticleId}`)">{{ likeArticleTitle }}</span>
             </template>
             <template v-if="data.type === 1">
                 <span class="user" @click="handleRouter(`/zone/${createUserId}/article`)">{{ createUser }}</span>
-                <span>{{ msgTime }}</span>
-                <span>{{ msgType }}</span>
+                <span :class="{'not-read': !isRead}">{{ msgTime }}</span>
+                <span :class="{'not-read': !isRead}">{{ msgType }}</span>
                 <span class="article" @click="handleRouter(`/detail/${collectArticleId}`)">{{ collectArticleTitle }}</span>
             </template>
             <template v-if="data.type === 2">
                 <span class="user" @click="handleRouter(`/zone/${createUserId}/article`)">{{ createUser }}</span>
-                <span>{{ msgTime }}</span>
-                <span>{{ msgType }}</span>
+                <span :class="{'not-read': !isRead}">{{ msgTime }}</span>
+                <span :class="{'not-read': !isRead}">{{ msgType }}</span>
             </template>
             <template v-if="data.type === 3">
                 <span class="user" @click="handleRouter(`/zone/${createUserId}/article`)">{{ createUser }}</span>
-                <span>{{ msgTime }}</span>
-                <span>{{ msgType }}</span>
+                <span :class="{'not-read': !isRead}">{{ msgTime }}</span>
+                <span :class="{'not-read': !isRead}">{{ msgType }}</span>
                 <span class="article" @click="handleRouter(`/topic/${topicId}`)">{{ topicTitle }}</span>
             </template>
         </div>
         <div class="item-menu">
             <span
-                v-if="!isRead"
+                v-if="!isRead && activeTabName === 'all'"
                 title="标记为已读"
                 @click="handleRead(messageId)">
                 <i class="icon icon-biaoji"></i>
@@ -51,7 +51,8 @@ export default {
         data: {
             type: Object,
             default: () => ({})
-        }
+        },
+        activeTabName: String
     },
     computed: {
         messageId() {

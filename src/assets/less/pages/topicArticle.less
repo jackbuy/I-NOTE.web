@@ -39,7 +39,7 @@
                     cursor: pointer;
                     &:hover{
                         &::after{
-                            background: rgba(0,0,0,.2);
+                            background: rgba(0,0,0,.6);
                         }
                     }
                     &::after{
@@ -60,15 +60,37 @@
                         padding: 6px 8px;
                         z-index: 2;
                         color: #fff;
-                        background: rgba(0,0,0,.5);
+                        background: rgba(0,0,0,.8);
                         display:flex;
                         align-items:center;/*垂直居中*/
                         justify-content: center;/*水平居中*/
                         font-size: 12px;
                         border-radius: 0 15px 15px 0;
-                        i{
+                    }
+                    .read{
+                        position: absolute;
+                        left: 0px;
+                        top: 0;
+                        width: 100%;
+                        height: 100%;
+                        display:flex;
+                        align-items:center;/*垂直居中*/
+                        justify-content: center;/*水平居中*/
+                        z-index: 100;
+                        color: #fff;
+                        font-size: 0;
+                        &:hover{
+                            span{
+                                opacity: 1;
+                            }
+                        }
+                        span{
+                            font-size: 14px;
                             color: #fff;
-                            padding-right: 5px;
+                            opacity: 0;
+                            transition: all 0.3s;
+                            padding: 6px 15px;
+                            border: 1px solid #fff;
                         }
                     }
                     .img{

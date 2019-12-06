@@ -60,8 +60,11 @@ import {
 } from '@/store/mutation-types';
 import { imgBaseUrl } from '@/constants/url-config';
 import api from '@/utils/api';
+import notification from '@/mixins/notification';
+
 export default {
     name: 'LayoutHeaderUser',
+    mixins: [ notification ],
     props: {
         newMsg: {
             type: Object,
@@ -87,6 +90,8 @@ export default {
                 const { toUserId, msgCount } = data;
                 if (this.currentUserId === toUserId) {
                     if (msgCount > 0) {
+                        // 发送桌面通知
+                        this.sendNotification({ body: `您有${msgCount}条未读消息！` });
                         return true;
                     } else {
                         return false;

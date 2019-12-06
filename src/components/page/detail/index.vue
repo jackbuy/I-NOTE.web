@@ -81,6 +81,7 @@ import api from '_u/api';
 import utils from '_u/utils';
 import To from '_u/to';
 import topicArticleAdd from '@/mixins/topicArticleAdd';
+
 export default {
     name: 'ArticleDetail',
     components: {
@@ -91,7 +92,7 @@ export default {
         ArticleComment,
         ArticleContent
     },
-    mixins: [topicArticleAdd],
+    mixins: [ topicArticleAdd ],
     data() {
         return {
             loading: false,

@@ -1,14 +1,14 @@
 <template>
     <msg-layout>
         <card slot="content" :visible-header="true" :padding="false">
-            <tab :activeName="activeTabName" @tabClick="handleTabClick">
+            <tab :active-name="activeTabName" @tabClick="handleTabClick">
                 <tab-label name="all" label="全部"></tab-label>
                 <tab-label name="read" label="已读"></tab-label>
-                <tab-label name="notifications" label="未读"></tab-label>
-                <!-- <tab-label name="like" label="点赞"></tab-label>
+                <tab-label name="notifications" label="未读" divided></tab-label>
+                <tab-label name="like" label="点赞"></tab-label>
                 <tab-label name="collect" label="收藏"></tab-label>
                 <tab-label name="followUser" label="关注"></tab-label>
-                <tab-label name="followTopic" label="专题"></tab-label> -->
+                <tab-label name="followTopic" label="专题"></tab-label>
             </tab>
             <infinite-scroll
                 :loading="loading"
@@ -18,6 +18,7 @@
                 <template slot-scope="scope">
                     <msg-list-item
                         :data="scope.row"
+                        :active-tab-name="activeTabName"
                         @del="handleDelete"
                         @read="handleRead"></msg-list-item>
                 </template>
@@ -49,7 +50,7 @@ export default {
     },
     data() {
         return {
-            activeTabName: 'notifications',
+            activeTabName: 'all',
             listData: [],
             pageConfig: {
                 pageSize: 15,
@@ -131,9 +132,7 @@ export default {
         },
         handleDelete(messageId) {
             api.messageDelete(messageId).then(() => {
-                let _ids = this.listData.map((item) => item._id);
-                let index = _ids.indexOf(messageId);
-                this.listData.splice(index, 1);
+                this.refresh();
                 this.showSuccessMsg('删除成功');
             }).catch(() => {});
         }

@@ -46,7 +46,11 @@
             </template>
             <template>
                 <div v-if="img" class="topic-img" @click="handleRead">
-                    <div class="icon-box"><i class="icon icon-yuedu1"></i>专题阅读</div>
+                    <div class="icon-box">阅读模式</div>
+                    <div class="read">
+                        <!-- <i class="icon icon-yuedu1"></i> -->
+                        <span>开始阅读</span>
+                    </div>
                     <div class="img" :style="{backgroundImage: 'url(' + img + ')'}"></div>
                 </div>
                 <div v-if="description" class="topic-description">{{ description }}</div>

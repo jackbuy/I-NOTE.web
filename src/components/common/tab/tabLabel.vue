@@ -1,5 +1,5 @@
 <template>
-    <span :class="{'active': name === activeName.name}" @click="handleClick">{{ label }}</span>
+    <span :class="{'active': name === activeName.name, 'divided': divided}" @click="handleClick">{{ label }}</span>
 </template>
 
 <script>
@@ -7,7 +7,8 @@ export default {
     name: '',
     props: {
         name: String,
-        label: String
+        label: String,
+        divided: Boolean
     },
     inject: ['activeName'],
     methods: {

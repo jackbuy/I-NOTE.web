@@ -1,15 +1,30 @@
 .tab(){
     .tab{
-        padding: 0 20px;
+        padding: 0 5px;
         border-bottom: 1px solid @borderColor;
+        font-size: 0;
         span{
             display: inline-block;
-            padding: 15px 0;
-            margin-right: 25px;
+            padding: 15px;
             color: @fontSubColor;
             cursor: pointer;
             transition: all 0.3s;
             position: relative;
+            font-size: 14px;
+            // 分割线
+            &.divided{
+                margin-right: 21px;
+                &::before{
+                    content: "";
+                    position: absolute;
+                    right: -11px;
+                    top: 35%;
+                    width: 1px;
+                    height: 30%;
+                    background: @borderColor;
+                    z-index: 10;
+                }
+            }
             &::after{
                 content: "";
                 position: absolute;

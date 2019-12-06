@@ -1,5 +1,19 @@
 <template>
     <layout :is-has="isHas" :loading="pageLoading">
+        <card slot="description" icon="icon icon-zhuanti" :title="topicTitle">
+            <template slot="menu">
+                <div class="menu">
+                    <div v-if="userId !== currentUserId" @click="handleFollow(topicDetail._id, topicDetail.userId._id)" class="menu-btn round">
+                        <span v-if="!topicDetail.isFollow">关注</span>
+                        <span v-else>已关注</span>
+                    </div>
+                    <div v-else class="menu-btn round" @click="handleEdit(topicDetail._id)">编辑</div>
+                </div>
+            </template>
+            <div class="topic-article__content-description">
+                {{ description }}
+            </div>
+        </card>
         <card slot="content" :visible-header="userId !== currentUserId || listData.length === 0" :padding="false">
             <div slot="menu" class="menu">
                 <span
@@ -34,26 +48,15 @@
                 :is-mine="userId === currentUserId">
             </topic-empty>
         </card>
-        <card slot="topicDetail" icon="icon icon-zhuanti" :title="topicTitle">
-            <template slot="menu">
-                <div class="menu">
-                    <div v-if="userId !== currentUserId" @click="handleFollow(topicDetail._id, topicDetail.userId._id)" class="menu-btn round">
-                        <span v-if="!topicDetail.isFollow">关注</span>
-                        <span v-else>已关注</span>
-                    </div>
-                    <div v-else class="menu-btn round" @click="handleEdit(topicDetail._id)">编辑</div>
-                </div>
-            </template>
+        <card slot="topicDetail" visible-header >
             <template>
                 <div v-if="img" class="topic-img" @click="handleRead">
                     <div class="icon-box">阅读模式</div>
                     <div class="read">
-                        <!-- <i class="icon icon-yuedu1"></i> -->
                         <span>开始阅读</span>
                     </div>
                     <div class="img" :style="{backgroundImage: 'url(' + img + ')'}"></div>
                 </div>
-                <div v-if="description" class="topic-description">{{ description }}</div>
                 <div v-if="articleCount > 0" class="topic-count">文章 {{ articleCount }} 篇</div>
                 <div v-if="followCount > 0" class="topic-count">关注 {{ followCount }} 人</div>
                 <div class="topic-time">{{ createTime }}</div>

@@ -33,9 +33,9 @@
                     prop="description">
                     <el-input
                         v-model="form.description"
-                        :rows="4"
+                        :rows="8"
                         type="textarea"
-                        placeholder="输入描述 <=300"></el-input>
+                        placeholder="输入描述 <=500"></el-input>
                 </el-form-item>
                 <el-form-item>
                     <el-button
@@ -74,7 +74,7 @@ export default {
                 ],
                 description: [
                     // { required: true, message: '必填' },
-                    { max: 300, message: '超过最大字符限制300' }
+                    { max: 500, message: '超过最大字符限制500' }
                 ]
             }
         };

@@ -2,6 +2,7 @@
     <page-loading :loading="loading">
         <div v-if="isHas" class="topic-article">
             <div class="topic-article__content">
+                <slot name="description"></slot>
                 <slot name="content"></slot>
             </div>
             <div class="topic-article__side">

@@ -80,6 +80,7 @@ export default {
         }
     },
     methods: {
+        // 提交评论
         handleSaveComment(obj) {
             const params = {
                 articleId: this.articleId,

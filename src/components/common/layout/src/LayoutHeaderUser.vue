@@ -19,15 +19,15 @@
                 <i class="icon icon-write"></i>
             </span>
             <span
-                :class="{'new-msg': isLetter, 'active': isActive === 'letter'}"
+                :class="{'active': isActive === 'letter'}"
                 class="letter"
                 title="私信"
                 @click="handleRoutePush('/letter', isActive === 'letter')">
                 <i class="icon icon-sixin"></i>
             </span>
             <span
-                :class="{'new-msg': isNewMsg, 'active': isActive === 'msg'}"
-                title="消息"
+                :class="{'new-msg': unreadMessageCount > 0 , 'active': isActive === 'msg'}"
+                :title="unreadMessageTitle"
                 @click="handleRoutePush('/msg')">
                 <i class="icon icon-xiaoxi"></i>
             </span>
@@ -60,20 +60,11 @@ import {
 } from '@/store/mutation-types';
 import { imgBaseUrl } from '@/constants/url-config';
 import api from '@/utils/api';
-import notification from '@/mixins/notification';
 
 export default {
     name: 'LayoutHeaderUser',
-    mixins: [ notification ],
     props: {
-        newMsg: {
-            type: Object,
-            default: () => {}
-        },
-        socketLetter: {
-            type: Object,
-            default: () => {}
-        },
+        unreadMessageCount: Number,
         isActive: String,
         currentUserId: String
     },
@@ -84,36 +75,8 @@ export default {
         ...mapGetters({
             isLogin: 'isLogin'
         }),
-        isNewMsg() {
-            const { type, data } = this.newMsg;
-            if (type && data) {
-                const { toUserId, msgCount } = data;
-                if (this.currentUserId === toUserId) {
-                    if (msgCount > 0) {
-                        // 发送桌面通知
-                        this.sendNotification({ body: `您有${msgCount}条未读消息！` });
-                        return true;
-                    } else {
-                        return false;
-                    }
-                }
-            }
-        },
         isLetter() {
-            // const { type, data } = this.socketLetter;
-            // console.log(type);
-            // console.log(data);
-            return '';
-            // if (type && data) {
-            //     const { toUserId, msgCount } = data;
-            //     if (this.currentUserId === toUserId) {
-            //         if (msgCount > 0) {
-            //             return true;
-            //         } else {
-            //             return false;
-            //         }
-            //     }
-            // }
+            return false;
         },
         userName() {
             return this.userInfo.nickname ? this.userInfo.nickname : this.userInfo.username;
@@ -131,18 +94,24 @@ export default {
         },
         themeLight() {
             return this.userInfo.theme === 'light';
+        },
+        unreadMessageTitle() {
+            return this.unreadMessageCount > 0 ? `${this.unreadMessageCount} 条未读消息` : '消息';
         }
     },
     watch: {
         userInfo: {
             handler(n, o) {
                 if (n && n.theme) this.setTheme(`theme-${n.theme}`);
+                // this.$socket.emit('UNREAD_MESSAGE_COUNT', n._id);
             },
             immediate: true
         }
     },
     created() {
-        if (this.isLogin) this.getUserInfo();
+        if (this.isLogin) {
+            this.getUserInfo();
+        }
     },
     methods: {
         ...mapMutations({
@@ -170,7 +139,7 @@ export default {
             });
         },
         handleCommand(command) {
-            if (command === 'loginOut') this.handleLogOut('/');
+            if (command === 'loginOut') this.handleLogOut();
             if (command === 'zone') this.handleRoutePush(`/zone/${this.userId}/article`);
             if (command === 'collect') this.handleRoutePush(`/zone/${this.userId}/collect`);
             if (command === 'follow') this.handleRoutePush(`/zone/${this.userId}/follow`);
@@ -178,8 +147,8 @@ export default {
             if (command === 'fans') this.handleRoutePush(`/zone/${this.userId}/fans`);
             if (command === 'settings') this.handleRoutePush(`/settings`);
         },
-        handleLogOut(path) {
-            localStorage.clear();
+        handleLogOut() {
+            localStorage.removeItem('token');
             window.location.href = '/';
         },
         handleRoutePush(path, type) {

@@ -50,7 +50,7 @@
         </card>
         <card slot="topicDetail" visible-header >
             <template>
-                <div v-if="img" class="topic-img" @click="handleRead">
+                <div class="topic-img" @click="handleRead">
                     <div class="icon-box">阅读模式</div>
                     <div class="read">
                         <span>开始阅读</span>
@@ -121,7 +121,7 @@ export default {
             return this.$route.params.topicId;
         },
         description() {
-            return this.topicDetail.description;
+            return this.topicDetail.description ? this.topicDetail.description : '暂无';
         },
         createTime() {
             return this.topicDetail.createTime ? `创建于 ${utils.formatDate.date(this.topicDetail.createTime)}` : '';

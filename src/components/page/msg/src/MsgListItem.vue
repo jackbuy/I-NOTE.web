@@ -7,13 +7,13 @@
                 <span class="user" @click="handleRouter(`/zone/${createUserId}/article`)">{{ createUser }}</span>
                 <span :class="{'not-read': !isRead}">{{ msgTime }}</span>
                 <span :class="{'not-read': !isRead}">{{ msgType }}</span>
-                <span class="article" @click="handleRouter(`/detail/${likeArticleId}`)">{{ likeArticleTitle }}</span>
+                <span class="article" @click="handleRouter(`/p/${likeArticleId}`)">{{ likeArticleTitle }}</span>
             </template>
             <template v-if="data.type === 1">
                 <span class="user" @click="handleRouter(`/zone/${createUserId}/article`)">{{ createUser }}</span>
                 <span :class="{'not-read': !isRead}">{{ msgTime }}</span>
                 <span :class="{'not-read': !isRead}">{{ msgType }}</span>
-                <span class="article" @click="handleRouter(`/detail/${collectArticleId}`)">{{ collectArticleTitle }}</span>
+                <span class="article" @click="handleRouter(`/p/${collectArticleId}`)">{{ collectArticleTitle }}</span>
             </template>
             <template v-if="data.type === 2">
                 <span class="user" @click="handleRouter(`/zone/${createUserId}/article`)">{{ createUser }}</span>
@@ -25,6 +25,18 @@
                 <span :class="{'not-read': !isRead}">{{ msgTime }}</span>
                 <span :class="{'not-read': !isRead}">{{ msgType }}</span>
                 <span class="article" @click="handleRouter(`/topic/${topicId}`)">{{ topicTitle }}</span>
+            </template>
+            <template v-if="data.type === 4">
+                <span class="user" @click="handleRouter(`/zone/${createUserId}/article`)">{{ createUser }}</span>
+                <span :class="{'not-read': !isRead}">{{ msgTime }}</span>
+                <span :class="{'not-read': !isRead}">{{ msgType }}</span>
+                <span class="article" @click="handleRouter(`/p/${commentArticleId}`)">{{ commentArticleTitle }}</span>
+            </template>
+            <template v-if="data.type === 5">
+                <span class="user" @click="handleRouter(`/zone/${createUserId}/article`)">{{ createUser }}</span>
+                <span :class="{'not-read': !isRead}">{{ msgTime }}</span>
+                <span :class="{'not-read': !isRead}">{{ msgType }}</span>
+                <span class="article" @click="handleRouter(`/p/${replyArticleId}`)">{{ replyArticleTitle }}</span>
             </template>
         </div>
         <div class="item-menu">
@@ -99,6 +111,18 @@ export default {
         },
         topicId() {
             if (this.data.topicId) return this.data.topicId._id;
+        },
+        commentArticleTitle() {
+            if (this.data.commentId) return this.data.commentId.title;
+        },
+        commentArticleId() {
+            if (this.data.commentId) return this.data.commentId._id;
+        },
+        replyArticleTitle() {
+            if (this.data.replyId) return this.data.replyId.title;
+        },
+        replyArticleId() {
+            if (this.data.replyId) return this.data.replyId._id;
         }
     },
     methods: {

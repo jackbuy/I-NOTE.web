@@ -102,8 +102,8 @@ export default {
 
     // 消息列表
     messageQuery: (params) => http('post', `${apiBaseUrl}/message/query`, params),
-    // 新消息
-    getNewMessage: (params) => http('post', `${apiBaseUrl}/message/query/new/count`, params),
+    // 未读消息数量
+    // getNewMessageCount: (params) => http('post', `${apiBaseUrl}/message/unRead/query/count`, params),
     // 标记为已读
     messageRead: (messageId) => http('put', `${apiBaseUrl}/message/read/${messageId}`),
     // 消息删除

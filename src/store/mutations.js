@@ -9,18 +9,18 @@ export default {
     [C.SOCKET_ONLINE_USER](state, payload) {
         state.socketOnlineUser = payload;
     },
-    [C.SOCKET_NEW_MSG](state, payload) {
-        state.socketMsg = payload;
+    [C.SOCKET_UNREAD_MESSAGE_COUNT](state, payload) {
+        state.socketUnreadMessageCount = payload;
     },
     [C.SOCKET_NEW_POST](state, payload) {
-        state.socketPost = payload;
+        state.socketNewPost = payload;
     },
     [C.SOCKET_NEW_POST_RESET](state, payload) {
-        state.socketPost = {};
+        state.socketNewPost = {};
     },
-    [C.SOCKET_NEW_LETTER](state, payload) {
-        state.socketLetter = payload;
-    },
+    // [C.SOCKET_NEW_LETTER](state, payload) {
+    //     state.socketLetter = payload;
+    // },
     // userInfo
     [C.GET_USER_INFO](state, payload) {
         state.userInfo = payload;

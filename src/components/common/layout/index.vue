@@ -6,7 +6,7 @@
                 v-if="menuDate.length > 0"
                 :data="menuDate"
                 :is-active="activePath"
-                :socket-post="socketPost"
+                :new-post="newPost"
                 @push="handleRouterPush">
             </layout-header-menu>
             <layout-header-search
@@ -15,8 +15,7 @@
             <layout-header-user
                 :is-active="activePath"
                 :current-user-id="currentUserId"
-                :new-msg="socketMsg"
-                :socket-letter="socketLetter">
+                :unread-message-count="unreadMessageCount">
         </layout-header-user>
         </layout-header>
         <layout-content :class="{'header-hidden': isHiddenHeader, 'header-fixed': !isHiddenHeader}">
@@ -53,6 +52,7 @@ export default {
     },
     data() {
         return {
+            newMsgCount: 0,
             baseMenuDate: [
                 {
                     id: 1,
@@ -84,20 +84,24 @@ export default {
     computed: {
         ...mapState({
             isHiddenHeader: state => state.isHiddenHeader,
-            socketMsg: state => state.socketMsg,
-            socketLetter: state => state.socketLetter,
-            socketPost: state => state.socketPost
+            socketUnreadMessageCount: state => state.socketUnreadMessageCount, // 未读消息数量
+            socketNewPost: state => state.socketNewPost // 新动态
         }),
         ...mapGetters({
             isLogin: 'isLogin',
             currentUserId: 'currentUserId'
         }),
         menuDate() {
-            // return this.isLogin ? this.baseMenuDate : [];
             return this.baseMenuDate;
         },
         activePath() {
             return this.$route.path.split('/')[1];
+        },
+        unreadMessageCount() {
+            return this.socketUnreadMessageCount.count;
+        },
+        newPost() {
+            return this.socketNewPost.type === 'newPost';
         }
     },
     methods: {

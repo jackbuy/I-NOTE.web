@@ -123,14 +123,14 @@ export default {
     },
     computed: {
         ...mapState({
-            socketPost: state => state.socketPost
+            socketNewPost: state => state.socketNewPost
         }),
         ...mapGetters({
             currentUserId: 'currentUserId'
         })
     },
     watch: {
-        socketPost: {
+        socketNewPost: {
             handler(n, o) {
                 if (n && n.type === 'newPost') {
                     this.isNewPost = true;

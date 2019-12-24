@@ -9,12 +9,13 @@
                 <tab-label name="collect" label="收藏"></tab-label>
                 <tab-label name="followUser" label="关注"></tab-label>
                 <tab-label name="followTopic" label="专题"></tab-label>
+                <tab-label name="comment" label="评论"></tab-label>
+                <tab-label name="reply" label="回复"></tab-label>
             </tab>
             <infinite-scroll
                 :loading="loading"
                 :no-more="noMore"
-                :data="listData"
-                @loadData="getList()">
+                :data="listData">
                 <template slot-scope="scope">
                     <msg-list-item
                         :data="scope.row"
@@ -62,17 +63,22 @@ export default {
     },
     computed: {
         ...mapState({
-            socketMsg: state => state.socketMsg
-        })
+            socketUnreadMessageCount: state => state.socketUnreadMessageCount // 未读消息数量
+        }),
+        unreadMessageCount() {
+            return this.socketUnreadMessageCount.count;
+        }
     },
-    // watch: {
-    //     socketMsg: {
-    //         handler(n, o) {
-    //             if (n !== o) this.refresh();
-    //         },
-    //         immediate: true
-    //     }
-    // },
+    watch: {
+        unreadMessageCount: {
+            handler(n, o) {
+                if (n && n !== o) {
+                    this.refresh();
+                }
+            }
+            // immediate: true
+        }
+    },
     created() {
         this.refresh();
     },
@@ -101,6 +107,12 @@ export default {
             }
             if (this.activeTabName === 'followTopic') {
                 params.type = 3;
+            }
+            if (this.activeTabName === 'comment') {
+                params.type = 4;
+            }
+            if (this.activeTabName === 'reply') {
+                params.type = 5;
             }
             this.loading = true;
             api.messageQuery({ ...params }).then((res) => {
@@ -132,7 +144,9 @@ export default {
         },
         handleDelete(messageId) {
             api.messageDelete(messageId).then(() => {
-                this.refresh();
+                let _ids = this.listData.map((item) => item._id);
+                let index = _ids.indexOf(messageId);
+                this.listData.splice(index, 1);
                 this.showSuccessMsg('删除成功');
             }).catch(() => {});
         }

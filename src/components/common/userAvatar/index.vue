@@ -90,8 +90,8 @@ export default {
         }
     },
     methods: {
-        handleLetter(userId) {
-            this.$router.push(`/letter/${userId}`).catch(() => {});
+        handleLetter(toUserId) {
+            this.$emit('doLetter', toUserId);
         },
         handleFollow(followUserId) {
             this.$emit('doFollow', followUserId);

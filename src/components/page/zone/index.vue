@@ -6,7 +6,8 @@
             :user="userInfo"
             :type="zoneType"
             :current-user-id="currentUserId"
-            @doFollow="handleFollow">
+            @doFollow="handleFollow"
+            @doLetter="handleLetter">
         </user-avatar>
         <user-avatar
             v-if="isFixed"
@@ -140,6 +141,13 @@ export default {
             };
             api.getZoneUserInfo(params).then((res) => {
                 this.userInfo = res.data;
+            }).catch(() => {});
+        },
+        // 私信
+        handleLetter(toUserId) {
+            api.letterUserAdd(toUserId).then((res) => {
+                const { _id } = res.data;
+                this.$router.push(`/letter/${_id}`).catch(() => {});
             }).catch(() => {});
         },
         // 关注

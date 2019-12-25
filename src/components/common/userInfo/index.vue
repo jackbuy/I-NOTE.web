@@ -93,8 +93,8 @@ export default {
         handleFollow(followUserId) {
             this.$emit('doFollow', followUserId);
         },
-        handleLetter(userId) {
-            this.$router.push(`/letter/${userId}`).catch(() => {});
+        handleLetter(toUserId) {
+            this.$emit('doLetter', toUserId);
         },
         handleZone(type) {
             this.$router.push(`/zone/${this.userId}/${type}`).catch(() => {});

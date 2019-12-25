@@ -36,7 +36,7 @@
                 <span class="user" @click="handleRouter(`/zone/${createUserId}/article`)">{{ createUser }}</span>
                 <span :class="{'not-read': !isRead}">{{ msgTime }}</span>
                 <span :class="{'not-read': !isRead}">{{ msgType }}</span>
-                <span class="article" @click="handleRouter(`/p/${replyArticleId}`)">{{ replyArticleTitle }}</span>
+                <span class="article" @click="handleRouter(`/p/${replyArticleId}`)">查看回复</span>
             </template>
         </div>
         <div class="item-menu">

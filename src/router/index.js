@@ -111,7 +111,7 @@ export default new Router({
                     meta: { title: '私信', requireAuth: true }
                 },
                 {
-                    path: '/letter/:userId',
+                    path: '/letter/:letterUserId',
                     name: 'letterAdd',
                     component: Letter,
                     meta: { title: '私信', requireAuth: true }

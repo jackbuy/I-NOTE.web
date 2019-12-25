@@ -115,6 +115,7 @@ export default {
     diffDate(date1, date2) {
         var start = Math.ceil(new Date(date1).getTime() / 1000);
         var end = Math.ceil(new Date(date2).getTime() / 1000);
+        var s = Math.ceil(new Date(moment().startOf('day')).getTime() / 1000); // 当天0点
         var timestamp = start - end;
         var time = '';
         switch (true) {
@@ -126,17 +127,9 @@ export default {
             case timestamp < 60:
                 time = parseInt(timestamp / 1 + '') + '秒前';
                 break;
-            // 一小时内
-            case timestamp > 60 && timestamp < 3600:
-                var t = parseInt(timestamp / 60 + '');
-                time = t + '分钟前';
-                break;
             // 一天内
-            case timestamp >= 3600 && timestamp < 86400:
-                var hours = parseInt(timestamp / 3600 + '');
-                // var minutes = parseInt(((timestamp - (3600 * hours)) / 60) + '');
-                time = hours + '小时前';
-                // time = hours + '小时 ' + minutes + '分钟前';
+            case timestamp > 60 && timestamp < 86400:
+                time = end - s < 0 ? `昨天 ${moment(date2).format('HH:mm')}` : `今天 ${moment(date2).format('HH:mm')}`;
                 break;
             // 一年内
             case timestamp >= 86400 && timestamp < 31536000:

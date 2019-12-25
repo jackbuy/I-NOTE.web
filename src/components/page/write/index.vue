@@ -4,7 +4,7 @@
         <card
             slot="side"
             :padding="false"
-            class="card-content">
+            class="card-side">
 
             <div slot="title" class="tit-menu">
                 <span v-if="cateTitle" @click="handleCate">
@@ -81,7 +81,7 @@
             v-loading="isSaving"
             :padding="false"
             :visible-header="true"
-            class="card-side">
+            class="card-content">
 
             <div v-if="!isLoadingDetail && articleId">
                 <div

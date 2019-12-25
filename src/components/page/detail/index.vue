@@ -55,7 +55,8 @@
         <card slot="userinfo" :visible-header="true" icon="icon icon-zuozhe" title="关于作者">
             <user-info
                 :user="userInfo"
-                @doFollow="handleFollow">
+                @doFollow="handleFollow"
+                @doLetter="handleLetter">
             </user-info>
         </card>
         <card slot="recommend" icon="icon icon-wenzhang" title="Ta的热文" class="fixed">
@@ -198,6 +199,13 @@ export default {
         handleFollow(followUserId) {
             api.followUser({ followUserId }).then(() => {
                 this.detail.userId.isFollow = !this.detail.userId.isFollow;
+            }).catch(() => {});
+        },
+        // 私信
+        handleLetter(toUserId) {
+            api.letterUserAdd(toUserId).then((res) => {
+                const { _id } = res.data;
+                this.$router.push(`/letter/${_id}`).catch(() => {});
             }).catch(() => {});
         },
         // 收藏

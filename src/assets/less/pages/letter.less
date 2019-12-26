@@ -34,6 +34,18 @@
                         background-size: cover;
                         background-repeat: no-repeat;
                         background-position: center;
+                        position: relative;
+                        span{
+                            position: absolute;
+                            right: -5px;
+                            top: -6px;
+                            background: #f20;
+                            color: #fff;
+                            padding: 2px 5px;
+                            line-height: 1;
+                            border-radius: 10px;
+                            font-size: 12px;
+                        }
                     }
                     .title{
                         flex: 1;
@@ -66,10 +78,11 @@
                 span{
                     display: inline-block;
                     max-width: 80%;
-                    padding: 10px;
+                    padding: 7px 15px;
+                    line-height: 1.5;
                     background: @formBgColor;
                     color: @fontMainColor;
-                    border-radius: 0px 10px 10px 10px;
+                    border-radius: 0px 15px 15px 15px;
                     font-size: 14px;
                     margin: 10px 0;
                 }
@@ -78,7 +91,7 @@
                     span{
                         color: #fff;
                         background: @fontHoverColor;
-                        border-radius: 10px 0px 10px 10px;
+                        border-radius: 15px 0px 15px 15px;
                     }
                 }
             }

@@ -21,6 +21,9 @@ export default {
     [C.SOCKET_NEW_LETTER](state, payload) {
         state.socketLetter = payload;
     },
+    [C.SOCKET_UNREAD_LETTER_COUNT](state, payload) {
+        state.socketUnreadLetterCount = payload;
+    },
     // userInfo
     [C.GET_USER_INFO](state, payload) {
         state.userInfo = payload;

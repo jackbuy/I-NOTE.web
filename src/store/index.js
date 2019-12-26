@@ -20,6 +20,7 @@ const Store = {
         isHiddenHeader: false, // 是否隐藏头部
         documentTitle: '',
         socketLetter: {}, // socket私信
+        socketUnreadLetterCount: {}, // socket未读私信数量
         socketUnreadMessageCount: {}, // socket未读消息数量
         socketNewPost: {}, // socket新动态
         socketOnlineUser: [] // socket在线用户

@@ -1,10 +1,10 @@
 <template>
-    <layout :loading="loading" :user-list="userList">
+    <layout :user-list="userList">
         <card
             slot="list"
             :padding="false"
             class="card-side"
-            title="私信 - 联系人">
+            title="私信">
             <div class="letter__side-user-list">
                 <ul>
                     <li
@@ -12,22 +12,24 @@
                         :key="item._id"
                         :class="{'active': item._id === letterUserId}"
                         @click="handleLetter(item._id)">
-                        <div class="img" :style="{backgroundImage: 'url(' + formatImg(item) + ')'}"></div>
+                        <div class="img" :style="{backgroundImage: 'url(' + formatImg(item) + ')'}">
+                            <span v-if="formatUnreadCount(item) > 0">{{ formatUnreadCount(item) }}</span>
+                        </div>
                         <div class="title">{{ formatUser(item) }}</div>
-                        <div class="new-letter" v-if="item._id === emitLetterUserId"><span>new</span></div>
                     </li>
                 </ul>
             </div>
         </card>
         <card
-            v-show="letterUserId"
+            v-loading="detailLoading"
             slot="content"
             :padding="false"
             :title="toUserName"
             class="card-content">
             <cy
                 :data="letterList"
-                :mine="currentUserId"></cy>
+                :mine="currentUserId">
+            </cy>
             <div class="letter__content-letter-input">
                 <el-input
                     v-model="form.content"
@@ -59,11 +61,11 @@ export default {
     data() {
         return {
             loading: false,
+            detailLoading: false,
             form: {},
             userList: [], // 用户列表
             letterList: [], // 对话列表
-            toUserName: '', // 与谁对话
-            emitLetterUserId: '' // 新消息触发用户对话ID
+            toUserName: '' // 与谁对话
         };
     },
     computed: {
@@ -89,9 +91,14 @@ export default {
                 const { type, data } = n;
                 if (type && data) {
                     const { letterUserId } = data;
-                    this.emitLetterUserId = letterUserId;
                     if (letterUserId === this.letterUserId) {
-                        this.getLetterList(letterUserId);
+                        api.letterUserClearCount({ letterUserId }).then(() => {
+                            this.getLetterList(letterUserId);
+                        });
+                    } else {
+                        api.letterUserQuery().then((res) => {
+                            this.userList = res.data;
+                        });
                     }
                 }
             },
@@ -108,6 +115,7 @@ export default {
     methods: {
         // 获取聊天人员
         getLetterUser() {
+            this.loading = true;
             api.letterUserQuery().then((res) => {
                 this.userList = res.data;
                 if (!this.letterUserId) {
@@ -121,25 +129,33 @@ export default {
                         if (item._id === this.letterUserId) this.toUserName = this.formatUser(item);
                     });
                 }
-            }).catch(() => {});
+                this.loading = false;
+            }).catch(() => {
+                this.loading = false;
+            });
         },
         // 开启对话
         handleLetter(letterUserId, type) {
-            let path = `/letter/${letterUserId}`;
-            if (type && type === 'replace') {
-                this.$router.replace(path).catch(() => {});
-            } else {
-                this.$router.push(path).catch(() => {});
-            }
+            api.letterUserClearCount({ letterUserId }).then(() => {
+                let path = `/letter/${letterUserId}`;
+                if (type && type === 'replace') {
+                    this.$router.replace(path).catch(() => {});
+                } else {
+                    this.$router.push(path).catch(() => {});
+                }
+            });
         },
         // 获取对话内容
         getLetterList(letterUserId) {
             const params = {
                 letterUserId
             };
+            this.detailLoading = true;
             api.letterQuery(params).then((res) => {
                 this.letterList = this.formatData(res.data);
-                this.emitLetterUserId = '';
+                this.detailLoading = false;
+            }).catch(() => {
+                this.detailLoading = false;
             });
         },
         // 发送
@@ -176,15 +192,25 @@ export default {
         formatUser(item) {
             return item.toUserId._id === this.currentUserId ? item.fromUserId.nickname : item.toUserId.nickname;
         },
+        formatUnreadCount(item) {
+            return item.toUserId._id === this.currentUserId ? item.toUserUnreadCount : item.fromUserUnreadCount;
+        },
         // 格式化对话数据
         formatData(arr) {
+            let lastItem = null;
             let _arr = [];
             arr.map((item) => {
                 let end = utils.formatDate.time(item.createTime);
                 let start = utils.formatDate.now();
+                let createAt = null;
+                // 过滤1分钟内的时间
+                if (!lastItem || new Date(lastItem.createTime).getTime() - new Date(item.createTime).getTime() > 1000 * 60 * 1) {
+                    createAt = utils.diffDate(start, end);
+                    lastItem = item;
+                }
                 _arr.unshift({
                     ...item,
-                    createTime: utils.diffDate(start, end)
+                    createAt
                 });
             });
             return _arr;

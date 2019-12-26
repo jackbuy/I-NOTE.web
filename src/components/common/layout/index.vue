@@ -15,6 +15,7 @@
             <layout-header-user
                 :is-active="activePath"
                 :current-user-id="currentUserId"
+                :unread-letter-count="unreadLetterCount"
                 :unread-message-count="unreadMessageCount">
         </layout-header-user>
         </layout-header>
@@ -38,6 +39,7 @@ import LayoutHeaderSearch from './src/LayoutHeaderSearch';
 import LayoutHeaderUser from './src/LayoutHeaderUser';
 import LayoutContent from './src/LayoutContent';
 import Login from '@/components/page/login';
+// import api from '@/utils/api';
 export default {
     name: 'LayoutContainer',
     components: {
@@ -52,7 +54,6 @@ export default {
     },
     data() {
         return {
-            newMsgCount: 0,
             baseMenuDate: [
                 {
                     id: 1,
@@ -85,7 +86,8 @@ export default {
         ...mapState({
             isHiddenHeader: state => state.isHiddenHeader,
             socketUnreadMessageCount: state => state.socketUnreadMessageCount, // 未读消息数量
-            socketNewPost: state => state.socketNewPost // 新动态
+            socketNewPost: state => state.socketNewPost, // 新动态
+            socketUnreadLetterCount: state => state.socketUnreadLetterCount // 未读私信数量
         }),
         ...mapGetters({
             isLogin: 'isLogin',
@@ -99,6 +101,9 @@ export default {
         },
         unreadMessageCount() {
             return this.socketUnreadMessageCount.count;
+        },
+        unreadLetterCount() {
+            return this.socketUnreadLetterCount.count;
         },
         newPost() {
             return this.socketNewPost.type === 'newPost';

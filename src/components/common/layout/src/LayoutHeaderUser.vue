@@ -19,9 +19,9 @@
                 <i class="icon icon-write"></i>
             </span>
             <span
-                :class="{'active': isActive === 'letter'}"
+                :class="{'new-msg': unreadLetterCount, 'active': isActive === 'letter'}"
                 class="letter"
-                title="私信"
+                :title="unreadLetterTitle"
                 @click="handleRoutePush('/letter', isActive === 'letter')">
                 <i class="icon icon-sixin"></i>
             </span>
@@ -65,6 +65,7 @@ export default {
     name: 'LayoutHeaderUser',
     props: {
         unreadMessageCount: Number,
+        unreadLetterCount: Number,
         isActive: String,
         currentUserId: String
     },
@@ -97,6 +98,9 @@ export default {
         },
         unreadMessageTitle() {
             return this.unreadMessageCount > 0 ? `${this.unreadMessageCount} 条未读消息` : '消息';
+        },
+        unreadLetterTitle() {
+            return this.unreadLetterCount > 0 ? `${this.unreadLetterCount} 条未读私信` : '私信';
         }
     },
     watch: {

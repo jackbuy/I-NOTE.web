@@ -4,7 +4,7 @@
             <li
                 v-for="item in data"
                 :key="item._id">
-                <div class="time">{{ item.createTime }}</div>
+                <div v-if="item.createAt" class="time">{{ item.createAt }}</div>
                 <div :class="{'mine': item.userId === mine}">
                     <span>{{ item.content }}</span>
                 </div>

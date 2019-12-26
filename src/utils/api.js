@@ -145,6 +145,8 @@ export default {
     letterUserAdd: (toUserId) => http('post', `${apiBaseUrl}/letterUser/add/${toUserId}`),
     // 列表
     letterUserQuery: (params) => http('post', `${apiBaseUrl}/letterUser/query`, params),
+    // 清空数量
+    letterUserClearCount: (params) => http('post', `${apiBaseUrl}/letterUser/clear/count`, params),
     // 列表
     letterQuery: (params) => http('post', `${apiBaseUrl}/letter/query`, params),
     // 新增

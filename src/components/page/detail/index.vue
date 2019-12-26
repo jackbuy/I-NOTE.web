@@ -25,6 +25,20 @@
                 </button>
                 <div class="title">收藏</div>
             </div>
+            <div>
+                <button
+                    title="收入专题"
+                    @click="handleAddTopic(articleId)">
+                    <i class="icon icon-jia"></i>
+                </button>
+                <!-- <div class="title">收入专题</div> -->
+            </div>
+            <topic-article-add-modal
+                v-model="topicArticleAddModalVisible"
+                :data="topicList"
+                @createTopic="handleCreateTopic"
+                @addToTopic="handleAddToTopic">
+            </topic-article-add-modal>
         </div>
         <card slot="content" :visible-header="true">
             <article-content
@@ -82,6 +96,7 @@ import api from '_u/api';
 import utils from '_u/utils';
 import To from '_u/to';
 import topicArticleAdd from '@/mixins/topicArticleAdd';
+import TopicArticleAddModal from '@/components/common/topicArticleAddModal';
 
 export default {
     name: 'ArticleDetail',
@@ -91,7 +106,8 @@ export default {
         UserInfo,
         ArticleRecommend,
         ArticleComment,
-        ArticleContent
+        ArticleContent,
+        TopicArticleAddModal
     },
     mixins: [ topicArticleAdd ],
     data() {

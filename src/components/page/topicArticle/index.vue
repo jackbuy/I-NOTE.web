@@ -62,6 +62,11 @@
                 <div class="topic-time">{{ createTime }}</div>
             </template>
         </card>
+        <card slot="join" title="参与作者">
+            <div class="author-join">
+                <user-join v-for="item in joinAuthor" :key="item._id" :item="item"></user-join>
+            </div>
+        </card>
         <card slot="author" icon="icon icon-zuozhe" title="管理员">
             <user-recommend :item="userInfo"></user-recommend>
         </card>
@@ -76,6 +81,7 @@ import Card from '@/components/common/card';
 import InfiniteScroll from '@/components/common/infiniteScrollList';
 import ArticleItem from '@/components/common/articleItem';
 import UserRecommend from '@/components/common/userRecommend';
+import UserJoin from '@/components/common/UserJoin';
 import message from '@/mixins/message';
 import api from '@/utils/api';
 import utils from '@/utils/utils';
@@ -90,7 +96,8 @@ export default {
         InfiniteScroll,
         ArticleItem,
         UserRecommend,
-        TopicEmpty
+        TopicEmpty,
+        UserJoin
     },
     data() {
         return {
@@ -138,6 +145,12 @@ export default {
         userId() {
             return this.topicDetail.userId ? this.topicDetail.userId._id : '';
         },
+        joinAuthor() {
+            if (this.listData.length > 0) {
+                let list = this.listData.map((item) => item.articleId.userId);
+                return this.uniqueArray(list, '_id');
+            }
+        },
         actionTitle() {
             return this.isAction ? '完成' : '编辑';
         }
@@ -151,6 +164,28 @@ export default {
         }
     },
     methods: {
+        /*
+        * JSON数组去重
+        * @param: [array] json Array
+        * @param: [string] 唯一的key名，根据此键名进行去重
+        */
+        uniqueArray(array, key) {
+            var result = [array[0]];
+            for (var i = 1; i < array.length; i++) {
+                var item = array[i];
+                var repeat = false;
+                for (var j = 0; j < result.length; j++) {
+                    if (item[key] === result[j][key]) {
+                        repeat = true;
+                        break;
+                    }
+                }
+                if (!repeat) {
+                    result.push(item);
+                }
+            }
+            return result;
+        },
         handleRead() {
             if (this.listData && this.listData.length === 0) return;
             const articleId = this.listData[0].articleId._id;

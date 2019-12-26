@@ -19,7 +19,6 @@ export default {
     },
     methods: {
         handleAddTopic(articlePublishId) {
-            this.topicArticleAddModalVisible = true;
             this.activeArticleId = articlePublishId;
             this.getIsTopicList(this.activeArticleId);
         },
@@ -31,7 +30,7 @@ export default {
         },
         // 获取专题列表
         getIsTopicList(articleId) {
-            if (this.currentUserId) { // 登录用户才发请求
+            return new Promise((resolve, reject) => {
                 const params = {
                     articleId,
                     pageSize: 10000,
@@ -39,8 +38,9 @@ export default {
                 };
                 api.getTopicList(params).then((res) => {
                     this.topicList = res.data;
+                    this.topicArticleAddModalVisible = true;
                 }).catch(() => {});
-            }
+            });
         },
         // (取消)收入专题
         handleAddToTopic(row) {

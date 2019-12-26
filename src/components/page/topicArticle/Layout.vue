@@ -8,6 +8,7 @@
             <div class="topic-article__side">
                 <div class="fixed">
                     <slot name="topicDetail"></slot>
+                    <slot name="join"></slot>
                     <slot name="author"></slot>
                 </div>
             </div>

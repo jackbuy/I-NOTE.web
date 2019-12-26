@@ -15,7 +15,6 @@ const TopicArticle = () => import('@/components/page/topicArticle');
 const TopicWrite = () => import('@/components/page/topicWrite');
 const TopicArticleDetail = () => import('@/components/page/topicArticleDetail');
 const Letter = () => import('@/components/page/letter');
-const Draft = () => import('@/components/page/draft');
 const Zone = () => import('@/components/page/zone');
 const Settings = () => import('@/components/page/settings');
 
@@ -97,12 +96,6 @@ export default new Router({
                     name: 'articleEdit',
                     component: Write,
                     meta: { title: '写文章', requireAuth: true }
-                },
-                {
-                    path: '/follow',
-                    name: 'follow',
-                    component: Draft,
-                    meta: { title: '关注', requireAuth: true }
                 },
                 {
                     path: '/letter',

@@ -3,8 +3,8 @@
 </template>
 
 <script>
-import { mapState, mapActions } from 'vuex';
-import { GET_SYSTEM_INFO } from '@/store/mutation-types';
+import { mapState, mapActions, mapGetters } from 'vuex';
+import { GET_SYSTEM_INFO, GET_USER_INFO } from '@/store/mutation-types';
 export default {
     name: 'App',
     data() {
@@ -16,6 +16,9 @@ export default {
         ...mapState({
             documentTitle: state => state.documentTitle,
             systemInfo: state => state.systemInfo
+        }),
+        ...mapGetters({
+            isLogin: 'isLogin'
         }),
         title() {
             return this.documentTitle ? this.documentTitle : this.$route.meta.title || '';
@@ -42,10 +45,14 @@ export default {
         }).catch(() => {
             this.isRenderApp = false;
         });
+        if (this.isLogin) {
+            this.getUserInfo();
+        }
     },
     methods: {
         ...mapActions({
-            getSystemInfo: GET_SYSTEM_INFO
+            getSystemInfo: GET_SYSTEM_INFO,
+            getUserInfo: GET_USER_INFO
         }),
         setDocumentTitle() {
             document.title = this.resultDocumentTitle;

@@ -210,6 +210,7 @@ import message from '@/mixins/message';
 import fullScreen from '@/mixins/fullScreen';
 import topicArticleAdd from '@/mixins/topicArticleAdd';
 import api from '@/utils/api';
+import utils from '@/utils/utils';
 export default {
     name: 'ArticleAdd',
     components: {
@@ -555,7 +556,8 @@ export default {
         handleSave(obj = {}) {
             let params = {
                 ...this.form,
-                ...obj
+                ...obj,
+                title: utils.trim(this.form.title)
             };
             this.isSaving = true;
             api.articleEdit(this.articleId, params).then((res) => {

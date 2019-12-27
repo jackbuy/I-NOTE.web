@@ -75,6 +75,18 @@ export default {
             return moment().format('YYYY-MM-DD HH:mm:ss');
         }
     },
+    // 删除左右两端的空格
+    trim: (str) => {
+        return str.replace(/(^\s*)|(\s*$)/g, '');
+    },
+    // 删除左空格
+    ltrim: (str) => {
+        return str.replace(/(^\s*)/g, '');
+    },
+    // 删除右空格
+    rtrim: (str) => {
+        return str.replace(/(\s*$)/g, '');
+    },
     // 截取字符串
     strSubstring: (str, start = 0, end = 10) => {
         let _str = '';

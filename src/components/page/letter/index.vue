@@ -51,6 +51,7 @@ import Cy from './Content';
 import api from '@/utils/api';
 import { imgBaseUrl } from '@/constants/url-config';
 import utils from '@/utils/utils';
+import message from '@/mixins/message';
 export default {
     name: 'Letter',
     components: {
@@ -58,6 +59,7 @@ export default {
         Card,
         Cy
     },
+    mixins: [ message ],
     data() {
         return {
             loading: false,
@@ -153,6 +155,7 @@ export default {
             this.detailLoading = true;
             api.letterQuery(params).then((res) => {
                 this.letterList = this.formatData(res.data);
+                this.form = {};
                 this.detailLoading = false;
             }).catch(() => {
                 this.detailLoading = false;
@@ -161,13 +164,17 @@ export default {
         // 发送
         handleSend() {
             const { content } = this.form;
+            if (utils.trim(content).length === 0) {
+                this.form = {};
+                this.showWarningMsg('不能发送空信息！');
+                return;
+            }
             const params = {
                 letterUserId: this.letterUserId,
                 content
             };
             api.letterAdd(params).then(() => {
                 this.getLetterList(this.letterUserId);
-                this.form = {};
             }).catch(() => {});
         },
         // 设置编辑器高度

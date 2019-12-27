@@ -39,7 +39,6 @@ import LayoutHeaderSearch from './src/LayoutHeaderSearch';
 import LayoutHeaderUser from './src/LayoutHeaderUser';
 import LayoutContent from './src/LayoutContent';
 import Login from '@/components/page/login';
-// import api from '@/utils/api';
 export default {
     name: 'LayoutContainer',
     components: {

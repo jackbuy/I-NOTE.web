@@ -24,6 +24,10 @@ export default {
     [C.SOCKET_UNREAD_LETTER_COUNT](state, payload) {
         state.socketUnreadLetterCount = payload;
     },
+    // systemInfo
+    [C.GET_SYSTEM_INFO](state, payload) {
+        state.systemInfo = payload;
+    },
     // userInfo
     [C.GET_USER_INFO](state, payload) {
         state.userInfo = payload;

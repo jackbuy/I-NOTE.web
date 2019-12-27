@@ -1,31 +1,54 @@
 <template>
-    <router-view></router-view>
+    <router-view v-if="isRenderApp"></router-view>
 </template>
 
 <script>
-import { mapState } from 'vuex';
+import { mapState, mapActions } from 'vuex';
+import { GET_SYSTEM_INFO } from '@/store/mutation-types';
 export default {
     name: 'App',
+    data() {
+        return {
+            isRenderApp: false // 是否渲染app
+        };
+    },
     computed: {
         ...mapState({
-            documentTitle: state => state.documentTitle
+            documentTitle: state => state.documentTitle,
+            systemInfo: state => state.systemInfo
         }),
         title() {
-            const title = this.$route.meta.title ? `${this.$route.meta.title} - ` : '';
-            return this.documentTitle ? `${this.documentTitle} - ` : title;
+            return this.documentTitle ? this.documentTitle : this.$route.meta.title || '';
+        },
+        systemName() {
+            return this.systemInfo.name ? ` - ${this.systemInfo.name}` : '';
+        },
+        resultDocumentTitle() {
+            return `${this.title}${this.systemName}`;
         }
     },
     watch: {
         title: {
             handler() {
                 this.setDocumentTitle();
-            },
-            immediate: true
+            }
+            // immediate: true
         }
     },
+    created() {
+        this.getSystemInfo().then(() => {
+            this.setDocumentTitle();
+            this.isRenderApp = true;
+        }).catch(() => {
+            this.isRenderApp = false;
+        });
+    },
     methods: {
+        ...mapActions({
+            getSystemInfo: GET_SYSTEM_INFO
+        }),
         setDocumentTitle() {
-            document.title = `${this.title}I'NOTE`;
+            document.title = this.resultDocumentTitle;
         }
     }
 };

@@ -12,13 +12,14 @@ Vue.use(Vuex);
 const Store = {
     state: {
         token: localStorage.getItem('token'),
+        systemInfo: {}, // 系统信息
         userInfo: {}, // 已登录用户信息
         loginModal: {
             open: false,
             type: ''
         },
         isHiddenHeader: false, // 是否隐藏头部
-        documentTitle: '',
+        documentTitle: '', // 文档标题
         socketLetter: {}, // socket私信
         socketUnreadLetterCount: {}, // socket未读私信数量
         socketUnreadMessageCount: {}, // socket未读消息数量

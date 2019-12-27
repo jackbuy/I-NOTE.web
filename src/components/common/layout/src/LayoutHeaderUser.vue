@@ -107,7 +107,6 @@ export default {
         userInfo: {
             handler(n, o) {
                 if (n && n.theme) this.setTheme(`theme-${n.theme}`);
-                // this.$socket.emit('UNREAD_MESSAGE_COUNT', n._id);
             },
             immediate: true
         }

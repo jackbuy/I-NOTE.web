@@ -150,6 +150,9 @@ export default {
     // 列表
     letterQuery: (params) => http('post', `${apiBaseUrl}/letter/query`, params),
     // 新增
-    letterAdd: (params) => http('post', `${apiBaseUrl}/letter/add`, params)
+    letterAdd: (params) => http('post', `${apiBaseUrl}/letter/add`, params),
+
+    // 系统信息
+    systemDetail: () => http('get', `${apiBaseUrl}/system/detail`)
 
 };

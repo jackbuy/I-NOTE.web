@@ -4,6 +4,8 @@
 
 export const TOGGLE_LOGIN_MODAL = 'TOGGLE_LOGIN_MODAL';
 export const OPEN_LOGIN_MODAL = 'OPEN_LOGIN_MODAL';
+// 获取系统信息
+export const GET_SYSTEM_INFO = 'GET_SYSTEM_INFO';
 // 获取用户信息
 export const GET_USER_INFO = 'GET_USER_INFO';
 // 是否隐藏头部

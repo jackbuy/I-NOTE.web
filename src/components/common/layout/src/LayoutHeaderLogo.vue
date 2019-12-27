@@ -1,5 +1,7 @@
 <template>
-    <div class="layout__header-logo" @click="handleRoutePush">
+    <div
+        class="layout__header-logo"
+        @click="handleRoutePush">
         <img src="../../../../../static/img/logo.png" alt="">
     </div>
 </template>

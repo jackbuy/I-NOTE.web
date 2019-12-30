@@ -53,9 +53,9 @@
 </template>
 
 <script>
-import { mapMutations, mapState, mapGetters } from 'vuex';
+import { mapMutations, mapState, mapActions, mapGetters } from 'vuex';
 import {
-    TOGGLE_LOGIN_MODAL
+    TOGGLE_LOGIN_MODAL, GET_USER_INFO
 } from '@/store/mutation-types';
 import { imgBaseUrl } from '@/constants/url-config';
 import api from '@/utils/api';
@@ -111,6 +111,9 @@ export default {
         }
     },
     methods: {
+        ...mapActions({
+            getUserInfo: GET_USER_INFO
+        }),
         ...mapMutations({
             toggleLoginModal: TOGGLE_LOGIN_MODAL
         }),

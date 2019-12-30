@@ -1,5 +1,6 @@
 <template>
-    <router-view v-if="isRenderApp"></router-view>
+    <!-- <router-view v-if="isRenderApp"></router-view> -->
+    <router-view></router-view>
 </template>
 
 <script>
@@ -9,7 +10,7 @@ export default {
     name: 'App',
     data() {
         return {
-            isRenderApp: false // 是否渲染app
+            // isRenderApp: false // 是否渲染app
         };
     },
     computed: {
@@ -41,9 +42,9 @@ export default {
     created() {
         this.getSystemInfo().then(() => {
             this.setDocumentTitle();
-            this.isRenderApp = true;
+            // this.isRenderApp = true;
         }).catch(() => {
-            this.isRenderApp = false;
+            // this.isRenderApp = false;
         });
         if (this.isLogin) {
             this.getUserInfo();

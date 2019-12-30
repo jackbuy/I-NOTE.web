@@ -31,7 +31,7 @@
                     @click="handleAddTopic(articleId)">
                     <i class="icon icon-jia"></i>
                 </button>
-                <!-- <div class="title">收入专题</div> -->
+                <div class="title">收入专题</div>
             </div>
             <topic-article-add-modal
                 v-model="topicArticleAddModalVisible"

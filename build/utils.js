@@ -48,7 +48,7 @@ exports.cssLoaders = function (options) {
       return ExtractTextPlugin.extract({
         use: loaders,
         fallback: 'vue-style-loader',
-        publicPath: '../../', // '/' 绝对路劲， './'相对路劲
+        publicPath: '../../', // css相对路劲时，才配置，绝对路劲时，注释掉
       })
     } else {
       return ['vue-style-loader'].concat(loaders)

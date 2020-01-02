@@ -5,7 +5,7 @@ import VueSocketio from 'vue-socket.io';
 import router from './router';
 import store from './store';
 import App from './App';
-import Highlight from './directive/highlight';
+import './directive';
 import VueClipboard from 'vue-clipboard2';
 import { apiBaseUrl } from '@/constants/url-config';
 
@@ -55,8 +55,6 @@ Vue.prototype.$message = Message;
 Vue.prototype.$ELEMENT = { size: 'small', zIndex: 3000 };
 
 Vue.use(VueClipboard);
-
-Vue.use(Highlight);
 
 Vue.use(VueQuillEditor, {/* { default global options } */});
 

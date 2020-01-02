@@ -1,5 +1,5 @@
 <template>
-    <div class="article-list">
+    <div v-infinite="loadData" class="article-list">
         <div class="fixed">
             <div class="write-search">
                 <el-input
@@ -18,7 +18,7 @@
                 <tab-label name="draft" label="草稿"></tab-label>
             </tab>
         </div>
-        <page-loading :loading="loading" :data="data" class="write-list">
+        <div class="write-list">
             <ul>
                 <li
                     v-for="item in data"
@@ -67,19 +67,21 @@
                         </div> -->
                     </div>
                 </li>
+                <loading v-if="loading"></loading>
             </ul>
-        </page-loading>
+        </div>
     </div>
 </template>
 
 <script>
-import PageLoading from '_c/pageLoading';
+import Loading from '_c/infiniteScrollList/src/Loading';
 import Tab from '_c/tab';
 import TabLabel from '_c/tab/tabLabel';
 export default {
     name: 'ArticleList',
     props: {
         loading: Boolean,
+        noMore: Boolean,
         articleId: String,
         activeTabName: String,
         data: {
@@ -88,7 +90,7 @@ export default {
         }
     },
     components: {
-        PageLoading,
+        Loading,
         Tab,
         TabLabel
     },
@@ -98,6 +100,9 @@ export default {
         };
     },
     methods: {
+        loadData() {
+            this.$emit('loadData');
+        },
         handleTabClick(name) {
             this.$emit('tab', name);
         },

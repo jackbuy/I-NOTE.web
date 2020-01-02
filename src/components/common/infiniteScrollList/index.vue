@@ -43,85 +43,42 @@ export default {
         };
     },
     mounted() {
-        window.onscroll = () => {
-            // 判断页面滚动方向
-            var scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop;
-            var scroll = scrollTop - this.i;
-            this.i = scrollTop;
-            if (scroll < 0) {
-                this.$emit('up');
-            } else {
-                this.$emit('down');
-            }
-
-            // 当滚动条滑动，触发事件，判断是否到达最底部
-            if (this.getScrollHeight() === this.getWindowHeight() + this.getDocumentTop()) {
-                if (!this.noMore && !this.loading) this.$emit('loadData');
-            }
-            // emit滚动事件
-            this.$emit('scroll', scrollTop);
+        document.body.onscroll = () => {
+            this.pageScroll();
         };
     },
     activated() {
-        window.onscroll = () => {
+        document.body.onscroll = () => {
+            this.pageScroll();
+        };
+    },
+    methods: {
+        pageScroll() {
+            // 当滚动条滑动，触发事件，判断是否到达最底部
+            if (this.getScrollHeight() === this.getClientHeight() + this.getScrollTop()) {
+                if (!this.noMore && !this.loading) this.$emit('loadData');
+            }
+
             // 判断页面滚动方向
-            var scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop;
-            var scroll = scrollTop - this.i;
-            this.i = scrollTop;
+            var scroll = this.getScrollTop() - this.i;
+            this.i = this.getScrollTop();
             if (scroll < 0) {
                 this.$emit('up');
             } else {
                 this.$emit('down');
             }
 
-            // 当滚动条滑动，触发事件，判断是否到达最底部
-            if (this.getScrollHeight() === this.getWindowHeight() + this.getDocumentTop()) {
-                if (!this.noMore && !this.loading) this.$emit('loadData');
-            }
-
             // emit滚动事件
-            this.$emit('scroll', scrollTop);
-        };
-    },
-    methods: {
-        // 文档高度
-        getDocumentTop() {
-            let scrollTop = 0;
-            let bodyScrollTop = 0;
-            let documentScrollTop = 0;
-            if (document.body) {
-                bodyScrollTop = document.body.scrollTop;
-            }
-            if (document.documentElement) {
-                documentScrollTop = document.documentElement.scrollTop;
-            }
-            scrollTop = (bodyScrollTop - documentScrollTop > 0) ? bodyScrollTop : documentScrollTop;
-            return scrollTop;
+            // this.$emit('scroll', scrollTop);
         },
-        // 可视窗口高度
-        getWindowHeight() {
-            // let windowHeight = 0;
-            // if (document.compatMode === 'CS1SCompat') {
-            //     windowHeight = document.documentElement.clientHeight;
-            // } else {
-            //     windowHeight = document.body.clientHeight;
-            // }
-            // return windowHeight;
-            return window.innerHeight;
+        getScrollTop() {
+            return document.documentElement.scrollTop || document.body.scrollTop;
         },
-        // 滚动条滚动高度
+        getClientHeight() {
+            return document.documentElement.clientHeight || document.body.clientHeight;
+        },
         getScrollHeight() {
-            let scrollHeight = 0;
-            let bodyScrollHeight = 0;
-            let documentScrollHeight = 0;
-            if (document.body) {
-                bodyScrollHeight = document.body.scrollHeight;
-            }
-            if (document.documentElement) {
-                documentScrollHeight = document.documentElement.scrollHeight;
-            }
-            scrollHeight = (bodyScrollHeight - documentScrollHeight > 0) ? bodyScrollHeight : documentScrollHeight;
-            return scrollHeight;
+            return document.documentElement.scrollHeight || document.body.scrollHeight;
         }
     }
 };

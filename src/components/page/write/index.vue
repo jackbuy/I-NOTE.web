@@ -40,8 +40,10 @@
                 v-show="!showCateList"
                 :loading="listLoading"
                 :data="listData"
+                :no-more="noMore"
                 :article-id="articleId"
                 :active-tab-name="activeTabName"
+                @loadData="getList"
                 @tab="handleTab"
                 @search="handleSearchList"
                 @del="handleDelete"
@@ -272,10 +274,11 @@ export default {
             timer: null,
             defaultTitle: '未命名文章',
             listData: [], // 文章列表
+            noMore: false,
             listLoading: false,
             changeCount: 0, // 监听文章改变的数量，解决页面刷新，读取详情数据，会多发一次请求的问题
             pageConfig: {
-                pageSize: 100,
+                pageSize: 25,
                 currentPage: 1,
                 total: 0
             }
@@ -365,7 +368,7 @@ export default {
                 this.cateActive = this.cateList[0];
 
                 // 是否加载分组下的文章列表
-                if (type === 'loadArticleList') this.getList();
+                if (type === 'loadArticleList') this.reloadList();
             });
         },
         handleCateModalOpenAdd() {
@@ -433,7 +436,7 @@ export default {
             };
             api.articleEdit(this.articleId, params).then(() => {
                 this.form.articleCateId = cateId;
-                this.getList();
+                this.getList('reload');
                 this.showSuccessMsg('更改分组成功！');
             });
         },
@@ -459,10 +462,16 @@ export default {
         },
         handleTab(tabName) {
             this.activeTabName = tabName;
-            this.getList();
+            this.reloadList();
+        },
+        reloadList() {
+            document.getElementsByClassName('article-list')[0].scrollTop = 0;
+            this.pageConfig.currentPage = 1;
+            this.noMore = false;
+            this.getList('reload');
         },
         // 文章列表
-        getList() {
+        getList(loadType) {
             const { _id } = this.cateActive;
             const params = {
                 articleCateId: _id,
@@ -474,11 +483,20 @@ export default {
             this.listLoading = true;
             api.articleQuery(params).then((res) => {
                 if (!this.keyword && this.activeTabName === 'all') this.pageConfig.total = res.total;
-                this.listData = res.data;
-                if (this.articleId) {
-                    this.handleRouterReplace(`/write/${this.articleId}`);
-                } else if (res.data && res.data.length > 0) {
-                    this.handleRouterReplace(`/write/${res.data[0]._id}`);
+                if (res.data.length === 0) {
+                    this.noMore = true;
+                    this.listLoading = false;
+                    return;
+                };
+                if (loadType === 'reload') {
+                    this.listData = res.data;
+                    if (this.articleId) {
+                        this.handleRouterReplace(`/write/${this.articleId}`);
+                    } else if (res.data && res.data.length > 0) {
+                        this.handleRouterReplace(`/write/${res.data[0]._id}`);
+                    }
+                } else {
+                    this.listData.push(...res.data);
                 }
                 this.listLoading = false;
             }).catch(() => {
@@ -679,7 +697,7 @@ export default {
             this.keyword = keyword;
             this.pageConfig.currentPage = 1;
             this.listData = [];
-            this.getList();
+            this.reloadList();
         },
         // 复制链接
         handleCopyLink() {

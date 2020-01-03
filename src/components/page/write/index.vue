@@ -315,7 +315,7 @@ export default {
     watch: {
         form: {
             handler(n, o) {
-                if (n && n.title && o && !this.isSaving) {
+                if (n && o && !this.isSaving) {
                     this.changeCount++;
                     if (this.changeCount > 1) {
                         clearTimeout(this.timer);
@@ -330,8 +330,8 @@ export default {
         articleId: {
             handler(n, o) {
                 if (n === o) return;
-                this.form = {};
                 if (n) {
+                    this.form = {};
                     this.getDetail(this.articleId);
                 }
             },
@@ -483,11 +483,6 @@ export default {
             this.listLoading = true;
             api.articleQuery(params).then((res) => {
                 if (!this.keyword && this.activeTabName === 'all') this.pageConfig.total = res.total;
-                if (res.data.length === 0) {
-                    this.noMore = true;
-                    this.listLoading = false;
-                    return;
-                };
                 if (loadType === 'reload') {
                     this.listData = res.data;
                     if (this.articleId) {
@@ -496,6 +491,7 @@ export default {
                         this.handleRouterReplace(`/write/${res.data[0]._id}`);
                     }
                 } else {
+                    if (res.data.length === 0) this.noMore = true;
                     this.listData.push(...res.data);
                 }
                 this.listLoading = false;
@@ -505,13 +501,13 @@ export default {
         },
         // 切换列表
         handleChange(articleId) {
+            if (this.isSaving) return;
             this.handleRouterPush(`/write/${articleId}`);
         },
         // 获取详情
         getDetail(articleId) {
             this.isSaving = true;
             this.isLoadingDetail = true;
-            this.changeCount = 0;
             api.articleDetail(articleId).then((res) => {
                 const { contentHtml, tagId, isPublish, title, articlePublishId, articleCateId } = res.data;
                 this.form = {
@@ -527,6 +523,7 @@ export default {
                 this.saved = false;
                 this.isSaving = false;
                 this.isLoadingDetail = false;
+                this.changeCount = 0;
                 this.$nextTick(this.setH);
                 this.$nextTick(() => {
                     if (title === this.defaultTitle) {

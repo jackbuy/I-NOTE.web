@@ -2,6 +2,9 @@
  * mutation-types
  */
 
+// 首页位置
+export const SET_HOME_OFFSET_Y = 'SET_HOME_OFFSET_Y';
+
 export const TOGGLE_LOGIN_MODAL = 'TOGGLE_LOGIN_MODAL';
 export const OPEN_LOGIN_MODAL = 'OPEN_LOGIN_MODAL';
 // 获取系统信息

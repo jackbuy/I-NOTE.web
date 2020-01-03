@@ -24,7 +24,8 @@ const Store = {
         socketUnreadLetterCount: {}, // socket未读私信数量
         socketUnreadMessageCount: {}, // socket未读消息数量
         socketNewPost: {}, // socket新动态
-        socketOnlineUser: [] // socket在线用户
+        socketOnlineUser: [], // socket在线用户,
+        homeOffsetY: 0 // 首页滚动条的滚动位置
     },
     getters: {
         isLogin: state => !!state.token, // 是否已登录

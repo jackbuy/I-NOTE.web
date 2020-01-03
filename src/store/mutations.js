@@ -5,6 +5,10 @@
 
 import * as C from './mutation-types';
 export default {
+    // homeOffsetY
+    [C.SET_HOME_OFFSET_Y](state, payload) {
+        state.homeOffsetY = payload;
+    },
     // socket
     [C.SOCKET_ONLINE_USER](state, payload) {
         state.socketOnlineUser = payload;

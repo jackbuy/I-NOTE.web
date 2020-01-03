@@ -123,7 +123,8 @@ export default {
     },
     computed: {
         ...mapState({
-            socketNewPost: state => state.socketNewPost
+            socketNewPost: state => state.socketNewPost,
+            homeOffsetY: state => state.homeOffsetY
         }),
         ...mapGetters({
             currentUserId: 'currentUserId'
@@ -154,6 +155,10 @@ export default {
         this.getUserRecommend();
         this.getTopicRecommend();
         this.getOperationsCount();
+        setTimeout(() => {
+            // window.scrollTo(0, window.CateListScrollTop);
+            window.scrollTo(0, this.homeOffsetY);
+        });
     },
     deactivated() {
         this.showIntroduce = false;

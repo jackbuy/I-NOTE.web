@@ -89,8 +89,12 @@ router.beforeEach((to, from, next) => {
 });
 
 router.afterEach((to, from) => {
-    window.scrollTo(0, 0);
     NProgress.done();
+    if (from.name === 'find') {
+        let homeOffsetY = document.documentElement.scrollTop || document.body.scrollTop;
+        store.commit('SET_HOME_OFFSET_Y', homeOffsetY);
+    }
+    if (to.name !== 'find') window.scrollTo(0, 0);
 });
 
 window.vm = new Vue({

@@ -27,14 +27,12 @@ export default {
                 confirmButtonClass
             });
         },
-
         showErrorMsg(message) {
             this.$message({
                 message: message,
                 type: 'error'
             });
         },
-
         showWarningMsg(message) {
             this.$message({
                 message: message,
@@ -44,16 +42,6 @@ export default {
                 type: 'warning'
             });
         },
-
-        showWarningBox(message) {
-            this.$alert(message, {
-                confirmButtonText: '确定',
-                title: '警告',
-                closeOnClickModal: true,
-                type: 'warning'
-            });
-        },
-
         showSuccessMsg(msg) {
             this.$message({
                 message: msg,
@@ -64,6 +52,14 @@ export default {
             this.$message({
                 message: msg,
                 type: 'info'
+            });
+        },
+        showWarningBox(message) {
+            this.$alert(message, {
+                confirmButtonText: '确定',
+                title: '警告',
+                closeOnClickModal: true,
+                type: 'warning'
             });
         }
     }

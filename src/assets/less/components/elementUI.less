@@ -1,7 +1,8 @@
-// elementUI 样式改造
+// elementUI 组件样式改造
 .element-ui(){
 
-    .el-input-group__append, .el-input-group__prepend{
+    .el-input-group__append,
+    .el-input-group__prepend{
         border-color: @borderColor;
     }
 
@@ -15,6 +16,7 @@
         }
         .palceholder(@formPalceholderColor);
     }
+
     .el-button{
         background: @formBgColor;
         border-color: @borderColor;
@@ -45,4 +47,27 @@
         }
     }
 
+    .el-loading-mask{
+        background-color: @maskBg;
+    }
+
+    .el-message-box{
+        width: 314px;
+        background: @boxBgColor;
+        box-shadow: @shadow;
+        border-color: @borderColor;
+        &__title{
+            color: @fontMainColor;
+        }
+        &__content{
+            color: @fontSubColor;
+        }
+    }
+
+    .el-message{
+        min-width: 180px;
+        background: @boxBgColor;
+        box-shadow: @shadow;
+        border-color: @borderColor;
+    }
 }

@@ -152,6 +152,9 @@ export default {
     // 新增
     letterAdd: (params) => http('post', `${apiBaseUrl}/letter/add`, params),
 
+    // 友情链接
+    linkQuery: (params) => http('post', `${apiBaseUrl}/link/query`, params),
+
     // 系统信息
     systemDetail: () => http('get', `${apiBaseUrl}/system/detail`)
 

@@ -2,7 +2,7 @@
     <div
         class="layout__header-logo"
         @click="handleRoutePush">
-        <img src="../../../../../static/img/logo.png" alt="">
+        <img src="../../../../../static/img/logo.jpg" alt="">
     </div>
 </template>
 

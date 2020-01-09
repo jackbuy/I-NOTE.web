@@ -66,6 +66,11 @@
                 :data="operationsData">
             </operations>
         </card>
+        <card slot="operation" icon="icon icon-youqinglianjie" title="友情链接">
+            <friendly-link
+                :data="linkData">
+            </friendly-link>
+        </card>
     </home-layout>
 </template>
 
@@ -81,6 +86,7 @@ import ArticleRecommend from '@/components/common/articleRecommend';
 import TopicRecommend from '@/components/common/topicRecommend';
 import UserRecommend from '@/components/common/userRecommend';
 import Operations from '@/components/common/operations';
+import FriendlyLink from '@/components/common/friendlyLink';
 import Card from '@/components/common/card';
 import Tab from '@/components/common/tab';
 import TabLabel from '@/components/common/tab/tabLabel';
@@ -100,7 +106,8 @@ export default {
         Card,
         Tab,
         TabLabel,
-        Introduce
+        Introduce,
+        FriendlyLink
     },
     data() {
         return {
@@ -112,6 +119,7 @@ export default {
             authorRecommendData: [], // 作者推荐
             topicRecommendData: [], // 专题推荐
             recommendData: [], // 文章推荐
+            linkData: [], // 文章推荐
             operationsData: {}, // 数量统计
             pageConfig: {
                 pageSize: 15,
@@ -147,6 +155,7 @@ export default {
         this.getUserRecommend();
         this.getTopicRecommend();
         this.getOperationsCount();
+        this.getLink();
         this.getList(this.sortType);
     },
     activated() {
@@ -155,6 +164,7 @@ export default {
         this.getUserRecommend();
         this.getTopicRecommend();
         this.getOperationsCount();
+        this.getLink();
         setTimeout(() => {
             // window.scrollTo(0, window.CateListScrollTop);
             window.scrollTo(0, this.homeOffsetY);
@@ -219,6 +229,16 @@ export default {
             };
             api.userPublishQuery(params).then((res) => {
                 this.authorRecommendData = res.data;
+            }).catch(() => {});
+        },
+        // 友情链接
+        getLink() {
+            const params = {
+                currentPage: 1,
+                pageSize: 10
+            };
+            api.linkQuery(params).then((res) => {
+                this.linkData = res.data;
             }).catch(() => {});
         },
         // 推荐专题
